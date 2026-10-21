@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deployment API · API · Apelora</title>
+  <meta name="description" content="Instances, plans, deployments, moves and volumes. Apelora Fabric documentation and website.">
+  <link rel="canonical" href="https://apelora.github.io/docs/api/deployment/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Deployment API · API · Apelora">
+  <meta property="og:description" content="Instances, plans, deployments, moves and volumes. Apelora Fabric documentation and website.">
+  <meta property="og:url" content="https://apelora.github.io/docs/api/deployment/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/servers-and-network/">Servers and network</a></li><li><a href="/docs/start/install-incus/">Install Incus</a></li><li><a href="/docs/start/install-on-your-servers/">Install Apelora</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group" open><summary>API<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/api/overview/">Overview</a></li><li><a href="/docs/api/system/">System</a></li><li><a href="/docs/api/inventory/">Inventory</a></li><li><a href="/docs/api/deployment/" aria-current="page">Deployment</a></li><li><a href="/docs/api/applications/">Applications</a></li><li><a href="/docs/api/cluster/">Cluster</a></li><li><a href="/docs/api/administration/">Administration</a></li><li><a href="/docs/api/audit/">Audit</a></li><li><a href="/docs/api/identity/">Identity and access</a></li><li><a href="/docs/api/sessions/">Sessions</a></li><li><a href="/docs/api/alerts/">Alerts</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/settings/">Settings reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li><li><a href="/docs/decisions/0015-application-lifecycle-verbs/">0015 · Application lifecycle verbs: Shut down, Stop, and Migrate</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/api/">API</a></nav>
+        <h1>Deployment API</h1>
+        <div class="prose">
+<p>Creating, changing and moving single instances, and the plan and deployment of a design. This page documents all 10 operations, each with a request you can copy. Set <code>APELORA_URL</code> and <code>APELORA_TOKEN</code> as described in <a href="/docs/api/overview/">the API overview</a>.</p>
+<h2 id="operations">Operations</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#post-apiv1instances">undefined</a></td><td>Queues creation of an instance.</td></tr><tr><td><a href="#delete-apiv1instancesprojectname">undefined</a></td><td>Queues deletion of an Apelora instance (stopped first if running).</td></tr><tr><td><a href="#get-apiv1instancesprojectnamemove">undefined</a></td><td>Dry run of moving an instance to another member: whether it keeps running, what it copies, what blocks it.</td></tr><tr><td><a href="#post-apiv1instancesprojectnamemove">undefined</a></td><td>Moves an Apelora instance to another member, after the check runs again and its name is typed: live when it can, otherwise only with <code>allowStop</code>, copying its volumes there.</td></tr><tr><td><a href="#post-apiv1instancesprojectnamestate">undefined</a></td><td>Queues starting or stopping an Apelora instance.</td></tr><tr><td><a href="#get-apiv1jobs">undefined</a></td><td>Jobs newest first, filtered by status, kind and application and paged with <code>after</code>.</td></tr><tr><td><a href="#get-apiv1jobsid">undefined</a></td><td>A queued job and its progress.</td></tr><tr><td><a href="#post-apiv1jobsidcancel">undefined</a></td><td>Cancels a job.</td></tr><tr><td><a href="#get-apiv1jobsiddetail">undefined</a></td><td>A job with its attempts (worker, timings, outcome, error and the Incus operations each started), who queued it, its request id, and the jobs linked to it (retries, and other jobs the same request queued).</td></tr><tr><td><a href="#post-apiv1jobsidretry">undefined</a></td><td>Queues a new job that repeats a failed one, linked to it (<code>retryOf</code>); the failed job is kept unchanged as evidence.</td></tr></tbody></table></div>
+<h2 id="details">Details</h2>
+<h3 id="post-apiv1instances"><code>POST /api/v1/instances</code></h3>
+<p>Queues creation of an instance. Apelora marks it as its own; only such instances can later be stopped or deleted through Apelora.</p>
+<p><strong>Needs:</strong> <code>deploy</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>Idempotency-Key</code></td><td>header</td><td>string</td><td>no</td><td>Makes the request safe to repeat</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>architectures</code></td><td>list of string</td><td>no</td><td>Architectures the image is known to run on (see [<code>ARCHITECTURES</code>]); empty allows any. Checked against the cluster before creating and against the instance Incus created.</td></tr><tr><td><code>config</code></td><td>object</td><td>no</td><td>Extra instance config; keys under <code>user.apelora.</code> are reserved.</td></tr><tr><td><code>kind</code></td><td><code>container</code>, <code>virtual-machine</code>, <code>unknown</code></td><td>yes</td><td>Kind of Incus instance as reported by the cluster.</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>network</code></td><td>one of several</td><td>no</td><td>—</td></tr><tr><td><code>owner</code></td><td>one of several</td><td>no</td><td>—</td></tr><tr><td><code>profiles</code></td><td>list of string</td><td>no</td><td>Profiles to apply, in order; empty applies the project's <code>default</code> profile.</td></tr><tr><td><code>project</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>rootPool</code></td><td>string</td><td>no</td><td>The pool of the root disk when it is not the one the project's profile gives: the shared pool for a module that restarts on another member after a failure (ADR 0013). Set by the control plane from the module's volume classes, never by a caller.</td></tr><tr><td><code>source</code></td><td>object</td><td>yes</td><td>Where an instance's root image comes from.</td></tr><tr><td><code>start</code></td><td>boolean</td><td>no</td><td>Start the instance once created.</td></tr><tr><td><code>volumes</code></td><td>list of object</td><td>no</td><td>Persistent volumes, each created for this instance on the member it runs on.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;project&quot;: &quot;apelora&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;kind&quot;: &quot;container&quot;,
+  &quot;source&quot;: {
+    &quot;alias&quot;: &quot;example&quot;,
+    &quot;protocol&quot;: &quot;simplestreams&quot;,
+    &quot;server&quot;: &quot;example&quot;,
+    &quot;fingerprint&quot;: &quot;example&quot;
+  }
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/instances&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Idempotency-Key: $(uuidgen)&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;project&quot;:&quot;apelora&quot;,&quot;name&quot;:&quot;example&quot;,&quot;kind&quot;:&quot;container&quot;,&quot;source&quot;:{&quot;alias&quot;:&quot;example&quot;,&quot;protocol&quot;:&quot;simplestreams&quot;,&quot;server&quot;:&quot;example&quot;,&quot;fingerprint&quot;:&quot;example&quot;}}'</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;created&quot;: false,
+  &quot;jobId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1instancesprojectname"><code>DELETE /api/v1/instances/{project}/{name}</code></h3>
+<p>Queues deletion of an Apelora instance (stopped first if running).</p>
+<p><strong>Needs:</strong> <code>deploy</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string</td><td>yes</td><td>Incus project.</td></tr><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Instance name.</td></tr><tr><td><code>Idempotency-Key</code></td><td>header</td><td>string</td><td>no</td><td>Makes the request safe to repeat</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/instances/apelora/shop&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Idempotency-Key: $(uuidgen)&quot;</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;created&quot;: false,
+  &quot;jobId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1instancesprojectnamemove"><code>GET /api/v1/instances/{project}/{name}/move</code></h3>
+<p>Dry run of moving an instance to another member: whether it keeps running, what it copies, what blocks it. Changes nothing.</p>
+<p><strong>Needs:</strong> <code>deploy</code> (or <code>instance.manage</code>).</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string</td><td>yes</td><td>Incus project.</td></tr><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Instance name.</td></tr><tr><td><code>target</code></td><td>query</td><td>string</td><td>yes</td><td>The member to move to.</td></tr><tr><td><code>allowStop</code></td><td>query</td><td>boolean</td><td>no</td><td>Whether a short stop is acceptable when it cannot move while running.</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/instances/apelora/shop/move?target=example&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;plan&quot;: {
+    &quot;blocked&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;copyMib&quot;: 0,
+    &quot;from&quot;: &quot;example&quot;,
+    &quot;instance&quot;: &quot;example&quot;,
+    &quot;live&quot;: false,
+    &quot;notes&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;stops&quot;: false,
+    &quot;to&quot;: &quot;example&quot;,
+    &quot;volumes&quot;: [
+      &quot;example&quot;
+    ]
+  },
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1instancesprojectnamemove"><code>POST /api/v1/instances/{project}/{name}/move</code></h3>
+<p>Moves an Apelora instance to another member, after the check runs again and its name is typed: live when it can, otherwise only with <code>allowStop</code>, copying its volumes there. Queues an <code>instance.move</code> job.</p>
+<p><strong>Needs:</strong> <code>deploy</code> (or <code>instance.manage</code>); audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string</td><td>yes</td><td>Incus project.</td></tr><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Instance name.</td></tr><tr><td><code>Idempotency-Key</code></td><td>header</td><td>string</td><td>no</td><td>Makes the request safe to repeat</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>allowStop</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The instance's name again, typed by the person moving it.</td></tr><tr><td><code>target</code></td><td>string</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;target&quot;: &quot;example&quot;,
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/instances/apelora/shop/move&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Idempotency-Key: $(uuidgen)&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;target&quot;:&quot;example&quot;,&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;created&quot;: false,
+  &quot;jobId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1instancesprojectnamestate"><code>POST /api/v1/instances/{project}/{name}/state</code></h3>
+<p>Queues starting or stopping an Apelora instance.</p>
+<p><strong>Needs:</strong> <code>deploy</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string</td><td>yes</td><td>Incus project.</td></tr><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Instance name.</td></tr><tr><td><code>Idempotency-Key</code></td><td>header</td><td>string</td><td>no</td><td>Makes the request safe to repeat</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>action</code></td><td><code>start</code>, <code>stop</code>, <code>restart</code></td><td>yes</td><td>A state change Apelora can request for one of its instances.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;start&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/instances/apelora/shop/state&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Idempotency-Key: $(uuidgen)&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;action&quot;:&quot;start&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;created&quot;: false,
+  &quot;jobId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1jobs"><code>GET /api/v1/jobs</code></h3>
+<p>Jobs newest first, filtered by status, kind and application and paged with <code>after</code>. Whole platform readers (<code>read-inventory</code>) see every job; anyone else the jobs of applications they may view.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>status</code></td><td>query</td><td>string</td><td>no</td><td><code>pending</code>, <code>running</code>, <code>succeeded</code>, <code>failed</code> or <code>cancelled</code>.</td></tr><tr><td><code>kind</code></td><td>query</td><td>string</td><td>no</td><td>Only kinds starting with this, e.g. <code>instance.</code> or <code>volume.restore</code>.</td></tr><tr><td><code>application</code></td><td>query</td><td>string</td><td>no</td><td>Only the jobs of this application.</td></tr><tr><td><code>after</code></td><td>query</td><td>string</td><td>no</td><td>Paging: the <code>next</code> of the previous page.</td></tr><tr><td><code>limit</code></td><td>query</td><td>integer</td><td>no</td><td>Jobs per page, 1 to 200 (default 100).</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/jobs&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;actions&quot;: {
+        &quot;cancel&quot;: {
+          &quot;allowed&quot;: false,
+          &quot;reason&quot;: &quot;example&quot;
+        },
+        &quot;retry&quot;: {
+          &quot;allowed&quot;: false,
+          &quot;reason&quot;: &quot;example&quot;
+        }
+      },
+      &quot;attempts&quot;: 1,
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;incusOperations&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;kind&quot;: &quot;example&quot;,
+      &quot;maxAttempts&quot;: 1,
+      &quot;request&quot;: {},
+      &quot;status&quot;: &quot;example&quot;,
+      &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;cancelRequestedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;cancelRequestedBy&quot;: &quot;example&quot;,
+      &quot;incusOperation&quot;: &quot;example&quot;,
+      &quot;lastError&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;next&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1jobsid"><code>GET /api/v1/jobs/{id}</code></h3>
+<p>A queued job and its progress.</p>
+<p><strong>Needs:</strong> <code>read-inventory</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Job id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;actions&quot;: {
+    &quot;cancel&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;retry&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    }
+  },
+  &quot;attempts&quot;: 1,
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;incusOperations&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;kind&quot;: &quot;example&quot;,
+  &quot;maxAttempts&quot;: 1,
+  &quot;request&quot;: {},
+  &quot;status&quot;: &quot;example&quot;,
+  &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;cancelRequestedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;cancelRequestedBy&quot;: &quot;example&quot;,
+  &quot;incusOperation&quot;: &quot;example&quot;,
+  &quot;lastError&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>404</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1jobsidcancel"><code>POST /api/v1/jobs/{id}/cancel</code></h3>
+<p>Cancels a job. A waiting job with nothing in flight is cancelled at once (<code>cancelled</code>); otherwise the request is recorded (<code>requested</code>) and the worker stops at the job kind's next safe point, never in the middle of an Incus change (see <code>safePoints</code> on the job's detail). Repeating the request changes nothing. Refused (409 <code>job_finished</code>) for a finished job.</p>
+<p><strong>Needs:</strong> the permission that queues that kind of job on its target; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Job id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/cancel&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;job&quot;: {
+    &quot;actions&quot;: {
+      &quot;cancel&quot;: {
+        &quot;allowed&quot;: false,
+        &quot;reason&quot;: &quot;example&quot;
+      },
+      &quot;retry&quot;: {
+        &quot;allowed&quot;: false,
+        &quot;reason&quot;: &quot;example&quot;
+      }
+    },
+    &quot;attempts&quot;: 1,
+    &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;incusOperations&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;kind&quot;: &quot;example&quot;,
+    &quot;maxAttempts&quot;: 1,
+    &quot;request&quot;: {},
+    &quot;status&quot;: &quot;example&quot;,
+    &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;cancelRequestedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;cancelRequestedBy&quot;: &quot;example&quot;,
+    &quot;incusOperation&quot;: &quot;example&quot;,
+    &quot;lastError&quot;: &quot;example&quot;
+  },
+  &quot;outcome&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1jobsiddetail"><code>GET /api/v1/jobs/{id}/detail</code></h3>
+<p>A job with its attempts (worker, timings, outcome, error and the Incus operations each started), who queued it, its request id, and the jobs linked to it (retries, and other jobs the same request queued). Same visibility as <code>GET /api/v1/jobs/{id}</code>.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Job id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/detail&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;attempts&quot;: [
+    {
+      &quot;attempt&quot;: 1,
+      &quot;incusOperations&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;startedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;worker&quot;: &quot;example&quot;,
+      &quot;endedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;error&quot;: &quot;example&quot;,
+      &quot;outcome&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;job&quot;: {
+    &quot;actions&quot;: {
+      &quot;cancel&quot;: {
+        &quot;allowed&quot;: false,
+        &quot;reason&quot;: &quot;example&quot;
+      },
+      &quot;retry&quot;: {
+        &quot;allowed&quot;: false,
+        &quot;reason&quot;: &quot;example&quot;
+      }
+    },
+    &quot;attempts&quot;: 1,
+    &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;incusOperations&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;kind&quot;: &quot;example&quot;,
+    &quot;maxAttempts&quot;: 1,
+    &quot;request&quot;: {},
+    &quot;status&quot;: &quot;example&quot;,
+    &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;cancelRequestedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;cancelRequestedBy&quot;: &quot;example&quot;,
+    &quot;incusOperation&quot;: &quot;example&quot;,
+    &quot;lastError&quot;: &quot;example&quot;
+  },
+  &quot;linked&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;kind&quot;: &quot;example&quot;,
+      &quot;relation&quot;: &quot;example&quot;,
+      &quot;status&quot;: &quot;example&quot;,
+      &quot;target&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;safePoints&quot;: &quot;example&quot;,
+  &quot;target&quot;: &quot;example&quot;,
+  &quot;application&quot;: &quot;example&quot;,
+  &quot;finishedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;startedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1jobsidretry"><code>POST /api/v1/jobs/{id}/retry</code></h3>
+<p>Queues a new job that repeats a failed one, linked to it (<code>retryOf</code>); the failed job is kept unchanged as evidence. Refused (409) when the job did not fail (<code>not_failed</code>), was retried already (<code>already_retried</code>), a newer job for the same target was queued since (<code>superseded</code>), or it is an application operation (<code>not_retryable</code>: start it again from the application). Audited.</p>
+<p><strong>Needs:</strong> the permission that queues that kind of job on its target.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Job id</td></tr><tr><td><code>Idempotency-Key</code></td><td>header</td><td>string</td><td>no</td><td>Makes the request safe to repeat</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/retry&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Idempotency-Key: $(uuidgen)&quot;</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;created&quot;: false,
+  &quot;jobId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/inventory/"><span>Previous</span>Inventory</a><a class="next" href="/docs/api/applications/"><span>Next</span>Applications</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#post-apiv1instances">POST /api/v1/instances</a></li><li class="l3"><a href="#delete-apiv1instancesprojectname">DELETE /api/v1/instances/{project}/{name}</a></li><li class="l3"><a href="#get-apiv1instancesprojectnamemove">GET /api/v1/instances/{project}/{name}/move</a></li><li class="l3"><a href="#post-apiv1instancesprojectnamemove">POST /api/v1/instances/{project}/{name}/move</a></li><li class="l3"><a href="#post-apiv1instancesprojectnamestate">POST /api/v1/instances/{project}/{name}/state</a></li><li class="l3"><a href="#get-apiv1jobs">GET /api/v1/jobs</a></li><li class="l3"><a href="#get-apiv1jobsid">GET /api/v1/jobs/{id}</a></li><li class="l3"><a href="#post-apiv1jobsidcancel">POST /api/v1/jobs/{id}/cancel</a></li><li class="l3"><a href="#get-apiv1jobsiddetail">GET /api/v1/jobs/{id}/detail</a></li><li class="l3"><a href="#post-apiv1jobsidretry">POST /api/v1/jobs/{id}/retry</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cluster API · API · Apelora</title>
+  <meta name="description" content="Members, machines, join tokens, settings and recovery. Apelora Fabric documentation and website.">
+  <link rel="canonical" href="https://apelora.github.io/docs/api/cluster/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Cluster API · API · Apelora">
+  <meta property="og:description" content="Members, machines, join tokens, settings and recovery. Apelora Fabric documentation and website.">
+  <meta property="og:url" content="https://apelora.github.io/docs/api/cluster/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/servers-and-network/">Servers and network</a></li><li><a href="/docs/start/install-incus/">Install Incus</a></li><li><a href="/docs/start/install-on-your-servers/">Install Apelora</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group" open><summary>API<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/api/overview/">Overview</a></li><li><a href="/docs/api/system/">System</a></li><li><a href="/docs/api/inventory/">Inventory</a></li><li><a href="/docs/api/deployment/">Deployment</a></li><li><a href="/docs/api/applications/">Applications</a></li><li><a href="/docs/api/cluster/" aria-current="page">Cluster</a></li><li><a href="/docs/api/administration/">Administration</a></li><li><a href="/docs/api/audit/">Audit</a></li><li><a href="/docs/api/identity/">Identity and access</a></li><li><a href="/docs/api/sessions/">Sessions</a></li><li><a href="/docs/api/alerts/">Alerts</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/settings/">Settings reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li><li><a href="/docs/decisions/0015-application-lifecycle-verbs/">0015 · Application lifecycle verbs: Shut down, Stop, and Migrate</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/api/">API</a></nav>
+        <h1>Cluster API</h1>
+        <div class="prose">
+<p>The cluster's servers: members, maintenance, machines and join tokens, cluster settings, groups, certificates and recovery. This page documents all 22 operations, each with a request you can copy. Set <code>APELORA_URL</code> and <code>APELORA_TOKEN</code> as described in <a href="/docs/api/overview/">the API overview</a>.</p>
+<h2 id="operations">Operations</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#get-apiv1clustergroups">undefined</a></td><td>Cluster groups and their members (empty on a standalone server).</td></tr><tr><td><a href="#get-apiv1clusterjoin-tokens">undefined</a></td><td>Join tokens waiting to be used (no secrets).</td></tr><tr><td><a href="#post-apiv1clusterjoin-tokens">undefined</a></td><td>Approves a new cluster member: asks Incus for a single-use join token.</td></tr><tr><td><a href="#delete-apiv1clusterjoin-tokensmember">undefined</a></td><td>Withdraws a new member's approval: revokes its unused join token.</td></tr><tr><td><a href="#get-apiv1clustermembers">undefined</a></td><td>Members with their database role (voter, stand-by, spare), the leader, other roles, failure domain, groups and Incus release; the database majority (how many voters answer, how many are needed, how many more can be lost); and version skew against the pinned Incus release with what blocks an upgrade.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberevacuate">undefined</a></td><td>Evacuates a cluster member through Incus after re-running the dry run: refused while anything blocks it.</td></tr><tr><td><a href="#get-apiv1clustermembersmemberevacuation">undefined</a></td><td>Dry run of evacuating a cluster member: per instance, what Incus will do and what it means for the application; what blocks it; what to accept.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberfencing">undefined</a></td><td>Confirms that a failed server is powered off (or cut off from the shared storage).</td></tr><tr><td><a href="#get-apiv1clustermembersmemberremoval">undefined</a></td><td>Dry run of removing a cluster member for good: what is still on it, what blocks it and what to accept.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberremove">undefined</a></td><td>Removes an evacuated, empty member from the cluster for good, after the check runs again: refused while anything blocks it.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberrestore">undefined</a></td><td>Restores an evacuated member: Incus moves its instances back and starts them.</td></tr><tr><td><a href="#get-apiv1clusterrecovery">undefined</a></td><td>Failed members: whether each is fenced (and the evidence), or why Apelora waits; and per instance whether it restarts on another server (and where) or waits (and why).</td></tr><tr><td><a href="#get-apiv1clustersettings">undefined</a></td><td>Cluster-wide settings (offline and healing thresholds, database voters and stand-bys, join-token lifetime, image replication and updates): the value set, Incus's default and whether the default applies.</td></tr><tr><td><a href="#patch-apiv1clustersettings">undefined</a></td><td>Changes cluster settings through Incus with the admin identity.</td></tr><tr><td><a href="#get-apiv1machines">undefined</a></td><td>Machines being enrolled, with their state derived from Incus.</td></tr><tr><td><a href="#post-apiv1machines">undefined</a></td><td>Registers a machine.</td></tr><tr><td><a href="#delete-apiv1machinesname">undefined</a></td><td>Forgets a machine that is not a cluster member (revoking an unused join token).</td></tr><tr><td><a href="#get-apiv1machinesnameadmission">undefined</a></td><td>The admission checks for a joined machine (dry run; changes nothing).</td></tr><tr><td><a href="#post-apiv1machinesnameadmit">undefined</a></td><td>Admits a joined machine: re-runs the admission checks and, when none fails, lets Incus place instances on it.</td></tr><tr><td><a href="#delete-apiv1machinesnameapproval">undefined</a></td><td>Withdraws an approval: revokes the machine's unused join token.</td></tr><tr><td><a href="#post-apiv1machinesnameapprove">undefined</a></td><td>Approves a machine: asks Incus for its single-use join token, returned only in this response with the command to run on the server.</td></tr><tr><td><a href="#get-apiv1provisionersmaasmachines">undefined</a></td><td>The machines MAAS manages, with the Apelora machine and Incus member each became.</td></tr></tbody></table></div>
+<h2 id="details">Details</h2>
+<h3 id="get-apiv1clustergroups"><code>GET /api/v1/cluster/groups</code></h3>
+<p>Cluster groups and their members (empty on a standalone server). Read-only; needs <code>cluster.view</code>.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/groups&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;members&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;name&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1clusterjoin-tokens"><code>GET /api/v1/cluster/join-tokens</code></h3>
+<p>Join tokens waiting to be used (no secrets).</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/join-tokens&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;memberName&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1clusterjoin-tokens"><code>POST /api/v1/cluster/join-tokens</code></h3>
+<p>Approves a new cluster member: asks Incus for a single-use join token. The token is in this response only.</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>memberName</code></td><td>string</td><td>yes</td><td>Name the new member will join with.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;memberName&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/cluster/join-tokens&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;memberName&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;memberName&quot;: &quot;example&quot;,
+  &quot;token&quot;: &quot;&lt;redacted&gt;&quot;,
+  &quot;warnings&quot;: [
+    &quot;example&quot;
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1clusterjoin-tokensmember"><code>DELETE /api/v1/cluster/join-tokens/{member}</code></h3>
+<p>Withdraws a new member's approval: revokes its unused join token.</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Name the token was issued for</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/cluster/join-tokens/node-1&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1clustermembers"><code>GET /api/v1/cluster/members</code></h3>
+<p>Members with their database role (voter, stand-by, spare), the leader, other roles, failure domain, groups and Incus release; the database majority (how many voters answer, how many are needed, how many more can be lost); and version skew against the pinned Incus release with what blocks an upgrade. Read-only; needs <code>cluster.view</code>.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/members&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;clustered&quot;: false,
+  &quot;members&quot;: [
+    {
+      &quot;architecture&quot;: &quot;example&quot;,
+      &quot;databaseExcluded&quot;: false,
+      &quot;databaseRole&quot;: &quot;voter&quot;,
+      &quot;eventHub&quot;: false,
+      &quot;failureDomain&quot;: &quot;example&quot;,
+      &quot;groups&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;held&quot;: false,
+      &quot;incusVersion&quot;: &quot;example&quot;,
+      &quot;leader&quot;: false,
+      &quot;message&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;ovnChassis&quot;: false,
+      &quot;roles&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;status&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;quorum&quot;: {
+    &quot;canLose&quot;: 0,
+    &quot;leader&quot;: &quot;example&quot;,
+    &quot;needed&quot;: 0,
+    &quot;nextStep&quot;: &quot;example&quot;,
+    &quot;spares&quot;: 0,
+    &quot;standbys&quot;: 0,
+    &quot;standbysUp&quot;: 0,
+    &quot;state&quot;: &quot;healthy&quot;,
+    &quot;summary&quot;: &quot;example&quot;,
+    &quot;voters&quot;: 0,
+    &quot;votersUp&quot;: 0,
+    &quot;warnings&quot;: [
+      &quot;example&quot;
+    ]
+  },
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  },
+  &quot;versions&quot;: {
+    &quot;blockers&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;groups&quot;: [
+      {
+        &quot;againstPin&quot;: &quot;same&quot;,
+        &quot;members&quot;: [
+          &quot;example&quot;
+        ],
+        &quot;version&quot;: &quot;example&quot;
+      }
+    ],
+    &quot;notes&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;pinned&quot;: &quot;example&quot;,
+    &quot;ready&quot;: false,
+    &quot;state&quot;: &quot;matches-pin&quot;,
+    &quot;summary&quot;: &quot;example&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1clustermembersmemberevacuate"><code>POST /api/v1/cluster/members/{member}/evacuate</code></h3>
+<p>Evacuates a cluster member through Incus after re-running the dry run: refused while anything blocks it.</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code> and the admin identity; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The member's name again, typed by the administrator.</td></tr><tr><td><code>force</code></td><td>boolean</td><td>no</td><td>Evacuate although the dry run found blockers (a workload may lose service). Needs the unsafe-evacuation permission and an approval from another person.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/evacuate&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;member&quot;: &quot;example&quot;,
+  &quot;operation&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1clustermembersmemberevacuation"><code>GET /api/v1/cluster/members/{member}/evacuation</code></h3>
+<p>Dry run of evacuating a cluster member: per instance, what Incus will do and what it means for the application; what blocks it; what to accept. Changes nothing.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/members/node-1/evacuation&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;plan&quot;: {
+    &quot;blocked&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;items&quot;: [
+      {
+        &quot;impact&quot;: &quot;example&quot;,
+        &quot;instance&quot;: &quot;example&quot;,
+        &quot;mode&quot;: &quot;example&quot;,
+        &quot;outcome&quot;: &quot;example&quot;,
+        &quot;project&quot;: &quot;apelora&quot;,
+        &quot;status&quot;: &quot;example&quot;,
+        &quot;application&quot;: &quot;example&quot;,
+        &quot;module&quot;: &quot;example&quot;
+      }
+    ],
+    &quot;member&quot;: &quot;example&quot;,
+    &quot;targets&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;warnings&quot;: [
+      &quot;example&quot;
+    ]
+  },
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1clustermembersmemberfencing"><code>POST /api/v1/cluster/members/{member}/fencing</code></h3>
+<p>Confirms that a failed server is powered off (or cut off from the shared storage). This fences it: Apelora then restarts its modules on shared storage on other servers. Refused unless Incus reports the member Offline.</p>
+<p><strong>Needs:</strong> <code>cluster.fence_confirm</code> and another person's approval; the member's name typed again; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The member's name again, typed by the person.</td></tr><tr><td><code>poweredOff</code></td><td>boolean</td><td>yes</td><td>Must be <code>true</code>: the server is switched off (or cut off from the shared storage).</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;,
+  &quot;poweredOff&quot;: false
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/fencing&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;confirm&quot;:&quot;example&quot;,&quot;poweredOff&quot;:false}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;fencing&quot;: {
+    &quot;condition&quot;: &quot;waiting&quot;,
+    &quot;reason&quot;: &quot;example&quot;,
+    &quot;evidence&quot;: {
+      &quot;at&quot;: 1,
+      &quot;kind&quot;: &quot;storage-lease&quot;,
+      &quot;summary&quot;: &quot;example&quot;,
+      &quot;confirmedBy&quot;: &quot;example&quot;,
+      &quot;generation&quot;: 0,
+      &quot;hostId&quot;: 0,
+      &quot;lockspace&quot;: &quot;example&quot;,
+      &quot;observedBy&quot;: &quot;example&quot;,
+      &quot;provider&quot;: &quot;example&quot;
+    },
+    &quot;leaseState&quot;: &quot;free&quot;,
+    &quot;nextStep&quot;: &quot;example&quot;,
+    &quot;observedAt&quot;: 1,
+    &quot;observedBy&quot;: &quot;example&quot;
+  },
+  &quot;items&quot;: [
+    {
+      &quot;action&quot;: &quot;restart&quot;,
+      &quot;instance&quot;: &quot;example&quot;,
+      &quot;project&quot;: &quot;apelora&quot;,
+      &quot;reason&quot;: &quot;example&quot;,
+      &quot;application&quot;: &quot;example&quot;,
+      &quot;module&quot;: &quot;example&quot;,
+      &quot;target&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;member&quot;: &quot;example&quot;,
+  &quot;status&quot;: &quot;example&quot;,
+  &quot;confirmedBy&quot;: &quot;example&quot;,
+  &quot;decidedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;detectedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;evidence&quot;: {
+    &quot;at&quot;: 1,
+    &quot;kind&quot;: &quot;storage-lease&quot;,
+    &quot;summary&quot;: &quot;example&quot;,
+    &quot;confirmedBy&quot;: &quot;example&quot;,
+    &quot;generation&quot;: 0,
+    &quot;hostId&quot;: 0,
+    &quot;lockspace&quot;: &quot;example&quot;,
+    &quot;observedBy&quot;: &quot;example&quot;,
+    &quot;provider&quot;: &quot;example&quot;
+  },
+  &quot;failure&quot;: &quot;example&quot;,
+  &quot;fencedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;lastHeartbeat&quot;: &quot;2026-01-01T09:00:00Z&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1clustermembersmemberremoval"><code>GET /api/v1/cluster/members/{member}/removal</code></h3>
+<p>Dry run of removing a cluster member for good: what is still on it, what blocks it and what to accept. Changes nothing.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/members/node-1/removal&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;plan&quot;: {
+    &quot;blocked&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;instances&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;member&quot;: &quot;example&quot;,
+    &quot;status&quot;: &quot;example&quot;,
+    &quot;volumes&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;warnings&quot;: [
+      &quot;example&quot;
+    ]
+  },
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1clustermembersmemberremove"><code>POST /api/v1/cluster/members/{member}/remove</code></h3>
+<p>Removes an evacuated, empty member from the cluster for good, after the check runs again: refused while anything blocks it.</p>
+<p><strong>Needs:</strong> <code>cluster.manage</code>, the admin identity and the member's name typed again; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The member's name again, typed by the administrator.</td></tr><tr><td><code>force</code></td><td>boolean</td><td>no</td><td>Evacuate although the dry run found blockers (a workload may lose service). Needs the unsafe-evacuation permission and an approval from another person.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/remove&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1clustermembersmemberrestore"><code>POST /api/v1/cluster/members/{member}/restore</code></h3>
+<p>Restores an evacuated member: Incus moves its instances back and starts them.</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code> and the admin identity; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The member's name again, typed by the administrator.</td></tr><tr><td><code>force</code></td><td>boolean</td><td>no</td><td>Evacuate although the dry run found blockers (a workload may lose service). Needs the unsafe-evacuation permission and an approval from another person.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/restore&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;member&quot;: &quot;example&quot;,
+  &quot;operation&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1clusterrecovery"><code>GET /api/v1/cluster/recovery</code></h3>
+<p>Failed members: whether each is fenced (and the evidence), or why Apelora waits; and per instance whether it restarts on another server (and where) or waits (and why). Read-only; needs <code>cluster.view</code>.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/recovery&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;fencing&quot;: {
+        &quot;condition&quot;: &quot;waiting&quot;,
+        &quot;reason&quot;: &quot;example&quot;,
+        &quot;evidence&quot;: {
+          &quot;at&quot;: 1,
+          &quot;kind&quot;: &quot;storage-lease&quot;,
+          &quot;summary&quot;: &quot;example&quot;,
+          &quot;confirmedBy&quot;: &quot;example&quot;,
+          &quot;generation&quot;: 0,
+          &quot;hostId&quot;: 0,
+          &quot;lockspace&quot;: &quot;example&quot;,
+          &quot;observedBy&quot;: &quot;example&quot;,
+          &quot;provider&quot;: &quot;example&quot;
+        },
+        &quot;leaseState&quot;: &quot;free&quot;,
+        &quot;nextStep&quot;: &quot;example&quot;,
+        &quot;observedAt&quot;: 1,
+        &quot;observedBy&quot;: &quot;example&quot;
+      },
+      &quot;items&quot;: [
+        {
+          &quot;action&quot;: &quot;restart&quot;,
+          &quot;instance&quot;: &quot;example&quot;,
+          &quot;project&quot;: &quot;apelora&quot;,
+          &quot;reason&quot;: &quot;example&quot;,
+          &quot;application&quot;: &quot;example&quot;,
+          &quot;module&quot;: &quot;example&quot;,
+          &quot;target&quot;: &quot;example&quot;
+        }
+      ],
+      &quot;member&quot;: &quot;example&quot;,
+      &quot;status&quot;: &quot;example&quot;,
+      &quot;confirmedBy&quot;: &quot;example&quot;,
+      &quot;decidedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;detectedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;evidence&quot;: {
+        &quot;at&quot;: 1,
+        &quot;kind&quot;: &quot;storage-lease&quot;,
+        &quot;summary&quot;: &quot;example&quot;,
+        &quot;confirmedBy&quot;: &quot;example&quot;,
+        &quot;generation&quot;: 0,
+        &quot;hostId&quot;: 0,
+        &quot;lockspace&quot;: &quot;example&quot;,
+        &quot;observedBy&quot;: &quot;example&quot;,
+        &quot;provider&quot;: &quot;example&quot;
+      },
+      &quot;failure&quot;: &quot;example&quot;,
+      &quot;fencedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;lastHeartbeat&quot;: &quot;2026-01-01T09:00:00Z&quot;
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1clustersettings"><code>GET /api/v1/cluster/settings</code></h3>
+<p>Cluster-wide settings (offline and healing thresholds, database voters and stand-bys, join-token lifetime, image replication and updates): the value set, Incus's default and whether the default applies. Read with the admin identity, since Incus shows its configuration only to an unrestricted one (503 <code>cluster_admin_not_configured</code> without it); only these keys are returned. Read-only; needs <code>cluster.view</code>.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/settings&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;identity&quot;: &quot;example&quot;,
+  &quot;items&quot;: [
+    {
+      &quot;default&quot;: &quot;example&quot;,
+      &quot;key&quot;: &quot;example&quot;,
+      &quot;label&quot;: &quot;example&quot;,
+      &quot;meaning&quot;: &quot;example&quot;,
+      &quot;usesDefault&quot;: false,
+      &quot;value&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="patch-apiv1clustersettings"><code>PATCH /api/v1/cluster/settings</code></h3>
+<p>Changes cluster settings through Incus with the admin identity. Every key must be one the Servers page lists and every value is checked. Settings that already hold the value are left out; nothing to change is refused. With <code>dryRun</code> it only reports (what each becomes and what to watch for). Applying needs <code>cluster.sensitive_change</code> and another person's approval of <code>cluster-settings:&lt;keys joined by /&gt;</code> (<code>Apelora-Approval</code>), spent before the change, and is audited with the old and new values.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>changes</code></td><td>object</td><td>yes</td><td>—</td></tr><tr><td><code>dryRun</code></td><td>boolean</td><td>no</td><td>Only report what would change and what to watch for; nothing is changed and no approval is needed.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;changes&quot;: {
+    &quot;key&quot;: &quot;example&quot;
+  }
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PATCH &quot;$APELORA_URL/api/v1/cluster/settings&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;changes&quot;:{&quot;key&quot;:&quot;example&quot;}}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;applied&quot;: false,
+  &quot;approvalTarget&quot;: &quot;example&quot;,
+  &quot;changes&quot;: [
+    {
+      &quot;key&quot;: &quot;example&quot;,
+      &quot;label&quot;: &quot;example&quot;,
+      &quot;warnings&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;from&quot;: &quot;example&quot;,
+      &quot;to&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1machines"><code>GET /api/v1/machines</code></h3>
+<p>Machines being enrolled, with their state derived from Incus.</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/machines&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;capabilities&quot;: {
+        &quot;discovers&quot;: false,
+        &quot;installs&quot;: false,
+        &quot;powers&quot;: false
+      },
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;nextStep&quot;: &quot;example&quot;,
+      &quot;provider&quot;: &quot;manual&quot;,
+      &quot;registeredAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;registeredBy&quot;: &quot;example&quot;,
+      &quot;state&quot;: &quot;registered&quot;,
+      &quot;warnings&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;admittedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;admittedBy&quot;: &quot;example&quot;,
+      &quot;approvalExpiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;approvedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;approvedBy&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1machines"><code>POST /api/v1/machines</code></h3>
+<p>Registers a machine. A name that is already an eligible member is adopted as admitted.</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>; audited.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>description</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>The name it will have as a cluster member.</td></tr><tr><td><code>provider</code></td><td>one of several</td><td>no</td><td>—</td></tr><tr><td><code>systemId</code></td><td>string</td><td>no</td><td>For a <code>maas</code> machine: its MAAS system id (from <code>GET /api/v1/provisioners/maas/machines</code>).</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/machines&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;capabilities&quot;: {
+    &quot;discovers&quot;: false,
+    &quot;installs&quot;: false,
+    &quot;powers&quot;: false
+  },
+  &quot;description&quot;: &quot;A description&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;nextStep&quot;: &quot;example&quot;,
+  &quot;provider&quot;: &quot;manual&quot;,
+  &quot;registeredAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;registeredBy&quot;: &quot;example&quot;,
+  &quot;state&quot;: &quot;registered&quot;,
+  &quot;warnings&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;admittedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;admittedBy&quot;: &quot;example&quot;,
+  &quot;approvalExpiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;approvedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;approvedBy&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1machinesname"><code>DELETE /api/v1/machines/{name}</code></h3>
+<p>Forgets a machine that is not a cluster member (revoking an unused join token).</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Machine name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/machines/shop&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1machinesnameadmission"><code>GET /api/v1/machines/{name}/admission</code></h3>
+<p>The admission checks for a joined machine (dry run; changes nothing).</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Machine name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/machines/shop/admission&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;admissible&quot;: false,
+  &quot;checks&quot;: [
+    {
+      &quot;detail&quot;: &quot;example&quot;,
+      &quot;id&quot;: &quot;example&quot;,
+      &quot;status&quot;: &quot;pass&quot;,
+      &quot;title&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1machinesnameadmit"><code>POST /api/v1/machines/{name}/admit</code></h3>
+<p>Admits a joined machine: re-runs the admission checks and, when none fails, lets Incus place instances on it.</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Machine name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/machines/shop/admit&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;admissible&quot;: false,
+  &quot;checks&quot;: [
+    {
+      &quot;detail&quot;: &quot;example&quot;,
+      &quot;id&quot;: &quot;example&quot;,
+      &quot;status&quot;: &quot;pass&quot;,
+      &quot;title&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1machinesnameapproval"><code>DELETE /api/v1/machines/{name}/approval</code></h3>
+<p>Withdraws an approval: revokes the machine's unused join token.</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Machine name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/machines/shop/approval&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1machinesnameapprove"><code>POST /api/v1/machines/{name}/approve</code></h3>
+<p>Approves a machine: asks Incus for its single-use join token, returned only in this response with the command to run on the server.</p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>; audited without the token.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Machine name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/machines/shop/approve&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;enrolCommand&quot;: &quot;example&quot;,
+  &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;token&quot;: &quot;&lt;redacted&gt;&quot;,
+  &quot;warnings&quot;: [
+    &quot;example&quot;
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1provisionersmaasmachines"><code>GET /api/v1/provisioners/maas/machines</code></h3>
+<p>The machines MAAS manages, with the Apelora machine and Incus member each became. Read-only: MAAS is asked to list, nothing else.</p>
+<p><strong>Needs:</strong> <code>cluster.view</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/provisioners/maas/machines&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;configured&quot;: false,
+  &quot;items&quot;: [
+    {
+      &quot;addresses&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;architecture&quot;: &quot;example&quot;,
+      &quot;cpuCount&quot;: 0,
+      &quot;hostname&quot;: &quot;example&quot;,
+      &quot;memoryMib&quot;: 0,
+      &quot;os&quot;: &quot;example&quot;,
+      &quot;pool&quot;: &quot;example&quot;,
+      &quot;powerState&quot;: &quot;example&quot;,
+      &quot;powerType&quot;: &quot;example&quot;,
+      &quot;status&quot;: &quot;example&quot;,
+      &quot;systemId&quot;: &quot;example&quot;,
+      &quot;zone&quot;: &quot;example&quot;,
+      &quot;hardwareUuid&quot;: &quot;example&quot;,
+      &quot;memberStatus&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/applications/"><span>Previous</span>Applications</a><a class="next" href="/docs/api/administration/"><span>Next</span>Administration</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#get-apiv1clustergroups">GET /api/v1/cluster/groups</a></li><li class="l3"><a href="#get-apiv1clusterjoin-tokens">GET /api/v1/cluster/join-tokens</a></li><li class="l3"><a href="#post-apiv1clusterjoin-tokens">POST /api/v1/cluster/join-tokens</a></li><li class="l3"><a href="#delete-apiv1clusterjoin-tokensmember">DELETE /api/v1/cluster/join-tokens/{member}</a></li><li class="l3"><a href="#get-apiv1clustermembers">GET /api/v1/cluster/members</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberevacuate">POST /api/v1/cluster/members/{member}/evacuate</a></li><li class="l3"><a href="#get-apiv1clustermembersmemberevacuation">GET /api/v1/cluster/members/{member}/evacuation</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberfencing">POST /api/v1/cluster/members/{member}/fencing</a></li><li class="l3"><a href="#get-apiv1clustermembersmemberremoval">GET /api/v1/cluster/members/{member}/removal</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberremove">POST /api/v1/cluster/members/{member}/remove</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberrestore">POST /api/v1/cluster/members/{member}/restore</a></li><li class="l3"><a href="#get-apiv1clusterrecovery">GET /api/v1/cluster/recovery</a></li><li class="l3"><a href="#get-apiv1clustersettings">GET /api/v1/cluster/settings</a></li><li class="l3"><a href="#patch-apiv1clustersettings">PATCH /api/v1/cluster/settings</a></li><li class="l3"><a href="#get-apiv1machines">GET /api/v1/machines</a></li><li class="l3"><a href="#post-apiv1machines">POST /api/v1/machines</a></li><li class="l3"><a href="#delete-apiv1machinesname">DELETE /api/v1/machines/{name}</a></li><li class="l3"><a href="#get-apiv1machinesnameadmission">GET /api/v1/machines/{name}/admission</a></li><li class="l3"><a href="#post-apiv1machinesnameadmit">POST /api/v1/machines/{name}/admit</a></li><li class="l3"><a href="#delete-apiv1machinesnameapproval">DELETE /api/v1/machines/{name}/approval</a></li><li class="l3"><a href="#post-apiv1machinesnameapprove">POST /api/v1/machines/{name}/approve</a></li><li class="l3"><a href="#get-apiv1provisionersmaasmachines">GET /api/v1/provisioners/maas/machines</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

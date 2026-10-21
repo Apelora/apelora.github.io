@@ -2,7 +2,7 @@
 title: When something goes wrong
 section: start
 slug: when-something-goes-wrong
-order: 7
+order: 9
 label: When something goes wrong
 summary: Where to look first, and which runbook to open for a failed server, lost quorum, a failing replica, storage, certificates or a security incident.
 ---

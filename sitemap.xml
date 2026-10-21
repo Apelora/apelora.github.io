@@ -3,6 +3,18 @@
   <url><loc>https://apelora.github.io/</loc></url>
   <url><loc>https://apelora.github.io/contact/</loc></url>
   <url><loc>https://apelora.github.io/docs/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/administration/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/alerts/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/applications/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/audit/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/cluster/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/deployment/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/identity/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/inventory/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/overview/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/sessions/</loc></url>
+  <url><loc>https://apelora.github.io/docs/api/system/</loc></url>
   <url><loc>https://apelora.github.io/docs/concepts/</loc></url>
   <url><loc>https://apelora.github.io/docs/concepts/access-and-roles/</loc></url>
   <url><loc>https://apelora.github.io/docs/concepts/cloud-roadmap/</loc></url>
@@ -61,10 +73,10 @@
   <url><loc>https://apelora.github.io/docs/guides/terminal-sessions/</loc></url>
   <url><loc>https://apelora.github.io/docs/guides/testing-without-hardware/</loc></url>
   <url><loc>https://apelora.github.io/docs/reference/</loc></url>
-  <url><loc>https://apelora.github.io/docs/reference/api/</loc></url>
   <url><loc>https://apelora.github.io/docs/reference/current-state/</loc></url>
   <url><loc>https://apelora.github.io/docs/reference/module-catalog/</loc></url>
   <url><loc>https://apelora.github.io/docs/reference/module-ports/</loc></url>
+  <url><loc>https://apelora.github.io/docs/reference/settings/</loc></url>
   <url><loc>https://apelora.github.io/docs/runbooks/</loc></url>
   <url><loc>https://apelora.github.io/docs/runbooks/access-revocation/</loc></url>
   <url><loc>https://apelora.github.io/docs/runbooks/alerts/</loc></url>
@@ -91,8 +103,10 @@
   <url><loc>https://apelora.github.io/docs/start/</loc></url>
   <url><loc>https://apelora.github.io/docs/start/deploy-it/</loc></url>
   <url><loc>https://apelora.github.io/docs/start/design-your-first-application/</loc></url>
+  <url><loc>https://apelora.github.io/docs/start/install-incus/</loc></url>
   <url><loc>https://apelora.github.io/docs/start/install-on-your-servers/</loc></url>
   <url><loc>https://apelora.github.io/docs/start/manage-it/</loc></url>
+  <url><loc>https://apelora.github.io/docs/start/servers-and-network/</loc></url>
   <url><loc>https://apelora.github.io/docs/start/sign-in/</loc></url>
   <url><loc>https://apelora.github.io/docs/start/try-it-on-your-workstation/</loc></url>
   <url><loc>https://apelora.github.io/docs/start/what-you-need/</loc></url>

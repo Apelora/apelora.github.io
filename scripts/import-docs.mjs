@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, rmSync
 import { join, dirname, basename, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
+import { apiPages } from "./lib/api-docs.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const repo = resolve(process.argv[2] ?? join(root, "../apelora-fabric"));
@@ -28,7 +29,9 @@ let count = 0;
 
 for (const [section, list] of Object.entries(config.imports)) {
   mkdirSync(join(out, section), { recursive: true });
-  list.forEach((src, order) => {
+  list.forEach((entry, index) => {
+    const src = typeof entry === "string" ? entry : entry.src;
+    const order = typeof entry === "string" ? index : entry.order;
     const file = join(repo, "docs", `${src}.md`);
     if (!existsSync(file)) throw new Error(`missing ${file}`);
     const md = readFileSync(file, "utf8").replace(/\r\n?/g, "\n");
@@ -51,32 +54,42 @@ for (const [section, list] of Object.entries(config.imports)) {
 }
 
 for (const n of config.extraImages ?? []) images.add(join(repo, "docs/screenshots", `${n}.png`));
-// API reference, generated from the control plane's OpenAPI document
+
+// Facts the site states about the product, read from where they live so that no page repeats a number by hand.
+// Pages and documents write {{fact:name}} (or {{fact:name|cap}} to capitalise); build.mjs fills them in.
+{
+  const read = (f) => readFileSync(join(repo, f), "utf8");
+  const words = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
+  const nameOf = Object.fromEntries(Object.entries(words).map(([w, n]) => [n, w]));
+  const catalog = read("docs/architecture/CATALOG.md");
+  const [, modules, categories] = catalog.match(/(\d+) modules in (\d+) categories/);
+  const [, deployable] = catalog.match(/(\d+) of \d+ classes have an Incus runtime/);
+  // The number of built-in alert rules: the crate's own test asserts `RULES.len()` against this literal.
+  const alertRules = Number(read("crates/domain/src/alerts.rs").match(/RULES\.len\(\),\s*(\d+)\)/)[1]);
+  const api = JSON.parse(read("packages/api-client/openapi.json"));
+  const apiOperations = Object.values(api.paths).reduce((n, ops) => n + Object.keys(ops).filter((m) => ["get", "post", "put", "patch", "delete"].includes(m)).length, 0);
+  const lock = read("upstream.lock.yaml");
+  const incusSeries = lock.match(/series:\s*"?([\d.]+)"?/)[1];
+  const state = read("docs/architecture/current-state.md");
+  const labWord = state.match(/\b(two|three|four|five|six)-member/)[1];
+  const f = {
+    modules, categories, deployable, deployableWord: nameOf[deployable] ?? deployable, alertRules, apiOperations,
+    apiOperationsFloor: Math.floor(apiOperations / 10) * 10, apiGroups: new Set(Object.values(api.paths).flatMap((ops) => Object.values(ops).map((o) => o?.tags?.[0]).filter(Boolean))).size, incusSeries, labServers: words[labWord], labServersWord: labWord,
+  };
+  writeFileSync(join(root, "content/facts.json"), JSON.stringify(f, null, 2) + "\n");
+  console.log("facts:", JSON.stringify(f));
+}
+
+// API reference: one page per area, every operation with its parameters, an example body and response and a curl command,
+// generated from the control plane's OpenAPI document
 {
   const api = JSON.parse(readFileSync(join(repo, "packages/api-client/openapi.json"), "utf8"));
-  const tags = (api.tags ?? []).map((t) => t.name);
-  const byTag = new Map(tags.map((t) => [t, []]));
-  for (const [path, ops] of Object.entries(api.paths)) {
-    for (const [method, op] of Object.entries(ops)) {
-      if (!["get", "post", "put", "patch", "delete"].includes(method)) continue;
-      const tag = op.tags?.[0] ?? "other";
-      if (!byTag.has(tag)) byTag.set(tag, []);
-      const first = (op.summary ?? "").replace(/\s+/g, " ").trim().replace(/^(.+?[.!?])\s.*$/, "$1");
-      byTag.get(tag).push({ method: method.toUpperCase(), path, text: first === "Public." ? "Public: no sign-in needed." : first });
-    }
+  mkdirSync(join(out, "api"), { recursive: true });
+  for (const page of apiPages(api, config.apiTags ?? {})) {
+    const fm = ["---", `title: ${page.title}`, "section: api", `slug: ${page.tag}`, `order: ${page.order}`, `label: ${page.label}`, "source: packages/api-client/openapi.json", `summary: ${page.summary}`, "---", ""].join("\n");
+    writeFileSync(join(out, "api", `${page.tag}.md`), fm + page.md);
+    count++;
   }
-  const esc = (t) => t.replace(/\|/g, "\\|");
-  const total = [...byTag.values()].reduce((n, l) => n + l.length, 0);
-  let md = `The control plane's REST API, version \`${api.info.version}\`: ${total} operations. Calls are made with a bearer token (an API token or an identity provider's access token) and checked against the caller's permissions; a few, such as health and sign-in, are public. The complete machine-readable description, with request and response shapes, is the OpenAPI document \`packages/api-client/openapi.json\` in the repository; \`apelora-control-plane openapi\` prints it. This page is generated from it.\n\n`;
-  for (const [tag, ops] of byTag) {
-    if (!ops.length) continue;
-    md += `## ${tag[0].toUpperCase()}${tag.slice(1)}\n\n| Method | Path | What it does |\n|---|---|---|\n`;
-    for (const o of ops.sort((a, b) => a.path.localeCompare(b.path) || a.method.localeCompare(b.method))) md += `| \`${o.method}\` | \`${o.path}\` | ${esc(o.text)} |\n`;
-    md += "\n";
-  }
-  const fm = ["---", "title: API reference", "section: reference", "slug: api", "order: 3", "label: API reference", "source: packages/api-client/openapi.json", `summary: Every operation of the control plane's REST API, by area. Generated from its OpenAPI document.`, "---", ""].join("\n");
-  writeFileSync(join(out, "reference", "api.md"), fm + md);
-  count++;
 }
 // images: screenshots to WebP (at most 1440 px wide), diagrams copied
 mkdirSync(join(root, "assets/docs/img"), { recursive: true });

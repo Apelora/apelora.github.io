@@ -2,7 +2,7 @@
 title: Deploy it
 section: start
 slug: deploy-it
-order: 5
+order: 7
 label: Deploy it
 summary: Publish a version, deploy it from the Applications list, review exactly what will change, and watch the application come up.
 ---

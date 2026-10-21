@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory API · API · Apelora</title>
+  <meta name="description" content="Servers, instances, networks, storage, jobs and preflight. Apelora Fabric documentation and website.">
+  <link rel="canonical" href="https://apelora.github.io/docs/api/inventory/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Inventory API · API · Apelora">
+  <meta property="og:description" content="Servers, instances, networks, storage, jobs and preflight. Apelora Fabric documentation and website.">
+  <meta property="og:url" content="https://apelora.github.io/docs/api/inventory/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/servers-and-network/">Servers and network</a></li><li><a href="/docs/start/install-incus/">Install Incus</a></li><li><a href="/docs/start/install-on-your-servers/">Install Apelora</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group" open><summary>API<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/api/overview/">Overview</a></li><li><a href="/docs/api/system/">System</a></li><li><a href="/docs/api/inventory/" aria-current="page">Inventory</a></li><li><a href="/docs/api/deployment/">Deployment</a></li><li><a href="/docs/api/applications/">Applications</a></li><li><a href="/docs/api/cluster/">Cluster</a></li><li><a href="/docs/api/administration/">Administration</a></li><li><a href="/docs/api/audit/">Audit</a></li><li><a href="/docs/api/identity/">Identity and access</a></li><li><a href="/docs/api/sessions/">Sessions</a></li><li><a href="/docs/api/alerts/">Alerts</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/settings/">Settings reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li><li><a href="/docs/decisions/0015-application-lifecycle-verbs/">0015 · Application lifecycle verbs: Shut down, Stop, and Migrate</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/api/">API</a></nav>
+        <h1>Inventory API</h1>
+        <div class="prose">
+<p>What exists in the cluster, as Incus reports it: instances, networks, storage pools, jobs, preflight and capacity. This page documents all 14 operations, each with a request you can copy. Set <code>APELORA_URL</code> and <code>APELORA_TOKEN</code> as described in <a href="/docs/api/overview/">the API overview</a>.</p>
+<h2 id="operations">Operations</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#get-apiv1capacity">undefined</a></td><td>How much CPU, memory and volume space the cluster has free, per server and in total, for comparing with a design.</td></tr><tr><td><a href="#get-apiv1cluster">undefined</a></td><td>The Incus server and its cluster members.</td></tr><tr><td><a href="#get-apiv1instances">undefined</a></td><td>Instances in all projects.</td></tr><tr><td><a href="#get-apiv1instancesprojectname">undefined</a></td><td>The instance with the application it belongs to, its recent jobs, and what the caller may do (Start, Stop, Restart, Move and Delete go through the existing instance routes and jobs).</td></tr><tr><td><a href="#get-apiv1instancesprojectnameconsole-log">undefined</a></td><td>The end of the instance's console log (<code>tailKib</code>, default 64, at most 1024).</td></tr><tr><td><a href="#get-apiv1instancesprojectnamelogs">undefined</a></td><td>The instance's log files as Incus lists them (names only).</td></tr><tr><td><a href="#get-apiv1instancesprojectnamelogsfile">undefined</a></td><td>The end of one of the instance's log files (<code>tailKib</code>, default 64, at most 1024).</td></tr><tr><td><a href="#get-apiv1networks">undefined</a></td><td>Networks in all projects.</td></tr><tr><td><a href="#get-apiv1networkssettings">undefined</a></td><td>The network settings in effect: Apelora's uplink and service range, each deploy project's network limits, and the uplink as Incus reports it (with the administrator identity, when configured), with what does not fit together.</td></tr><tr><td><a href="#get-apiv1preflight">undefined</a></td><td>Read-only readiness checks of the Incus server or cluster, of the projects Apelora deploys into, and of the image mirrors (whether each image server the catalog uses is mirrored and whether the mirrors answer).</td></tr><tr><td><a href="#get-apiv1projects">undefined</a></td><td>Incus projects.</td></tr><tr><td><a href="#get-apiv1storage-pools">undefined</a></td><td>Storage pools.</td></tr><tr><td><a href="#get-apiv1storageorphans">undefined</a></td><td>Custom volumes in Apelora's projects that no application volume or backup record refers to, in every pool, with their size.</td></tr><tr><td><a href="#get-apiv1storagepools">undefined</a></td><td>Storage pools with how full each is, per member and in total (read from each member's state, like the Health page).</td></tr></tbody></table></div>
+<h2 id="details">Details</h2>
+<h3 id="get-apiv1capacity"><code>GET /api/v1/capacity</code></h3>
+<p>How much CPU, memory and volume space the cluster has free, per server and in total, for comparing with a design. Read-only. With <code>cluster.view</code> servers are named; with <code>capacity.view</code> (held by designers and operators at any scope) they are numbered.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/capacity&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;named&quot;: false,
+  &quot;servers&quot;: [
+    {
+      &quot;acceptsModules&quot;: false,
+      &quot;architecture&quot;: &quot;example&quot;,
+      &quot;label&quot;: &quot;example&quot;,
+      &quot;cpuThreads&quot;: 0,
+      &quot;load&quot;: 1,
+      &quot;memory&quot;: {
+        &quot;totalBytes&quot;: 0,
+        &quot;usedBytes&quot;: 0
+      },
+      &quot;reason&quot;: &quot;example&quot;,
+      &quot;volumePool&quot;: {
+        &quot;totalBytes&quot;: 0,
+        &quot;usedBytes&quot;: 0
+      }
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  },
+  &quot;totals&quot;: {
+    &quot;cpuThreads&quot;: 0,
+    &quot;memoryFreeBytes&quot;: 0,
+    &quot;memoryTotalBytes&quot;: 0,
+    &quot;serversAccepting&quot;: 0,
+    &quot;volumePoolFreeBytes&quot;: 0
+  },
+  &quot;volumePoolShared&quot;: false,
+  &quot;volumePool&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1cluster"><code>GET /api/v1/cluster</code></h3>
+<p>The Incus server and its cluster members.</p>
+<p><strong>Needs:</strong> <code>read-inventory</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;members&quot;: [
+    {
+      &quot;architecture&quot;: &quot;example&quot;,
+      &quot;database&quot;: false,
+      &quot;failureDomain&quot;: &quot;example&quot;,
+      &quot;groups&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;message&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;roles&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;status&quot;: &quot;example&quot;,
+      &quot;url&quot;: &quot;https://example.org&quot;,
+      &quot;scheduler&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;server&quot;: {
+    &quot;apiExtensions&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;apiVersion&quot;: &quot;example&quot;,
+    &quot;auth&quot;: &quot;example&quot;,
+    &quot;clustered&quot;: false,
+    &quot;kernelVersion&quot;: &quot;example&quot;,
+    &quot;serverVersion&quot;: &quot;example&quot;,
+    &quot;architectures&quot;: [
+      &quot;example&quot;
+    ]
+  },
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1instances"><code>GET /api/v1/instances</code></h3>
+<p>Instances in all projects.</p>
+<p><strong>Needs:</strong> <code>read-inventory</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/instances&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;architecture&quot;: &quot;example&quot;,
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;kind&quot;: &quot;container&quot;,
+      &quot;location&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;project&quot;: &quot;apelora&quot;,
+      &quot;status&quot;: &quot;example&quot;,
+      &quot;evacuate&quot;: &quot;example&quot;,
+      &quot;limits&quot;: {
+        &quot;key&quot;: &quot;example&quot;
+      },
+      &quot;managed&quot;: false,
+      &quot;owner&quot;: {
+        &quot;application&quot;: &quot;example&quot;,
+        &quot;module&quot;: &quot;example&quot;,
+        &quot;replica&quot;: 0
+      },
+      &quot;unreachable&quot;: false
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1instancesprojectname"><code>GET /api/v1/instances/{project}/{name}</code></h3>
+<p>The instance with the application it belongs to, its recent jobs, and what the caller may do (Start, Stop, Restart, Move and Delete go through the existing instance routes and jobs).</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string</td><td>yes</td><td>Incus project.</td></tr><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Instance name.</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/instances/apelora/shop&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;actions&quot;: {
+    &quot;delete&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;logs&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;move&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;restart&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;start&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;stop&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    }
+  },
+  &quot;instance&quot;: {
+    &quot;addresses&quot;: [
+      {
+        &quot;address&quot;: &quot;example&quot;,
+        &quot;family&quot;: &quot;example&quot;,
+        &quot;interface&quot;: &quot;example&quot;,
+        &quot;netmask&quot;: &quot;example&quot;,
+        &quot;scope&quot;: &quot;example&quot;
+      }
+    ],
+    &quot;architecture&quot;: &quot;example&quot;,
+    &quot;description&quot;: &quot;A description&quot;,
+    &quot;disks&quot;: [
+      {
+        &quot;device&quot;: &quot;example&quot;,
+        &quot;path&quot;: &quot;example&quot;,
+        &quot;pool&quot;: &quot;example&quot;,
+        &quot;size&quot;: &quot;example&quot;,
+        &quot;volume&quot;: &quot;example&quot;
+      }
+    ],
+    &quot;image&quot;: {
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;fingerprint&quot;: &quot;example&quot;,
+      &quot;os&quot;: &quot;example&quot;,
+      &quot;release&quot;: &quot;example&quot;
+    },
+    &quot;kind&quot;: &quot;container&quot;,
+    &quot;limits&quot;: {
+      &quot;cpu&quot;: &quot;example&quot;,
+      &quot;memory&quot;: &quot;example&quot;,
+      &quot;rootDisk&quot;: &quot;example&quot;
+    },
+    &quot;location&quot;: &quot;example&quot;,
+    &quot;managed&quot;: false,
+    &quot;name&quot;: &quot;example&quot;,
+    &quot;profiles&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;project&quot;: &quot;apelora&quot;,
+    &quot;snapshots&quot;: [
+      {
+        &quot;name&quot;: &quot;example&quot;,
+  …</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1instancesprojectnameconsole-log"><code>GET /api/v1/instances/{project}/{name}/console-log</code></h3>
+<p>The end of the instance's console log (<code>tailKib</code>, default 64, at most 1024).</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string</td><td>yes</td><td>Incus project.</td></tr><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Instance name.</td></tr><tr><td><code>tailKib</code></td><td>query</td><td>integer</td><td>no</td><td>How many KiB from the end of the log (1–1024, default 64).</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/instances/apelora/shop/console-log&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;file&quot;: &quot;example&quot;,
+  &quot;log&quot;: {
+    &quot;content&quot;: &quot;example&quot;,
+    &quot;size&quot;: 0,
+    &quot;truncated&quot;: false
+  },
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  },
+  &quot;tailKib&quot;: 0
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1instancesprojectnamelogs"><code>GET /api/v1/instances/{project}/{name}/logs</code></h3>
+<p>The instance's log files as Incus lists them (names only).</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string</td><td>yes</td><td>Incus project.</td></tr><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Instance name.</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/instances/apelora/shop/logs&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;files&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1instancesprojectnamelogsfile"><code>GET /api/v1/instances/{project}/{name}/logs/{file}</code></h3>
+<p>The end of one of the instance's log files (<code>tailKib</code>, default 64, at most 1024).</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string</td><td>yes</td><td>Incus project.</td></tr><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Instance name.</td></tr><tr><td><code>file</code></td><td>path</td><td>string</td><td>yes</td><td>Log file name, as listed.</td></tr><tr><td><code>tailKib</code></td><td>query</td><td>integer</td><td>no</td><td>How many KiB from the end of the log (1–1024, default 64).</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/instances/apelora/shop/logs/example&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;file&quot;: &quot;example&quot;,
+  &quot;log&quot;: {
+    &quot;content&quot;: &quot;example&quot;,
+    &quot;size&quot;: 0,
+    &quot;truncated&quot;: false
+  },
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  },
+  &quot;tailKib&quot;: 0
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1networks"><code>GET /api/v1/networks</code></h3>
+<p>Networks in all projects.</p>
+<p><strong>Needs:</strong> <code>read-inventory</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/networks&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;kind&quot;: &quot;example&quot;,
+      &quot;managed&quot;: false,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;project&quot;: &quot;apelora&quot;,
+      &quot;status&quot;: &quot;example&quot;,
+      &quot;locations&quot;: [
+        &quot;example&quot;
+      ]
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1networkssettings"><code>GET /api/v1/networks/settings</code></h3>
+<p>The network settings in effect: Apelora's uplink and service range, each deploy project's network limits, and the uplink as Incus reports it (with the administrator identity, when configured), with what does not fit together. Read-only.</p>
+<p><strong>Needs:</strong> <code>cluster.view</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/networks/settings&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;findings&quot;: [
+    {
+      &quot;message&quot;: &quot;example&quot;,
+      &quot;severity&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;projects&quot;: [
+    {
+      &quot;found&quot;: false,
+      &quot;ownNetworks&quot;: false,
+      &quot;project&quot;: &quot;apelora&quot;,
+      &quot;restricted&quot;: false,
+      &quot;subnets&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;uplinks&quot;: [
+        &quot;example&quot;
+      ]
+    }
+  ],
+  &quot;serviceAddressesUsed&quot;: 1,
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  },
+  &quot;serviceAddressesTotal&quot;: 0,
+  &quot;serviceRange&quot;: &quot;example&quot;,
+  &quot;uplink&quot;: &quot;example&quot;,
+  &quot;uplinkNote&quot;: &quot;example&quot;,
+  &quot;uplinkObserved&quot;: {
+    &quot;ipv4Routes&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;kind&quot;: &quot;example&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+    &quot;ovnRanges&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;status&quot;: &quot;example&quot;,
+    &quot;ipv4Address&quot;: &quot;example&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1preflight"><code>GET /api/v1/preflight</code></h3>
+<p>Read-only readiness checks of the Incus server or cluster, of the projects Apelora deploys into, and of the image mirrors (whether each image server the catalog uses is mirrored and whether the mirrors answer). Changes nothing.</p>
+<p><strong>Needs:</strong> <code>read-inventory</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/preflight&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;checks&quot;: [
+    {
+      &quot;detail&quot;: &quot;example&quot;,
+      &quot;id&quot;: &quot;example&quot;,
+      &quot;status&quot;: &quot;pass&quot;,
+      &quot;title&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;overall&quot;: &quot;pass&quot;,
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1projects"><code>GET /api/v1/projects</code></h3>
+<p>Incus projects.</p>
+<p><strong>Needs:</strong> <code>read-inventory</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/projects&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;restricted&quot;: false
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1storage-pools"><code>GET /api/v1/storage-pools</code></h3>
+<p>Storage pools.</p>
+<p><strong>Needs:</strong> <code>read-inventory</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/storage-pools&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;driver&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;status&quot;: &quot;example&quot;,
+      &quot;locations&quot;: [
+        &quot;example&quot;
+      ]
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1storageorphans"><code>GET /api/v1/storage/orphans</code></h3>
+<p>Custom volumes in Apelora's projects that no application volume or backup record refers to, in every pool, with their size. Read-only: deleting one is a decision made in Incus or, for a kept application volume, on the application.</p>
+<p><strong>Needs:</strong> <code>cluster.view</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/storage/orphans&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;content&quot;: &quot;example&quot;,
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;member&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;pool&quot;: &quot;example&quot;,
+      &quot;project&quot;: &quot;apelora&quot;,
+      &quot;reason&quot;: &quot;example&quot;,
+      &quot;usedBy&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;application&quot;: &quot;example&quot;,
+      &quot;backupOf&quot;: &quot;example&quot;,
+      &quot;sizeMib&quot;: 0
+    }
+  ],
+  &quot;projects&quot;: [
+    &quot;apelora&quot;
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1storagepools"><code>GET /api/v1/storage/pools</code></h3>
+<p>Storage pools with how full each is, per member and in total (read from each member's state, like the Health page). Read-only.</p>
+<p><strong>Needs:</strong> <code>cluster.view</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/storage/pools&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;driver&quot;: &quot;example&quot;,
+      &quot;members&quot;: [
+        {
+          &quot;member&quot;: &quot;example&quot;,
+          &quot;totalBytes&quot;: 0,
+          &quot;usedBytes&quot;: 0
+        }
+      ],
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;shared&quot;: false,
+      &quot;status&quot;: &quot;example&quot;,
+      &quot;unreadable&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;role&quot;: &quot;example&quot;,
+      &quot;total&quot;: {
+        &quot;totalBytes&quot;: 0,
+        &quot;usedBytes&quot;: 0
+      }
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  },
+  &quot;backupPool&quot;: &quot;example&quot;,
+  &quot;volumePool&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/system/"><span>Previous</span>System</a><a class="next" href="/docs/api/deployment/"><span>Next</span>Deployment</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#get-apiv1capacity">GET /api/v1/capacity</a></li><li class="l3"><a href="#get-apiv1cluster">GET /api/v1/cluster</a></li><li class="l3"><a href="#get-apiv1instances">GET /api/v1/instances</a></li><li class="l3"><a href="#get-apiv1instancesprojectname">GET /api/v1/instances/{project}/{name}</a></li><li class="l3"><a href="#get-apiv1instancesprojectnameconsole-log">GET /api/v1/instances/{project}/{name}/console-log</a></li><li class="l3"><a href="#get-apiv1instancesprojectnamelogs">GET /api/v1/instances/{project}/{name}/logs</a></li><li class="l3"><a href="#get-apiv1instancesprojectnamelogsfile">GET /api/v1/instances/{project}/{name}/logs/{file}</a></li><li class="l3"><a href="#get-apiv1networks">GET /api/v1/networks</a></li><li class="l3"><a href="#get-apiv1networkssettings">GET /api/v1/networks/settings</a></li><li class="l3"><a href="#get-apiv1preflight">GET /api/v1/preflight</a></li><li class="l3"><a href="#get-apiv1projects">GET /api/v1/projects</a></li><li class="l3"><a href="#get-apiv1storage-pools">GET /api/v1/storage-pools</a></li><li class="l3"><a href="#get-apiv1storageorphans">GET /api/v1/storage/orphans</a></li><li class="l3"><a href="#get-apiv1storagepools">GET /api/v1/storage/pools</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

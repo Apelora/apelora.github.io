@@ -1,0 +1,1776 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Identity and access API · API · Apelora</title>
+  <meta name="description" content="People, groups, roles, scopes, approvals, tokens and sign-in.">
+  <link rel="canonical" href="https://apelora.github.io/docs/api/identity/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Identity and access API · API · Apelora">
+  <meta property="og:description" content="People, groups, roles, scopes, approvals, tokens and sign-in.">
+  <meta property="og:url" content="https://apelora.github.io/docs/api/identity/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/servers-and-network/">Servers and network</a></li><li><a href="/docs/start/install-incus/">Install Incus</a></li><li><a href="/docs/start/install-on-your-servers/">Install Apelora</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group" open><summary>API<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/api/overview/">Overview</a></li><li><a href="/docs/api/system/">System</a></li><li><a href="/docs/api/inventory/">Inventory</a></li><li><a href="/docs/api/deployment/">Deployment</a></li><li><a href="/docs/api/applications/">Applications</a></li><li><a href="/docs/api/cluster/">Cluster</a></li><li><a href="/docs/api/administration/">Administration</a></li><li><a href="/docs/api/audit/">Audit</a></li><li><a href="/docs/api/identity/" aria-current="page">Identity and access</a></li><li><a href="/docs/api/sessions/">Sessions</a></li><li><a href="/docs/api/alerts/">Alerts</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/settings/">Settings reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li><li><a href="/docs/decisions/0015-application-lifecycle-verbs/">0015 · Application lifecycle verbs: Shut down, Stop, and Migrate</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/api/">API</a></nav>
+        <h1>Identity and access API</h1>
+        <div class="prose">
+<p>Identity and access: organisations, projects, people, groups, roles and assignments, approvals, service identities, tokens and sign-in methods. This page documents all 65 operations, each with a request you can copy. Set <code>APELORA_URL</code> and <code>APELORA_TOKEN</code> as described in <a href="/docs/api/overview/">the API overview</a>.</p>
+<h2 id="operations">Operations</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#get-apiv1approvals">undefined</a></td><td>Requests and approvals: your own, plus every open one if you may approve.</td></tr><tr><td><a href="#post-apiv1approvals">undefined</a></td><td>Asks for approval of one risky action on one target.</td></tr><tr><td><a href="#post-apiv1approvalsidapprove">undefined</a></td><td>Approves a request made by someone else.</td></tr><tr><td><a href="#post-apiv1approvalsidcancel">undefined</a></td><td>Withdraws your own pending request.</td></tr><tr><td><a href="#post-apiv1approvalsidreject">undefined</a></td><td>Rejects a request.</td></tr><tr><td><a href="#get-apiv1identityassignments">undefined</a></td><td>Role assignments in the caller's scopes.</td></tr><tr><td><a href="#post-apiv1identityassignments">undefined</a></td><td>Grants a role to a person, group or automation identity at a scope.</td></tr><tr><td><a href="#delete-apiv1identityassignmentsassignment">undefined</a></td><td>Revokes an assignment; the person loses it on their next request.</td></tr><tr><td><a href="#post-apiv1identityassignmentspreview">undefined</a></td><td>Shows what an assignment would give before it is saved: what the person can already do at the scope, what they could do afterwards, which permissions would be inert, and whether you may save it.</td></tr><tr><td><a href="#get-apiv1identityaudit">undefined</a></td><td>Audit history the caller may read: the same filters and paging as <code>GET /api/v1/audit</code>.</td></tr><tr><td><a href="#post-apiv1identityemergency-access">undefined</a></td><td>Grants a person a platform role for a short time, with a recorded reason (break-glass).</td></tr><tr><td><a href="#post-apiv1identityenvironmentsidincus-project">undefined</a></td><td>Creates or adopts the environment's Incus project now (idempotent): the restricted project with its default profile, granted to the deploy identity, then the quotas mirrored.</td></tr><tr><td><a href="#get-apiv1identitygroups">undefined</a></td><td>Groups the caller may see.</td></tr><tr><td><a href="#post-apiv1identitygroups">undefined</a></td><td>Creates a group: an organisation's (needs <code>group.manage</code> there) or a platform group (platform <code>group.manage</code>).</td></tr><tr><td><a href="#get-apiv1identitygroupsgroupmembers">undefined</a></td><td>Members of a group.</td></tr><tr><td><a href="#put-apiv1identitygroupsgroupmembersuser">undefined</a></td><td>Adds a person to a group.</td></tr><tr><td><a href="#delete-apiv1identitygroupsgroupmembersuser">undefined</a></td><td>Removes a person from a group; their access through it ends on their next request.</td></tr><tr><td><a href="#post-apiv1identitylocal-accounts">undefined</a></td><td>Creates a local account and returns its one-time setup link, valid for 24 hours.</td></tr><tr><td><a href="#post-apiv1identitylocal-accountsidreset">undefined</a></td><td>Takes a local account's password away, revokes every session of theirs and returns a new one-time setup link (24 hours).</td></tr><tr><td><a href="#get-apiv1identityorganizations">undefined</a></td><td>Organisations the caller may see.</td></tr><tr><td><a href="#post-apiv1identityorganizations">undefined</a></td><td>Creates an organisation.</td></tr><tr><td><a href="#post-apiv1identityorganizationsorgprojects">undefined</a></td><td>Creates a project in an organisation.</td></tr><tr><td><a href="#get-apiv1identitypermissions">undefined</a></td><td>Every permission, its class and the narrowest scope at which a grant takes effect.</td></tr><tr><td><a href="#get-apiv1identitypersonal-tokens">undefined</a></td><td>Everyone's personal tokens (or one person's), live ones and those that ended in the last 30 days.</td></tr><tr><td><a href="#delete-apiv1identitypersonal-tokensid">undefined</a></td><td>Revokes anyone's live personal token.</td></tr><tr><td><a href="#get-apiv1identitypolicies">undefined</a></td><td>Access policies (MFA and approval rules).</td></tr><tr><td><a href="#put-apiv1identitypolicies">undefined</a></td><td>Creates or updates a policy by name.</td></tr><tr><td><a href="#delete-apiv1identitypoliciesid">undefined</a></td><td>Deletes a policy.</td></tr><tr><td><a href="#get-apiv1identityprojects">undefined</a></td><td>Projects the caller may see, optionally of one organisation.</td></tr><tr><td><a href="#get-apiv1identityprojectsprojectenvironments">undefined</a></td><td>Environments of a project.</td></tr><tr><td><a href="#post-apiv1identityprojectsprojectenvironments">undefined</a></td><td>Creates an environment.</td></tr><tr><td><a href="#get-apiv1identityquotasscopeid">undefined</a></td><td>A scope's quota and use.</td></tr><tr><td><a href="#put-apiv1identityquotasscopeid">undefined</a></td><td>Sets a scope's quota (all limits empty removes it), then mirrors the tightest applicable quota onto every environment beneath it.</td></tr><tr><td><a href="#get-apiv1identityroles">undefined</a></td><td>The predefined and custom roles with their permissions.</td></tr><tr><td><a href="#post-apiv1identityroles">undefined</a></td><td>Defines a custom role from explicit permissions.</td></tr><tr><td><a href="#delete-apiv1identityrolesrole">undefined</a></td><td>Deletes a custom role that no assignment uses.</td></tr><tr><td><a href="#get-apiv1identityservice-identities">undefined</a></td><td>Registered service identities (the credentials Apelora uses for Incus and MAAS, and automation identities that call this API).</td></tr><tr><td><a href="#post-apiv1identityservice-identities">undefined</a></td><td>Registers a service identity.</td></tr><tr><td><a href="#post-apiv1identityservice-identitiesiddisable">undefined</a></td><td>Disables a service identity at once.</td></tr><tr><td><a href="#post-apiv1identityservice-identitiesidenable">undefined</a></td><td>Re-enables a service identity.</td></tr><tr><td><a href="#get-apiv1identitysign-in">undefined</a></td><td>Sign-in settings: identity providers (saved and from the environment), whether API tokens are accepted, and local accounts.</td></tr><tr><td><a href="#put-apiv1identitysign-inapi-tokens">undefined</a></td><td>Turns API tokens on or off.</td></tr><tr><td><a href="#post-apiv1identitysign-incheck">undefined</a></td><td>Reads a provider's discovery document and key set, without saving anything: what an administrator checks before saving.</td></tr><tr><td><a href="#get-apiv1identitysign-indirectories">undefined</a></td><td>The directories people sign in with, each checked with a TLS connection now.</td></tr><tr><td><a href="#post-apiv1identitysign-indirectories">undefined</a></td><td>Adds a directory; it is offered on the sign-in page at once when enabled.</td></tr><tr><td><a href="#put-apiv1identitysign-indirectoriesid">undefined</a></td><td>Changes a directory (including turning it off).</td></tr><tr><td><a href="#delete-apiv1identitysign-indirectoriesid">undefined</a></td><td>Removes a directory: its people can no longer sign in with it; their accounts and roles in Apelora stay.</td></tr><tr><td><a href="#post-apiv1identitysign-indirectoriescheck">undefined</a></td><td>Connects with TLS, binds as a test person and reads their entry and groups, without saving anything.</td></tr><tr><td><a href="#put-apiv1identitysign-inlocal-accounts">undefined</a></td><td>Turns sign-in with local accounts on or off.</td></tr><tr><td><a href="#post-apiv1identitysign-inproviders">undefined</a></td><td>Adds an identity provider; it is checked and applied at once.</td></tr><tr><td><a href="#put-apiv1identitysign-inprovidersid">undefined</a></td><td>Changes a provider saved in the Console.</td></tr><tr><td><a href="#delete-apiv1identitysign-inprovidersid">undefined</a></td><td>Removes a provider saved in the Console: people stop being able to sign in with it.</td></tr><tr><td><a href="#get-apiv1identitysign-ins">undefined</a></td><td>Everyone's Apelora sessions open now (or one person's).</td></tr><tr><td><a href="#delete-apiv1identitysign-insid">undefined</a></td><td>Ends anyone's session.</td></tr><tr><td><a href="#get-apiv1identitytenancy">undefined</a></td><td>Organisations, projects and environments the caller can see, with quotas, use and each environment's Incus project as Incus reports it.</td></tr><tr><td><a href="#get-apiv1identityusers">undefined</a></td><td>People who have signed in, as far as the caller may see them: everyone for a platform administrator, otherwise those with a role in the caller's scopes.</td></tr><tr><td><a href="#post-apiv1identityusersuserdisable">undefined</a></td><td>Disables a person: their tokens and Apelora sessions stop working at once.</td></tr><tr><td><a href="#post-apiv1identityusersuserenable">undefined</a></td><td>Re-enables a person.</td></tr><tr><td><a href="#get-apiv1identityuserslookup">undefined</a></td><td>Finds one person by exact user name or e-mail so a role can be given to them.</td></tr><tr><td><a href="#get-apiv1mesign-ins">undefined</a></td><td>Your Apelora sessions open now (password and directory sign-ins), most recently used first.</td></tr><tr><td><a href="#delete-apiv1mesign-insid">undefined</a></td><td>Ends one of your sessions (signs that browser out).</td></tr><tr><td><a href="#get-apiv1metokens">undefined</a></td><td>Your personal tokens (live ones, and those that ended in the last 30 days), newest first.</td></tr><tr><td><a href="#post-apiv1metokens">undefined</a></td><td>Creates a personal token, shown only in this response.</td></tr><tr><td><a href="#delete-apiv1metokensid">undefined</a></td><td>Revokes one of your live tokens; it stops working at once.</td></tr><tr><td><a href="#post-apiv1metokensidrotate">undefined</a></td><td>Rotates one of your live tokens: a successor with the same name (shown only in this response), and the old token keeps working for the overlap (0–1440 minutes, 60 by default), then expires.</td></tr></tbody></table></div>
+<h2 id="details">Details</h2>
+<h3 id="get-apiv1approvals"><code>GET /api/v1/approvals</code></h3>
+<p>Requests and approvals: your own, plus every open one if you may approve.</p>
+<p><strong>Needs:</strong> <code>approval.request</code> or <code>approval.grant</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/approvals&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;action&quot;: &quot;example&quot;,
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;reason&quot;: &quot;example&quot;,
+      &quot;requester&quot;: &quot;example&quot;,
+      &quot;state&quot;: &quot;example&quot;,
+      &quot;target&quot;: &quot;example&quot;,
+      &quot;approver&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1approvals"><code>POST /api/v1/approvals</code></h3>
+<p>Asks for approval of one risky action on one target. You must be allowed to do the action yourself; someone else with <code>approval.grant</code> then decides.</p>
+<p><strong>Needs:</strong> <code>approval.request</code>.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>action</code></td><td>string</td><td>yes</td><td>The permission to be exercised, e.g. <code>hardware.delete</code>.</td></tr><tr><td><code>reason</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>target</code></td><td>string</td><td>yes</td><td>What it will be done to, e.g. <code>machine:rack1-07</code>.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;example&quot;,
+  &quot;target&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/approvals&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;action&quot;:&quot;example&quot;,&quot;target&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;example&quot;,
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;reason&quot;: &quot;example&quot;,
+  &quot;requester&quot;: &quot;example&quot;,
+  &quot;state&quot;: &quot;example&quot;,
+  &quot;target&quot;: &quot;example&quot;,
+  &quot;approver&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1approvalsidapprove"><code>POST /api/v1/approvals/{id}/approve</code></h3>
+<p>Approves a request made by someone else. The approval is good for 30 minutes, once.</p>
+<p><strong>Needs:</strong> <code>approval.grant</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Approval id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-000000000001/approve&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;example&quot;,
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;reason&quot;: &quot;example&quot;,
+  &quot;requester&quot;: &quot;example&quot;,
+  &quot;state&quot;: &quot;example&quot;,
+  &quot;target&quot;: &quot;example&quot;,
+  &quot;approver&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>409</code>, <code>410</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1approvalsidcancel"><code>POST /api/v1/approvals/{id}/cancel</code></h3>
+<p>Withdraws your own pending request.</p>
+<p><strong>Needs:</strong> <code>approval.request</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Approval id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-000000000001/cancel&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;example&quot;,
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;reason&quot;: &quot;example&quot;,
+  &quot;requester&quot;: &quot;example&quot;,
+  &quot;state&quot;: &quot;example&quot;,
+  &quot;target&quot;: &quot;example&quot;,
+  &quot;approver&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1approvalsidreject"><code>POST /api/v1/approvals/{id}/reject</code></h3>
+<p>Rejects a request.</p>
+<p><strong>Needs:</strong> <code>approval.grant</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Approval id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-000000000001/reject&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;example&quot;,
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;reason&quot;: &quot;example&quot;,
+  &quot;requester&quot;: &quot;example&quot;,
+  &quot;state&quot;: &quot;example&quot;,
+  &quot;target&quot;: &quot;example&quot;,
+  &quot;approver&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identityassignments"><code>GET /api/v1/identity/assignments</code></h3>
+<p>Role assignments in the caller's scopes.</p>
+<p><strong>Needs:</strong> <code>user.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>principalType</code></td><td>query</td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>principalId</code></td><td>query</td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>includeRevoked</code></td><td>query</td><td>boolean</td><td>no</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/assignments&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;conditions&quot;: {
+        &quot;environments&quot;: [
+          &quot;production&quot;
+        ],
+        &quot;requireMfa&quot;: false
+      },
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;createdBy&quot;: &quot;example&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;kind&quot;: &quot;standard&quot;,
+      &quot;principal&quot;: {
+        &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+        &quot;type&quot;: &quot;user&quot;
+      },
+      &quot;role&quot;: {
+        &quot;key&quot;: &quot;example&quot;,
+        &quot;type&quot;: &quot;builtin&quot;
+      },
+      &quot;roleName&quot;: &quot;example&quot;,
+      &quot;scope&quot;: {
+        &quot;type&quot;: &quot;platform&quot;
+      },
+      &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;reason&quot;: &quot;example&quot;,
+      &quot;revokedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityassignments"><code>POST /api/v1/identity/assignments</code></h3>
+<p>Grants a role to a person, group or automation identity at a scope.</p>
+<p><strong>Needs:</strong> <code>role.assign</code> there and every permission the role holds (no escalation); audited.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>conditions</code></td><td>object</td><td>no</td><td>—</td></tr><tr><td><code>expiresAt</code></td><td>string</td><td>no</td><td>RFC 3339. Assignments may expire; emergency grants must.</td></tr><tr><td><code>principal</code></td><td>one of several</td><td>yes</td><td>Who an assignment is for.</td></tr><tr><td><code>reason</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>role</code></td><td>one of several</td><td>yes</td><td>—</td></tr><tr><td><code>scope</code></td><td>one of several</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;principal&quot;: {
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;type&quot;: &quot;user&quot;
+  },
+  &quot;role&quot;: {
+    &quot;key&quot;: &quot;example&quot;,
+    &quot;type&quot;: &quot;builtin&quot;
+  },
+  &quot;scope&quot;: {
+    &quot;type&quot;: &quot;platform&quot;
+  }
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/assignments&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;principal&quot;:{&quot;id&quot;:&quot;00000000-0000-4000-8000-000000000001&quot;,&quot;type&quot;:&quot;user&quot;},&quot;role&quot;:{&quot;key&quot;:&quot;example&quot;,&quot;type&quot;:&quot;builtin&quot;},&quot;scope&quot;:{&quot;type&quot;:&quot;platform&quot;}}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;conditions&quot;: {
+    &quot;environments&quot;: [
+      &quot;production&quot;
+    ],
+    &quot;requireMfa&quot;: false
+  },
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;createdBy&quot;: &quot;example&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;kind&quot;: &quot;standard&quot;,
+  &quot;principal&quot;: {
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;type&quot;: &quot;user&quot;
+  },
+  &quot;role&quot;: {
+    &quot;key&quot;: &quot;example&quot;,
+    &quot;type&quot;: &quot;builtin&quot;
+  },
+  &quot;roleName&quot;: &quot;example&quot;,
+  &quot;scope&quot;: {
+    &quot;type&quot;: &quot;platform&quot;
+  },
+  &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;reason&quot;: &quot;example&quot;,
+  &quot;revokedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1identityassignmentsassignment"><code>DELETE /api/v1/identity/assignments/{assignment}</code></h3>
+<p>Revokes an assignment; the person loses it on their next request. Refused when it would leave no enabled platform super admin.</p>
+<p><strong>Needs:</strong> <code>role.assign</code> in its scope and every permission the role confers there (you can only take away what you could grant).</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>assignment</code></td><td>path</td><td>string</td><td>yes</td><td>Assignment id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/assignments/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityassignmentspreview"><code>POST /api/v1/identity/assignments/preview</code></h3>
+<p>Shows what an assignment would give before it is saved: what the person can already do at the scope, what they could do afterwards, which permissions would be inert, and whether you may save it. Changes nothing.</p>
+<p><strong>Needs:</strong> <code>role.assign</code>.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>conditions</code></td><td>object</td><td>no</td><td>—</td></tr><tr><td><code>expiresAt</code></td><td>string</td><td>no</td><td>RFC 3339. Assignments may expire; emergency grants must.</td></tr><tr><td><code>principal</code></td><td>one of several</td><td>yes</td><td>Who an assignment is for.</td></tr><tr><td><code>reason</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>role</code></td><td>one of several</td><td>yes</td><td>—</td></tr><tr><td><code>scope</code></td><td>one of several</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;principal&quot;: {
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;type&quot;: &quot;user&quot;
+  },
+  &quot;role&quot;: {
+    &quot;key&quot;: &quot;example&quot;,
+    &quot;type&quot;: &quot;builtin&quot;
+  },
+  &quot;scope&quot;: {
+    &quot;type&quot;: &quot;platform&quot;
+  }
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/assignments/preview&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;principal&quot;:{&quot;id&quot;:&quot;00000000-0000-4000-8000-000000000001&quot;,&quot;type&quot;:&quot;user&quot;},&quot;role&quot;:{&quot;key&quot;:&quot;example&quot;,&quot;type&quot;:&quot;builtin&quot;},&quot;scope&quot;:{&quot;type&quot;:&quot;platform&quot;}}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;added&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;after&quot;: [
+    {
+      &quot;class&quot;: &quot;tenant&quot;,
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;grants&quot;: [
+        {
+          &quot;assignment&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+          &quot;emergency&quot;: false,
+          &quot;role&quot;: {
+            &quot;key&quot;: &quot;example&quot;,
+            &quot;type&quot;: &quot;builtin&quot;
+          },
+          &quot;roleName&quot;: &quot;example&quot;,
+          &quot;scope&quot;: {
+            &quot;type&quot;: &quot;platform&quot;
+          },
+          &quot;viaGroup&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+        }
+      ],
+      &quot;permission&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;allowed&quot;: false,
+  &quot;before&quot;: [
+    {
+      &quot;class&quot;: &quot;tenant&quot;,
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;grants&quot;: [
+        {
+          &quot;assignment&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+          &quot;emergency&quot;: false,
+          &quot;role&quot;: {
+            &quot;key&quot;: &quot;example&quot;,
+            &quot;type&quot;: &quot;builtin&quot;
+          },
+          &quot;roleName&quot;: &quot;example&quot;,
+          &quot;scope&quot;: {
+            &quot;type&quot;: &quot;platform&quot;
+          },
+          &quot;viaGroup&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+        }
+      ],
+      &quot;permission&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;inert&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;warnings&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;error&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identityaudit"><code>GET /api/v1/identity/audit</code></h3>
+<p>Audit history the caller may read: the same filters and paging as <code>GET /api/v1/audit</code>.</p>
+<p><strong>Needs:</strong> <code>audit.read</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>actor</code></td><td>query</td><td>string</td><td>no</td><td>Who acted: their stable id (<code>user:&lt;uuid&gt;</code>, <code>service:&lt;uuid&gt;</code>, <code>token:&lt;name&gt;</code>) or, ignoring case, the name they had when they acted.</td></tr><tr><td><code>target</code></td><td>query</td><td>string</td><td>no</td><td>What was acted on, exactly as recorded (e.g. <code>local-account:ada</code> or a group's name).</td></tr><tr><td><code>action</code></td><td>query</td><td>string</td><td>no</td><td>Only actions starting with this, e.g. <code>role.</code> or <code>emergency_access.</code>.</td></tr><tr><td><code>outcome</code></td><td>query</td><td>string</td><td>no</td><td><code>success</code>, <code>denied</code> or <code>failed</code>.</td></tr><tr><td><code>from</code></td><td>query</td><td>string</td><td>no</td><td>RFC 3339: events at or after this time.</td></tr><tr><td><code>to</code></td><td>query</td><td>string</td><td>no</td><td>RFC 3339: events before this time.</td></tr><tr><td><code>before</code></td><td>query</td><td>integer</td><td>no</td><td>Only events older than this id (paging: the id of the last event of the previous page).</td></tr><tr><td><code>limit</code></td><td>query</td><td>integer</td><td>no</td><td>Events per page, 1 to 500 (default 100). Not used by the export.</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/audit&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;action&quot;: &quot;example&quot;,
+      &quot;actor&quot;: &quot;example&quot;,
+      &quot;actorType&quot;: &quot;example&quot;,
+      &quot;at&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;detail&quot;: {},
+      &quot;id&quot;: 1,
+      &quot;outcome&quot;: &quot;example&quot;,
+      &quot;target&quot;: &quot;example&quot;,
+      &quot;actorName&quot;: &quot;example&quot;,
+      &quot;scope&quot;: {}
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityemergency-access"><code>POST /api/v1/identity/emergency-access</code></h3>
+<p>Grants a person a platform role for a short time, with a recorded reason (break-glass). You cannot grant it to yourself; every request made with it is audited.</p>
+<p><strong>Needs:</strong> <code>platform.emergency_access</code>.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>minutes</code></td><td>integer</td><td>yes</td><td>5–240 minutes.</td></tr><tr><td><code>reason</code></td><td>string</td><td>yes</td><td>Why; at least 10 characters. Recorded in the audit trail.</td></tr><tr><td><code>role</code></td><td>string</td><td>yes</td><td>A predefined role key, e.g. <code>fabric-administrator</code>.</td></tr><tr><td><code>userId</code></td><td>string</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;userId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;role&quot;: &quot;example&quot;,
+  &quot;reason&quot;: &quot;example&quot;,
+  &quot;minutes&quot;: 1
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/emergency-access&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;userId&quot;:&quot;00000000-0000-4000-8000-000000000001&quot;,&quot;role&quot;:&quot;example&quot;,&quot;reason&quot;:&quot;example&quot;,&quot;minutes&quot;:1}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;conditions&quot;: {
+    &quot;environments&quot;: [
+      &quot;production&quot;
+    ],
+    &quot;requireMfa&quot;: false
+  },
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;createdBy&quot;: &quot;example&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;kind&quot;: &quot;standard&quot;,
+  &quot;principal&quot;: {
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;type&quot;: &quot;user&quot;
+  },
+  &quot;role&quot;: {
+    &quot;key&quot;: &quot;example&quot;,
+    &quot;type&quot;: &quot;builtin&quot;
+  },
+  &quot;roleName&quot;: &quot;example&quot;,
+  &quot;scope&quot;: {
+    &quot;type&quot;: &quot;platform&quot;
+  },
+  &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;reason&quot;: &quot;example&quot;,
+  &quot;revokedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityenvironmentsidincus-project"><code>POST /api/v1/identity/environments/{id}/incus-project</code></h3>
+<p>Creates or adopts the environment's Incus project now (idempotent): the restricted project with its default profile, granted to the deploy identity, then the quotas mirrored.</p>
+<p><strong>Needs:</strong> <code>environment.manage</code> on the environment's project; 503 without an admin identity.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Environment id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/environments/00000000-0000-4000-8000-000000000001/incus-project&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;detail&quot;: &quot;example&quot;,
+  &quot;environmentId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;findings&quot;: [
+    {
+      &quot;message&quot;: &quot;example&quot;,
+      &quot;severity&quot;: &quot;info&quot;,
+      &quot;key&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;state&quot;: &quot;pending&quot;,
+  &quot;incusProject&quot;: &quot;apelora&quot;,
+  &quot;limits&quot;: {
+    &quot;detail&quot;: &quot;example&quot;,
+    &quot;environment&quot;: &quot;example&quot;,
+    &quot;environmentId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;limits&quot;: {
+      &quot;key&quot;: &quot;example&quot;
+    },
+    &quot;result&quot;: &quot;applied&quot;,
+    &quot;incusProject&quot;: &quot;apelora&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identitygroups"><code>GET /api/v1/identity/groups</code></h3>
+<p>Groups the caller may see.</p>
+<p><strong>Needs:</strong> <code>user.view</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/groups&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;externalName&quot;: &quot;example&quot;,
+      &quot;organizationId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identitygroups"><code>POST /api/v1/identity/groups</code></h3>
+<p>Creates a group: an organisation's (needs <code>group.manage</code> there) or a platform group (platform <code>group.manage</code>). Mapping a group to an identity-provider group name is platform-only.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>description</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>externalName</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>organizationId</code></td><td>string</td><td>no</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/groups&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;description&quot;: &quot;A description&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;externalName&quot;: &quot;example&quot;,
+  &quot;organizationId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identitygroupsgroupmembers"><code>GET /api/v1/identity/groups/{group}/members</code></h3>
+<p>Members of a group.</p>
+<p><strong>Needs:</strong> <code>user.view</code> or <code>group.manage</code> on the group's organisation.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>group</code></td><td>path</td><td>string</td><td>yes</td><td>Group id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/groups/00000000-0000-4000-8000-000000000001/members&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;disabled&quot;: false,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;issuer&quot;: &quot;example&quot;,
+      &quot;displayName&quot;: &quot;example&quot;,
+      &quot;email&quot;: &quot;alex@example.org&quot;,
+      &quot;lastSeenAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;username&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="put-apiv1identitygroupsgroupmembersuser"><code>PUT /api/v1/identity/groups/{group}/members/{user}</code></h3>
+<p>Adds a person to a group.</p>
+<p><strong>Needs:</strong> <code>group.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>group</code></td><td>path</td><td>string</td><td>yes</td><td>Group id</td></tr><tr><td><code>user</code></td><td>path</td><td>string</td><td>yes</td><td>User id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PUT &quot;$APELORA_URL/api/v1/identity/groups/00000000-0000-4000-8000-000000000001/members/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1identitygroupsgroupmembersuser"><code>DELETE /api/v1/identity/groups/{group}/members/{user}</code></h3>
+<p>Removes a person from a group; their access through it ends on their next request.</p>
+<p><strong>Needs:</strong> <code>group.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>group</code></td><td>path</td><td>string</td><td>yes</td><td>Group id</td></tr><tr><td><code>user</code></td><td>path</td><td>string</td><td>yes</td><td>User id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/groups/00000000-0000-4000-8000-000000000001/members/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identitylocal-accounts"><code>POST /api/v1/identity/local-accounts</code></h3>
+<p>Creates a local account and returns its one-time setup link, valid for 24 hours. The person chooses their password with it; nobody else ever knows it.</p>
+<p><strong>Needs:</strong> <code>user.manage</code>.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>displayName</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>email</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>username</code></td><td>string</td><td>yes</td><td>2 to 64 of <code>a-z 0-9 . _ -</code> (stored lowercase).</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;username&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/local-accounts&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;username&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;setupExpiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;setupToken&quot;: &quot;&lt;redacted&gt;&quot;,
+  &quot;user&quot;: {
+    &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;disabled&quot;: false,
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;issuer&quot;: &quot;example&quot;,
+    &quot;displayName&quot;: &quot;example&quot;,
+    &quot;email&quot;: &quot;alex@example.org&quot;,
+    &quot;lastSeenAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;username&quot;: &quot;example&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identitylocal-accountsidreset"><code>POST /api/v1/identity/local-accounts/{id}/reset</code></h3>
+<p>Takes a local account's password away, revokes every session of theirs and returns a new one-time setup link (24 hours). Not for your own account (use Change password).</p>
+<p><strong>Needs:</strong> <code>user.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>User id of the local account</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/local-accounts/00000000-0000-4000-8000-000000000001/reset&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;setupExpiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;setupToken&quot;: &quot;&lt;redacted&gt;&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identityorganizations"><code>GET /api/v1/identity/organizations</code></h3>
+<p>Organisations the caller may see.</p>
+<p><strong>Needs:</strong> <code>organization.view</code> (or a grant below that reaches them).</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/organizations&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;disabled&quot;: false,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;slug&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityorganizations"><code>POST /api/v1/identity/organizations</code></h3>
+<p>Creates an organisation.</p>
+<p><strong>Needs:</strong> <code>organization.create</code> (platform).</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>slug</code></td><td>string</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;slug&quot;: &quot;example&quot;,
+  &quot;name&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/organizations&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;slug&quot;:&quot;example&quot;,&quot;name&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;disabled&quot;: false,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;slug&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityorganizationsorgprojects"><code>POST /api/v1/identity/organizations/{org}/projects</code></h3>
+<p>Creates a project in an organisation.</p>
+<p><strong>Needs:</strong> <code>project.create</code> on the organisation.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>org</code></td><td>path</td><td>string</td><td>yes</td><td>Organisation id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>slug</code></td><td>string</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;slug&quot;: &quot;example&quot;,
+  &quot;name&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/organizations/00000000-0000-4000-8000-000000000001/projects&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;slug&quot;:&quot;example&quot;,&quot;name&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;organizationId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;organizationSlug&quot;: &quot;example&quot;,
+  &quot;slug&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identitypermissions"><code>GET /api/v1/identity/permissions</code></h3>
+<p>Every permission, its class and the narrowest scope at which a grant takes effect.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/permissions&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;class&quot;: &quot;tenant&quot;,
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;floor&quot;: &quot;platform&quot;,
+      &quot;id&quot;: &quot;example&quot;,
+      &quot;needsApproval&quot;: false
+    }
+  ]
+}</code></pre>
+<h3 id="get-apiv1identitypersonal-tokens"><code>GET /api/v1/identity/personal-tokens</code></h3>
+<p>Everyone's personal tokens (or one person's), live ones and those that ended in the last 30 days.</p>
+<p><strong>Needs:</strong> <code>token.manage</code> on the platform.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>user</code></td><td>query</td><td>string</td><td>no</td><td>Only this person's.</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/personal-tokens&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;current&quot;: false,
+      &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;owner&quot;: &quot;example&quot;,
+      &quot;state&quot;: &quot;example&quot;,
+      &quot;userId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;lastUsedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;revokedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;revokedBy&quot;: &quot;example&quot;,
+      &quot;rotatedFrom&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;successor&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+    }
+  ],
+  &quot;limit&quot;: 1
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1identitypersonal-tokensid"><code>DELETE /api/v1/identity/personal-tokens/{id}</code></h3>
+<p>Revokes anyone's live personal token.</p>
+<p><strong>Needs:</strong> <code>token.manage</code> on the platform.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Token id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/personal-tokens/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identitypolicies"><code>GET /api/v1/identity/policies</code></h3>
+<p>Access policies (MFA and approval rules).</p>
+<p><strong>Needs:</strong> <code>access_policy.manage</code> or <code>audit.read</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/policies&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;enabled&quot;: false,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;kind&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;parameters&quot;: {},
+      &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;updatedBy&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="put-apiv1identitypolicies"><code>PUT /api/v1/identity/policies</code></h3>
+<p>Creates or updates a policy by name. <code>mfa</code>: <code>{&quot;environments&quot;: [&quot;production&quot;], &quot;infrastructure&quot;: true}</code>. <code>approval</code>: <code>{&quot;actions&quot;: [&quot;cluster.evacuate&quot;]}</code> (extra actions that need approval where the API already asks for it).</p>
+<p><strong>Needs:</strong> <code>access_policy.manage</code>.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>kind</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>parameters</code></td><td>object</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;kind&quot;: &quot;example&quot;,
+  &quot;parameters&quot;: {}
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PUT &quot;$APELORA_URL/api/v1/identity/policies&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;,&quot;kind&quot;:&quot;example&quot;,&quot;parameters&quot;:{}}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;enabled&quot;: false,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;kind&quot;: &quot;example&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;parameters&quot;: {},
+  &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;updatedBy&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1identitypoliciesid"><code>DELETE /api/v1/identity/policies/{id}</code></h3>
+<p>Deletes a policy.</p>
+<p><strong>Needs:</strong> <code>access_policy.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Policy id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/policies/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identityprojects"><code>GET /api/v1/identity/projects</code></h3>
+<p>Projects the caller may see, optionally of one organisation.</p>
+<p><strong>Needs:</strong> <code>project.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>organization</code></td><td>query</td><td>string</td><td>no</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/projects&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;organizationId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;organizationSlug&quot;: &quot;example&quot;,
+      &quot;slug&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identityprojectsprojectenvironments"><code>GET /api/v1/identity/projects/{project}/environments</code></h3>
+<p>Environments of a project.</p>
+<p><strong>Needs:</strong> <code>project.view</code> on it.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string</td><td>yes</td><td>Project id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/projects/apelora/environments&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;incusDetail&quot;: &quot;example&quot;,
+      &quot;incusProjectConfig&quot;: {
+        &quot;key&quot;: &quot;example&quot;
+      },
+      &quot;incusProvisioned&quot;: false,
+      &quot;incusState&quot;: &quot;pending&quot;,
+      &quot;kind&quot;: &quot;production&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;projectId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;slug&quot;: &quot;example&quot;,
+      &quot;incusProject&quot;: &quot;apelora&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityprojectsprojectenvironments"><code>POST /api/v1/identity/projects/{project}/environments</code></h3>
+<p>Creates an environment. The Incus project it maps to is derived from the names (tenants cannot choose it); platform administrators may map an existing one.</p>
+<p><strong>Needs:</strong> <code>environment.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string</td><td>yes</td><td>Project id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>incusProject</code></td><td>string</td><td>no</td><td>Platform administrators only: map an existing Incus project instead of the derived name.</td></tr><tr><td><code>kind</code></td><td><code>production</code>, <code>staging</code>, <code>development</code>, <code>other</code></td><td>yes</td><td>Kind of environment; policies such as &quot;production needs MFA&quot; refer to it.</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>slug</code></td><td>string</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;slug&quot;: &quot;example&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;kind&quot;: &quot;production&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/projects/apelora/environments&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;slug&quot;:&quot;example&quot;,&quot;name&quot;:&quot;example&quot;,&quot;kind&quot;:&quot;production&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;incusDetail&quot;: &quot;example&quot;,
+  &quot;incusProjectConfig&quot;: {
+    &quot;key&quot;: &quot;example&quot;
+  },
+  &quot;incusProvisioned&quot;: false,
+  &quot;incusState&quot;: &quot;pending&quot;,
+  &quot;kind&quot;: &quot;production&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;projectId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;slug&quot;: &quot;example&quot;,
+  &quot;incusProject&quot;: &quot;apelora&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identityquotasscopeid"><code>GET /api/v1/identity/quotas/{scope}/{id}</code></h3>
+<p>A scope's quota and use.</p>
+<p><strong>Needs:</strong> <code>organization.view</code> (organisation) or <code>project.view</code> (project, environment) on it, or <code>quota.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>scope</code></td><td>path</td><td>string</td><td>yes</td><td>organization, project or environment</td></tr><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Its id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/quotas/example/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;bound&quot;: {
+    &quot;cpu&quot;: 1,
+    &quot;diskGib&quot;: 1,
+    &quot;instances&quot;: 1,
+    &quot;memoryGib&quot;: 1
+  },
+  &quot;canSet&quot;: false,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;kind&quot;: &quot;organization&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;quota&quot;: {
+    &quot;cpu&quot;: 1,
+    &quot;diskGib&quot;: 1,
+    &quot;instances&quot;: 1,
+    &quot;memoryGib&quot;: 1
+  },
+  &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;updatedBy&quot;: &quot;example&quot;,
+  &quot;usage&quot;: {
+    &quot;cpu&quot;: 1,
+    &quot;diskBytes&quot;: 1,
+    &quot;instances&quot;: 1,
+    &quot;memoryBytes&quot;: 1
+  },
+  &quot;usageError&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="put-apiv1identityquotasscopeid"><code>PUT /api/v1/identity/quotas/{scope}/{id}</code></h3>
+<p>Sets a scope's quota (all limits empty removes it), then mirrors the tightest applicable quota onto every environment beneath it.</p>
+<p><strong>Needs:</strong> <code>quota.manage</code>; or, below the organisation, <code>organization.update</code> on the organisation (projects, environments) or <code>project.update</code> on the project (environments), and then never more than a quota above allows.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>scope</code></td><td>path</td><td>string</td><td>yes</td><td>organization, project or environment</td></tr><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Its id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>cpu</code></td><td>integer</td><td>no</td><td>—</td></tr><tr><td><code>diskGib</code></td><td>integer</td><td>no</td><td>—</td></tr><tr><td><code>instances</code></td><td>integer</td><td>no</td><td>—</td></tr><tr><td><code>memoryGib</code></td><td>integer</td><td>no</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;cpu&quot;: 1
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PUT &quot;$APELORA_URL/api/v1/identity/quotas/example/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;cpu&quot;:1}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;environments&quot;: [
+    {
+      &quot;detail&quot;: &quot;example&quot;,
+      &quot;environment&quot;: &quot;example&quot;,
+      &quot;environmentId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;limits&quot;: {
+        &quot;key&quot;: &quot;example&quot;
+      },
+      &quot;result&quot;: &quot;applied&quot;,
+      &quot;incusProject&quot;: &quot;apelora&quot;
+    }
+  ],
+  &quot;quota&quot;: {
+    &quot;cpu&quot;: 1,
+    &quot;diskGib&quot;: 1,
+    &quot;instances&quot;: 1,
+    &quot;memoryGib&quot;: 1
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identityroles"><code>GET /api/v1/identity/roles</code></h3>
+<p>The predefined and custom roles with their permissions.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/roles&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;builtin&quot;: false,
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;id&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;permissions&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;reference&quot;: {
+        &quot;key&quot;: &quot;example&quot;,
+        &quot;type&quot;: &quot;builtin&quot;
+      },
+      &quot;scopes&quot;: [
+        &quot;platform&quot;
+      ]
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityroles"><code>POST /api/v1/identity/roles</code></h3>
+<p>Defines a custom role from explicit permissions.</p>
+<p><strong>Needs:</strong> <code>role.manage</code> (platform), and you may only include permissions you hold yourself.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>description</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>permissions</code></td><td>list of string</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;permissions&quot;: [
+    &quot;example&quot;
+  ]
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/roles&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;,&quot;permissions&quot;:[&quot;example&quot;]}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;builtin&quot;: false,
+  &quot;description&quot;: &quot;A description&quot;,
+  &quot;id&quot;: &quot;example&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;permissions&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;reference&quot;: {
+    &quot;key&quot;: &quot;example&quot;,
+    &quot;type&quot;: &quot;builtin&quot;
+  },
+  &quot;scopes&quot;: [
+    &quot;platform&quot;
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1identityrolesrole"><code>DELETE /api/v1/identity/roles/{role}</code></h3>
+<p>Deletes a custom role that no assignment uses.</p>
+<p><strong>Needs:</strong> <code>role.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>role</code></td><td>path</td><td>string</td><td>yes</td><td>Custom role id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/roles/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identityservice-identities"><code>GET /api/v1/identity/service-identities</code></h3>
+<p>Registered service identities (the credentials Apelora uses for Incus and MAAS, and automation identities that call this API).</p>
+<p><strong>Needs:</strong> <code>service_identity.manage</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/service-identities&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;apiAccess&quot;: false,
+      &quot;backend&quot;: &quot;example&quot;,
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;createdBy&quot;: &quot;example&quot;,
+      &quot;disabled&quot;: false,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;kind&quot;: &quot;workload&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;operations&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;restrictions&quot;: {},
+      &quot;credentialRef&quot;: &quot;example&quot;,
+      &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;lastUsedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityservice-identities"><code>POST /api/v1/identity/service-identities</code></h3>
+<p>Registers a service identity. Outbound kinds (workload, network, storage, provisioning) record only the name of a credential held in the secret store; automation identities get an API token, shown once.</p>
+<p><strong>Needs:</strong> <code>service_identity.manage</code>.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>credentialRef</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>expiresInDays</code></td><td>integer</td><td>no</td><td>Automation identities only: days until their token expires (1–365, default 90).</td></tr><tr><td><code>kind</code></td><td><code>workload</code>, <code>network</code>, <code>storage</code>, <code>provisioning</code>, <code>automation</code></td><td>yes</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>restrictions</code></td><td>object</td><td>no</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;kind&quot;: &quot;workload&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/service-identities&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;,&quot;kind&quot;:&quot;workload&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;identity&quot;: {
+    &quot;apiAccess&quot;: false,
+    &quot;backend&quot;: &quot;example&quot;,
+    &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;createdBy&quot;: &quot;example&quot;,
+    &quot;disabled&quot;: false,
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;kind&quot;: &quot;workload&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+    &quot;operations&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;restrictions&quot;: {},
+    &quot;credentialRef&quot;: &quot;example&quot;,
+    &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;lastUsedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+  },
+  &quot;token&quot;: &quot;&lt;redacted&gt;&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityservice-identitiesiddisable"><code>POST /api/v1/identity/service-identities/{id}/disable</code></h3>
+<p>Disables a service identity at once.</p>
+<p><strong>Needs:</strong> <code>service_identity.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Service identity id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/service-identities/00000000-0000-4000-8000-000000000001/disable&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityservice-identitiesidenable"><code>POST /api/v1/identity/service-identities/{id}/enable</code></h3>
+<p>Re-enables a service identity.</p>
+<p><strong>Needs:</strong> <code>service_identity.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Service identity id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/service-identities/00000000-0000-4000-8000-000000000001/enable&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identitysign-in"><code>GET /api/v1/identity/sign-in</code></h3>
+<p>Sign-in settings: identity providers (saved and from the environment), whether API tokens are accepted, and local accounts.</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/sign-in&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;apiTokens&quot;: {
+    &quot;enabled&quot;: false,
+    &quot;lockedByEnvironment&quot;: false
+  },
+  &quot;directories&quot;: [
+    {
+      &quot;bindTemplate&quot;: &quot;example&quot;,
+      &quot;emailAttribute&quot;: &quot;alex@example.org&quot;,
+      &quot;enabled&quot;: false,
+      &quot;groupNameAttribute&quot;: &quot;example&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;idAttribute&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;nameAttribute&quot;: &quot;example&quot;,
+      &quot;reachable&quot;: false,
+      &quot;startTls&quot;: false,
+      &quot;updatedBy&quot;: &quot;example&quot;,
+      &quot;url&quot;: &quot;https://example.org&quot;,
+      &quot;usernameAttribute&quot;: &quot;example&quot;,
+      &quot;baseDn&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;localAccounts&quot;: {
+    &quot;enabled&quot;: false,
+    &quot;pending&quot;: 1,
+    &quot;ready&quot;: 1
+  },
+  &quot;providers&quot;: [
+    {
+      &quot;audiences&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;authorizedParties&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;enabled&quot;: false,
+      &quot;groupsClaim&quot;: &quot;example&quot;,
+      &quot;issuer&quot;: &quot;example&quot;,
+      &quot;mfaAcr&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;mfaAmr&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;reachable&quot;: false,
+      &quot;scopes&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;source&quot;: &quot;console&quot;,
+      &quot;usernameClaim&quot;: &quot;example&quot;,
+      &quot;clientId&quot;: &quot;example&quot;,
+      &quot;error&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="put-apiv1identitysign-inapi-tokens"><code>PUT /api/v1/identity/sign-in/api-tokens</code></h3>
+<p>Turns API tokens on or off. Turning them off is refused while no other way in remains (an identity provider that answers, or local accounts that are on with at least one account set up), and for someone signed in with an API token (they would lock themselves out).</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code>; audited.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;enabled&quot;: false
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PUT &quot;$APELORA_URL/api/v1/identity/sign-in/api-tokens&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;enabled&quot;:false}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;enabled&quot;: false,
+  &quot;lockedByEnvironment&quot;: false
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identitysign-incheck"><code>POST /api/v1/identity/sign-in/check</code></h3>
+<p>Reads a provider's discovery document and key set, without saving anything: what an administrator checks before saving.</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code>.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>issuer</code></td><td>string</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;issuer&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/sign-in/check&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;issuer&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;authorizationEndpoint&quot;: &quot;example&quot;,
+  &quot;jwksUri&quot;: &quot;example&quot;,
+  &quot;keys&quot;: 0,
+  &quot;tokenEndpoint&quot;: &quot;&lt;redacted&gt;&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identitysign-indirectories"><code>GET /api/v1/identity/sign-in/directories</code></h3>
+<p>The directories people sign in with, each checked with a TLS connection now.</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/sign-in/directories&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;bindTemplate&quot;: &quot;example&quot;,
+      &quot;emailAttribute&quot;: &quot;alex@example.org&quot;,
+      &quot;enabled&quot;: false,
+      &quot;groupNameAttribute&quot;: &quot;example&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;idAttribute&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;nameAttribute&quot;: &quot;example&quot;,
+      &quot;reachable&quot;: false,
+      &quot;startTls&quot;: false,
+      &quot;updatedBy&quot;: &quot;example&quot;,
+      &quot;url&quot;: &quot;https://example.org&quot;,
+      &quot;usernameAttribute&quot;: &quot;example&quot;,
+      &quot;baseDn&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identitysign-indirectories"><code>POST /api/v1/identity/sign-in/directories</code></h3>
+<p>Adds a directory; it is offered on the sign-in page at once when enabled.</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code> (and an approval where the policy asks for one); audited.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>baseDn</code></td><td>string</td><td>no</td><td>Where to search for the person's entry after the bind.</td></tr><tr><td><code>bindTemplate</code></td><td>string</td><td>yes</td><td>The bind name with <code>{username}</code>: a DN (<code>uid={username},ou=people,dc=example,dc=org</code>) or a principal name (<code>{username}@example.org</code>, which needs <code>baseDn</code> and <code>userFilter</code>).</td></tr><tr><td><code>caPem</code></td><td>string</td><td>no</td><td>The certificate authority that signed the directory's certificate (PEM); empty: the system's trusted roots.</td></tr><tr><td><code>emailAttribute</code></td><td>string</td><td>no</td><td>Default <code>mail</code>.</td></tr><tr><td><code>enabled</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>groupAttribute</code></td><td>string</td><td>no</td><td>An attribute of the person's entry that lists their groups, e.g. <code>memberOf</code>.</td></tr><tr><td><code>groupBaseDn</code></td><td>string</td><td>no</td><td>Where to search for groups that name the person.</td></tr><tr><td><code>groupFilter</code></td><td>string</td><td>no</td><td>The group search, with <code>{dn}</code> and <code>{username}</code> (default <code>(member={dn})</code>).</td></tr><tr><td><code>groupNameAttribute</code></td><td>string</td><td>no</td><td>The group attribute that holds the group's name (default <code>cn</code>).</td></tr><tr><td><code>idAttribute</code></td><td>string</td><td>no</td><td>The entry's stable id (default <code>entryUUID</code>; <code>objectGUID</code> is read as hex).</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>What the sign-in form calls it (1 to 60 characters).</td></tr><tr><td><code>nameAttribute</code></td><td>string</td><td>no</td><td>Default <code>cn</code>.</td></tr><tr><td><code>startTls</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>url</code></td><td>string</td><td>yes</td><td><code>ldaps://host[:port]</code>, or <code>ldap://host[:port]</code> with <code>startTls</code>. Plain LDAP is refused.</td></tr><tr><td><code>userFilter</code></td><td>string</td><td>no</td><td>Finds the person's entry under <code>baseDn</code>, with <code>{username}</code>, e.g. <code>(userPrincipalName={username}@example.org)</code>. Empty: the entry is the bind DN itself.</td></tr><tr><td><code>usernameAttribute</code></td><td>string</td><td>no</td><td>Default <code>uid</code>.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;url&quot;: &quot;https://example.org&quot;,
+  &quot;bindTemplate&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/sign-in/directories&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;,&quot;url&quot;:&quot;https://example.org&quot;,&quot;bindTemplate&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;bindTemplate&quot;: &quot;example&quot;,
+  &quot;emailAttribute&quot;: &quot;alex@example.org&quot;,
+  &quot;enabled&quot;: false,
+  &quot;groupNameAttribute&quot;: &quot;example&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;idAttribute&quot;: &quot;example&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;nameAttribute&quot;: &quot;example&quot;,
+  &quot;reachable&quot;: false,
+  &quot;startTls&quot;: false,
+  &quot;updatedBy&quot;: &quot;example&quot;,
+  &quot;url&quot;: &quot;https://example.org&quot;,
+  &quot;usernameAttribute&quot;: &quot;example&quot;,
+  &quot;baseDn&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="put-apiv1identitysign-indirectoriesid"><code>PUT /api/v1/identity/sign-in/directories/{id}</code></h3>
+<p>Changes a directory (including turning it off).</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Directory id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>baseDn</code></td><td>string</td><td>no</td><td>Where to search for the person's entry after the bind.</td></tr><tr><td><code>bindTemplate</code></td><td>string</td><td>yes</td><td>The bind name with <code>{username}</code>: a DN (<code>uid={username},ou=people,dc=example,dc=org</code>) or a principal name (<code>{username}@example.org</code>, which needs <code>baseDn</code> and <code>userFilter</code>).</td></tr><tr><td><code>caPem</code></td><td>string</td><td>no</td><td>The certificate authority that signed the directory's certificate (PEM); empty: the system's trusted roots.</td></tr><tr><td><code>emailAttribute</code></td><td>string</td><td>no</td><td>Default <code>mail</code>.</td></tr><tr><td><code>enabled</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>groupAttribute</code></td><td>string</td><td>no</td><td>An attribute of the person's entry that lists their groups, e.g. <code>memberOf</code>.</td></tr><tr><td><code>groupBaseDn</code></td><td>string</td><td>no</td><td>Where to search for groups that name the person.</td></tr><tr><td><code>groupFilter</code></td><td>string</td><td>no</td><td>The group search, with <code>{dn}</code> and <code>{username}</code> (default <code>(member={dn})</code>).</td></tr><tr><td><code>groupNameAttribute</code></td><td>string</td><td>no</td><td>The group attribute that holds the group's name (default <code>cn</code>).</td></tr><tr><td><code>idAttribute</code></td><td>string</td><td>no</td><td>The entry's stable id (default <code>entryUUID</code>; <code>objectGUID</code> is read as hex).</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>What the sign-in form calls it (1 to 60 characters).</td></tr><tr><td><code>nameAttribute</code></td><td>string</td><td>no</td><td>Default <code>cn</code>.</td></tr><tr><td><code>startTls</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>url</code></td><td>string</td><td>yes</td><td><code>ldaps://host[:port]</code>, or <code>ldap://host[:port]</code> with <code>startTls</code>. Plain LDAP is refused.</td></tr><tr><td><code>userFilter</code></td><td>string</td><td>no</td><td>Finds the person's entry under <code>baseDn</code>, with <code>{username}</code>, e.g. <code>(userPrincipalName={username}@example.org)</code>. Empty: the entry is the bind DN itself.</td></tr><tr><td><code>usernameAttribute</code></td><td>string</td><td>no</td><td>Default <code>uid</code>.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;url&quot;: &quot;https://example.org&quot;,
+  &quot;bindTemplate&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PUT &quot;$APELORA_URL/api/v1/identity/sign-in/directories/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;,&quot;url&quot;:&quot;https://example.org&quot;,&quot;bindTemplate&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;bindTemplate&quot;: &quot;example&quot;,
+  &quot;emailAttribute&quot;: &quot;alex@example.org&quot;,
+  &quot;enabled&quot;: false,
+  &quot;groupNameAttribute&quot;: &quot;example&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;idAttribute&quot;: &quot;example&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;nameAttribute&quot;: &quot;example&quot;,
+  &quot;reachable&quot;: false,
+  &quot;startTls&quot;: false,
+  &quot;updatedBy&quot;: &quot;example&quot;,
+  &quot;url&quot;: &quot;https://example.org&quot;,
+  &quot;usernameAttribute&quot;: &quot;example&quot;,
+  &quot;baseDn&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1identitysign-indirectoriesid"><code>DELETE /api/v1/identity/sign-in/directories/{id}</code></h3>
+<p>Removes a directory: its people can no longer sign in with it; their accounts and roles in Apelora stay. Its name must be typed again.</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Directory id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The directory's name again.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/sign-in/directories/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identitysign-indirectoriescheck"><code>POST /api/v1/identity/sign-in/directories/check</code></h3>
+<p>Connects with TLS, binds as a test person and reads their entry and groups, without saving anything. Reports what it found or the precise reason it failed.</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code>.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>password</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>settings</code></td><td>object</td><td>yes</td><td>The settings of a directory. Empty optional fields take the defaults shown.</td></tr><tr><td><code>username</code></td><td>string</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;settings&quot;: {
+    &quot;bindTemplate&quot;: &quot;example&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+    &quot;url&quot;: &quot;https://example.org&quot;,
+    &quot;baseDn&quot;: &quot;example&quot;,
+    &quot;caPem&quot;: &quot;example&quot;,
+    &quot;emailAttribute&quot;: &quot;alex@example.org&quot;,
+    &quot;enabled&quot;: false,
+    &quot;groupAttribute&quot;: &quot;example&quot;,
+    &quot;groupBaseDn&quot;: &quot;example&quot;,
+    &quot;groupFilter&quot;: &quot;example&quot;,
+    &quot;groupNameAttribute&quot;: &quot;example&quot;,
+    &quot;idAttribute&quot;: &quot;example&quot;,
+    &quot;nameAttribute&quot;: &quot;example&quot;,
+    &quot;startTls&quot;: false
+  },
+  &quot;username&quot;: &quot;example&quot;,
+  &quot;password&quot;: &quot;&lt;redacted&gt;&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/sign-in/directories/check&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;settings&quot;:{&quot;bindTemplate&quot;:&quot;example&quot;,&quot;name&quot;:&quot;example&quot;,&quot;url&quot;:&quot;https://example.org&quot;,&quot;baseDn&quot;:&quot;example&quot;,&quot;caPem&quot;:&quot;example&quot;,&quot;emailAttribute&quot;:&quot;alex@example.org&quot;,&quot;enabled&quot;:false,&quot;groupAttribute&quot;:&quot;example&quot;,&quot;groupBaseDn&quot;:&quot;example&quot;,&quot;groupFilter&quot;:&quot;example&quot;,&quot;groupNameAttribute&quot;:&quot;example&quot;,&quot;idAttribute&quot;:&quot;example&quot;,&quot;nameAttribute&quot;:&quot;example&quot;,&quot;startTls&quot;:false},&quot;username&quot;:&quot;example&quot;,&quot;password&quot;:&quot;&lt;redacted&gt;&quot;}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;message&quot;: &quot;example&quot;,
+  &quot;ok&quot;: false,
+  &quot;entry&quot;: {
+    &quot;dn&quot;: &quot;example&quot;,
+    &quot;groups&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;mappedGroups&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;subject&quot;: &quot;example&quot;,
+    &quot;username&quot;: &quot;example&quot;,
+    &quot;displayName&quot;: &quot;example&quot;,
+    &quot;email&quot;: &quot;alex@example.org&quot;
+  },
+  &quot;problem&quot;: &quot;unreachable&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="put-apiv1identitysign-inlocal-accounts"><code>PUT /api/v1/identity/sign-in/local-accounts</code></h3>
+<p>Turns sign-in with local accounts on or off. Turning it off is refused while nothing else would let people sign in, and for someone signed in with a local account. Turning it off also ends every password session.</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code>; audited.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;enabled&quot;: false
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PUT &quot;$APELORA_URL/api/v1/identity/sign-in/local-accounts&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;enabled&quot;:false}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;enabled&quot;: false,
+  &quot;pending&quot;: 1,
+  &quot;ready&quot;: 1
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identitysign-inproviders"><code>POST /api/v1/identity/sign-in/providers</code></h3>
+<p>Adds an identity provider; it is checked and applied at once.</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code> (and an approval where the policy asks for one); audited.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>audiences</code></td><td>list of string</td><td>yes</td><td>—</td></tr><tr><td><code>authorizedParties</code></td><td>list of string</td><td>no</td><td>—</td></tr><tr><td><code>clientId</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>enabled</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>groupsClaim</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>issuer</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>mfaAcr</code></td><td>list of string</td><td>no</td><td>—</td></tr><tr><td><code>mfaAmr</code></td><td>list of string</td><td>no</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>scopes</code></td><td>list of string</td><td>no</td><td>—</td></tr><tr><td><code>usernameClaim</code></td><td>string</td><td>no</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;issuer&quot;: &quot;example&quot;,
+  &quot;audiences&quot;: [
+    &quot;example&quot;
+  ]
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/sign-in/providers&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;,&quot;issuer&quot;:&quot;example&quot;,&quot;audiences&quot;:[&quot;example&quot;]}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;audiences&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;authorizedParties&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;enabled&quot;: false,
+  &quot;groupsClaim&quot;: &quot;example&quot;,
+  &quot;issuer&quot;: &quot;example&quot;,
+  &quot;mfaAcr&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;mfaAmr&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;reachable&quot;: false,
+  &quot;scopes&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;source&quot;: &quot;console&quot;,
+  &quot;usernameClaim&quot;: &quot;example&quot;,
+  &quot;clientId&quot;: &quot;example&quot;,
+  &quot;error&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="put-apiv1identitysign-inprovidersid"><code>PUT /api/v1/identity/sign-in/providers/{id}</code></h3>
+<p>Changes a provider saved in the Console.</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Provider id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>audiences</code></td><td>list of string</td><td>yes</td><td>—</td></tr><tr><td><code>authorizedParties</code></td><td>list of string</td><td>no</td><td>—</td></tr><tr><td><code>clientId</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>enabled</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>groupsClaim</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>issuer</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>mfaAcr</code></td><td>list of string</td><td>no</td><td>—</td></tr><tr><td><code>mfaAmr</code></td><td>list of string</td><td>no</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>scopes</code></td><td>list of string</td><td>no</td><td>—</td></tr><tr><td><code>usernameClaim</code></td><td>string</td><td>no</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;issuer&quot;: &quot;example&quot;,
+  &quot;audiences&quot;: [
+    &quot;example&quot;
+  ]
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PUT &quot;$APELORA_URL/api/v1/identity/sign-in/providers/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;,&quot;issuer&quot;:&quot;example&quot;,&quot;audiences&quot;:[&quot;example&quot;]}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;audiences&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;authorizedParties&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;enabled&quot;: false,
+  &quot;groupsClaim&quot;: &quot;example&quot;,
+  &quot;issuer&quot;: &quot;example&quot;,
+  &quot;mfaAcr&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;mfaAmr&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;reachable&quot;: false,
+  &quot;scopes&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;source&quot;: &quot;console&quot;,
+  &quot;usernameClaim&quot;: &quot;example&quot;,
+  &quot;clientId&quot;: &quot;example&quot;,
+  &quot;error&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1identitysign-inprovidersid"><code>DELETE /api/v1/identity/sign-in/providers/{id}</code></h3>
+<p>Removes a provider saved in the Console: people stop being able to sign in with it. Its name must be typed again.</p>
+<p><strong>Needs:</strong> <code>platform.security.manage</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Provider id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The provider's name again.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/sign-in/providers/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identitysign-ins"><code>GET /api/v1/identity/sign-ins</code></h3>
+<p>Everyone's Apelora sessions open now (or one person's).</p>
+<p><strong>Needs:</strong> <code>user.manage</code> on the platform.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>user</code></td><td>query</td><td>string</td><td>no</td><td>Only this person's.</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/sign-ins&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;absoluteSecs&quot;: 1,
+  &quot;credential&quot;: &quot;example&quot;,
+  &quot;idleSecs&quot;: 1,
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;current&quot;: false,
+      &quot;endsAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;lastUsedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;method&quot;: &quot;example&quot;,
+      &quot;person&quot;: &quot;example&quot;,
+      &quot;userId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1identitysign-insid"><code>DELETE /api/v1/identity/sign-ins/{id}</code></h3>
+<p>Ends anyone's session.</p>
+<p><strong>Needs:</strong> <code>user.manage</code> on the platform.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Session id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/sign-ins/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identitytenancy"><code>GET /api/v1/identity/tenancy</code></h3>
+<p>Organisations, projects and environments the caller can see, with quotas, use and each environment's Incus project as Incus reports it.</p>
+<p><strong>Needs:</strong> <code>organization.view</code> or <code>project.view</code> somewhere (or <code>quota.manage</code>).</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/tenancy&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;adminConfigured&quot;: false,
+  &quot;baseline&quot;: {
+    &quot;key&quot;: &quot;example&quot;
+  },
+  &quot;organizations&quot;: [
+    {
+      &quot;canSetQuota&quot;: false,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;projects&quot;: [
+        {
+          &quot;canSetQuota&quot;: false,
+          &quot;environments&quot;: [],
+          &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+          &quot;name&quot;: &quot;example&quot;,
+          &quot;slug&quot;: &quot;example&quot;,
+          &quot;quota&quot;: {
+            &quot;cpu&quot;: 1,
+            &quot;diskGib&quot;: 1,
+            &quot;instances&quot;: 1,
+            &quot;memoryGib&quot;: 1
+          },
+          &quot;usage&quot;: {
+            &quot;cpu&quot;: 1,
+            &quot;diskBytes&quot;: 1,
+            &quot;instances&quot;: 1,
+            &quot;memoryBytes&quot;: 1
+          }
+        }
+      ],
+      &quot;slug&quot;: &quot;example&quot;,
+      &quot;quota&quot;: {
+        &quot;cpu&quot;: 1,
+        &quot;diskGib&quot;: 1,
+        &quot;instances&quot;: 1,
+        &quot;memoryGib&quot;: 1
+      },
+      &quot;usage&quot;: {
+        &quot;cpu&quot;: 1,
+        &quot;diskBytes&quot;: 1,
+        &quot;instances&quot;: 1,
+        &quot;memoryBytes&quot;: 1
+      }
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identityusers"><code>GET /api/v1/identity/users</code></h3>
+<p>People who have signed in, as far as the caller may see them: everyone for a platform administrator, otherwise those with a role in the caller's scopes.</p>
+<p><strong>Needs:</strong> <code>user.view</code>.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/users&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;disabled&quot;: false,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;issuer&quot;: &quot;example&quot;,
+      &quot;displayName&quot;: &quot;example&quot;,
+      &quot;email&quot;: &quot;alex@example.org&quot;,
+      &quot;lastSeenAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;username&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityusersuserdisable"><code>POST /api/v1/identity/users/{user}/disable</code></h3>
+<p>Disables a person: their tokens and Apelora sessions stop working at once.</p>
+<p><strong>Needs:</strong> <code>user.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>user</code></td><td>path</td><td>string</td><td>yes</td><td>User id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/users/00000000-0000-4000-8000-000000000001/disable&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1identityusersuserenable"><code>POST /api/v1/identity/users/{user}/enable</code></h3>
+<p>Re-enables a person.</p>
+<p><strong>Needs:</strong> <code>user.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>user</code></td><td>path</td><td>string</td><td>yes</td><td>User id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/identity/users/00000000-0000-4000-8000-000000000001/enable&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1identityuserslookup"><code>GET /api/v1/identity/users/lookup</code></h3>
+<p>Finds one person by exact user name or e-mail so a role can be given to them. Someone who has never signed in does not exist yet.</p>
+<p><strong>Needs:</strong> <code>role.assign</code> or <code>group.manage</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>q</code></td><td>query</td><td>string</td><td>yes</td><td>Exact user name or e-mail address.</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/identity/users/lookup?q=example&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;disabled&quot;: false,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;issuer&quot;: &quot;example&quot;,
+      &quot;displayName&quot;: &quot;example&quot;,
+      &quot;email&quot;: &quot;alex@example.org&quot;,
+      &quot;lastSeenAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;username&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1mesign-ins"><code>GET /api/v1/me/sign-ins</code></h3>
+<p>Your Apelora sessions open now (password and directory sign-ins), most recently used first. Sign-ins with an identity provider's token are not sessions and are not listed.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/me/sign-ins&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;absoluteSecs&quot;: 1,
+  &quot;credential&quot;: &quot;example&quot;,
+  &quot;idleSecs&quot;: 1,
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;current&quot;: false,
+      &quot;endsAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;lastUsedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;method&quot;: &quot;example&quot;,
+      &quot;person&quot;: &quot;example&quot;,
+      &quot;userId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1mesign-insid"><code>DELETE /api/v1/me/sign-ins/{id}</code></h3>
+<p>Ends one of your sessions (signs that browser out). Another person's answers 404.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Session id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/me/sign-ins/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1metokens"><code>GET /api/v1/me/tokens</code></h3>
+<p>Your personal tokens (live ones, and those that ended in the last 30 days), newest first. Any signed-in person.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/me/tokens&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;current&quot;: false,
+      &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;owner&quot;: &quot;example&quot;,
+      &quot;state&quot;: &quot;example&quot;,
+      &quot;userId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;lastUsedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;revokedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;revokedBy&quot;: &quot;example&quot;,
+      &quot;rotatedFrom&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;successor&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+    }
+  ],
+  &quot;limit&quot;: 1
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1metokens"><code>POST /api/v1/me/tokens</code></h3>
+<p>Creates a personal token, shown only in this response. It acts as you with whatever you hold when it is used, and never opens terminal sessions or makes other credentials.</p>
+<p><strong>Needs:</strong> a sign-in (not a personal token); 1–365 days, no default; at most 20 live tokens.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>expiresInDays</code></td><td>integer</td><td>no</td><td>1–365 days; required.</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>What it is for, e.g. &quot;laptop backup script&quot;.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/me/tokens&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;info&quot;: {
+    &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;current&quot;: false,
+    &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+    &quot;owner&quot;: &quot;example&quot;,
+    &quot;state&quot;: &quot;example&quot;,
+    &quot;userId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;lastUsedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;revokedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;revokedBy&quot;: &quot;example&quot;,
+    &quot;rotatedFrom&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;successor&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+  },
+  &quot;token&quot;: &quot;&lt;redacted&gt;&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>409</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1metokensid"><code>DELETE /api/v1/me/tokens/{id}</code></h3>
+<p>Revokes one of your live tokens; it stops working at once. Another person's token answers 404.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Token id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/me/tokens/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1metokensidrotate"><code>POST /api/v1/me/tokens/{id}/rotate</code></h3>
+<p>Rotates one of your live tokens: a successor with the same name (shown only in this response), and the old token keeps working for the overlap (0–1440 minutes, 60 by default), then expires. A token is rotated once; rotate its successor next time.</p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Token id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>expiresInDays</code></td><td>integer</td><td>no</td><td>The successor's lifetime, 1–365 days; the old token's lifetime when omitted.</td></tr><tr><td><code>overlapMinutes</code></td><td>integer</td><td>no</td><td>How long the old token keeps working, 0–1440 minutes; 60 when omitted.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;expiresInDays&quot;: 1
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/me/tokens/00000000-0000-4000-8000-000000000001/rotate&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;expiresInDays&quot;:1}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;info&quot;: {
+    &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;current&quot;: false,
+    &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+    &quot;owner&quot;: &quot;example&quot;,
+    &quot;state&quot;: &quot;example&quot;,
+    &quot;userId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;lastUsedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;revokedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;revokedBy&quot;: &quot;example&quot;,
+    &quot;rotatedFrom&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;successor&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+  },
+  &quot;previous&quot;: {
+    &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;current&quot;: false,
+    &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+    &quot;owner&quot;: &quot;example&quot;,
+    &quot;state&quot;: &quot;example&quot;,
+    &quot;userId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;lastUsedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;revokedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;revokedBy&quot;: &quot;example&quot;,
+    &quot;rotatedFrom&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;successor&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+  },
+  &quot;token&quot;: &quot;&lt;redacted&gt;&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/audit/"><span>Previous</span>Audit</a><a class="next" href="/docs/api/sessions/"><span>Next</span>Sessions</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#get-apiv1approvals">GET /api/v1/approvals</a></li><li class="l3"><a href="#post-apiv1approvals">POST /api/v1/approvals</a></li><li class="l3"><a href="#post-apiv1approvalsidapprove">POST /api/v1/approvals/{id}/approve</a></li><li class="l3"><a href="#post-apiv1approvalsidcancel">POST /api/v1/approvals/{id}/cancel</a></li><li class="l3"><a href="#post-apiv1approvalsidreject">POST /api/v1/approvals/{id}/reject</a></li><li class="l3"><a href="#get-apiv1identityassignments">GET /api/v1/identity/assignments</a></li><li class="l3"><a href="#post-apiv1identityassignments">POST /api/v1/identity/assignments</a></li><li class="l3"><a href="#delete-apiv1identityassignmentsassignment">DELETE /api/v1/identity/assignments/{assignment}</a></li><li class="l3"><a href="#post-apiv1identityassignmentspreview">POST /api/v1/identity/assignments/preview</a></li><li class="l3"><a href="#get-apiv1identityaudit">GET /api/v1/identity/audit</a></li><li class="l3"><a href="#post-apiv1identityemergency-access">POST /api/v1/identity/emergency-access</a></li><li class="l3"><a href="#post-apiv1identityenvironmentsidincus-project">POST /api/v1/identity/environments/{id}/incus-project</a></li><li class="l3"><a href="#get-apiv1identitygroups">GET /api/v1/identity/groups</a></li><li class="l3"><a href="#post-apiv1identitygroups">POST /api/v1/identity/groups</a></li><li class="l3"><a href="#get-apiv1identitygroupsgroupmembers">GET /api/v1/identity/groups/{group}/members</a></li><li class="l3"><a href="#put-apiv1identitygroupsgroupmembersuser">PUT /api/v1/identity/groups/{group}/members/{user}</a></li><li class="l3"><a href="#delete-apiv1identitygroupsgroupmembersuser">DELETE /api/v1/identity/groups/{group}/members/{user}</a></li><li class="l3"><a href="#post-apiv1identitylocal-accounts">POST /api/v1/identity/local-accounts</a></li><li class="l3"><a href="#post-apiv1identitylocal-accountsidreset">POST /api/v1/identity/local-accounts/{id}/reset</a></li><li class="l3"><a href="#get-apiv1identityorganizations">GET /api/v1/identity/organizations</a></li><li class="l3"><a href="#post-apiv1identityorganizations">POST /api/v1/identity/organizations</a></li><li class="l3"><a href="#post-apiv1identityorganizationsorgprojects">POST /api/v1/identity/organizations/{org}/projects</a></li><li class="l3"><a href="#get-apiv1identitypermissions">GET /api/v1/identity/permissions</a></li><li class="l3"><a href="#get-apiv1identitypersonal-tokens">GET /api/v1/identity/personal-tokens</a></li><li class="l3"><a href="#delete-apiv1identitypersonal-tokensid">DELETE /api/v1/identity/personal-tokens/{id}</a></li><li class="l3"><a href="#get-apiv1identitypolicies">GET /api/v1/identity/policies</a></li><li class="l3"><a href="#put-apiv1identitypolicies">PUT /api/v1/identity/policies</a></li><li class="l3"><a href="#delete-apiv1identitypoliciesid">DELETE /api/v1/identity/policies/{id}</a></li><li class="l3"><a href="#get-apiv1identityprojects">GET /api/v1/identity/projects</a></li><li class="l3"><a href="#get-apiv1identityprojectsprojectenvironments">GET /api/v1/identity/projects/{project}/environments</a></li><li class="l3"><a href="#post-apiv1identityprojectsprojectenvironments">POST /api/v1/identity/projects/{project}/environments</a></li><li class="l3"><a href="#get-apiv1identityquotasscopeid">GET /api/v1/identity/quotas/{scope}/{id}</a></li><li class="l3"><a href="#put-apiv1identityquotasscopeid">PUT /api/v1/identity/quotas/{scope}/{id}</a></li><li class="l3"><a href="#get-apiv1identityroles">GET /api/v1/identity/roles</a></li><li class="l3"><a href="#post-apiv1identityroles">POST /api/v1/identity/roles</a></li><li class="l3"><a href="#delete-apiv1identityrolesrole">DELETE /api/v1/identity/roles/{role}</a></li><li class="l3"><a href="#get-apiv1identityservice-identities">GET /api/v1/identity/service-identities</a></li><li class="l3"><a href="#post-apiv1identityservice-identities">POST /api/v1/identity/service-identities</a></li><li class="l3"><a href="#post-apiv1identityservice-identitiesiddisable">POST /api/v1/identity/service-identities/{id}/disable</a></li><li class="l3"><a href="#post-apiv1identityservice-identitiesidenable">POST /api/v1/identity/service-identities/{id}/enable</a></li><li class="l3"><a href="#get-apiv1identitysign-in">GET /api/v1/identity/sign-in</a></li><li class="l3"><a href="#put-apiv1identitysign-inapi-tokens">PUT /api/v1/identity/sign-in/api-tokens</a></li><li class="l3"><a href="#post-apiv1identitysign-incheck">POST /api/v1/identity/sign-in/check</a></li><li class="l3"><a href="#get-apiv1identitysign-indirectories">GET /api/v1/identity/sign-in/directories</a></li><li class="l3"><a href="#post-apiv1identitysign-indirectories">POST /api/v1/identity/sign-in/directories</a></li><li class="l3"><a href="#put-apiv1identitysign-indirectoriesid">PUT /api/v1/identity/sign-in/directories/{id}</a></li><li class="l3"><a href="#delete-apiv1identitysign-indirectoriesid">DELETE /api/v1/identity/sign-in/directories/{id}</a></li><li class="l3"><a href="#post-apiv1identitysign-indirectoriescheck">POST /api/v1/identity/sign-in/directories/check</a></li><li class="l3"><a href="#put-apiv1identitysign-inlocal-accounts">PUT /api/v1/identity/sign-in/local-accounts</a></li><li class="l3"><a href="#post-apiv1identitysign-inproviders">POST /api/v1/identity/sign-in/providers</a></li><li class="l3"><a href="#put-apiv1identitysign-inprovidersid">PUT /api/v1/identity/sign-in/providers/{id}</a></li><li class="l3"><a href="#delete-apiv1identitysign-inprovidersid">DELETE /api/v1/identity/sign-in/providers/{id}</a></li><li class="l3"><a href="#get-apiv1identitysign-ins">GET /api/v1/identity/sign-ins</a></li><li class="l3"><a href="#delete-apiv1identitysign-insid">DELETE /api/v1/identity/sign-ins/{id}</a></li><li class="l3"><a href="#get-apiv1identitytenancy">GET /api/v1/identity/tenancy</a></li><li class="l3"><a href="#get-apiv1identityusers">GET /api/v1/identity/users</a></li><li class="l3"><a href="#post-apiv1identityusersuserdisable">POST /api/v1/identity/users/{user}/disable</a></li><li class="l3"><a href="#post-apiv1identityusersuserenable">POST /api/v1/identity/users/{user}/enable</a></li><li class="l3"><a href="#get-apiv1identityuserslookup">GET /api/v1/identity/users/lookup</a></li><li class="l3"><a href="#get-apiv1mesign-ins">GET /api/v1/me/sign-ins</a></li><li class="l3"><a href="#delete-apiv1mesign-insid">DELETE /api/v1/me/sign-ins/{id}</a></li><li class="l3"><a href="#get-apiv1metokens">GET /api/v1/me/tokens</a></li><li class="l3"><a href="#post-apiv1metokens">POST /api/v1/me/tokens</a></li><li class="l3"><a href="#delete-apiv1metokensid">DELETE /api/v1/me/tokens/{id}</a></li><li class="l3"><a href="#post-apiv1metokensidrotate">POST /api/v1/me/tokens/{id}/rotate</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

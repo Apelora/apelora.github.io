@@ -2,7 +2,7 @@
 title: Manage it
 section: start
 slug: manage-it
-order: 6
+order: 8
 label: Manage it
 summary: A tour of Fabric Console: health, servers, applications, operations, audit, and adding servers.
 ---
@@ -56,7 +56,7 @@ Shut down, Stop and Restart ask first; when clients of a single-instance or stat
 
 <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Apelora Studio · Applications</span></div><img src="/assets/docs/img/43-studio-applications-list-1440x900.webp" width="1440" height="900" loading="lazy" alt="Studio's Applications list in its list layout: each application with its status, project and health, and the Deploy, Start, Restart, Shut down, Stop and Migrate buttons the server allows."><figcaption>The Applications list. Import and New application are at the top; Export is in each row's menu. Sample data.</figcaption></figure>
 
-**Migrate** first shows, per instance, whether it keeps running while it moves, what is copied, and what blocks it; what has to stop needs a tick. All instances end up on the one server, so a module's replicas then share it. Shut down, Stop and migrating containers have run on the four-server lab; the dry run and this dialog have only been checked against stand-ins, and migrating virtual machines through an application has not been tried.
+**Migrate** first shows, per instance, whether it keeps running while it moves, what is copied, and what blocks it; what has to stop needs a tick. All instances end up on the one server, so a module's replicas then share it. Shut down, Stop and migrating containers have run on the {{fact:labServersWord}}-server lab; the dry run and this dialog have only been checked against stand-ins, and migrating virtual machines through an application has not been tried.
 
 <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Apelora Studio · Migrate</span></div><img src="/assets/docs/img/46-studio-migrate-1440x900.webp" width="1440" height="900" loading="lazy" alt="The Migrate dialog: a server chosen from a list, a table with each instance, where it runs now and what happens to it, a note that replicas will share the server, and a tick for instances that stop while they move."><figcaption>What would happen to each instance, before anything is asked. Sample data.</figcaption></figure>
 

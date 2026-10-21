@@ -2,7 +2,7 @@
 title: Design your first application
 section: start
 slug: design-your-first-application
-order: 4
+order: 6
 label: Design your first application
 summary: Drag modules onto the canvas, cable their ports, set replicas and resources, and check the design before anything runs.
 ---
@@ -16,7 +16,7 @@ Open the Studio. It starts on the **Applications** list: **New application** cre
 
 ## 2. Add modules
 
-The catalog on the left holds 83 modules in 12 categories. Drag a tile onto the canvas, or click it to place it at the centre. Search narrows the list. Right-click empty canvas for **Add module**.
+The catalog on the left holds {{fact:modules}} modules in {{fact:categories}} categories. Drag a tile onto the canvas, or click it to place it at the centre. Search narrows the list. Right-click empty canvas for **Add module**.
 
 > **Which modules run today.** NGINX (an application container), Debian (a system container) and a Linux virtual machine deploy. The other 80 are design-only: you can place and connect them, but deployment skips them and the Deploy dialog says so. See the [module catalog](/docs/reference/module-catalog/).
 

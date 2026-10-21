@@ -18,7 +18,7 @@
           <h2>Design</h2>
           <p>Apelora Studio is a canvas for connected modules. Ports are typed, so a cable that cannot work is refused.</p>
           <ul class="checks">
-            <li><span>A catalog of 83 modules in 12 categories, and modules you define yourself.</span></li>
+            <li><span>A catalog of {{fact:modules}} modules in {{fact:categories}} categories, and modules you define yourself.</span></li>
             <li><span>Import and export designs as files; undo and redo.</span></li>
             <li><span><b>Deploys today:</b> NGINX (an application container), Debian (a system container) and a Linux virtual machine. The other 80 modules are design-only until their images have run on the lab.</span></li>
           </ul>
@@ -121,7 +121,7 @@
           <h2>Monitor</h2>
           <p>Know before your users do.</p>
           <ul class="checks">
-            <li><span>Fifteen built-in alert rules (failed jobs, silent workers, offline servers, expiring certificates, failed backups) with signed webhooks.</span></li>
+            <li><span>{{fact:alertRules}} built-in alert rules (failed jobs, silent workers, offline servers, expiring certificates, failed backups) with signed webhooks.</span></li>
             <li><span>A metrics endpoint for the control plane and the worker, for your own monitoring.</span></li>
             <li><span>A support bundle with versions, health and failed jobs; secrets are never included.</span></li>
           </ul>
@@ -145,11 +145,11 @@
           <table>
             <thead><tr><th scope="col">Item</th><th scope="col">State</th><th scope="col">What it means for you</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Production use</th><td data-label="State">Not yet</td><td data-label="Meaning">Tested on a four-server lab of virtual machines; no real servers have run it, and speed and scale are unmeasured.</td></tr>
+              <tr><th scope="row">Production use</th><td data-label="State">Not yet</td><td data-label="Meaning">Tested on a {{fact:labServersWord}}-server lab of virtual machines; no real servers have run it, and speed and scale are unmeasured.</td></tr>
               <tr><th scope="row">Virtual machines after a server dies</th><td data-label="State">Planned</td><td data-label="Meaning">Containers with data on shared storage recover; virtual machines are not drilled.</td></tr>
               <tr><th scope="row">Operating systems through MAAS</th><td data-label="State">Not built</td><td data-label="Meaning">Discovery and registration of MAAS machines is built and tested against a real MAAS; installing an OS through it is not. Servers installed by hand join with a token.</td></tr>
               <tr><th scope="row">Management controllers</th><td data-label="State">Partly built</td><td data-label="Meaning">A Redfish fence provider exists, tested against a test server only; IPMI is not built.</td></tr>
-              <tr><th scope="row">More deployable modules</th><td data-label="State">Ongoing</td><td data-label="Meaning">Three of 83 modules deploy; each new runtime is added after its images have run on the lab.</td></tr>
+              <tr><th scope="row">More deployable modules</th><td data-label="State">Ongoing</td><td data-label="Meaning">{{fact:deployableWord|cap}} of {{fact:modules}} modules deploy; each new runtime is added after its images have run on the lab.</td></tr>
               <tr><th scope="row">Rebalancing and staged upgrades</th><td data-label="State">Not built</td><td data-label="Meaning">Instances are not moved automatically for balance; the rolling Incus upgrade is a written procedure, not an assistant.</td></tr>
               <tr><th scope="row">Service names (DNS)</th><td data-label="State">Not built</td><td data-label="Meaning">Modules find each other through addresses injected as settings.</td></tr>
               <tr><th scope="row">Several sites and regions</th><td data-label="State">Designed</td><td data-label="Meaning">A design from three servers to a global fabric is written down; the multi-site parts are not built.</td></tr>

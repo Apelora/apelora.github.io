@@ -8,7 +8,7 @@ summary: What Apelora Fabric is made of, what it needs, what state it is in, and
 ---
 Apelora Fabric lets you draw an application, then runs it on your own Linux servers. This section takes you from nothing to a running, managed application in seven short steps. It does not explain everything; each step links to the page that does.
 
-> **Heads-up: early development.** Fabric is tested on a four-server lab of virtual machines. No real servers have run it yet, and speed and scale are unmeasured. Three of the 83 catalog modules deploy today: NGINX, Debian and a Linux virtual machine. Read [what works today](/docs/reference/current-state/) before you plan anything around it.
+> **Heads-up: early development.** Fabric is tested on a {{fact:labServersWord}}-server lab of virtual machines. No real servers have run it yet, and speed and scale are unmeasured. Three of the 83 catalog modules deploy today: NGINX, Debian and a Linux virtual machine. Read [what works today](/docs/reference/current-state/) before you plan anything around it.
 
 ## The parts
 
@@ -28,13 +28,13 @@ Apelora owns the application: its design, its connections, its replicas and thei
 ## What you need
 
 - **To try it:** a Mac or Linux workstation, Node.js 22 or newer, and for the full lab Rust (the repository pins the toolchain), Docker and [Lima](https://lima-vm.io). No hardware to buy.
-- **To run it on your servers:** three or more Linux servers (kernel 6.12 or newer) with Incus 7.0 LTS clustered; PostgreSQL; a machine for the control plane and worker; and a way to serve two sets of static files over HTTPS.
+- **To run it on your servers:** three or more Linux servers (kernel 6.12 or newer) with Incus {{fact:incusSeries}} LTS clustered; PostgreSQL; a machine for the control plane and worker; and a way to serve two sets of static files over HTTPS.
 - **To deploy something:** an Incus project for Apelora to deploy into, and an identity Apelora may use there.
 
 ## Choose your way in
 
 1. **See the designer in a minute.** [Try it on your workstation](/docs/start/try-it-on-your-workstation/), first step. Mock data, nothing deployed.
 2. **Run the whole thing on one machine.** The same page, second step: a throwaway Incus cluster in virtual machines.
-3. **Set it up on your own servers.** [Install on your servers](/docs/start/install-on-your-servers/).
+3. **Set it up on your own servers.** Plan the [servers and network](/docs/start/servers-and-network/), [install Incus](/docs/start/install-incus/), then [install Apelora Fabric](/docs/start/install-on-your-servers/).
 
 Then, in order: [sign in](/docs/start/sign-in/), [design your first application](/docs/start/design-your-first-application/), [deploy it](/docs/start/deploy-it/), [manage it](/docs/start/manage-it/), and keep [when something goes wrong](/docs/start/when-something-goes-wrong/) at hand.

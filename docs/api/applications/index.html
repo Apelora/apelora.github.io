@@ -1,0 +1,1386 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Applications API · API · Apelora</title>
+  <meta name="description" content="Applications, drafts, versions, operations and migration. Apelora Fabric documentation and website.">
+  <link rel="canonical" href="https://apelora.github.io/docs/api/applications/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Applications API · API · Apelora">
+  <meta property="og:description" content="Applications, drafts, versions, operations and migration. Apelora Fabric documentation and website.">
+  <meta property="og:url" content="https://apelora.github.io/docs/api/applications/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/servers-and-network/">Servers and network</a></li><li><a href="/docs/start/install-incus/">Install Incus</a></li><li><a href="/docs/start/install-on-your-servers/">Install Apelora</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group" open><summary>API<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/api/overview/">Overview</a></li><li><a href="/docs/api/system/">System</a></li><li><a href="/docs/api/inventory/">Inventory</a></li><li><a href="/docs/api/deployment/">Deployment</a></li><li><a href="/docs/api/applications/" aria-current="page">Applications</a></li><li><a href="/docs/api/cluster/">Cluster</a></li><li><a href="/docs/api/administration/">Administration</a></li><li><a href="/docs/api/audit/">Audit</a></li><li><a href="/docs/api/identity/">Identity and access</a></li><li><a href="/docs/api/sessions/">Sessions</a></li><li><a href="/docs/api/alerts/">Alerts</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/settings/">Settings reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li><li><a href="/docs/decisions/0015-application-lifecycle-verbs/">0015 · Application lifecycle verbs: Shut down, Stop, and Migrate</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/api/">API</a></nav>
+        <h1>Applications API</h1>
+        <div class="prose">
+<p>Applications: drafts and published versions, deploying a version, start, shut down, stop, restart and migrate, volumes and status. This page documents all 33 operations, each with a request you can copy. Set <code>APELORA_URL</code> and <code>APELORA_TOKEN</code> as described in <a href="/docs/api/overview/">the API overview</a>.</p>
+<h2 id="operations">Operations</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#get-apiv1applications">undefined</a></td><td>Applications the caller may see, each with design status, derived runtime status, replica health, and the actions they may take now.</td></tr><tr><td><a href="#post-apiv1applications">undefined</a></td><td>Creates an application in an environment, optionally with its first draft.</td></tr><tr><td><a href="#get-apiv1applicationsname">undefined</a></td><td>One application with its modules (desired and observed), versions and recent operations.</td></tr><tr><td><a href="#patch-apiv1applicationsname">undefined</a></td><td>Changes an application's description or icon (its name cannot change).</td></tr><tr><td><a href="#post-apiv1applicationsnamearchive">undefined</a></td><td>Archives an application that is not running; it leaves the default list and keeps its data.</td></tr><tr><td><a href="#post-apiv1applicationsnamedeployments">undefined</a></td><td>Deploys the design: saves it as a new revision and queues the planned changes.</td></tr><tr><td><a href="#get-apiv1applicationsnamedraft">undefined</a></td><td>The application's working document.</td></tr><tr><td><a href="#put-apiv1applicationsnamedraft">undefined</a></td><td>Saves the draft as the next version.</td></tr><tr><td><a href="#get-apiv1applicationsnameevents">undefined</a></td><td>What happened to the application: creation, saves, versions, deployments, operations, refusals.</td></tr><tr><td><a href="#get-apiv1applicationsnamemigration">undefined</a></td><td>Dry run of migrating the application to another server: for each instance whether it keeps running, what is copied and what blocks it.</td></tr><tr><td><a href="#get-apiv1applicationsnameoperations">undefined</a></td><td>Recent operations of the application, newest first.</td></tr><tr><td><a href="#post-apiv1applicationsnameoperations">undefined</a></td><td>Starts, shuts down (graceful), stops (immediate), restarts or migrates the application's instances, in dependency order where that matters, as an asynchronous operation.</td></tr><tr><td><a href="#get-apiv1applicationsnameoperationsid">undefined</a></td><td>One operation with the progress of each phase and instance.</td></tr><tr><td><a href="#post-apiv1applicationsnameplan">undefined</a></td><td>What deploying the design would change, without changing anything.</td></tr><tr><td><a href="#post-apiv1applicationsnamerestore">undefined</a></td><td>Brings an archived application back.</td></tr><tr><td><a href="#get-apiv1applicationsnamestatus">undefined</a></td><td>The application's instances as Incus reports them, by module.</td></tr><tr><td><a href="#get-apiv1applicationsnameversions">undefined</a></td><td>Versions of the application, newest first.</td></tr><tr><td><a href="#post-apiv1applicationsnameversions">undefined</a></td><td>Releases the current draft as the next immutable published version.</td></tr><tr><td><a href="#get-apiv1applicationsnameversionsrevision">undefined</a></td><td>The document of one version.</td></tr><tr><td><a href="#get-apiv1applicationsnamevolumes">undefined</a></td><td>The application's volumes, with what Incus says about each now.</td></tr><tr><td><a href="#patch-apiv1applicationsnamevolumesvolume">undefined</a></td><td>Grows one of the application's volumes, also while its instance runs.</td></tr><tr><td><a href="#delete-apiv1applicationsnamevolumesvolume">undefined</a></td><td>Deletes one of the application's volumes and its snapshots, for good.</td></tr><tr><td><a href="#get-apiv1applicationsnamevolumesvolumebackups">undefined</a></td><td>The volume's backups, oldest first, whether each still exists, and its schedules.</td></tr><tr><td><a href="#post-apiv1applicationsnamevolumesvolumebackups">undefined</a></td><td>Backs the volume up now: a copy, through a short-lived snapshot, into the backup pool on another member.</td></tr><tr><td><a href="#get-apiv1applicationsnamevolumesvolumebackupsbackuprestore">undefined</a></td><td>Dry run of restoring the volume from one of its backups: what is replaced (data written since the backup, the volume's snapshots), which instances must be stopped, where the safety backup goes, and the steps.</td></tr><tr><td><a href="#post-apiv1applicationsnamevolumesvolumebackupsbackuprestore">undefined</a></td><td>Restores the volume from one of its backups, after the dry run passes again and the volume's name is typed: a safety backup of the current data first (unless declined), then the backup is copied over the volume.</td></tr><tr><td><a href="#put-apiv1applicationsnamevolumesvolumeschedules">undefined</a></td><td>Sets or turns off the volume's snapshot and backup schedules.</td></tr><tr><td><a href="#get-apiv1applicationsnamevolumesvolumesnapshots">undefined</a></td><td>The volume's snapshots, oldest first.</td></tr><tr><td><a href="#post-apiv1applicationsnamevolumesvolumesnapshots">undefined</a></td><td>Takes a snapshot of the volume, named after the time (<code>snap-YYYYMMDD-HHMMSS</code>).</td></tr><tr><td><a href="#delete-apiv1applicationsnamevolumesvolumesnapshotssnapshot">undefined</a></td><td>Deletes one snapshot of the volume.</td></tr><tr><td><a href="#post-apiv1applicationsnamevolumesvolumesnapshotssnapshotrestore">undefined</a></td><td>Puts the volume back to a snapshot: everything written since is lost.</td></tr><tr><td><a href="#get-apiv1networksapplications">undefined</a></td><td>Each application the caller may view that has a recorded deployment: its network, the rules compiled from its design, its service and published addresses, and what Incus holds for each, with the differences.</td></tr><tr><td><a href="#get-apiv1storagevolumes">undefined</a></td><td>Every application volume the caller may see, with what Incus reports, its schedules and how many backups it has.</td></tr></tbody></table></div>
+<h2 id="details">Details</h2>
+<h3 id="get-apiv1applications"><code>GET /api/v1/applications</code></h3>
+<p>Applications the caller may see, each with design status, derived runtime status, replica health, and the actions they may take now.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>includeArchived</code></td><td>query</td><td>boolean</td><td>no</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;actions&quot;: {
+        &quot;migrate&quot;: {
+          &quot;allowed&quot;: false,
+          &quot;reason&quot;: &quot;example&quot;
+        },
+        &quot;restart&quot;: {
+          &quot;allowed&quot;: false,
+          &quot;reason&quot;: &quot;example&quot;
+        },
+        &quot;shutdown&quot;: {
+          &quot;allowed&quot;: false,
+          &quot;reason&quot;: &quot;example&quot;
+        },
+        &quot;start&quot;: {
+          &quot;allowed&quot;: false,
+          &quot;reason&quot;: &quot;example&quot;
+        },
+        &quot;stop&quot;: {
+          &quot;allowed&quot;: false,
+          &quot;reason&quot;: &quot;example&quot;
+        }
+      },
+      &quot;archived&quot;: false,
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;deployment&quot;: {
+        &quot;modules&quot;: 0,
+        &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+        &quot;replicas&quot;: {
+          &quot;desired&quot;: 0,
+          &quot;healthy&quot;: 0,
+          &quot;running&quot;: 0,
+          &quot;unhealthy&quot;: 0
+        },
+        &quot;source&quot;: &quot;mock&quot;,
+        &quot;stale&quot;: false,
+        &quot;status&quot;: &quot;not-deployed&quot;,
+        &quot;deployedVersion&quot;: 1,
+        &quot;lastActivityAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+        &quot;operation&quot;: {
+          &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+          &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+          &quot;kind&quot;: &quot;start&quot;,
+          &quot;state&quot;: &quot;pending&quot;,
+          &quot;error&quot;: &quot;example&quot;
+        }
+      },
+      &quot;description&quot;: &quot;A description&quot;,
+      &quot;design&quot;: {
+        &quot;hasUnpublishedChanges&quot;: false,
+        &quot;status&quot;: &quot;draft&quot;,
+        &quot;validationErrors&quot;: 1,
+        &quot;draftVersion&quot;: 1,
+        &quot;publishedVersion&quot;: 1,
+        &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+      },
+      &quot;icon&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;project&quot;: {
+        &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+        &quot;name&quot;: &quot;example&quot;,
+        &quot;organizationId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+        &quot;organizationSlug&quot;: &quot;example&quot;,
+        &quot;slug&quot;: &quot;example&quot;
+      },
+      &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;environment&quot;: {
+        &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  …</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applications"><code>POST /api/v1/applications</code></h3>
+<p>Creates an application in an environment, optionally with its first draft.</p>
+<p><strong>Needs:</strong> <code>application.create</code> on the environment's project.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>description</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>document</code></td><td>object</td><td>no</td><td>The first draft (a Studio document), if any.</td></tr><tr><td><code>environmentId</code></td><td>string</td><td>yes</td><td>The environment (and so the project) the application lives in.</td></tr><tr><td><code>icon</code></td><td>string</td><td>no</td><td>Icon key; <code>box</code> when omitted.</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>Lowercase letters, digits and hyphens, starting with a letter; at most 40 characters. Fixed for the life of the application (instances are named after it).</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;environmentId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;name&quot;:&quot;example&quot;,&quot;environmentId&quot;:&quot;00000000-0000-4000-8000-000000000001&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;actions&quot;: {
+    &quot;migrate&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;restart&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;shutdown&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;start&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;stop&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    }
+  },
+  &quot;archived&quot;: false,
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;deployment&quot;: {
+    &quot;modules&quot;: 0,
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;replicas&quot;: {
+      &quot;desired&quot;: 0,
+      &quot;healthy&quot;: 0,
+      &quot;running&quot;: 0,
+      &quot;unhealthy&quot;: 0
+    },
+    &quot;source&quot;: &quot;mock&quot;,
+    &quot;stale&quot;: false,
+    &quot;status&quot;: &quot;not-deployed&quot;,
+    &quot;deployedVersion&quot;: 1,
+    &quot;lastActivityAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;operation&quot;: {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;kind&quot;: &quot;start&quot;,
+      &quot;state&quot;: &quot;pending&quot;,
+      &quot;error&quot;: &quot;example&quot;
+    }
+  },
+  &quot;description&quot;: &quot;A description&quot;,
+  &quot;design&quot;: {
+    &quot;hasUnpublishedChanges&quot;: false,
+    &quot;status&quot;: &quot;draft&quot;,
+    &quot;validationErrors&quot;: 1,
+    &quot;draftVersion&quot;: 1,
+    &quot;publishedVersion&quot;: 1,
+    &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+  },
+  &quot;icon&quot;: &quot;example&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;project&quot;: {
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+    &quot;organizationId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;organizationSlug&quot;: &quot;example&quot;,
+    &quot;slug&quot;: &quot;example&quot;
+  },
+  &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;environment&quot;: {
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;kind&quot;: &quot;production&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+  …</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsname"><code>GET /api/v1/applications/{name}</code></h3>
+<p>One application with its modules (desired and observed), versions and recent operations.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;application&quot;: {
+    &quot;actions&quot;: {
+      &quot;migrate&quot;: {
+        &quot;allowed&quot;: false,
+        &quot;reason&quot;: &quot;example&quot;
+      },
+      &quot;restart&quot;: {
+        &quot;allowed&quot;: false,
+        &quot;reason&quot;: &quot;example&quot;
+      },
+      &quot;shutdown&quot;: {
+        &quot;allowed&quot;: false,
+        &quot;reason&quot;: &quot;example&quot;
+      },
+      &quot;start&quot;: {
+        &quot;allowed&quot;: false,
+        &quot;reason&quot;: &quot;example&quot;
+      },
+      &quot;stop&quot;: {
+        &quot;allowed&quot;: false,
+        &quot;reason&quot;: &quot;example&quot;
+      }
+    },
+    &quot;archived&quot;: false,
+    &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;deployment&quot;: {
+      &quot;modules&quot;: 0,
+      &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;replicas&quot;: {
+        &quot;desired&quot;: 0,
+        &quot;healthy&quot;: 0,
+        &quot;running&quot;: 0,
+        &quot;unhealthy&quot;: 0
+      },
+      &quot;source&quot;: &quot;mock&quot;,
+      &quot;stale&quot;: false,
+      &quot;status&quot;: &quot;not-deployed&quot;,
+      &quot;deployedVersion&quot;: 1,
+      &quot;lastActivityAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;operation&quot;: {
+        &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+        &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+        &quot;kind&quot;: &quot;start&quot;,
+        &quot;state&quot;: &quot;pending&quot;,
+        &quot;error&quot;: &quot;example&quot;
+      }
+    },
+    &quot;description&quot;: &quot;A description&quot;,
+    &quot;design&quot;: {
+      &quot;hasUnpublishedChanges&quot;: false,
+      &quot;status&quot;: &quot;draft&quot;,
+      &quot;validationErrors&quot;: 1,
+      &quot;draftVersion&quot;: 1,
+      &quot;publishedVersion&quot;: 1,
+      &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+    },
+    &quot;icon&quot;: &quot;example&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+    &quot;project&quot;: {
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;organizationId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;organizationSlug&quot;: &quot;example&quot;,
+      &quot;slug&quot;: &quot;example&quot;
+    },
+    &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;environment&quot;: {
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;kind&quot;: &quot;production&quot;,
+  …</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="patch-apiv1applicationsname"><code>PATCH /api/v1/applications/{name}</code></h3>
+<p>Changes an application's description or icon (its name cannot change).</p>
+<p><strong>Needs:</strong> <code>application.design</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>description</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>icon</code></td><td>string</td><td>no</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;description&quot;: &quot;A description&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PATCH &quot;$APELORA_URL/api/v1/applications/shop&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;description&quot;:&quot;A description&quot;}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;actions&quot;: {
+    &quot;migrate&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;restart&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;shutdown&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;start&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    },
+    &quot;stop&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;reason&quot;: &quot;example&quot;
+    }
+  },
+  &quot;archived&quot;: false,
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;deployment&quot;: {
+    &quot;modules&quot;: 0,
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;replicas&quot;: {
+      &quot;desired&quot;: 0,
+      &quot;healthy&quot;: 0,
+      &quot;running&quot;: 0,
+      &quot;unhealthy&quot;: 0
+    },
+    &quot;source&quot;: &quot;mock&quot;,
+    &quot;stale&quot;: false,
+    &quot;status&quot;: &quot;not-deployed&quot;,
+    &quot;deployedVersion&quot;: 1,
+    &quot;lastActivityAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;operation&quot;: {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;kind&quot;: &quot;start&quot;,
+      &quot;state&quot;: &quot;pending&quot;,
+      &quot;error&quot;: &quot;example&quot;
+    }
+  },
+  &quot;description&quot;: &quot;A description&quot;,
+  &quot;design&quot;: {
+    &quot;hasUnpublishedChanges&quot;: false,
+    &quot;status&quot;: &quot;draft&quot;,
+    &quot;validationErrors&quot;: 1,
+    &quot;draftVersion&quot;: 1,
+    &quot;publishedVersion&quot;: 1,
+    &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+  },
+  &quot;icon&quot;: &quot;example&quot;,
+  &quot;name&quot;: &quot;example&quot;,
+  &quot;project&quot;: {
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+    &quot;organizationId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;organizationSlug&quot;: &quot;example&quot;,
+    &quot;slug&quot;: &quot;example&quot;
+  },
+  &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;environment&quot;: {
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;kind&quot;: &quot;production&quot;,
+    &quot;name&quot;: &quot;example&quot;,
+  …</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applicationsnamearchive"><code>POST /api/v1/applications/{name}/archive</code></h3>
+<p>Archives an application that is not running; it leaves the default list and keeps its data.</p>
+<p><strong>Needs:</strong> <code>application.delete</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/archive&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applicationsnamedeployments"><code>POST /api/v1/applications/{name}/deployments</code></h3>
+<p>Deploys the design: saves it as a new revision and queues the planned changes. Refuses the whole deployment if any module conflicts with an existing instance.</p>
+<p><strong>Needs:</strong> <code>deploy</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>Idempotency-Key</code></td><td>header</td><td>string</td><td>no</td><td>Makes the request safe to repeat</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>connections</code></td><td>list of object</td><td>no</td><td>The design's connections; enforced when the control plane has a network uplink.</td></tr><tr><td><code>document</code></td><td>object</td><td>yes</td><td>The Studio document, saved as an immutable revision. Ignored when <code>version</code> is given.</td></tr><tr><td><code>modules</code></td><td>list of object</td><td>yes</td><td>—</td></tr><tr><td><code>project</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>published</code></td><td>list of object</td><td>no</td><td>Ports reachable from outside the application (needs connections to be enforced).</td></tr><tr><td><code>removeMissing</code></td><td>boolean</td><td>no</td><td>Also delete the application's instances that are no longer in the design.</td></tr><tr><td><code>version</code></td><td>integer</td><td>no</td><td>Deploy this published version (its stored document) instead of saving <code>document</code> as a new revision. Drafts can never be deployed.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;project&quot;: &quot;apelora&quot;,
+  &quot;document&quot;: {},
+  &quot;modules&quot;: [
+    {
+      &quot;module&quot;: &quot;example&quot;,
+      &quot;spec&quot;: {
+        &quot;kind&quot;: &quot;container&quot;,
+        &quot;name&quot;: &quot;example&quot;,
+        &quot;project&quot;: &quot;apelora&quot;,
+        &quot;source&quot;: {
+          &quot;alias&quot;: &quot;example&quot;,
+          &quot;protocol&quot;: &quot;simplestreams&quot;,
+          &quot;server&quot;: &quot;example&quot;,
+          &quot;fingerprint&quot;: &quot;example&quot;
+        },
+        &quot;architectures&quot;: [
+          &quot;example&quot;
+        ],
+        &quot;config&quot;: {
+          &quot;key&quot;: &quot;example&quot;
+        },
+        &quot;network&quot;: {
+          &quot;acl&quot;: &quot;example&quot;,
+          &quot;network&quot;: &quot;example&quot;,
+          &quot;uplink&quot;: &quot;example&quot;
+        },
+        &quot;owner&quot;: {
+          &quot;application&quot;: &quot;example&quot;,
+          &quot;module&quot;: &quot;example&quot;,
+          &quot;replica&quot;: 0
+        },
+        &quot;profiles&quot;: [
+          &quot;example&quot;
+        ],
+        &quot;rootPool&quot;: &quot;example&quot;,
+        &quot;start&quot;: false,
+        &quot;volumes&quot;: [
+          {
+            &quot;name&quot;: &quot;example&quot;,
+            &quot;sizeMib&quot;: 0,
+            &quot;path&quot;: &quot;example&quot;,
+            &quot;pool&quot;: &quot;example&quot;
+          }
+        ]
+      },
+      &quot;availability&quot;: &quot;stateless&quot;,
+      &quot;guestOs&quot;: &quot;linux&quot;,
+      &quot;internet&quot;: &quot;none&quot;,
+      &quot;readiness&quot;: {
+        &quot;command&quot;: [
+          &quot;example&quot;
+        ],
+        &quot;timeoutSecs&quot;: 0
+      },
+      &quot;replicas&quot;: 0
+    }
+  ]
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/deployments&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Idempotency-Key: $(uuidgen)&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;project&quot;:&quot;apelora&quot;,&quot;document&quot;:{},&quot;modules&quot;:[{&quot;module&quot;:&quot;example&quot;,&quot;spec&quot;:{&quot;kind&quot;:&quot;container&quot;,&quot;name&quot;:&quot;example&quot;,&quot;project&quot;:&quot;apelora&quot;,&quot;source&quot;:{&quot;alias&quot;:&quot;example&quot;,&quot;protocol&quot;:&quot;simplestreams&quot;,&quot;server&quot;:&quot;example&quot;,&quot;fingerprint&quot;:&quot;example&quot;},&quot;architectures&quot;:[&quot;example&quot;],&quot;config&quot;:{&quot;key&quot;:&quot;example&quot;},&quot;network&quot;:{&quot;acl&quot;:&quot;example&quot;,&quot;network&quot;:&quot;example&quot;,&quot;uplink&quot;:&quot;example&quot;},&quot;owner&quot;:{&quot;application&quot;:&quot;example&quot;,&quot;module&quot;:&quot;example&quot;,&quot;replica&quot;:0},&quot;profiles&quot;:[&quot;example&quot;],&quot;rootPool&quot;:&quot;example&quot;,&quot;start&quot;:false,&quot;volumes&quot;:[{&quot;name&quot;:&quot;example&quot;,&quot;sizeMib&quot;:0,&quot;path&quot;:&quot;example&quot;,&quot;pool&quot;:&quot;example&quot;}]},&quot;availability&quot;:&quot;stateless&quot;,&quot;guestOs&quot;:&quot;linux&quot;,&quot;internet&quot;:&quot;none&quot;,&quot;readiness&quot;:{&quot;command&quot;:[&quot;example&quot;],&quot;timeoutSecs&quot;:0},&quot;replicas&quot;:0}]}'</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;application&quot;: &quot;example&quot;,
+  &quot;jobs&quot;: [
+    {
+      &quot;action&quot;: &quot;create&quot;,
+      &quot;instance&quot;: &quot;example&quot;,
+      &quot;jobId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;module&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;plan&quot;: {
+    &quot;items&quot;: [
+      {
+        &quot;action&quot;: &quot;create&quot;,
+        &quot;instance&quot;: &quot;example&quot;,
+        &quot;module&quot;: &quot;example&quot;,
+        &quot;reason&quot;: &quot;example&quot;,
+        &quot;replica&quot;: 0,
+        &quot;changes&quot;: [
+          {
+            &quot;key&quot;: &quot;example&quot;,
+            &quot;from&quot;: &quot;example&quot;,
+            &quot;to&quot;: &quot;example&quot;
+          }
+        ]
+      }
+    ],
+    &quot;warnings&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;quota&quot;: {
+      &quot;adding&quot;: {
+        &quot;cpu&quot;: 1,
+        &quot;diskBytes&quot;: 1,
+        &quot;instances&quot;: 1,
+        &quot;memoryBytes&quot;: 1
+      },
+      &quot;allowed&quot;: false,
+      &quot;scopes&quot;: [
+        {
+          &quot;dimensions&quot;: [],
+          &quot;id&quot;: &quot;example&quot;,
+          &quot;kind&quot;: &quot;organization&quot;,
+          &quot;name&quot;: &quot;example&quot;
+        }
+      ]
+    }
+  },
+  &quot;revision&quot;: 1,
+  &quot;networkJob&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnamedraft"><code>GET /api/v1/applications/{name}/draft</code></h3>
+<p>The application's working document. 404 when it has none yet.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/draft&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;document&quot;: {},
+  &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;updatedBy&quot;: &quot;example&quot;,
+  &quot;validationErrors&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;version&quot;: 1
+}</code></pre>
+<p><strong>Errors:</strong> <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="put-apiv1applicationsnamedraft"><code>PUT /api/v1/applications/{name}/draft</code></h3>
+<p>Saves the draft as the next version. Refused with 409 <code>draft_conflict</code> (and the current version) when someone saved since <code>baseVersion</code>; nothing is overwritten.</p>
+<p><strong>Needs:</strong> <code>application.design</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>baseVersion</code></td><td>integer</td><td>no</td><td>The draft version this edit started from; omit only for the first save.</td></tr><tr><td><code>document</code></td><td>object</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;document&quot;: {}
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PUT &quot;$APELORA_URL/api/v1/applications/shop/draft&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;document&quot;:{}}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;document&quot;: {},
+  &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;updatedBy&quot;: &quot;example&quot;,
+  &quot;validationErrors&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;version&quot;: 1
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnameevents"><code>GET /api/v1/applications/{name}/events</code></h3>
+<p>What happened to the application: creation, saves, versions, deployments, operations, refusals.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/events&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;action&quot;: &quot;example&quot;,
+      &quot;actor&quot;: &quot;example&quot;,
+      &quot;actorType&quot;: &quot;example&quot;,
+      &quot;at&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;detail&quot;: {},
+      &quot;id&quot;: 1,
+      &quot;outcome&quot;: &quot;example&quot;,
+      &quot;target&quot;: &quot;example&quot;,
+      &quot;actorName&quot;: &quot;example&quot;,
+      &quot;scope&quot;: {}
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnamemigration"><code>GET /api/v1/applications/{name}/migration</code></h3>
+<p>Dry run of migrating the application to another server: for each instance whether it keeps running, what is copied and what blocks it. Changes nothing.</p>
+<p><strong>Needs:</strong> <code>application.operate</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>target</code></td><td>query</td><td>string</td><td>yes</td><td>The server to move the application to.</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/migration?target=example&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;alreadyThere&quot;: false,
+      &quot;blocked&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;copyMib&quot;: 0,
+      &quot;from&quot;: &quot;example&quot;,
+      &quot;instance&quot;: &quot;example&quot;,
+      &quot;live&quot;: false,
+      &quot;module&quot;: &quot;example&quot;,
+      &quot;notes&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;stops&quot;: false
+    }
+  ],
+  &quot;possible&quot;: false,
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  },
+  &quot;stops&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;target&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnameoperations"><code>GET /api/v1/applications/{name}/operations</code></h3>
+<p>Recent operations of the application, newest first.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/operations&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;kind&quot;: &quot;start&quot;,
+      &quot;phases&quot;: [
+        {
+          &quot;action&quot;: &quot;example&quot;,
+          &quot;state&quot;: &quot;example&quot;,
+          &quot;steps&quot;: []
+        }
+      ],
+      &quot;requestedBy&quot;: &quot;example&quot;,
+      &quot;state&quot;: &quot;pending&quot;,
+      &quot;stepsDone&quot;: 0,
+      &quot;stepsTotal&quot;: 0,
+      &quot;error&quot;: &quot;example&quot;,
+      &quot;finishedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;startedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applicationsnameoperations"><code>POST /api/v1/applications/{name}/operations</code></h3>
+<p>Starts, shuts down (graceful), stops (immediate), restarts or migrates the application's instances, in dependency order where that matters, as an asynchronous operation. Succeeds only when Incus confirms each instance's state (and, for a migration, its new server). It only touches instances this application owns; networks, volumes, data and other applications are left alone.</p>
+<p><strong>Needs:</strong> <code>application.operate</code> on the application.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>Idempotency-Key</code></td><td>header</td><td>string</td><td>no</td><td>Makes the request safe to repeat</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>action</code></td><td><code>start</code>, <code>stop</code>, <code>shutdown</code>, <code>restart</code>, <code>migrate</code></td><td>yes</td><td>—</td></tr><tr><td><code>confirmDisruption</code></td><td>boolean</td><td>no</td><td>Required to stop or restart an application that has single-instance or stateful modules: it acknowledges that their clients lose service meanwhile.</td></tr><tr><td><code>target</code></td><td>string</td><td>no</td><td>The server to move the application to. Needed for <code>migrate</code>, ignored otherwise.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;start&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/operations&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Idempotency-Key: $(uuidgen)&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;action&quot;:&quot;start&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;created&quot;: false,
+  &quot;operation&quot;: {
+    &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+    &quot;kind&quot;: &quot;start&quot;,
+    &quot;phases&quot;: [
+      {
+        &quot;action&quot;: &quot;example&quot;,
+        &quot;state&quot;: &quot;example&quot;,
+        &quot;steps&quot;: [
+          {
+            &quot;instance&quot;: &quot;example&quot;,
+            &quot;module&quot;: &quot;example&quot;,
+            &quot;state&quot;: &quot;example&quot;,
+            &quot;error&quot;: &quot;example&quot;
+          }
+        ]
+      }
+    ],
+    &quot;requestedBy&quot;: &quot;example&quot;,
+    &quot;state&quot;: &quot;pending&quot;,
+    &quot;stepsDone&quot;: 0,
+    &quot;stepsTotal&quot;: 0,
+    &quot;error&quot;: &quot;example&quot;,
+    &quot;finishedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;startedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnameoperationsid"><code>GET /api/v1/applications/{name}/operations/{id}</code></h3>
+<p>One operation with the progress of each phase and instance.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Operation id</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/operations/00000000-0000-4000-8000-000000000001&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;kind&quot;: &quot;start&quot;,
+  &quot;phases&quot;: [
+    {
+      &quot;action&quot;: &quot;example&quot;,
+      &quot;state&quot;: &quot;example&quot;,
+      &quot;steps&quot;: [
+        {
+          &quot;instance&quot;: &quot;example&quot;,
+          &quot;module&quot;: &quot;example&quot;,
+          &quot;state&quot;: &quot;example&quot;,
+          &quot;error&quot;: &quot;example&quot;
+        }
+      ]
+    }
+  ],
+  &quot;requestedBy&quot;: &quot;example&quot;,
+  &quot;state&quot;: &quot;pending&quot;,
+  &quot;stepsDone&quot;: 0,
+  &quot;stepsTotal&quot;: 0,
+  &quot;error&quot;: &quot;example&quot;,
+  &quot;finishedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;startedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applicationsnameplan"><code>POST /api/v1/applications/{name}/plan</code></h3>
+<p>What deploying the design would change, without changing anything.</p>
+<p><strong>Needs:</strong> <code>deploy</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>connections</code></td><td>list of object</td><td>no</td><td>The design's connections; enforced when the control plane has a network uplink.</td></tr><tr><td><code>modules</code></td><td>list of object</td><td>yes</td><td>—</td></tr><tr><td><code>project</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>published</code></td><td>list of object</td><td>no</td><td>Ports reachable from outside the application (needs connections to be enforced).</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;project&quot;: &quot;apelora&quot;,
+  &quot;modules&quot;: [
+    {
+      &quot;module&quot;: &quot;example&quot;,
+      &quot;spec&quot;: {
+        &quot;kind&quot;: &quot;container&quot;,
+        &quot;name&quot;: &quot;example&quot;,
+        &quot;project&quot;: &quot;apelora&quot;,
+        &quot;source&quot;: {
+          &quot;alias&quot;: &quot;example&quot;,
+          &quot;protocol&quot;: &quot;simplestreams&quot;,
+          &quot;server&quot;: &quot;example&quot;,
+          &quot;fingerprint&quot;: &quot;example&quot;
+        },
+        &quot;architectures&quot;: [
+          &quot;example&quot;
+        ],
+        &quot;config&quot;: {
+          &quot;key&quot;: &quot;example&quot;
+        },
+        &quot;network&quot;: {
+          &quot;acl&quot;: &quot;example&quot;,
+          &quot;network&quot;: &quot;example&quot;,
+          &quot;uplink&quot;: &quot;example&quot;
+        },
+        &quot;owner&quot;: {
+          &quot;application&quot;: &quot;example&quot;,
+          &quot;module&quot;: &quot;example&quot;,
+          &quot;replica&quot;: 0
+        },
+        &quot;profiles&quot;: [
+          &quot;example&quot;
+        ],
+        &quot;rootPool&quot;: &quot;example&quot;,
+        &quot;start&quot;: false,
+        &quot;volumes&quot;: [
+          {
+            &quot;name&quot;: &quot;example&quot;,
+            &quot;sizeMib&quot;: 0,
+            &quot;path&quot;: &quot;example&quot;,
+            &quot;pool&quot;: &quot;example&quot;
+          }
+        ]
+      },
+      &quot;availability&quot;: &quot;stateless&quot;,
+      &quot;guestOs&quot;: &quot;linux&quot;,
+      &quot;internet&quot;: &quot;none&quot;,
+      &quot;readiness&quot;: {
+        &quot;command&quot;: [
+          &quot;example&quot;
+        ],
+        &quot;timeoutSecs&quot;: 0
+      },
+      &quot;replicas&quot;: 0
+    }
+  ]
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/plan&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;project&quot;:&quot;apelora&quot;,&quot;modules&quot;:[{&quot;module&quot;:&quot;example&quot;,&quot;spec&quot;:{&quot;kind&quot;:&quot;container&quot;,&quot;name&quot;:&quot;example&quot;,&quot;project&quot;:&quot;apelora&quot;,&quot;source&quot;:{&quot;alias&quot;:&quot;example&quot;,&quot;protocol&quot;:&quot;simplestreams&quot;,&quot;server&quot;:&quot;example&quot;,&quot;fingerprint&quot;:&quot;example&quot;},&quot;architectures&quot;:[&quot;example&quot;],&quot;config&quot;:{&quot;key&quot;:&quot;example&quot;},&quot;network&quot;:{&quot;acl&quot;:&quot;example&quot;,&quot;network&quot;:&quot;example&quot;,&quot;uplink&quot;:&quot;example&quot;},&quot;owner&quot;:{&quot;application&quot;:&quot;example&quot;,&quot;module&quot;:&quot;example&quot;,&quot;replica&quot;:0},&quot;profiles&quot;:[&quot;example&quot;],&quot;rootPool&quot;:&quot;example&quot;,&quot;start&quot;:false,&quot;volumes&quot;:[{&quot;name&quot;:&quot;example&quot;,&quot;sizeMib&quot;:0,&quot;path&quot;:&quot;example&quot;,&quot;pool&quot;:&quot;example&quot;}]},&quot;availability&quot;:&quot;stateless&quot;,&quot;guestOs&quot;:&quot;linux&quot;,&quot;internet&quot;:&quot;none&quot;,&quot;readiness&quot;:{&quot;command&quot;:[&quot;example&quot;],&quot;timeoutSecs&quot;:0},&quot;replicas&quot;:0}]}'</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;action&quot;: &quot;create&quot;,
+      &quot;instance&quot;: &quot;example&quot;,
+      &quot;module&quot;: &quot;example&quot;,
+      &quot;reason&quot;: &quot;example&quot;,
+      &quot;replica&quot;: 0,
+      &quot;changes&quot;: [
+        {
+          &quot;key&quot;: &quot;example&quot;,
+          &quot;from&quot;: &quot;example&quot;,
+          &quot;to&quot;: &quot;example&quot;
+        }
+      ]
+    }
+  ],
+  &quot;warnings&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;quota&quot;: {
+    &quot;adding&quot;: {
+      &quot;cpu&quot;: 1,
+      &quot;diskBytes&quot;: 1,
+      &quot;instances&quot;: 1,
+      &quot;memoryBytes&quot;: 1
+    },
+    &quot;allowed&quot;: false,
+    &quot;scopes&quot;: [
+      {
+        &quot;dimensions&quot;: [
+          {
+            &quot;adding&quot;: 1,
+            &quot;exceeded&quot;: false,
+            &quot;limit&quot;: 1,
+            &quot;used&quot;: 1
+          }
+        ],
+        &quot;id&quot;: &quot;example&quot;,
+        &quot;kind&quot;: &quot;organization&quot;,
+        &quot;name&quot;: &quot;example&quot;
+      }
+    ]
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applicationsnamerestore"><code>POST /api/v1/applications/{name}/restore</code></h3>
+<p>Brings an archived application back.</p>
+<p><strong>Needs:</strong> <code>application.delete</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/restore&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnamestatus"><code>GET /api/v1/applications/{name}/status</code></h3>
+<p>The application's instances as Incus reports them, by module.</p>
+<p><strong>Needs:</strong> <code>read-inventory</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>project</code></td><td>query</td><td>string</td><td>no</td><td>Only this Incus project.</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/status&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;instance&quot;: &quot;example&quot;,
+      &quot;location&quot;: &quot;example&quot;,
+      &quot;module&quot;: &quot;example&quot;,
+      &quot;project&quot;: &quot;apelora&quot;,
+      &quot;status&quot;: &quot;example&quot;,
+      &quot;health&quot;: {
+        &quot;detail&quot;: &quot;example&quot;,
+        &quot;health&quot;: &quot;unknown&quot;,
+        &quot;since&quot;: &quot;example&quot;,
+        &quot;restartedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+      }
+    }
+  ],
+  &quot;services&quot;: [
+    {
+      &quot;address&quot;: &quot;example&quot;,
+      &quot;module&quot;: &quot;example&quot;,
+      &quot;project&quot;: &quot;apelora&quot;
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnameversions"><code>GET /api/v1/applications/{name}/versions</code></h3>
+<p>Versions of the application, newest first.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/versions&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;createdBy&quot;: &quot;example&quot;,
+      &quot;published&quot;: false,
+      &quot;revision&quot;: 1,
+      &quot;draftVersion&quot;: 1,
+      &quot;label&quot;: &quot;example&quot;
+    }
+  ]
+}</code></pre>
+<p><strong>Errors:</strong> <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applicationsnameversions"><code>POST /api/v1/applications/{name}/versions</code></h3>
+<p>Releases the current draft as the next immutable published version. Refused while the draft is invalid or when this draft version is already published.</p>
+<p><strong>Needs:</strong> <code>application.design</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>label</code></td><td>string</td><td>no</td><td>A short name for the version, e.g. <code>after load test</code>.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;label&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/versions&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;label&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+  &quot;createdBy&quot;: &quot;example&quot;,
+  &quot;published&quot;: false,
+  &quot;revision&quot;: 1,
+  &quot;draftVersion&quot;: 1,
+  &quot;label&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>403</code>, <code>404</code>, <code>409</code>, <code>422</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnameversionsrevision"><code>GET /api/v1/applications/{name}/versions/{revision}</code></h3>
+<p>The document of one version.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>revision</code></td><td>path</td><td>integer</td><td>yes</td><td>Version number</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/versions/1&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;document&quot;: {},
+  &quot;published&quot;: false
+}</code></pre>
+<p><strong>Errors:</strong> <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnamevolumes"><code>GET /api/v1/applications/{name}/volumes</code></h3>
+<p>The application's volumes, with what Incus says about each now.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/volumes&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;class&quot;: &quot;example&quot;,
+      &quot;content&quot;: &quot;example&quot;,
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;incusName&quot;: &quot;example&quot;,
+      &quot;instance&quot;: &quot;example&quot;,
+      &quot;member&quot;: &quot;example&quot;,
+      &quot;module&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;pool&quot;: &quot;example&quot;,
+      &quot;sizeMib&quot;: 1,
+      &quot;state&quot;: &quot;attached&quot;,
+      &quot;usedBy&quot;: [
+        &quot;example&quot;
+      ]
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="patch-apiv1applicationsnamevolumesvolume"><code>PATCH /api/v1/applications/{name}/volumes/{volume}</code></h3>
+<p>Grows one of the application's volumes, also while its instance runs. Volumes only grow: a smaller size is refused.</p>
+<p><strong>Needs:</strong> <code>application.deploy</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>sizeMib</code></td><td>integer</td><td>yes</td><td>The new size in MiB; at least the current one (volumes only grow).</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;sizeMib&quot;: 0
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PATCH &quot;$APELORA_URL/api/v1/applications/shop/volumes/example&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;sizeMib&quot;:0}'</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1applicationsnamevolumesvolume"><code>DELETE /api/v1/applications/{name}/volumes/{volume}</code></h3>
+<p>Deletes one of the application's volumes and its snapshots, for good. The volume's Incus name must be typed again; refused while an instance uses it.</p>
+<p><strong>Needs:</strong> <code>application.delete</code> (and an approval where the policy asks for one); audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The volume's Incus name again, typed by the person deleting it.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/applications/shop/volumes/example&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnamevolumesvolumebackups"><code>GET /api/v1/applications/{name}/volumes/{volume}/backups</code></h3>
+<p>The volume's backups, oldest first, whether each still exists, and its schedules.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/volumes/example/backups&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;member&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;pool&quot;: &quot;example&quot;,
+      &quot;scheduled&quot;: false,
+      &quot;sizeMib&quot;: 1,
+      &quot;takenAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;beforeRestore&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+      &quot;present&quot;: false
+    }
+  ],
+  &quot;schedules&quot;: {
+    &quot;backups&quot;: {
+      &quot;everyMinutes&quot;: 1,
+      &quot;keep&quot;: 1,
+      &quot;error&quot;: &quot;example&quot;,
+      &quot;lastRunAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+    },
+    &quot;snapshots&quot;: {
+      &quot;everyMinutes&quot;: 1,
+      &quot;keep&quot;: 1,
+      &quot;error&quot;: &quot;example&quot;,
+      &quot;lastRunAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+    }
+  },
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  },
+  &quot;backupPool&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applicationsnamevolumesvolumebackups"><code>POST /api/v1/applications/{name}/volumes/{volume}/backups</code></h3>
+<p>Backs the volume up now: a copy, through a short-lived snapshot, into the backup pool on another member. Kept until someone deletes it (scheduled backups are pruned, these are not). Queues a <code>volume.backup</code> job.</p>
+<p><strong>Needs:</strong> <code>application.operate</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name</td></tr><tr><td><code>Idempotency-Key</code></td><td>header</td><td>string</td><td>no</td><td>Makes the request safe to repeat</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/volumes/example/backups&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Idempotency-Key: $(uuidgen)&quot;</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;created&quot;: false,
+  &quot;jobId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnamevolumesvolumebackupsbackuprestore"><code>GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore</code></h3>
+<p>Dry run of restoring the volume from one of its backups: what is replaced (data written since the backup, the volume's snapshots), which instances must be stopped, where the safety backup goes, and the steps. Changes nothing.</p>
+<p><strong>Needs:</strong> <code>application.operate</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name.</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name.</td></tr><tr><td><code>backup</code></td><td>path</td><td>string</td><td>yes</td><td>The backup's Incus name.</td></tr><tr><td><code>safetyBackup</code></td><td>query</td><td>boolean</td><td>no</td><td>Take a safety backup of the current data first (default true).</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/volumes/example/backups/example/restore&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;plan&quot;: {
+    &quot;backup&quot;: &quot;example&quot;,
+    &quot;backupMember&quot;: &quot;example&quot;,
+    &quot;backupPool&quot;: &quot;example&quot;,
+    &quot;backupTakenAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;blocked&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;member&quot;: &quot;example&quot;,
+    &quot;pool&quot;: &quot;example&quot;,
+    &quot;running&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;sizeMib&quot;: 0,
+    &quot;snapshotsDeleted&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;steps&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;usedBy&quot;: [
+      &quot;example&quot;
+    ],
+    &quot;volume&quot;: &quot;example&quot;,
+    &quot;safetyBackupPool&quot;: &quot;example&quot;
+  },
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applicationsnamevolumesvolumebackupsbackuprestore"><code>POST /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore</code></h3>
+<p>Restores the volume from one of its backups, after the dry run passes again and the volume's name is typed: a safety backup of the current data first (unless declined), then the backup is copied over the volume. Every instance using it must be stopped; they stay stopped. Queues a <code>volume.restore</code> job.</p>
+<p><strong>Needs:</strong> <code>application.operate</code> (and an approval where a policy asks); audited with the job.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name.</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name.</td></tr><tr><td><code>backup</code></td><td>path</td><td>string</td><td>yes</td><td>The backup's Incus name.</td></tr><tr><td><code>Idempotency-Key</code></td><td>header</td><td>string</td><td>no</td><td>Makes the request safe to repeat</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The volume's Incus name again, typed by the person restoring it.</td></tr><tr><td><code>safetyBackup</code></td><td>boolean</td><td>no</td><td>Take a safety backup of the current data first (default true).</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/volumes/example/backups/example/restore&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Idempotency-Key: $(uuidgen)&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;created&quot;: false,
+  &quot;jobId&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="put-apiv1applicationsnamevolumesvolumeschedules"><code>PUT /api/v1/applications/{name}/volumes/{volume}/schedules</code></h3>
+<p>Sets or turns off the volume's snapshot and backup schedules. A new or changed schedule first runs at the worker's next pass (within a minute).</p>
+<p><strong>Needs:</strong> <code>application.deploy</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>backups</code></td><td>one of several</td><td>no</td><td>—</td></tr><tr><td><code>snapshots</code></td><td>one of several</td><td>no</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;backups&quot;: {
+    &quot;everyMinutes&quot;: 0,
+    &quot;keep&quot;: 0
+  }
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X PUT &quot;$APELORA_URL/api/v1/applications/shop/volumes/example/schedules&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;backups&quot;:{&quot;everyMinutes&quot;:0,&quot;keep&quot;:0}}'</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1applicationsnamevolumesvolumesnapshots"><code>GET /api/v1/applications/{name}/volumes/{volume}/snapshots</code></h3>
+<p>The volume's snapshots, oldest first.</p>
+<p><strong>Needs:</strong> <code>application.view</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;name&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  }
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applicationsnamevolumesvolumesnapshots"><code>POST /api/v1/applications/{name}/volumes/{volume}/snapshots</code></h3>
+<p>Takes a snapshot of the volume, named after the time (<code>snap-YYYYMMDD-HHMMSS</code>). While an instance runs the snapshot is only crash-consistent; the response says which. Snapshots are not backups: they live in the same pool.</p>
+<p><strong>Needs:</strong> <code>application.operate</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>201</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;consistency&quot;: &quot;example&quot;,
+  &quot;name&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="delete-apiv1applicationsnamevolumesvolumesnapshotssnapshot"><code>DELETE /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}</code></h3>
+<p>Deletes one snapshot of the volume.</p>
+<p><strong>Needs:</strong> <code>application.delete</code>; audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name.</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name.</td></tr><tr><td><code>snapshot</code></td><td>path</td><td>string</td><td>yes</td><td>Snapshot name.</td></tr></tbody></table></div>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots/example&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1applicationsnamevolumesvolumesnapshotssnapshotrestore"><code>POST /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}/restore</code></h3>
+<p>Puts the volume back to a snapshot: everything written since is lost. The snapshot's name must be typed again, and every instance using the volume must be stopped.</p>
+<p><strong>Needs:</strong> <code>application.operate</code> (and an approval where the policy asks for one); audited.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Application name.</td></tr><tr><td><code>volume</code></td><td>path</td><td>string</td><td>yes</td><td>The volume's Incus name.</td></tr><tr><td><code>snapshot</code></td><td>path</td><td>string</td><td>yes</td><td>Snapshot name.</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The snapshot's name again, typed by the person restoring it.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots/example/restore&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1networksapplications"><code>GET /api/v1/networks/applications</code></h3>
+<p>Each application the caller may view that has a recorded deployment: its network, the rules compiled from its design, its service and published addresses, and what Incus holds for each, with the differences. Read-only.</p>
+<p><strong>Needs:</strong> <code>application.view</code> on each application.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/networks/applications&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;application&quot;: &quot;example&quot;,
+      &quot;connections&quot;: [
+        {
+          &quot;from&quot;: &quot;example&quot;,
+          &quot;to&quot;: &quot;example&quot;,
+          &quot;transport&quot;: &quot;example&quot;,
+          &quot;port&quot;: 0
+        }
+      ],
+      &quot;drift&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;enforced&quot;: false,
+      &quot;modules&quot;: [
+        {
+          &quot;acl&quot;: &quot;example&quot;,
+          &quot;drift&quot;: [],
+          &quot;egress&quot;: [],
+          &quot;ingress&quot;: [],
+          &quot;internet&quot;: &quot;none&quot;,
+          &quot;module&quot;: &quot;example&quot;,
+          &quot;aclPresent&quot;: false,
+          &quot;addresses&quot;: []
+        }
+      ],
+      &quot;network&quot;: &quot;example&quot;,
+      &quot;project&quot;: &quot;apelora&quot;,
+      &quot;published&quot;: [
+        {
+          &quot;module&quot;: &quot;example&quot;,
+          &quot;port&quot;: 0,
+          &quot;transport&quot;: &quot;example&quot;
+        }
+      ],
+      &quot;revision&quot;: 1,
+      &quot;services&quot;: [
+        {
+          &quot;drift&quot;: [],
+          &quot;module&quot;: &quot;example&quot;,
+          &quot;ports&quot;: [],
+          &quot;published&quot;: false,
+          &quot;address&quot;: &quot;example&quot;,
+          &quot;backends&quot;: []
+        }
+      ],
+      &quot;networkObserved&quot;: {
+        &quot;kind&quot;: &quot;example&quot;,
+        &quot;status&quot;: &quot;example&quot;,
+        &quot;ipv4Address&quot;: &quot;example&quot;,
+        &quot;routerAddress&quot;: &quot;example&quot;
+      },
+      &quot;serviceRange&quot;: &quot;example&quot;,
+      &quot;uplink&quot;: &quot;example&quot;
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  },
+  &quot;incusError&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1storagevolumes"><code>GET /api/v1/storage/volumes</code></h3>
+<p>Every application volume the caller may see, with what Incus reports, its schedules and how many backups it has. Read-only.</p>
+<p><strong>Needs:</strong> <code>application.view</code> on each application.</p>
+<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/storage/volumes&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Response <code>200</code></strong>:</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;items&quot;: [
+    {
+      &quot;application&quot;: &quot;example&quot;,
+      &quot;backups&quot;: 1,
+      &quot;class&quot;: &quot;example&quot;,
+      &quot;incusName&quot;: &quot;example&quot;,
+      &quot;instance&quot;: &quot;example&quot;,
+      &quot;member&quot;: &quot;example&quot;,
+      &quot;module&quot;: &quot;example&quot;,
+      &quot;name&quot;: &quot;example&quot;,
+      &quot;pool&quot;: &quot;example&quot;,
+      &quot;schedules&quot;: {
+        &quot;backups&quot;: {
+          &quot;everyMinutes&quot;: 1,
+          &quot;keep&quot;: 1,
+          &quot;error&quot;: &quot;example&quot;,
+          &quot;lastRunAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+        },
+        &quot;snapshots&quot;: {
+          &quot;everyMinutes&quot;: 1,
+          &quot;keep&quot;: 1,
+          &quot;error&quot;: &quot;example&quot;,
+          &quot;lastRunAt&quot;: &quot;2026-01-01T09:00:00Z&quot;
+        }
+      },
+      &quot;sizeMib&quot;: 1,
+      &quot;usedBy&quot;: [
+        &quot;example&quot;
+      ],
+      &quot;lastBackupAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+      &quot;state&quot;: &quot;attached&quot;
+    }
+  ],
+  &quot;source&quot;: {
+    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
+    &quot;provider&quot;: &quot;mock&quot;
+  },
+  &quot;backupPool&quot;: &quot;example&quot;,
+  &quot;incusError&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>401</code>, <code>403</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/deployment/"><span>Previous</span>Deployment</a><a class="next" href="/docs/api/cluster/"><span>Next</span>Cluster</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#get-apiv1applications">GET /api/v1/applications</a></li><li class="l3"><a href="#post-apiv1applications">POST /api/v1/applications</a></li><li class="l3"><a href="#get-apiv1applicationsname">GET /api/v1/applications/{name}</a></li><li class="l3"><a href="#patch-apiv1applicationsname">PATCH /api/v1/applications/{name}</a></li><li class="l3"><a href="#post-apiv1applicationsnamearchive">POST /api/v1/applications/{name}/archive</a></li><li class="l3"><a href="#post-apiv1applicationsnamedeployments">POST /api/v1/applications/{name}/deployments</a></li><li class="l3"><a href="#get-apiv1applicationsnamedraft">GET /api/v1/applications/{name}/draft</a></li><li class="l3"><a href="#put-apiv1applicationsnamedraft">PUT /api/v1/applications/{name}/draft</a></li><li class="l3"><a href="#get-apiv1applicationsnameevents">GET /api/v1/applications/{name}/events</a></li><li class="l3"><a href="#get-apiv1applicationsnamemigration">GET /api/v1/applications/{name}/migration</a></li><li class="l3"><a href="#get-apiv1applicationsnameoperations">GET /api/v1/applications/{name}/operations</a></li><li class="l3"><a href="#post-apiv1applicationsnameoperations">POST /api/v1/applications/{name}/operations</a></li><li class="l3"><a href="#get-apiv1applicationsnameoperationsid">GET /api/v1/applications/{name}/operations/{id}</a></li><li class="l3"><a href="#post-apiv1applicationsnameplan">POST /api/v1/applications/{name}/plan</a></li><li class="l3"><a href="#post-apiv1applicationsnamerestore">POST /api/v1/applications/{name}/restore</a></li><li class="l3"><a href="#get-apiv1applicationsnamestatus">GET /api/v1/applications/{name}/status</a></li><li class="l3"><a href="#get-apiv1applicationsnameversions">GET /api/v1/applications/{name}/versions</a></li><li class="l3"><a href="#post-apiv1applicationsnameversions">POST /api/v1/applications/{name}/versions</a></li><li class="l3"><a href="#get-apiv1applicationsnameversionsrevision">GET /api/v1/applications/{name}/versions/{revision}</a></li><li class="l3"><a href="#get-apiv1applicationsnamevolumes">GET /api/v1/applications/{name}/volumes</a></li><li class="l3"><a href="#patch-apiv1applicationsnamevolumesvolume">PATCH /api/v1/applications/{name}/volumes/{volume}</a></li><li class="l3"><a href="#delete-apiv1applicationsnamevolumesvolume">DELETE /api/v1/applications/{name}/volumes/{volume}</a></li><li class="l3"><a href="#get-apiv1applicationsnamevolumesvolumebackups">GET /api/v1/applications/{name}/volumes/{volume}/backups</a></li><li class="l3"><a href="#post-apiv1applicationsnamevolumesvolumebackups">POST /api/v1/applications/{name}/volumes/{volume}/backups</a></li><li class="l3"><a href="#get-apiv1applicationsnamevolumesvolumebackupsbackuprestore">GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore</a></li><li class="l3"><a href="#post-apiv1applicationsnamevolumesvolumebackupsbackuprestore">POST /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore</a></li><li class="l3"><a href="#put-apiv1applicationsnamevolumesvolumeschedules">PUT /api/v1/applications/{name}/volumes/{volume}/schedules</a></li><li class="l3"><a href="#get-apiv1applicationsnamevolumesvolumesnapshots">GET /api/v1/applications/{name}/volumes/{volume}/snapshots</a></li><li class="l3"><a href="#post-apiv1applicationsnamevolumesvolumesnapshots">POST /api/v1/applications/{name}/volumes/{volume}/snapshots</a></li><li class="l3"><a href="#delete-apiv1applicationsnamevolumesvolumesnapshotssnapshot">DELETE /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}</a></li><li class="l3"><a href="#post-apiv1applicationsnamevolumesvolumesnapshotssnapshotrestore">POST /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}/restore</a></li><li class="l3"><a href="#get-apiv1networksapplications">GET /api/v1/networks/applications</a></li><li class="l3"><a href="#get-apiv1storagevolumes">GET /api/v1/storage/volumes</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -80,6 +80,14 @@ function head(p) {
   <script src="/assets/js/site.js" defer></script>`;
 }
 
+const FACTS = existsSync(join(root, "content/facts.json")) ? JSON.parse(read("content/facts.json")) : {};
+/** Fills {{fact:name}} and {{fact:name|cap}} from content/facts.json (made by scripts/import-docs.mjs). An unknown name stops the build. */
+const withFacts = (text, where) => text.replace(/\{\{fact:([A-Za-z]+)(\|cap)?\}\}/g, (_, k, cap) => {
+  if (!(k in FACTS)) throw new Error(`${where}: unknown fact ${k}`);
+  const v = String(FACTS[k]);
+  return cap ? v[0].toUpperCase() + v.slice(1) : v;
+});
+
 const urls = [];
 function emit(meta, body) {
   const html = `<!doctype html>
@@ -103,7 +111,7 @@ ${partial("footer")}
 
 const pages = readdirSync(join(root, "src/pages")).filter((f) => f.endsWith(".html"));
 for (const file of pages) {
-  const raw = read(`src/pages/${file}`);
+  const raw = withFacts(read(`src/pages/${file}`), file);
   const m = raw.match(/^<!--page (\{[\s\S]*?\}) -->\s*/);
   if (!m) throw new Error(`${file}: missing the <!--page {...} --> header`);
   console.log(emit(JSON.parse(m[1]), raw.slice(m[0].length)));
@@ -128,7 +136,7 @@ for (const sec of sections) {
   const dir = join(root, "content/docs", sec.id);
   if (!existsSync(dir)) continue;
   for (const f of readdirSync(dir).filter((x) => x.endsWith(".md"))) {
-    const { meta, body } = frontMatter(readFileSync(join(dir, f), "utf8"));
+    const { meta, body } = frontMatter(withFacts(readFileSync(join(dir, f), "utf8"), `${sec.id}/${f}`));
     const slug = meta.slug || f.replace(/\.md$/, "");
     docs.push({
       section: sec.id, slug, title: meta.title, order: Number(meta.order ?? 99), source: meta.source || "",
@@ -248,7 +256,7 @@ ${r.html}
 {
   const meta = { title: "Documentation", description: "Documentation for Apelora Fabric: get started, install, design, deploy and manage, with concepts, runbooks, reference and design decisions.", path: "/docs/", nav: "documentation" };
   const cards = `<ul class="sec-cards">${sections.map((sec) => `<li><a href="/docs/${sec.id}/"><b>${escH(sec.title)}</b><span>${escH(sec.blurb)}</span><small>${sec.pages.length} pages</small></a></li>`).join("")}</ul>`;
-  emit(meta, docsPage(meta, read("content/docs/_home.html").replace("{{sections}}", cards), null));
+  emit(meta, docsPage(meta, withFacts(read("content/docs/_home.html"), "_home.html").replace("{{sections}}", cards), null));
 }
 
 // a landing page for each section

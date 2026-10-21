@@ -1,0 +1,13 @@
+{
+  "modules": "83",
+  "categories": "12",
+  "deployable": "3",
+  "deployableWord": "three",
+  "alertRules": 16,
+  "apiOperations": 181,
+  "apiOperationsFloor": 180,
+  "apiGroups": 10,
+  "incusSeries": "7.0",
+  "labServers": 4,
+  "labServersWord": "four"
+}

@@ -6,12 +6,14 @@
         <ol class="journey">
           <li><a href="/docs/start/what-you-need/"><span class="n">0</span><b>Before you start</b><small>The parts, the requirements, the state of the project.</small></a></li>
           <li><a href="/docs/start/try-it-on-your-workstation/"><span class="n">1</span><b>Try it</b><small>The designer in a minute; the whole stack in a lab on your machine.</small></a></li>
-          <li><a href="/docs/start/install-on-your-servers/"><span class="n">2</span><b>Install on your servers</b><small>Incus cluster, PostgreSQL, control plane, worker, the two screens.</small></a></li>
-          <li><a href="/docs/start/sign-in/"><span class="n">3</span><b>Sign in</b><small>A token to begin with, your identity provider for people.</small></a></li>
-          <li><a href="/docs/start/design-your-first-application/"><span class="n">4</span><b>Design</b><small>Modules, cables, replicas and resources in Studio.</small></a></li>
-          <li><a href="/docs/start/deploy-it/"><span class="n">5</span><b>Deploy</b><small>Review the plan, deploy, watch it come up.</small></a></li>
-          <li><a href="/docs/start/manage-it/"><span class="n">6</span><b>Manage</b><small>Health, servers, applications, operations, audit.</small></a></li>
-          <li><a href="/docs/start/when-something-goes-wrong/"><span class="n">7</span><b>When something goes wrong</b><small>Where to look, and which runbook to open.</small></a></li>
+          <li><a href="/docs/start/servers-and-network/"><span class="n">2</span><b>Servers and network</b><small>How many servers, how many network cards, which IP addresses.</small></a></li>
+          <li><a href="/docs/start/install-incus/"><span class="n">3</span><b>Install Incus</b><small>Where to download it, how to form the cluster, networking and certificates.</small></a></li>
+          <li><a href="/docs/start/install-on-your-servers/"><span class="n">4</span><b>Install Apelora</b><small>PostgreSQL, control plane, worker, the two screens, the first administrator.</small></a></li>
+          <li><a href="/docs/start/sign-in/"><span class="n">5</span><b>Sign in</b><small>A token to begin with, your identity provider for people.</small></a></li>
+          <li><a href="/docs/start/design-your-first-application/"><span class="n">6</span><b>Design</b><small>Modules, cables, replicas and resources in Studio.</small></a></li>
+          <li><a href="/docs/start/deploy-it/"><span class="n">7</span><b>Deploy</b><small>Review the plan, deploy, watch it come up.</small></a></li>
+          <li><a href="/docs/start/manage-it/"><span class="n">8</span><b>Manage</b><small>Health, servers, applications, operations, audit.</small></a></li>
+          <li><a href="/docs/start/when-something-goes-wrong/"><span class="n">9</span><b>When something goes wrong</b><small>Where to look, and which runbook to open.</small></a></li>
         </ol>
 
         <div class="home-shots">
@@ -23,6 +25,10 @@
         <div class="table-wrap" tabindex="0" role="region" aria-label="Tasks and where they are described"><table>
           <thead><tr><th scope="col">Task</th><th scope="col">Go to</th></tr></thead>
           <tbody>
+            <tr><th scope="row">Choose servers and network cards, and plan IP addresses</th><td><a href="/docs/start/servers-and-network/">Servers and network</a></td></tr>
+            <tr><th scope="row">Download and install Incus, and form the cluster</th><td><a href="/docs/start/install-incus/">Install Incus</a></td></tr>
+            <tr><th scope="row">Call the API from a script</th><td><a href="/docs/api/overview/">API overview</a>, then one page per group with a request for every operation</td></tr>
+            <tr><th scope="row">Look up a setting</th><td><a href="/docs/reference/settings/">Settings reference</a></td></tr>
             <tr><th scope="row">See what works today, and how it was checked</th><td><a href="/docs/reference/current-state/">What works today</a></td></tr>
             <tr><th scope="row">Try it without buying hardware</th><td><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></td></tr>
             <tr><th scope="row">Add a server to the cluster</th><td><a href="/docs/runbooks/member-join/">Add a server</a></td></tr>
@@ -44,7 +50,7 @@
         <h2 id="evidence">How to read the evidence labels</h2>
         <p>Results are labelled by how they were checked. A label is never stronger than its evidence.</p>
         <dl class="terms docs-terms">
-          <div><dt>Real Incus tested</dt><dd>Run against a real Incus cluster: the four-server lab of virtual machines.</dd></div>
+          <div><dt>Real Incus tested</dt><dd>Run against a real Incus cluster: the {{fact:labServersWord}}-server lab of virtual machines.</dd></div>
           <div><dt>Real MAAS tested</dt><dd>Run against a real MAAS, again in the lab.</dd></div>
           <div><dt>Contract verified</dt><dd>Checked against recorded responses or a server shaped like the real one.</dd></div>
           <div><dt>Mock verified</dt><dd>Checked against Apelora's mock provider and stubbed services. The screens say "Mock" until they show real data.</dd></div>

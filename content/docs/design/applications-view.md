@@ -7,7 +7,7 @@ label:
 source: docs/design/applications-view.md
 summary: Today the Studio opens straight onto one diagram kept in the browser (localStorage). The control plane learns an application exists only when it is first deployed (ApplicationInfo has just a name, a…
 ---
-Status: **built** (control plane API and Studio; MOCK VERIFIED and stubbed-API tests, Shut down, Stop and Migrate REAL INCUS TESTED at the worker on 2026-10-21, ADR 0015; Start/Restart not yet). Routes are `/studio/applications[/:name[/:tab]]` and the Assembly Library stays at `/` · Date: 2026-10-20 · Extends [application deployment](application-deployment.md) · Roles: [access and roles](../architecture/ACCESS-AND-ROLES.md) · Storage: [storage](../architecture/STORAGE.md)
+Status: **built** (control plane API and Studio; MOCK VERIFIED and stubbed-API tests, Start, Restart, Shut down, Stop and Migrate REAL INCUS TESTED at the worker on 2026-10-21, ADR 0015). Routes are `/studio/applications[/:name[/:tab]]` and the Assembly Library stays at `/` · Date: 2026-10-20 · Extends [application deployment](application-deployment.md) · Roles: [access and roles](../architecture/ACCESS-AND-ROLES.md) · Storage: [storage](../architecture/STORAGE.md)
 
 ## 1. Problem
 

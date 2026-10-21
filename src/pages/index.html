@@ -18,7 +18,7 @@
             </div>
             <span class="try-note">Needs Node.js 22 or newer. Mock data, nothing is deployed. <a href="/docs/start/try-it-on-your-workstation/">All the steps</a></span>
           </div>
-          <a class="lozenge" href="/product/#roadmap">Early development: tested on a four-server lab, not yet on production hardware</a>
+          <a class="lozenge" href="/product/#roadmap">Early development: tested on a {{fact:labServersWord}}-server lab, not yet on production hardware</a>
         </div>
         <div class="preview">
           <div class="tabs" role="tablist" aria-label="Apelora Fabric screens">
@@ -36,8 +36,8 @@
           <div class="panel" id="panel-operate" role="tabpanel" aria-labelledby="tab-operate" hidden>
             <figure class="shot">
               <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console</span></div>
-              <img src="/assets/img/console-servers.webp" width="1440" height="900" loading="lazy" alt="Fabric Console, Servers: the cluster database shows three of three voters answering and a safe majority, followed by a table of four servers with status, database role, failure domain, Incus version and capacity.">
-              <figcaption>Fabric Console, the administrator's view. Sample data from a four-server lab.</figcaption>
+              <img src="/assets/img/console-servers.webp" width="1440" height="900" loading="lazy" alt="Fabric Console, Servers: the cluster database shows three of three voters answering and a safe majority, followed by a table of {{fact:labServersWord}} servers with status, database role, failure domain, Incus version and capacity.">
+              <figcaption>Fabric Console, the administrator's view. Sample data from a {{fact:labServersWord}}-server lab.</figcaption>
             </figure>
           </div>
           <div class="panel" id="panel-recover" role="tabpanel" aria-labelledby="tab-recover" hidden>
@@ -54,10 +54,10 @@
     <section class="facts-band" aria-label="Apelora Fabric at a glance">
       <div class="wrap">
         <ul class="facts">
-          <li><b>83</b><span>modules to design with, in 12 categories. Three deploy today.</span></li>
-          <li><b>4</b><span>servers in the lab it has been tested on, running Incus 7.0 LTS.</span></li>
-          <li><b>15</b><span>built-in alert rules, with signed webhooks.</span></li>
-          <li><b>180+</b><span>API operations, from one documented OpenAPI file.</span></li>
+          <li><b>{{fact:modules}}</b><span>modules to design with, in {{fact:categories}} categories. {{fact:deployableWord|cap}} deploy today.</span></li>
+          <li><b>{{fact:labServers}}</b><span>servers in the lab it has been tested on, running Incus {{fact:incusSeries}} LTS.</span></li>
+          <li><b>{{fact:alertRules}}</b><span>built-in alert rules, with signed webhooks.</span></li>
+          <li><b>{{fact:apiOperationsFloor}}+</b><span>API operations, from one documented OpenAPI file.</span></li>
           <li><b>AGPL</b><span>open source. No tracking, no cookies on this site.</span></li>
         </ul>
       </div>
@@ -101,7 +101,7 @@
             <p>Servers, health and every change in Fabric Console. Maintenance, joining servers and cluster settings show a preview before anything changes; every change is a job you can follow, retry or cancel.</p>
             <div class="evidence"><span class="tag">Real Incus tested</span></div>
             <a class="more" href="/product/#operate">More about operating <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-            <img src="/assets/img/crop-console-servers.webp" width="1005" height="625" loading="lazy" alt="Fabric Console, Servers: the cluster database with three of three voters answering and a safe majority, then four servers with status, database role, failure domain, Incus version and capacity.">
+            <img src="/assets/img/crop-console-servers.webp" width="1005" height="625" loading="lazy" alt="Fabric Console, Servers: the cluster database with three of three voters answering and a safe majority, then {{fact:labServersWord}} servers with status, database role, failure domain, Incus version and capacity.">
           </article>
           <article class="tile sm">
             <h3>Connections become rules</h3>
@@ -117,7 +117,7 @@
           </article>
           <article class="tile sm">
             <h3>Know before your users do</h3>
-            <p>Fifteen built-in alert rules for failed jobs, silent workers, offline servers and expiring certificates, plus metrics for your own monitoring.</p>
+            <p>{{fact:alertRules}} built-in alert rules for failed jobs, silent workers, offline servers and expiring certificates, plus metrics for your own monitoring.</p>
             <div class="evidence"><span class="tag plain">Checked against stand-ins</span></div>
             <a class="more" href="/product/#monitor">About monitoring <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </article>
@@ -171,7 +171,7 @@
         </div>
         <ol class="start-cards reveal">
           <li><a href="/docs/start/try-it-on-your-workstation/"><span class="n">1</span><b>Try it on your machine</b><small>The designer in a minute, or the whole stack against a lab cluster. No hardware to buy.</small><span class="go">Open the guide</span></a></li>
-          <li><a href="/docs/start/install-on-your-servers/"><span class="n">2</span><b>Install on your servers</b><small>An Incus cluster, PostgreSQL, the control plane and worker, and the two screens.</small><span class="go">Open the guide</span></a></li>
+          <li><a href="/docs/start/servers-and-network/"><span class="n">2</span><b>Install on your servers</b><small>Plan the servers and network, install Incus, then PostgreSQL, the control plane, the worker and the two screens.</small><span class="go">Open the guide</span></a></li>
           <li><a href="/docs/start/deploy-it/"><span class="n">3</span><b>Deploy and manage</b><small>Review the plan, deploy, then start, shut down, stop or migrate from the Applications list.</small><span class="go">Open the guide</span></a></li>
         </ol>
         <p style="margin-top:28px"><a class="more" href="/docs/">Browse all documentation: runbooks, concepts, reference and decisions <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
@@ -198,7 +198,7 @@
             <ul class="dots">
               <li>need a proven production platform today: Fabric is in early development and has run only on a lab</li>
               <li>want a hosted service: you run Fabric on servers you own</li>
-              <li>need many ready-to-run application types: three modules deploy today (NGINX, Debian and a Linux virtual machine)</li>
+              <li>need many ready-to-run application types: {{fact:deployableWord}} modules deploy today (NGINX, Debian and a Linux virtual machine)</li>
             </ul>
           </div>
         </div>
@@ -206,7 +206,7 @@
         <div class="split2 reveal">
           <div class="box">
             <h3>Available now</h3>
-            <p>Run on a disposable four-server lab.</p>
+            <p>Run on a disposable {{fact:labServersWord}}-server lab.</p>
             <ul class="dots">
               <li>Designer, deploy, network rules and service addresses</li>
               <li>Containers and virtual machines created in Incus</li>

@@ -2,7 +2,7 @@
 title: Sign in
 section: start
 slug: sign-in
-order: 3
+order: 5
 label: Sign in
 summary: Three ways in: an API token to begin with, your identity provider for people, local accounts where you have none.
 ---

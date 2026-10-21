@@ -21,7 +21,7 @@ Open the address. You get Apelora Studio with the sample application on the canv
 
 ## 2. The whole stack, against a lab cluster
 
-This starts PostgreSQL, a disposable four-server Incus cluster (virtual machines standing in for physical servers), the control plane, the worker and both screens.
+This starts PostgreSQL, a disposable {{fact:labServersWord}}-server Incus cluster (virtual machines standing in for physical servers), the control plane, the worker and both screens.
 
 ```sh
 docker compose -f infra/dev/compose.yaml up -d       # PostgreSQL on 127.0.0.1:15432

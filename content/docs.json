@@ -21,6 +21,11 @@
       "blurb": "What to do when something breaks or needs care. Each step says whether it was tested."
     },
     {
+      "id": "api",
+      "title": "API",
+      "blurb": "The control plane's REST API: every operation, with parameters, example requests and responses."
+    },
+    {
       "id": "reference",
       "title": "Reference",
       "blurb": "What works today, the module catalog, the API."
@@ -88,7 +93,8 @@
     "reference": [
       "architecture/current-state",
       "architecture/CATALOG",
-      "architecture/MODULE-PORTS"
+      "architecture/MODULE-PORTS",
+      "architecture/SETTINGS"
     ],
     "design": [
       "design/application-deployment",
@@ -132,6 +138,20 @@
       "development/MUTATION-TESTING",
       "development/UPSTREAM-INCUS",
       "development/MCP-HOSTING"
+    ],
+    "start": [
+      {
+        "src": "guides/servers-and-network",
+        "order": 2
+      },
+      {
+        "src": "guides/install-incus",
+        "order": 3
+      },
+      {
+        "src": "guides/installing-apelora",
+        "order": 4
+      }
     ]
   },
   "slugs": {
@@ -140,7 +160,9 @@
     "architecture/CATALOG": "module-catalog",
     "architecture/MODULE-PORTS": "module-ports",
     "architecture/STUDIO-MVP": "studio-architecture",
-    "architecture/STUDIO-UI-SPEC": "studio-interface"
+    "architecture/STUDIO-UI-SPEC": "studio-interface",
+    "guides/installing-apelora": "install-on-your-servers",
+    "architecture/SETTINGS": "settings"
   },
   "labels": {
     "runbooks/README": "Runbooks: start here",
@@ -166,7 +188,11 @@
     "architecture/CLOUD-ROADMAP": "Roadmap to a full cloud",
     "design/vm-recovery-on-shared-storage": "VM recovery on shared storage (planned)",
     "design/node-enrolment": "Node enrolment",
-    "design/capacity-global-fabric": "Capacity: a global fabric"
+    "design/capacity-global-fabric": "Capacity: a global fabric",
+    "guides/servers-and-network": "Servers and network",
+    "guides/install-incus": "Install Incus",
+    "guides/installing-apelora": "Install Apelora",
+    "architecture/SETTINGS": "Settings reference"
   },
   "extraImages": [
     "01-commerce-stack-1440x900",
@@ -275,6 +301,62 @@
     "runbooks/tenancy-quotas": "Environments' Incus projects and quotas: checking and fixing them.",
     "runbooks/troubleshooting": "Using logs and the audit trail, and retrying or cancelling jobs.",
     "runbooks/volumes": "An application's volumes: kept, missing, or to be deleted.",
-    "decisions/0015-application-lifecycle-verbs": "Why an application has Shut down, Stop and Migrate beside Start and Restart, and what each does."
+    "decisions/0015-application-lifecycle-verbs": "Why an application has Shut down, Stop and Migrate beside Start and Restart, and what each does.",
+    "start/servers-and-network": "Hardware, how many network cards, and which IP addresses Incus and Apelora use.",
+    "start/install-incus": "Where to get Incus, how to install it on each server, form the cluster, set up OVN and create the project and identities Apelora needs.",
+    "start/install-on-your-servers": "PostgreSQL, the programs, their settings, the two screens, the first administrator.",
+    "reference/settings": "Every environment variable the control plane and the worker read, with its default. Generated from the code."
+  },
+  "apiTags": {
+    "system": {
+      "title": "System",
+      "summary": "Health, version, sign-in, settings, who am I.",
+      "intro": "Health, version and sign-in options (some of them public), the settings the control plane runs with, the support bundle, and who the caller is."
+    },
+    "inventory": {
+      "title": "Inventory",
+      "summary": "Servers, instances, networks, storage, jobs and preflight.",
+      "intro": "What exists in the cluster, as Incus reports it: instances, networks, storage pools, jobs, preflight and capacity."
+    },
+    "deployment": {
+      "title": "Deployment",
+      "summary": "Instances, plans, deployments, moves and volumes.",
+      "intro": "Creating, changing and moving single instances, and the plan and deployment of a design."
+    },
+    "applications": {
+      "title": "Applications",
+      "summary": "Applications, drafts, versions, operations and migration.",
+      "intro": "Applications: drafts and published versions, deploying a version, start, shut down, stop, restart and migrate, volumes and status."
+    },
+    "cluster": {
+      "title": "Cluster",
+      "summary": "Members, machines, join tokens, settings and recovery.",
+      "intro": "The cluster's servers: members, maintenance, machines and join tokens, cluster settings, groups, certificates and recovery."
+    },
+    "administration": {
+      "title": "Administration",
+      "summary": "Tokens and Apelora's own database.",
+      "intro": "API tokens and Apelora's own database backups."
+    },
+    "audit": {
+      "title": "Audit",
+      "summary": "The audit log and its export.",
+      "intro": "The append-only audit log: search and export."
+    },
+    "identity": {
+      "title": "Identity and access",
+      "summary": "People, groups, roles, scopes, approvals, tokens and sign-in.",
+      "intro": "Identity and access: organisations, projects, people, groups, roles and assignments, approvals, service identities, tokens and sign-in methods."
+    },
+    "sessions": {
+      "title": "Sessions",
+      "summary": "Terminal sessions into modules.",
+      "intro": "Terminal sessions into running modules."
+    },
+    "alerts": {
+      "title": "Alerts",
+      "summary": "Alerts, silences and webhook channels.",
+      "intro": "Built-in alerts, acknowledgement and silences, and the webhook channels that receive them."
+    }
   }
 }

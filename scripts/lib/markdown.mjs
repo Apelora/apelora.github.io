@@ -200,7 +200,7 @@ export function render(md, ctx = {}) {
           let first = c[0];
           let box = "";
           const t = first.match(/^\[([ xX])\]\s+/);
-          if (t) { box = `<input type="checkbox" disabled${t[1] !== " " ? " checked" : ""}> `; first = first.slice(t[0].length); }
+          if (t) { box = `<input type="checkbox" disabled aria-label="${t[1] !== " " ? "Done" : "To do"}"${t[1] !== " " ? " checked" : ""}> `; first = first.slice(t[0].length); }
           const inner = blocks([first, ...c.slice(1)]);
           const html = loose ? inner : inner.replace(/^<p>([\s\S]*?)<\/p>/, "$1");
           return `<li>${box}${html}</li>`;
