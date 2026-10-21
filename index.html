@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apelora: draw your application, run it on your own servers</title>
+  <meta name="description" content="Apelora turns a drawing of connected modules into access rules, service addresses and running instances on your own Linux servers. Open source, built on Incus. Early development.">
+  <link rel="canonical" href="https://apelora.github.io/">
+  <meta name="theme-color" content="#0f766e">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Apelora: draw your application, run it on your own servers">
+  <meta property="og:description" content="Connect modules on a canvas. Apelora turns each connection into an access rule and a service address and runs the result on your Linux servers.">
+  <meta property="og:url" content="https://apelora.github.io/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Apelora Studio: a gateway, a load balancer, two web servers, a database and a dashboard connected on a canvas">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="image" href="/assets/img/studio.png" fetchpriority="high">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="30" height="30">
+        <span>Apelora</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a class="hide-sm" href="#how">How it works</a>
+        <a class="hide-sm" href="#status">What works today</a>
+        <a class="hide-sm" href="#try">Try it</a>
+        <a class="gh" href="https://github.com/Apelora/apelora-fabric">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          GitHub
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="hero" aria-labelledby="hero-title" style="border-top:0">
+      <div class="wrap">
+        <h1 id="hero-title"><span>Draw your application.</span> <span>Run it on your own servers.</span></h1>
+        <p class="lede">Connect modules such as a gateway, NGINX and PostgreSQL on a canvas. Apelora turns each connection into an access rule and a service address, runs the result on your Linux servers, and keeps it running.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="https://github.com/Apelora/apelora-fabric">Get the source on GitHub</a>
+          <a class="btn btn-quiet" href="#status">See what works today</a>
+        </div>
+        <p class="fine">Open source under AGPL-3.0. Early development: tested on a four-server lab, not ready for production.</p>
+
+        <figure class="hero-shot">
+          <div class="frame">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <img src="/assets/img/studio.png" width="1440" height="900" alt="Apelora Studio: a gateway connects to a load balancer, which connects to two NGINX web servers, which connect to a PostgreSQL database. A Grafana module reads from the database. Each cable is labelled with its protocol.">
+          </div>
+          <figcaption>Apelora Studio with sample data. Every cable is typed: a web server's database port accepts a PostgreSQL connection, and the designer refuses anything that cannot work.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section aria-labelledby="why-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="why-title">Stop hand-writing the network between your services</h2>
+          <p>For platform and operations engineers at teams that run their own Linux servers. If you keep container, network and firewall files in step by hand, this replaces that work.</p>
+        </div>
+        <div class="cols">
+          <article class="card">
+            <h3>Connections become rules</h3>
+            <p>Only the connections you draw are allowed. Each one gets an access rule, and the module you connect to gets a stable service name and address inside the application's own network.</p>
+          </article>
+          <article class="card">
+            <h3>Impossible links are refused</h3>
+            <p>The designer rejects what cannot work, such as HTTP into a database port, before anything is deployed. The control plane then checks the design against your cluster.</p>
+          </article>
+          <article class="card">
+            <h3>Failures are handled</h3>
+            <p>Replicas run on different servers, unhealthy ones are restarted, and lost ones are replaced. A stateful module restarts on another server only after its failed server is fenced.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="tint" aria-labelledby="how-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="how-title">From a drawing to running instances</h2>
+          <p>Three steps. Each one is a separate piece you can read, test and replace.</p>
+        </div>
+        <ol class="cols" style="padding:0;list-style:none">
+          <li class="card">
+            <span class="num" aria-hidden="true">01</span>
+            <h3>Design</h3>
+            <p>In Apelora Studio, drag modules onto the canvas and connect their typed ports. A catalog of 83 modules in 12 categories comes with it, and you can define your own.</p>
+          </li>
+          <li class="card">
+            <span class="num" aria-hidden="true">02</span>
+            <h3>Deploy</h3>
+            <p>The control plane plans the change and shows it first. The deployment worker then creates each module's instances (containers or virtual machines) in Incus as durable jobs, so a crash or a repeated request never creates duplicates.</p>
+          </li>
+          <li class="card">
+            <span class="num" aria-hidden="true">03</span>
+            <h3>Operate</h3>
+            <p>Replicas are spread across servers, health is checked, and recovery is decided by one supervisor at a time. Everything that changes is written to an append-only audit log.</p>
+          </li>
+        </ol>
+        <figure class="diagram">
+          <a href="/assets/diagrams/design-to-cluster.svg" aria-label="Open the diagram full size"><img src="/assets/diagrams/design-to-cluster.svg" width="1200" height="600" loading="lazy" alt="A Studio design with a gateway, a web module with three replicas and a database with a volume. On three Incus servers the web replicas run apart on the application's network behind a service address the gateway publishes, and the database keeps its volume."></a>
+          <figcaption>Select the diagram to open it full size.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section aria-labelledby="incus-title">
+      <div class="wrap split">
+        <div>
+          <div class="sec-head">
+            <h2 id="incus-title">Built on Incus, not instead of it</h2>
+            <p>Apelora owns the application: its design, desired state, connections, replicas and health. Incus owns the servers: cluster membership, placement and the instances themselves. Apelora talks to Incus only through its documented REST API, with TLS verified.</p>
+          </div>
+          <ul class="ticks">
+            <li><b>Three kinds of module.</b> System containers, application containers and virtual machines, as each module's class says.</li>
+            <li><b>One network per application.</b> Deny-by-default rules compiled from your connections, with service discovery and optional internet access.</li>
+            <li><b>Your storage.</b> Local disks today, with backups to another pool. Clustered storage on a SAN lets a module restart on another server.</li>
+            <li><b>Your servers stay yours.</b> Credentials for Incus, for management controllers and for MAAS stay in the backend, never in the browser.</li>
+          </ul>
+        </div>
+        <figure class="diagram" style="margin-top:0">
+          <a href="/assets/diagrams/platform-layers.svg" aria-label="Open the layers diagram full size"><img src="/assets/diagrams/platform-layers.svg" width="1200" height="990" loading="lazy" alt="Apelora's layers from top to bottom: people use Studio and the Fabric Console; both talk to the control plane; the control plane and a worker use the Incus cluster, which runs system containers, application containers and virtual machines on local, backup and shared storage and an OVN network, on physical servers."></a>
+          <figcaption>Select the diagram to open it full size.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="tint" aria-labelledby="ops-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="ops-title">Run it from the Fabric Console</h2>
+          <p>The administrator's view of the cluster: what is running, what is failing and who changed what.</p>
+        </div>
+        <ul class="ticks" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px 40px;max-width:none">
+          <li><b>Servers.</b> Database majority, members, failure domains, maintenance with evacuation, and joining new servers with single-use tokens.</li>
+          <li><b>Health.</b> Control plane, database, workers, job queue and servers, each in words with its reason.</li>
+          <li><b>People and approvals.</b> Roles at organisation, project and application scope, with a second person's approval for sensitive changes.</li>
+          <li><b>Audit.</b> Who did what, to what, and whether it was allowed; searchable and exportable.</li>
+          <li><b>Alerts and metrics.</b> Fifteen built-in rules and a metrics endpoint for your own monitoring.</li>
+          <li><b>Backups and restore.</b> Volume backups, scheduled snapshots, and a restore that takes a safety backup first.</li>
+        </ul>
+        <figure style="margin-top:40px">
+          <div class="frame crop">
+            <div class="frame-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <img src="/assets/img/console-servers.png" width="1440" height="900" loading="lazy" alt="Fabric Console, Servers page: the cluster database shows three of three voters answering and a majority that is safe, followed by a table of four servers with their status, database role, failure domain, Incus version and capacity.">
+          </div>
+          <figcaption>Fabric Console, Servers, with sample data from a four-server lab.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="status" aria-labelledby="status-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="status-title">What works today, and how we know</h2>
+          <p>Apelora is in early development. Each result below says how it was checked, and the list of what has not been checked is as long as the list of what has.</p>
+        </div>
+        <p class="legend">
+          <span><b>Real Incus tested:</b> run on a disposable four-server Incus cluster.</span>
+          <span><b>Real MAAS tested:</b> run against a real MAAS, without hardware.</span>
+          <span><b>Contract verified:</b> against a test server that answers like the real thing.</span>
+          <span><b>Mock verified:</b> against a stand-in for Incus.</span>
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">What</th><th scope="col">Result</th><th scope="col">Checked</th></tr></thead>
+            <tbody>
+              <tr><td>Deploy a drawn application</td><td>Containers and virtual machines created in Incus from the design, replicas kept on different servers, volumes, snapshots and backups.</td><td><span class="chip real">Real Incus tested</span></td></tr>
+              <tr><td>Connections as network rules</td><td>One network per application; only the drawn connections pass; each module gets a service address.</td><td><span class="chip real">Real Incus tested</span></td></tr>
+              <tr><td>A server fails</td><td>A stateful module on shared storage runs again 144 to 155 seconds after its server is force-stopped, with its data intact, in three drills. It restarts only after the server is fenced.</td><td><span class="chip real">Real Incus tested</span></td></tr>
+              <tr><td>Fence through a server's management controller</td><td>A server cut off from the cluster but still running was switched off and fenced after 61 seconds. The Redfish provider has run only against a test server, never a real controller.</td><td><span class="chip real">Real Incus tested</span> <span class="chip">Contract verified</span></td></tr>
+              <tr><td>Add servers with MAAS</td><td>Lists the machines MAAS manages and registers one for enrolment, checked against a real MAAS over TLS. Installing operating systems through MAAS is not built.</td><td><span class="chip real">Real MAAS tested</span></td></tr>
+              <tr><td>Console, roles, audit, alerts</td><td>Checked in a real browser against stand-in data.</td><td><span class="chip">Mock verified</span></td></tr>
+              <tr><td>Production use</td><td>No real servers have run it yet, and nothing here is measured for speed or scale.</td><td><span class="chip no">Not yet</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fine" style="margin-top:20px">The complete, current list, including known limitations, is in <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/current-state.md">current state</a> in the repository.</p>
+      </div>
+    </section>
+
+    <section id="try" class="tint" aria-labelledby="try-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="try-title">Try the designer in a minute</h2>
+          <p>The Studio runs in your browser with sample data and deploys nothing. It needs Node.js and a clone of the repository.</p>
+        </div>
+        <div class="code">
+          <button class="copy js-only" type="button" data-copy="git clone https://github.com/Apelora/apelora-fabric.git&#10;cd apelora-fabric&#10;npm install&#10;npm run dev">Copy</button>
+<pre tabindex="0" aria-label="Commands to run Apelora Studio"><code>git clone https://github.com/Apelora/apelora-fabric.git
+cd apelora-fabric
+npm install
+npm run dev   <span class="c"># Studio at http://127.0.0.1:5173</span></code></pre>
+        </div>
+        <p class="fine" style="margin-top:24px">To deploy for real you need Incus servers, and you do not need to buy any: a disposable cluster of virtual machines on a Mac or Linux workstation stands in for them. <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/guides/testing-without-hardware.md">Testing without hardware</a> explains what that lab proves, and what only real servers can prove.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="open-title">
+      <div class="wrap split">
+        <div class="sec-head">
+          <h2 id="open-title">Open source, written in the open</h2>
+          <p>Apelora is licensed under the GNU Affero General Public License, version 3 only (AGPL-3.0-only). The control plane is Rust and PostgreSQL; Studio and the Fabric Console are React. Design decisions are recorded as short documents, and operating procedures are written as runbooks.</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="https://github.com/Apelora/apelora-fabric">Get the source on GitHub</a>
+            <a class="btn btn-quiet" href="https://github.com/Apelora/apelora-fabric/tree/main/docs/adr">Read the design decisions</a>
+          </div>
+        </div>
+        <ul class="ticks" style="margin-top:0">
+          <li><b>Architecture.</b> <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/PLATFORM-ARCHITECTURE.md">Who owns which state</a>, and how the layers connect.</li>
+          <li><b>Runbooks.</b> <a href="https://github.com/Apelora/apelora-fabric/tree/main/docs/runbooks">A server fails, quorum is lost, a certificate expires</a>, each step marked as tested or not.</li>
+          <li><b>Every size.</b> <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/EVERY-SIZE.md">One design</a> from three servers to a global fabric.</li>
+          <li><b>Disconnected sites.</b> <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/DISCONNECTED.md">Run without internet access</a>, with image mirrors and signed release bundles.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="30" height="30"><span>Apelora</span></a>
+          <p style="margin-top:14px;max-width:38ch">Design, connect, deploy and operate distributed applications on your own Linux servers.</p>
+        </div>
+        <div>
+          <h3>Project</h3>
+          <ul>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/current-state.md">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/LICENSE">Licence: AGPL-3.0-only</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/COMMERCIAL-LICENSE.md">Commercial licensing</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/TRADEMARKS.md">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">This site sets no cookies, runs no analytics and loads nothing from other sites. Product names and logos in the screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement. Incus is a project of the Linux Containers community; Apelora is independent of it.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll("[data-copy]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var done = function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1800); };
+        if (navigator.clipboard) { navigator.clipboard.writeText(b.getAttribute("data-copy")).then(done, function () { b.textContent = "Select and copy"; }); }
+        else { b.textContent = "Select and copy"; }
+      });
+    });
+  </script>
+</body>
+</html>
