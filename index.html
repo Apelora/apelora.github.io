@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apelora Fabric: design your applications, control your infrastructure</title>
+  <title>Apelora Fabric: design your applications, control your… · Apelora</title>
   <meta name="description" content="Apelora Fabric turns a drawing of connected modules into network rules, addresses and running containers or virtual machines on your own Linux servers. Open source. Request a demo.">
   <link rel="canonical" href="https://apelora.github.io/">
   <meta name="theme-color" content="#ffffff">
+  
   
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Apelora">
-  <meta property="og:title" content="Apelora Fabric: design your applications, control your infrastructure">
+  <meta property="og:title" content="Apelora Fabric: design your applications, control your… · Apelora">
   <meta property="og:description" content="Apelora Fabric turns a drawing of connected modules into network rules, addresses and running containers or virtual machines on your own Linux servers. Open source. Request a demo.">
   <meta property="og:url" content="https://apelora.github.io/">
   <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
@@ -40,7 +41,7 @@
         <a href="/product/">Product</a>
         <a href="/services/">Services</a>
         <a href="/pricing/">Pricing</a>
-        <a href="/documentation/">Documentation</a>
+        <a href="/docs/">Documentation</a>
         <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
       </nav>
     </div>
@@ -58,7 +59,7 @@
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             See how it works
           </a>
-          <a class="more" href="/documentation/">Read the documentation
+          <a class="more" href="/docs/">Read the docs
             <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
@@ -193,11 +194,34 @@
           <div class="evidence"><span class="tag">Real Incus tested</span><span class="tag road">Virtual machines: roadmap</span></div>
           <p style="margin-top:20px"><a class="more" href="/product/#recover">More about recovery <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
         </div>
-        <figure class="shot">
-          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Health</span></div>
-          <img src="/assets/img/crop-console-health.webp" width="790" height="610" loading="lazy" alt="Fabric Console, Health, during a failure: overall status is Down, the deployment worker is down with the instruction to start it, the job queue says three jobs wait and no worker is running, and Incus reports one of three servers offline with its next step.">
-          <figcaption>A simulated failure: each problem names its cause and the next step. Detail of a Console screen, sample data.</figcaption>
+                <figure class="shot recovery" data-recovery>
+          <div class="ar-stage">
+            <div class="ar-scene" role="img" aria-label="Two application modules, A and B, run on Server 1. Server 1 fails and is confirmed stopped. Then module A restarts on Server 2 and module B on Server 3, and both are healthy again. An illustration, not a measured recovery time.">
+              <div class="ar-ground"></div>
+              <svg class="ar-links" aria-hidden="true" focusable="false"><path class="ar-path ar-path-a"></path><path class="ar-path ar-path-b"></path><path class="ar-flow ar-flow-a"></path><path class="ar-flow ar-flow-b"></path></svg>
+              <div class="ar-fence" aria-hidden="true"><span class="ar-fence-mark">✓</span>Fencing confirmed</div>
+              <div class="ar-host ar-h1" aria-hidden="true"><div class="ar-tower"><div class="ar-badge">✓</div><div class="ar-vent"><span class="ar-slits"></span><span class="ar-led"></span></div><div class="ar-slot ar-source-a"></div><div class="ar-slot ar-source-b"></div><div class="ar-grille"></div></div><div class="ar-server-name">Server 1</div><div class="ar-server-state">2 modules running</div></div>
+              <div class="ar-host ar-h2" aria-hidden="true"><div class="ar-tower"><div class="ar-halo"></div><div class="ar-badge">✓</div><div class="ar-vent"><span class="ar-slits"></span><span class="ar-led"></span></div><div class="ar-vent"><span class="ar-slits"></span><span class="ar-led"></span></div><div class="ar-slot ar-target-a"></div><div class="ar-grille"></div></div><div class="ar-server-name">Server 2</div><div class="ar-server-state">Ready</div></div>
+              <div class="ar-host ar-h3" aria-hidden="true"><div class="ar-tower"><div class="ar-halo"></div><div class="ar-badge">✓</div><div class="ar-vent"><span class="ar-slits"></span><span class="ar-led"></span></div><div class="ar-vent"><span class="ar-slits"></span><span class="ar-led"></span></div><div class="ar-slot ar-target-b"></div><div class="ar-grille"></div></div><div class="ar-server-name">Server 3</div><div class="ar-server-state">Ready</div></div>
+              <div class="ar-module ar-module-a" aria-hidden="true"><span class="ar-node-port ar-port-l"></span><span class="ar-module-id">A</span><span class="ar-module-label">App</span><span class="ar-node-port ar-port-r"></span></div>
+              <div class="ar-module ar-module-b" aria-hidden="true"><span class="ar-node-port ar-port-l"></span><span class="ar-module-id">B</span><span class="ar-module-label">App</span><span class="ar-node-port ar-port-r"></span></div>
+            </div>
+            <div class="ar-footer">
+              <div class="ar-state-row">
+                <div class="ar-status" aria-live="polite"><span class="ar-dot"></span><span class="ar-status-text">Both modules are running.</span></div>
+                <button class="ar-control js-only" type="button">Pause</button>
+              </div>
+              <ol class="ar-steps" aria-label="The steps of a recovery">
+                <li class="ar-step"><span class="ar-step-dot"></span>Detect</li><li class="ar-step-link" aria-hidden="true"></li>
+                <li class="ar-step"><span class="ar-step-dot"></span>Fence</li><li class="ar-step-link" aria-hidden="true"></li>
+                <li class="ar-step"><span class="ar-step-dot"></span>Restart</li><li class="ar-step-link" aria-hidden="true"></li>
+                <li class="ar-step"><span class="ar-step-dot"></span>Healthy</li>
+              </ol>
+            </div>
+          </div>
+          <figcaption>Illustration, not a screenshot and not a measurement: the animation is faster than a real recovery. In the lab, a container with data ran again 144 to 155 seconds after its server was force-stopped. Virtual machines are not drilled yet.</figcaption>
         </figure>
+
       </article>
 
     </div>
@@ -271,10 +295,10 @@
             <p class="price">Free<small>Open source, AGPL-3.0</small></p>
             <ul class="checks">
               <li><span>The complete software and source code</span></li>
-              <li><span>Documentation, runbooks and design decisions</span></li>
+              <li><span>Step-by-step docs, runbooks and design decisions</span></li>
               <li><span>Questions and bug reports in public on GitHub</span></li>
             </ul>
-            <a class="btn btn-line" href="https://github.com/Apelora/apelora-fabric">Get the source</a>
+            <a class="btn btn-line" href="/docs/start/what-you-need/">Start building</a>
           </article>
           <article class="offer">
             <h3>Deployment</h3>
@@ -339,9 +363,9 @@
         <div>
           <h2>Resources</h2>
           <ul>
-            <li><a href="/documentation/">Documentation</a></li>
+            <li><a href="/docs/">Documentation</a></li>
             <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
-            <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/current-state.md">What works today</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
             <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
           </ul>
         </div>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign-in methods: local accounts and a directory · Design… · Apelora</title>
+  <meta name="description" content="Local accounts and a directory beside identity providers: the design.">
+  <link rel="canonical" href="https://apelora.github.io/docs/design/sign-in-methods/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Sign-in methods: local accounts and a directory · Design… · Apelora">
+  <meta property="og:description" content="Local accounts and a directory beside identity providers: the design.">
+  <meta property="og:url" content="https://apelora.github.io/docs/design/sign-in-methods/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group" open><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/" aria-current="page">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/design/">Design notes</a></nav>
+        <h1>Sign-in methods: local accounts and a directory</h1>
+        <div class="prose">
+<p>Status: agreed · Date: 2026-10-21 · Decision record: <a href="/docs/decisions/0007-sign-in-methods/">ADR 0007</a></p>
+<h2 id="1-scope">1. Scope</h2>
+<p><strong>Goals.</strong> People sign in with a username and password kept by Apelora (local accounts), or with their directory account over LDAP with TLS, next to identity providers and API tokens. Same users, groups, roles, audit and lockout guards as today.</p>
+<p><strong>Non-goals (this round).</strong> SAML; directory search through a service account; one-time codes for local accounts (next slice); self-service sign-up; password recovery by email.</p>
+<p><strong>Users and scale.</strong> Tens to a few hundred people per installation; sign-ins are rare compared with API requests (one per person per working session).</p>
+<h2 id="2-contracts">2. Contracts</h2>
+<h3 id="users-and-sessions">Users and sessions</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Way in</th><th scope="col"><code>users.issuer</code></th><th scope="col"><code>users.subject</code></th></tr></thead><tbody><tr><td>Local account</td><td><code>apelora:local</code></td><td>the username (lowercase)</td></tr><tr><td>Directory</td><td>the directory's URL, e.g. <code>ldaps://ldap.example.org</code></td><td>the entry's stable id (<code>entryUUID</code>, or <code>objectGUID</code> as hex), the DN if neither exists</td></tr></tbody></table></div>
+<p>Migration <strong>0017</strong> (<code>0017_sign_in_methods.sql</code>):</p>
+<ul><li><code>local_credentials (user_id PK → users, password_hash text NULL, setup_token_hash bytea NULL UNIQUE, setup_expires_at, failed_attempts int, locked_until, password_changed_at, created_by, created_at)</code>.</li><li><code>user_sessions (id PK, user_id → users, token_hash bytea UNIQUE, method 'password'|'directory', external_groups text[], created_at, last_used_at, expires_at, revoked_at)</code>.</li></ul>
+<p>Migration <strong>0018</strong> (<code>0018_directories.sql</code>): <code>directories (id, name UNIQUE, url, start_tls bool, ca_pem text NULL, bind_template text, base_dn text NULL, user_filter text NULL, id_attribute, username_attribute, email_attribute, name_attribute, group_attribute NULL, group_base_dn NULL, group_filter NULL, group_name_attribute, enabled, created_by, updated_by, created_at, updated_at)</code>.</p>
+<p>Session tokens are <code>apu_</code> + 64 hex characters. <strong>One function issues them</strong> (control plane, <code>api/sessions_auth.rs</code>):</p>
+<pre data-lang="rust" tabindex="0"><code>pub async fn issue_session(pool: &amp;Pool, user_id: Uuid, method: SessionMethod, external_groups: &amp;[String]) -&gt; Result&lt;IssuedSession, ApiError&gt;
+// IssuedSession { token: String, expires_at: OffsetDateTime }</code></pre>
+<p><code>resolve_principal</code> accepts <code>apu_</code> tokens: live (not revoked, <code>expires_at</code> in the future, <code>last_used_at</code> within the idle hour), person not disabled; groups are the person's Apelora groups plus groups whose external name is in <code>external_groups</code>; <code>mfa</code> is false.</p>
+<h3 id="api">API</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Method and path</th><th scope="col">Who</th><th scope="col">Body → answer</th></tr></thead><tbody><tr><td><code>POST /api/v1/sign-in/password</code></td><td>public, limited per address</td><td><code>{ username, password, directory?: uuid }</code> → <code>{ token, expiresAt, name }</code>; <code>401 invalid_credentials</code> &quot;The username or password is incorrect.&quot; (also when locked or unknown)</td></tr><tr><td><code>POST /api/v1/sign-in/setup</code></td><td>public</td><td><code>{ token, password }</code> → 204; <code>400 setup_invalid</code> when spent, expired or unknown; <code>400 weak_password</code> with the rule</td></tr><tr><td><code>POST /api/v1/sign-out</code></td><td>signed in</td><td>revokes the presented <code>apu_</code> session; 204 for other credentials</td></tr><tr><td><code>PUT /api/v1/me/password</code></td><td>a local account</td><td><code>{ current, new }</code> → 204, other sessions revoked</td></tr><tr><td><code>POST /api/v1/identity/local-accounts</code></td><td><code>user.manage</code></td><td><code>{ username, displayName?, email? }</code> → <code>{ user, setupToken, setupExpiresAt }</code> (token shown once)</td></tr><tr><td><code>POST /api/v1/identity/local-accounts/{id}/reset</code></td><td><code>user.manage</code></td><td>→ <code>{ setupToken, setupExpiresAt }</code>; password and sessions revoked</td></tr><tr><td><code>PUT /api/v1/identity/sign-in/local-accounts</code></td><td><code>platform.security.manage</code></td><td><code>{ enabled }</code> (setting <code>auth.local_accounts</code>, default off)</td></tr><tr><td><code>GET/POST/PUT/DELETE /api/v1/identity/sign-in/directories[/{id}]</code>, <code>POST …/directories/check</code></td><td><code>platform.security.manage</code></td><td>directory settings; <em>check</em> binds with a test username and password given in the request (never stored) and reports what it found</td></tr></tbody></table></div>
+<p><code>GET /api/v1/sign-in</code> gains <code>localAccounts: bool</code> and <code>directories: [{ id, name }]</code> (enabled ones only). <code>GET /api/v1/identity/sign-in</code> gains the local-accounts setting and the directories with their reachability.</p>
+<p>Audit actions: <code>auth.password.succeeded</code>, <code>auth.password.failed</code> (username, reason <code>unknown|wrong|locked|disabled</code>), <code>auth.locked</code>, <code>auth.setup.completed</code>, <code>auth.password.changed</code>, <code>identity.local_account.created</code>, <code>identity.local_account.reset</code>, <code>auth.directory.succeeded|failed</code>, <code>identity.directory.saved|deleted</code>, <code>identity.local_accounts.enabled|disabled</code>, <code>auth.signed_out</code>.</p>
+<h3 id="browser">Browser</h3>
+<ul><li>Sign-in page: when local accounts or a directory are on, a username and password form (with a choice between &quot;Apelora account&quot; and each directory only when there is more than one), next to the provider buttons and the API-token link.</li><li><code>#/set-password?token=…</code> (the token stays in the URL fragment, never sent to a server log): new password twice, the rule, then back to sign-in.</li><li>Users page: <em>Create local account…</em> and, for local accounts, <em>Reset password…</em>, each showing the setup link once.</li><li>Header: the person's name with <em>Change password</em> (local accounts) and <em>Sign out</em>.</li><li>Identity &amp; Access → Sign-in: sections for local accounts (on/off) and directories (add, check, edit, turn off, remove), next to identity providers and API tokens.</li></ul>
+<h2 id="3-deep-dive-the-risky-parts">3. Deep dive: the risky parts</h2>
+<p><strong>Brute force.</strong> Per account: five failures lock for 15 minutes (<code>locked_until</code>), success resets the counter. Per client address: at most 10 attempts a minute (in memory, 429 <code>rate_limited</code> with <code>Retry-After</code>). Unknown usernames verify against a fixed dummy hash so the timing does not reveal accounts.</p>
+<p><strong>Hashing cost.</strong> Argon2id in <code>spawn_blocking</code>; about 50 ms per attempt on the lab hardware.</p>
+<p><strong>Directory TLS.</strong> <code>ldaps://</code> or <code>ldap://</code> with StartTLS required; plain LDAP is refused at save time. The CA certificate (PEM) is optional (system roots otherwise); certificate and host name are always verified. Usernames are escaped for DN and filter syntax (RFC 4514 / RFC 4515) before they reach the directory.</p>
+<h2 id="4-wrap-up">4. Wrap-up</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Component</th><th scope="col">Failure</th><th scope="col">Behaviour</th></tr></thead><tbody><tr><td>Directory unreachable</td><td>bind times out (10 s)</td><td>503 <code>directory_unreachable</code> with the directory's name; other ways in keep working; logged at warn</td></tr><tr><td>Database down</td><td>session lookup fails</td><td>503 <code>store_unavailable</code> (as today)</td></tr><tr><td>Clock skew</td><td>—</td><td>sessions are checked against the database clock</td></tr></tbody></table></div>
+<p>Rollout: local accounts are off by default; turning them on is audited. Directories are added in the Console and take effect at once.</p>
+<h2 id="5-evidence-plan">5. Evidence plan</h2>
+<p>Unit and API tests against PostgreSQL; the directory against a real local directory server in Docker (<code>infra/dev</code>, profile <code>directory</code>), labelled REAL-BROWSER TESTED / CONTRACT VERIFIED as they are.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/design/sign-in-methods.md">docs/design/sign-in-methods.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/design/sign-in-methods.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/design/provisioner-maas/"><span>Previous</span>The MAAS provisioner adapter</a><a class="next" href="/docs/design/tenancy-isolation/"><span>Next</span>Tenancy isolation and quotas</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#1-scope">1. Scope</a></li><li class="l2"><a href="#2-contracts">2. Contracts</a></li><li class="l3"><a href="#users-and-sessions">Users and sessions</a></li><li class="l3"><a href="#api">API</a></li><li class="l3"><a href="#browser">Browser</a></li><li class="l2"><a href="#3-deep-dive-the-risky-parts">3. Deep dive: the risky parts</a></li><li class="l2"><a href="#4-wrap-up">4. Wrap-up</a></li><li class="l2"><a href="#5-evidence-plan">5. Evidence plan</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

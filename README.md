@@ -14,6 +14,18 @@ node scripts/check.mjs    # links, anchors, images, headings, titles; REPO=<chec
 python3 -m http.server 4173 --bind 127.0.0.1   # http://127.0.0.1:4173
 ```
 
+## Documentation
+
+`/docs/` is built from `content/docs/`: pages written for the site (`start/`, no `source:` line in their front matter) and snapshots of the product repository's `docs/` folder. The list, sections, order, short titles and summaries are in `content/docs.json`.
+
+```sh
+node scripts/import-docs.mjs ../apelora-fabric     # refresh the snapshots, their images (WebP via cwebp) and the generated API reference
+node scripts/render-diagrams.mjs ../apelora-fabric <mermaid.min.js> ../apelora-fabric/node_modules/playwright-core   # Mermaid diagrams to static SVG
+node build.mjs && node scripts/check.mjs
+```
+
+The imported pages are copies: the repository is the source of truth, and each page says so and links to its source. Links between documents are rewritten to site routes, other repository paths to GitHub. Screenshots in the Get started pages come from `tests/e2e/screenshots*.spec.ts` in the product repository (sample data). Refresh both whenever the product's screens change.
+
 ## Publish
 
 Repository `Apelora/apelora.github.io`, Settings → Pages → Deploy from a branch → `main` / root. `.nojekyll` turns off GitHub's own processing.

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Access, roles and security by layer · Concepts · Apelora</title>
+  <meta name="description" content="Who can do what at each layer: Studio, Console, API, Incus and the servers.">
+  <link rel="canonical" href="https://apelora.github.io/docs/concepts/access-and-roles/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Access, roles and security by layer · Concepts · Apelora">
+  <meta property="og:description" content="Who can do what at each layer: Studio, Console, API, Incus and the servers.">
+  <meta property="og:url" content="https://apelora.github.io/docs/concepts/access-and-roles/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group" open><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/" aria-current="page">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/concepts/">Concepts</a></nav>
+        <h1>Access, roles and security by layer</h1>
+        <div class="prose">
+<p>Status: <strong>core built.</strong> Scoped roles, OIDC validation, the evaluator, approvals, emergency access, service identities and audit are implemented and tested; see <a href="/docs/concepts/identity-and-authorization/">identity and authorization</a> for what is built and what is NOT VERIFIED (live identity provider, MAAS, Incus restricted projects). This document keeps the design rationale.</p>
+<p>Evidence labels used below: <strong>BUILT</strong> (in the repository and tested), <strong>PROPOSED</strong> (agreed direction, not built).</p>
+<h2 id="1-principles">1. Principles</h2>
+<ol><li><strong>The server decides.</strong> The Studio and the Console hide or disable what a person may not do, but only to be helpful. Every API route names the permission it needs and checks it on the server.</li><li><strong>One place maps roles to permissions</strong> (<code>Role::allows</code> in <code>crates/domain</code>). No route, screen or script re-implements it.</li><li><strong>Least privilege, separated duties.</strong> A designer can propose; an operator can run; an administrator can change the platform; an auditor can only read. No role is needed for everything.</li><li><strong>Two authorities, never mixed.</strong> Apelora decides who may design, deploy and operate <em>applications</em>. Incus decides what a certificate may do <em>inside Incus</em>. The browser never holds Incus credentials.</li><li><strong>Defence in depth.</strong> A mistake in one layer (a missing check in a screen) must not be enough to cause harm in the next.</li><li><strong>Everything that matters is audited,</strong> with who, what, when, on which object, and the outcome. Secrets never appear in the audit log.</li></ol>
+<h2 id="2-user-roles-access-levels-and-interfaces">2. User roles, access levels and interfaces</h2>
+<p>The following diagram shows how user roles relate to RBAC access levels and the typical interfaces they use.</p>
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-access-and-roles-0.svg"><img width="1912" height="1055" src="/assets/docs/diagrams/architecture-access-and-roles-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart LR
+  subgraph R[&quot;User roles — who&quot;]
+    A[&quot;Fabric administrator&lt;br/&gt;fabric-admin&quot;]
+    O[&quot;Operator&lt;br/&gt;operator&quot;]
+    D[&quot;Studio designer&lt;br/&gt;studio-designer&quot;]
+    U[&quot;Auditor&lt;br/&gt;auditor&quot;]
+    V[&quot;Viewer&lt;br/&gt;viewer (proposed)&quot;]
+    S[&quot;Service identities&lt;br/&gt;worker, CI token&quot;]
+  end
+
+  subgraph L[&quot;RBAC access levels — what&quot;]
+    L4[&quot;L4 Platform&lt;br/&gt;members, networks, storage,&lt;br/&gt;tokens, enrolment&quot;]
+    L3[&quot;L3 Operate&lt;br/&gt;deploy, start / stop,&lt;br/&gt;replace and recover replicas&quot;]
+    L2[&quot;L2 Design&lt;br/&gt;create and edit applications,&lt;br/&gt;preview plans&quot;]
+    L1[&quot;L1 Read&lt;br/&gt;inventory, application status&quot;]
+    L0[&quot;L0 Audit&lt;br/&gt;read the audit log&quot;]
+  end
+
+  subgraph I[&quot;Typical interfaces — where&quot;]
+    C[&quot;Fabric Console&quot;]
+    ST[&quot;Apelora Studio&quot;]
+    API[&quot;REST API and&lt;br/&gt;generated client&quot;]
+    CLI[&quot;control-plane CLI&lt;br/&gt;token create, openapi&quot;]
+    INC[&quot;Incus API / CLI&lt;br/&gt;break-glass, hosts only&quot;]
+  end
+
+  A --&gt; L4
+  O --&gt; L3
+  D --&gt; L2
+  U --&gt; L1
+  U --&gt; L0
+  V --&gt; L1
+  S --&gt; L3
+
+  L4 -.includes.-&gt; L3
+  L3 -.includes.-&gt; L2
+  L2 -.includes.-&gt; L1
+
+  L4 --&gt; C
+  L4 --&gt; CLI
+  L4 --&gt; INC
+  L3 --&gt; C
+  L3 --&gt; ST
+  L2 --&gt; ST
+  L1 --&gt; C
+  L1 --&gt; ST
+  L0 --&gt; C
+  L4 --&gt; API
+  L3 --&gt; API
+  L2 --&gt; API
+  S --&gt; API</code></pre></details></figure>
+<p>How to read it: a role grants one access level; a higher level includes the ones below it (a solid line from a level to an interface means that interface offers actions at that level). The Incus API is reachable only from hosts, by administrators, as break-glass (see §7); applications and tenants never touch it. Service identities use the API only; the deployment worker additionally holds the Incus deploy identity, restricted to its projects.</p>
+<h3 id="21-roles-today-and-proposed">2.1 Roles today and proposed</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Role</th><th scope="col">State</th><th scope="col">Purpose</th><th scope="col">Cannot</th></tr></thead><tbody><tr><td><code>fabric-admin</code></td><td>BUILT</td><td>Runs the platform: members, networks, storage, enrolment, tokens</td><td>— (all permissions)</td></tr><tr><td><code>operator</code></td><td>BUILT</td><td>Runs workloads: deploys and operates applications</td><td>Change infrastructure or tokens</td></tr><tr><td><code>studio-designer</code></td><td>BUILT</td><td>Designs applications in the Studio</td><td>Deploy, change infrastructure</td></tr><tr><td><code>auditor</code></td><td>BUILT</td><td>Reads inventory and the audit log</td><td>Design, deploy, change anything</td></tr><tr><td><code>viewer</code></td><td>PROPOSED</td><td>Stakeholders: sees applications and their health, no audit log, no inventory of other tenants</td><td>Anything that changes state</td></tr><tr><td>Service identities</td><td>BUILT (tokens) / PROPOSED (scopes)</td><td>Worker, CI, integrations; short-lived, narrow, never a person's token</td><td>Interactive use</td></tr></tbody></table></div>
+<h3 id="22-permissions">2.2 Permissions</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Permission</th><th scope="col">BUILT meaning</th><th scope="col">PROPOSED split</th></tr></thead><tbody><tr><td><code>read-inventory</code></td><td>Members, instances, networks, pools, applications</td><td><code>read-applications</code> (per project) separate from <code>read-inventory</code> (infrastructure)</td></tr><tr><td><code>read-audit</code></td><td>Audit log</td><td>Unchanged; may be scoped to a project</td></tr><tr><td><code>manage-tokens</code></td><td>Create and revoke API tokens</td><td>Unchanged; platform scope only</td></tr><tr><td><code>manage-infrastructure</code></td><td>Members, enrolment, evacuation, join tokens</td><td>Add <code>manage-storage</code> and <code>manage-networks</code> so storage or network teams need not be full administrators</td></tr><tr><td><code>design-applications</code></td><td>Create and edit designs, preview plans</td><td>Add <code>approve-deployment</code> for optional four-eyes release control</td></tr><tr><td><code>deploy</code></td><td>Deploy, start, stop, delete instances in allowed projects</td><td>Add <code>operate-instances</code> (start/stop/restart) apart from <code>deploy</code> (create/remove)</td></tr></tbody></table></div>
+<h3 id="23-matrix-built">2.3 Matrix (BUILT)</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Capability</th><th scope="col" style="text-align:center">fabric-admin</th><th scope="col" style="text-align:center">operator</th><th scope="col" style="text-align:center">studio-designer</th><th scope="col" style="text-align:center">auditor</th></tr></thead><tbody><tr><td>See inventory and application status</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td></tr><tr><td>Create and edit application designs, preview a plan</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">—</td></tr><tr><td>Deploy, start, stop, delete application instances</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr><tr><td>Members, evacuation, machine enrolment, join tokens</td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr><tr><td>See alerts (<code>cluster.view</code>)</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td></tr><tr><td>Acknowledge and silence alerts (<code>alert.respond</code>); change alert rules and webhooks (<code>alert.configure</code>)</td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr><tr><td>API tokens</td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr><tr><td>Audit log</td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">✓</td></tr></tbody></table></div>
+<h2 id="3-scope-who-may-do-it-where-proposed">3. Scope: who may do it <em>where</em> (PROPOSED)</h2>
+<p>Today a role applies to the whole platform and deployments are limited by the allow-list <code>APELORA_DEPLOY_PROJECTS</code>. The target binds a role to a <strong>scope</strong>, so a team can design and run its own applications and see no one else's.</p>
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-access-and-roles-1.svg"><img width="955" height="381" src="/assets/docs/diagrams/architecture-access-and-roles-1.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart TB
+  P[&quot;Platform&lt;br/&gt;(whole cluster)&quot;] --&gt; T1[&quot;Project: team-a&lt;br/&gt;(Incus project)&quot;]
+  P --&gt; T2[&quot;Project: team-b&quot;]
+  T1 --&gt; AP1[&quot;Application: shop&quot;]
+  T1 --&gt; AP2[&quot;Application: reports&quot;]
+  T2 --&gt; AP3[&quot;Application: intranet&quot;]
+
+  B1([&quot;Binding: alice = operator @ team-a&quot;]) -.-&gt; T1
+  B2([&quot;Binding: bob = studio-designer @ shop&quot;]) -.-&gt; AP1
+  B3([&quot;Binding: carol = auditor @ platform&quot;]) -.-&gt; P
+  B4([&quot;Binding: ci-shop = operator @ shop&quot;]) -.-&gt; AP1</code></pre></details></figure>
+<ul><li>A <strong>role binding</strong> is <code>(identity, role, scope)</code>. A binding at a scope applies to everything beneath it.</li><li>The <code>fabric-admin</code> and <code>auditor</code> roles are normally bound at platform scope. Designers and operators are bound at project or application scope.</li><li>Each Apelora project maps to one Incus project (restricted, see §5). This keeps the Apelora authorisation and the Incus isolation aligned.</li><li>Bindings live in PostgreSQL and are managed by administrators in the Console. Changes are audited.</li></ul>
+<h2 id="4-request-path-how-one-action-is-authorised">4. Request path: how one action is authorised</h2>
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-access-and-roles-2.svg"><img width="2287" height="813" src="/assets/docs/diagrams/architecture-access-and-roles-2.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>sequenceDiagram
+  autonumber
+  actor U as User
+  participant UI as Studio or Console
+  participant API as Control plane API
+  participant DB as PostgreSQL
+  participant W as Deployment worker
+  participant I as Incus (mTLS)
+
+  U-&gt;&gt;UI: Click Deploy
+  UI-&gt;&gt;API: POST /applications/shop/deployments (token, Idempotency-Key)
+  API-&gt;&gt;API: Authenticate token (hash lookup, expiry, revoked?)
+  API-&gt;&gt;API: Authorise: role allows deploy at scope shop?
+  API-&gt;&gt;API: Validate input and project allow-list
+  API-&gt;&gt;DB: Save revision, queue jobs, write audit event (one transaction)
+  API--&gt;&gt;UI: 202 with job ids
+  W-&gt;&gt;DB: Claim job (lease, generation)
+  W-&gt;&gt;I: Create instance with the deploy identity (restricted to the project)
+  I--&gt;&gt;W: Operation result
+  W-&gt;&gt;DB: Record result and audit event
+  UI-&gt;&gt;API: GET status (same checks)</code></pre></details></figure>
+<p>Points that matter: the check happens on the server (step 3), the audit write is in the same transaction as the work it describes (step 5), and the worker uses a <strong>different, narrower</strong> identity than the API's administrator identity (step 8, <a href="/docs/decisions/0003-incus-identities-and-cluster-join/">ADR 0003</a>).</p>
+<h2 id="5-best-practice-by-layer">5. Best practice by layer</h2>
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-access-and-roles-3.svg"><img width="877" height="754" src="/assets/docs/diagrams/architecture-access-and-roles-3.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart TB
+  L1[&quot;1 Interfaces: Studio, Console&lt;br/&gt;hide what is not allowed, no secrets in the browser,&lt;br/&gt;strict CSP, no token in localStorage&quot;]
+  L2[&quot;2 API&lt;br/&gt;authenticate, authorise every route, validate input,&lt;br/&gt;idempotency, rate limits, audit&quot;]
+  L3[&quot;3 Control plane and worker&lt;br/&gt;one permission table, separate identities,&lt;br/&gt;fenced jobs, secrets from the secret store&quot;]
+  L4[&quot;4 PostgreSQL&lt;br/&gt;least-privilege database roles, project column on every row,&lt;br/&gt;encryption at rest, tested backups&quot;]
+  L5[&quot;5 Incus&lt;br/&gt;mTLS with pinned server certificate, restricted certificate,&lt;br/&gt;restricted projects, unprivileged containers&quot;]
+  L6[&quot;6 Network&lt;br/&gt;deny by default, per-application networks,&lt;br/&gt;separate management and storage networks&quot;]
+  L7[&quot;7 Storage&lt;br/&gt;per-project volumes and quotas, ownership and fencing,&lt;br/&gt;encryption, snapshots are not backups&quot;]
+  L8[&quot;8 Hosts and supply chain&lt;br/&gt;minimal OS, MAAS or enrolment approval, BMC credentials isolated,&lt;br/&gt;pinned and scanned dependencies, signed releases&quot;]
+  L1 --&gt; L2 --&gt; L3 --&gt; L4
+  L3 --&gt; L5 --&gt; L6
+  L5 --&gt; L7
+  L5 --&gt; L8</code></pre></details></figure>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Layer</th><th scope="col">Do (BUILT unless marked)</th><th scope="col">Add (PROPOSED)</th></tr></thead><tbody><tr><td><strong>Interfaces</strong></td><td>Navigation and buttons follow <code>whoami</code> permissions; the API token lives in <code>sessionStorage</code> of the tab, never <code>localStorage</code>; the browser talks only to the Apelora API; destructive actions need typed confirmation; no secret values in designs (secret properties hold a reference name)</td><td>Content-Security-Policy and other security headers on both apps; sign-in with OIDC (authorisation code with PKCE) and short-lived tokens; idle sign-out; no sensitive data in URLs</td></tr><tr><td><strong>API</strong></td><td>Authentication and a named permission on every route; hashed tokens with expiry and revocation; input validated; <code>Idempotency-Key</code>; audit events; OpenAPI as the contract</td><td>Per-project scope on every route; rate limiting and request size limits; consistent error bodies that never reveal internals; <code>ETag</code>/<code>If-Match</code> on documents; CORS allow-list</td></tr><tr><td><strong>Control plane and worker</strong></td><td>Permission table in one crate; two Incus identities (deploy identity restricted to projects, admin identity only for cluster administration); jobs with leases and fencing generations; secrets not logged (<code>Debug</code> redaction)</td><td>Secrets from a secret store (not environment files); short-lived credentials for CI; periodic access review report; break-glass procedure with alarm</td></tr><tr><td><strong>PostgreSQL</strong></td><td>Apelora state only; migrations in the repository</td><td>Separate database roles: application (no DDL, no superuser), migration, read-only reporting; TLS to the database; row filters by project; encryption at rest; backup restore drill</td></tr><tr><td><strong>Incus</strong></td><td>mTLS with server-certificate pinning; deploy identity restricted to listed projects; restricted projects; unprivileged containers; no host mounts or raw configuration for tenants; healing off by default</td><td>Certificate rotation on a schedule (runbook exists); audit of Incus-side events correlated with Apelora's; project limits (CPU, memory, disk, instance counts) per tenant</td></tr><tr><td><strong>Network</strong></td><td>Deny-by-default connections compiled from the graph; per-application OVN networks and ACLs; internet access only through an explicit <code>@external</code></td><td>Management, storage and BMC networks separated and not reachable from tenant networks; egress allow-lists</td></tr><tr><td><strong>Storage</strong></td><td>Ownership labels (<code>user.apelora.*</code>) written only by Apelora</td><td>Volumes created per project with quotas; encryption where the backend supports it; restore tests; fencing before any stateful move (<a href="/docs/concepts/storage/">storage</a>)</td></tr><tr><td><strong>Hosts and supply chain</strong></td><td><code>cargo deny</code>, npm licence and audit checks, secret scanning, draft releases with checksums, pinned Incus version (<code>upstream.lock.yaml</code>)</td><td>Signed release artefacts and a software bill of materials; minimal host image; host patching runbook; separate credentials per environment</td></tr></tbody></table></div>
+<h2 id="6-identity">6. Identity</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Identity</th><th scope="col">State</th><th scope="col">Notes</th></tr></thead><tbody><tr><td>People</td><td>BUILT: API tokens created by an administrator, shown once, hashed in storage, with a role, expiry and last-use</td><td>PROPOSED: OIDC sign-in; groups from the identity provider map to role bindings; multi-factor authentication is the provider's job; tokens remain for automation only</td></tr><tr><td>Automation</td><td>BUILT: API tokens</td><td>PROPOSED: tokens bound to one scope and role, short expiry, named owner, visible in the Console</td></tr><tr><td>Apelora → Incus</td><td>BUILT: deploy identity (restricted) and admin identity (unrestricted) as two certificates</td><td>Rotate on schedule; store only in the backend's secret store</td></tr><tr><td>Hosts → cluster</td><td>BUILT: single-use join tokens issued after an administrator approves the machine</td><td>MAAS provisioning later (<a href="/docs/decisions/0002-bare-metal-provisioning-maas/">ADR 0002</a>)</td></tr></tbody></table></div>
+<h2 id="7-break-glass">7. Break-glass</h2>
+<p>Direct access to Incus on a host bypasses Apelora's authorisation and audit. It exists for outages (for example loss of quorum, see the runbooks) and is therefore: limited to a few named administrators, done from the host, announced, followed by a written account, and reconciled afterwards (Apelora reads actual Incus state before acting). It is never offered to tenants or designers. <em>PROPOSED:</em> alert when an Incus-side change has no matching Apelora audit event.</p>
+<h2 id="8-what-to-build-in-order">8. What to build, in order</h2>
+<ol><li>Document the current roles in the Console administration view (read-only list of roles and what they allow). <em>Small.</em></li><li>Project scoping: add a project column to applications and bindings; check scope in the authorisation helper; tests that a designer in project A cannot read project B.</li><li><code>viewer</code> role and the permission split (<code>read-applications</code>, <code>operate-instances</code>).</li><li>Security headers and CSP for both apps.</li><li>OIDC sign-in and group-to-role mapping.</li><li>Optional release approval (<code>approve-deployment</code>).</li></ol>
+<p>Each step needs tests on the server first (a role without the permission gets 403 on every affected route), then UI behaviour, then a real-browser check. Keep the list of routes and the permission each needs generated from the code or the OpenAPI document so it cannot drift.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/ACCESS-AND-ROLES.md">docs/architecture/ACCESS-AND-ROLES.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/architecture/ACCESS-AND-ROLES.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/concepts/storage/"><span>Previous</span>Storage</a><a class="next" href="/docs/concepts/identity-and-authorization/"><span>Next</span>Identity and authorization</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#1-principles">1. Principles</a></li><li class="l2"><a href="#2-user-roles-access-levels-and-interfaces">2. User roles, access levels and interfaces</a></li><li class="l3"><a href="#21-roles-today-and-proposed">2.1 Roles today and proposed</a></li><li class="l3"><a href="#22-permissions">2.2 Permissions</a></li><li class="l3"><a href="#23-matrix-built">2.3 Matrix (BUILT)</a></li><li class="l2"><a href="#3-scope-who-may-do-it-where-proposed">3. Scope: who may do it where (PROPOSED)</a></li><li class="l2"><a href="#4-request-path-how-one-action-is-authorised">4. Request path: how one action is authorised</a></li><li class="l2"><a href="#5-best-practice-by-layer">5. Best practice by layer</a></li><li class="l2"><a href="#6-identity">6. Identity</a></li><li class="l2"><a href="#7-break-glass">7. Break-glass</a></li><li class="l2"><a href="#8-what-to-build-in-order">8. What to build, in order</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

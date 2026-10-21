@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A replica fails its health check · Runbooks · Apelora</title>
+  <meta name="description" content="A replica fails its health check: what Apelora does and what you can do.">
+  <link rel="canonical" href="https://apelora.github.io/docs/runbooks/replica-unhealthy/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="A replica fails its health check · Runbooks · Apelora">
+  <meta property="og:description" content="A replica fails its health check: what Apelora does and what you can do.">
+  <meta property="og:url" content="https://apelora.github.io/docs/runbooks/replica-unhealthy/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group" open><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/" aria-current="page">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/runbooks/">Runbooks</a></nav>
+        <h1>A replica fails its health check</h1>
+        <div class="prose">
+<p class="ev"><strong>Evidence:</strong> REAL INCUS TESTED, 2026-10-20 (Incus 7.0.1, four members) — the end-to-end
+demonstration (<code>scripts/test-cluster/demo.sh</code>) closes the port of one NGINX replica while it keeps
+running and checks each step below.</p>
+<p>What Apelora checks: for modules with a service address, the OVN load balancer probes each
+replica's service port (a TCP connection, not an application request). Instances without a
+service address are not checked; a check that cannot see a hung application behind an open
+port will not notice it.</p>
+<p>What happens on its own:</p>
+<ol><li>The load balancer stops sending requests to the replica within seconds of its port closing.</li><li>After it has failed for <code>APELORA_HEALTH_FAIL_AFTER_SECS</code> (default 20 s) the worker records it
+as unhealthy: the Studio overlay shows the module <em>Degraded</em> (<em>Unhealthy</em> when no replica
+passes), <code>GET /api/v1/applications/&lt;name&gt;/status</code> reports <code>health: unhealthy</code> with the
+reason.</li><li>A <strong>stateless</strong> replica unhealthy for <code>APELORA_HEALTH_RESTART_AFTER_SECS</code> (default 60 s) is
+restarted once (audit: <code>application.replica.restart-unhealthy</code>). Only one replica of a
+module is restarted per pass, and the same replica not again within five minutes, so a
+replica that stays broken is not restarted in a loop. Singleton and stateful modules are
+never restarted automatically.</li><li>Once it passes for 20 s it is healthy again and receives requests.</li></ol>
+<p>What to do when a replica stays unhealthy after its restart:</p>
+<ol><li>Look at the instance: <code>incus info &lt;instance&gt; --project &lt;project&gt; --show-log</code>, and inside it
+(<code>incus exec</code>) check that the service listens on its port.</li><li>Fix the cause (configuration, a dependency it waits for, resources). The replica returns to
+service by itself when its check passes; nothing has to be re-deployed.</li><li>If the image itself is broken, deploy a corrected design (new image digest): the plan replaces
+the instances.</li></ol>
+<h2 id="when-the-module-has-an-application-check">When the module has an application check</h2>
+<p>A module can also declare a readiness command (Studio → Properties → Application check; <a href="/docs/design/application-readiness/">design</a>). The health detail then says which check failed: <em>port check failing</em>, <em>readiness command failing</em>, or both. A replica whose port answers but whose command fails is a hung application: look inside the instance (<code>incus exec</code>, or the terminal in the Console) for what it logs. A command that Incus cannot run (the program is missing from the image) is logged by the worker (<code>health: the readiness command could not be run</code>) and decides nothing, so fix the command or the image; the replica is not restarted for it. NOT YET VERIFIED against a real instance.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/runbooks/replica-unhealthy.md">docs/runbooks/replica-unhealthy.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/runbooks/replica-unhealthy.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/runbooks/incus-rolling-upgrade/"><span>Previous</span>Reading quorum, and a rolling Incus upgrade</a><a class="next" href="/docs/runbooks/volumes/"><span>Next</span>An application's volumes: kept, missing or to be deleted</a></nav>
+      </article>
+      <div class="docs-toc"></div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

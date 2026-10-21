@@ -77,11 +77,7 @@
           </ul>
           <div class="evidence"><span class="tag">Real Incus tested</span><span class="tag plain">Redfish: tested against a test server</span><span class="tag road">Virtual machines: roadmap</span></div>
         </div>
-        <figure class="shot">
-          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Health</span></div>
-          <img src="/assets/img/crop-console-health.webp" width="790" height="610" loading="lazy" alt="Fabric Console, Health, during a failure: overall status Down, with the deployment worker, job queue and one offline server each showing their cause and next step.">
-          <figcaption>A simulated failure: each problem names its cause and the next step. Sample data.</figcaption>
-        </figure>
+        {{include:failover}}
       </article>
 
       <article class="feature" id="operate">
@@ -161,7 +157,7 @@
             </tbody>
           </table>
         </div>
-        <p class="caption" style="margin-top:20px">Source of truth: <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/current-state.md">current state</a> in the repository, updated with every change.</p>
+        <p class="caption" style="margin-top:20px">The repository's status document is the source of truth; <a href="/docs/reference/current-state/">this page</a> is a snapshot of it.</p>
       </div>
     </section>
 

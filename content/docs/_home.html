@@ -1,0 +1,55 @@
+<article class="docs-body docs-home">
+        <h1>Documentation</h1>
+        <p class="lead">From the first install to a failed server at three in the morning. Each page says how its results were checked, and what has not been tested.</p>
+
+        <h2 id="start-here">Start here: from nothing to a managed application</h2>
+        <ol class="journey">
+          <li><a href="/docs/start/what-you-need/"><span class="n">0</span><b>Before you start</b><small>The parts, the requirements, the state of the project.</small></a></li>
+          <li><a href="/docs/start/try-it-on-your-workstation/"><span class="n">1</span><b>Try it</b><small>The designer in a minute; the whole stack in a lab on your machine.</small></a></li>
+          <li><a href="/docs/start/install-on-your-servers/"><span class="n">2</span><b>Install on your servers</b><small>Incus cluster, PostgreSQL, control plane, worker, the two screens.</small></a></li>
+          <li><a href="/docs/start/sign-in/"><span class="n">3</span><b>Sign in</b><small>A token to begin with, your identity provider for people.</small></a></li>
+          <li><a href="/docs/start/design-your-first-application/"><span class="n">4</span><b>Design</b><small>Modules, cables, replicas and resources in Studio.</small></a></li>
+          <li><a href="/docs/start/deploy-it/"><span class="n">5</span><b>Deploy</b><small>Review the plan, deploy, watch it come up.</small></a></li>
+          <li><a href="/docs/start/manage-it/"><span class="n">6</span><b>Manage</b><small>Health, servers, applications, operations, audit.</small></a></li>
+          <li><a href="/docs/start/when-something-goes-wrong/"><span class="n">7</span><b>When something goes wrong</b><small>Where to look, and which runbook to open.</small></a></li>
+        </ol>
+
+        <div class="home-shots">
+          <a href="/docs/start/design-your-first-application/"><img src="/assets/docs/img/15-networked-stack-link-tags-1440x900.webp" width="1440" height="900" loading="lazy" alt="Apelora Studio with a gateway, a load balancer, two web servers, a PostgreSQL database and Grafana connected on the canvas."><span>Design in Studio</span></a>
+          <a href="/docs/start/manage-it/"><img src="/assets/docs/img/31-console-servers-members-1440x900.webp" width="1440" height="900" loading="lazy" alt="Fabric Console, Servers: the cluster database and four members with status and capacity."><span>Operate in Fabric Console</span></a>
+        </div>
+
+        <h2 id="i-want-to">I want to…</h2>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Tasks and where they are described"><table>
+          <thead><tr><th scope="col">Task</th><th scope="col">Go to</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">See what works today, and how it was checked</th><td><a href="/docs/reference/current-state/">What works today</a></td></tr>
+            <tr><th scope="row">Try it without buying hardware</th><td><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></td></tr>
+            <tr><th scope="row">Add a server to the cluster</th><td><a href="/docs/runbooks/member-join/">Add a server</a></td></tr>
+            <tr><th scope="row">Set up sign-in with our identity provider</th><td><a href="/docs/guides/signing-in/">Signing in</a></td></tr>
+            <tr><th scope="row">Open a terminal into a module</th><td><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></td></tr>
+            <tr><th scope="row">Know what happens when a server dies</th><td><a href="/docs/runbooks/member-failure/">A server fails</a></td></tr>
+            <tr><th scope="row">Take a server out for maintenance</th><td><a href="/docs/runbooks/member-maintenance/">Maintenance on a server</a></td></tr>
+            <tr><th scope="row">Back up Apelora's database</th><td><a href="/docs/runbooks/apelora-database-backup/">Back up and restore</a></td></tr>
+            <tr><th scope="row">Run without internet access</th><td><a href="/docs/concepts/disconnected/">Without internet access</a></td></tr>
+            <tr><th scope="row">Understand who can do what</th><td><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></td></tr>
+            <tr><th scope="row">See which modules exist, and which deploy</th><td><a href="/docs/reference/module-catalog/">Module catalog</a></td></tr>
+            <tr><th scope="row">Understand how the pieces fit</th><td><a href="/docs/concepts/platform-architecture/">Platform architecture</a></td></tr>
+          </tbody>
+        </table></div>
+
+        <h2 id="browse">Browse by section</h2>
+        {{sections}}
+
+        <h2 id="evidence">How to read the evidence labels</h2>
+        <p>Results are labelled by how they were checked. A label is never stronger than its evidence.</p>
+        <dl class="terms docs-terms">
+          <div><dt>Real Incus tested</dt><dd>Run against a real Incus cluster: the four-server lab of virtual machines.</dd></div>
+          <div><dt>Real MAAS tested</dt><dd>Run against a real MAAS, again in the lab.</dd></div>
+          <div><dt>Contract verified</dt><dd>Checked against recorded responses or a server shaped like the real one.</dd></div>
+          <div><dt>Mock verified</dt><dd>Checked against Apelora's mock provider and stubbed services. The screens say "Mock" until they show real data.</dd></div>
+          <div><dt>Not verified</dt><dd>Written from the upstream documentation; nothing has run it yet.</dd></div>
+        </dl>
+        <p class="docs-source">These pages are snapshots of the documentation in the <a href="https://github.com/Apelora/apelora-fabric/tree/main/docs">product repository</a>, which is the source of truth. Screenshots show sample data.</p>
+      </article>
+      <div class="docs-toc"></div>

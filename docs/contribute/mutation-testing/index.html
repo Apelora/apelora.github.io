@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mutation testing · Contribute · Apelora</title>
+  <meta name="description" content="Checking that tests would fail if a rule were wrong, for the security-relevant code.">
+  <link rel="canonical" href="https://apelora.github.io/docs/contribute/mutation-testing/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Mutation testing · Contribute · Apelora">
+  <meta property="og:description" content="Checking that tests would fail if a rule were wrong, for the security-relevant code.">
+  <meta property="og:url" content="https://apelora.github.io/docs/contribute/mutation-testing/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group" open><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/" aria-current="page">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/contribute/">Contribute</a></nav>
+        <h1>Mutation testing</h1>
+        <div class="prose">
+<p>Line coverage says a test <em>ran</em> a line. Mutation testing says a test would <em>fail</em> if the line were wrong. A tool changes the code in a small way (turns <code>&gt;</code> into <code>&gt;=</code>, replaces a function body with a constant, deletes a <code>!</code>) and runs the tests; a change that no test notices is a <strong>missed mutant</strong>, a rule nothing protects. For code that decides who may do what, that is the number that matters.</p>
+<h2 id="what-is-covered-and-how-to-run-it">What is covered and how to run it</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Area</th><th scope="col">Tool</th><th scope="col">Scope</th><th scope="col">Command</th><th scope="col">Gate</th></tr></thead><tbody><tr><td>Authorisation</td><td><code>cargo-mutants</code></td><td><code>crates/auth</code> (evaluator, roles, scopes, approvals, assignment guard, backend mapping)</td><td><code>cargo mutants -p apelora-auth --no-shuffle -j 4</code></td><td><strong>No missed mutant</strong> (CI: <code>mutation.yml</code>, on pull requests that touch it, weekly)</td></tr><tr><td>Interactive access and lifecycle rules</td><td><code>cargo-mutants</code></td><td><code>crates/domain/src/access.rs</code>, <code>lifecycle.rs</code></td><td><code>cargo mutants -p apelora-domain --no-shuffle -j 4 -f crates/domain/src/access.rs -f crates/domain/src/lifecycle.rs</code></td><td>No missed mutant (same workflow)</td></tr><tr><td>Control plane handlers</td><td><code>cargo-mutants</code></td><td><code>api/sessions.rs</code>, <code>api/authz.rs</code> (needs PostgreSQL: <code>DATABASE_URL</code>)</td><td><code>cargo mutants -p apelora-control-plane --no-shuffle -j 2 --timeout 150 -f services/control-plane/src/api/sessions.rs -f services/control-plane/src/api/authz.rs</code></td><td>Run by hand before changing these files; slow (about an hour)</td></tr><tr><td>Model rules (TypeScript)</td><td>Stryker</td><td><code>packages/assembly-model</code> (<code>network.ts</code>, <code>validate.ts</code>, <code>runtime.ts</code>, <code>cables.ts</code>), <code>packages/api-client/src/index.ts</code></td><td><code>npm run mutation</code></td><td>Score reported weekly, not a gate</td></tr></tbody></table></div>
+<p>Scope is in <code>.cargo/mutants.toml</code> and <code>stryker.config.mjs</code>. The tools are development tools: neither is a dependency of anything that ships (<code>cargo-mutants</code> is MIT, Stryker is Apache-2.0).</p>
+<h2 id="reading-a-result">Reading a result</h2>
+<ul><li><strong>caught</strong>: a test failed. <strong>timeout</strong>: counts as caught (a mutant that loops forever is noticed). <strong>unviable</strong>: did not compile; ignore.</li><li><strong>MISSED</strong>: look at the line and decide:
+<ol><li><em>A real gap</em> (almost all of them): write the smallest test that fails for that mutant: both sides of a boundary, each operand of an <code>&amp;&amp;</code>/<code>||</code>, the value of a constant, the text of an error people read. For the authorisation crate these live in <code>crates/auth/src/hardening.rs</code> and next to the rule.</li><li><em>Redundant code</em>: delete it. (<code>derive_status</code> had a branch whose two arms returned the same value; mutation testing found it and it was removed.)</li><li><em>Equivalent mutant</em> (the program behaves identically): exclude that one function in <code>.cargo/mutants.toml</code> with a comment saying why. <code>Resource::platform()</code> is <code>Default::default()</code> by definition, so it is excluded.</li></ol></li><li>Never weaken a test, add <code>#[mutants::skip]</code> to a security rule, or exclude code to improve a number.</li></ul>
+<h2 id="results-2026-10-20">Results (2026-10-20)</h2>
+<p>First runs, then the tests added in response.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Scope</th><th scope="col">Mutants</th><th scope="col">Caught</th><th scope="col">Missed</th><th scope="col">Unviable</th><th scope="col">Note</th></tr></thead><tbody><tr><td><code>apelora-auth</code></td><td>253</td><td>230</td><td><strong>0</strong></td><td>23</td><td>First run: 34 missed. Gaps found: service-identity guard in <code>filter</code>/<code>holds_anywhere</code>, MFA and environment conditions in <code>filter</code>, expiry boundaries, emergency-grant boundary (exactly four hours), custom-role limits (60-character name, 100 permissions, role keys as names), Incus project-name cleaning, approval lifetimes, blank error messages.</td></tr><tr><td><code>apelora-domain</code> <code>access.rs</code>, <code>lifecycle.rs</code></td><td>66</td><td>58 + 2 timeouts</td><td><strong>0</strong></td><td>6</td><td>First run: 5 missed (shell command per session kind, self-connection and unknown endpoints in <code>layers</code>, one redundant branch).</td></tr><tr><td>Control plane <code>sessions.rs</code>, <code>authz.rs</code></td><td>254</td><td>150</td><td>15 on the first run</td><td>89</td><td>The first full run left 15 missed (the ticket generator could have been a constant, the one-minute window, the default terminal size, who may end a session, a disabled account ending a running one, the audit-name and legacy-role mappings). Tests were added and the functions re-run: the last of them, a <code>&gt;</code> on ticket expiry in <code>Sessions::issue_at</code>, is now caught (14 of 14). A test written for it also found a real bug: failed opens were never audited because the code wrote the outcome <code>failure</code> and the table accepts <code>failed</code>.</td></tr><tr><td>TypeScript model rules (Stryker)</td><td>979</td><td>657 (653 + 4 timeouts)</td><td>322 survived (no coverage: 0)</td><td></td><td><strong>67%</strong> overall: <code>cables.ts</code> 86%, <code>runtime.ts</code> 82%, <code>api-client</code> 78%, <code>network.ts</code> 61% (was 54%), <code>validate.ts</code> 54%. Most survivors are message strings, hint text and object literals in diagnostics (<code>validate.ts</code> alone has 64 string-literal mutants); the logic ones left are listed by <code>npm run mutation</code>. The deny-by-default rules in <code>network.ts</code> (<code>allows</code>, direction and publishing) now have tests that a rule for one appliance cannot be swapped for another.</td></tr></tbody></table></div>
+<h3 id="what-the-rust-numbers-do-not-say">What the Rust numbers do not say</h3>
+<p>A caught mutant means <em>a test failed</em>, not that the rule is verified against reality. All of this is MOCK VERIFIED or CONTRACT VERIFIED; none of it ran against a real Incus or identity provider.</p>
+<h2 id="running-stryker">Running Stryker</h2>
+<p>Stryker runs <strong>in place</strong>. The workspace packages are symlinked into <code>node_modules</code>, so a copied sandbox would test the original files, not the mutated copies. It rewrites source files while it runs and restores them afterwards, so:</p>
+<ul><li>start from a clean <code>git status</code>;</li><li>do not edit anything under <code>apps/</code> or <code>packages/</code> during a run, and do not run two at once (an edit made while it runs is overwritten when the originals are restored);</li><li>if a run is killed it leaves <code>// @ts-nocheck</code> lines in hundreds of files and its backup in <code>.stryker-tmp/backup-*</code> (git-ignored): check that <code>git diff</code> shows only those injected lines, then <code>git checkout -- apps packages tests scripts</code> (and any root config file listed) and delete <code>.stryker-tmp</code>.</li></ul>
+<p>The Vitest runner plugin for Stryker does not yet work with Vitest 5 (mutants are never switched on, so everything &quot;survives&quot;), which is why <code>stryker.config.mjs</code> uses the <code>command</code> runner: each mutant runs <code>vitest run packages --bail=1</code> and the first failing test kills it. Revisit when the plugin supports Vitest 5.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/development/MUTATION-TESTING.md">docs/development/MUTATION-TESTING.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/development/MUTATION-TESTING.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/contribute/lessons-learned/"><span>Previous</span>Lessons learned</a><a class="next" href="/docs/contribute/upstream-incus/"><span>Next</span>Staying in sync with upstream Incus</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#what-is-covered-and-how-to-run-it">What is covered and how to run it</a></li><li class="l2"><a href="#reading-a-result">Reading a result</a></li><li class="l2"><a href="#results-2026-10-20">Results (2026-10-20)</a></li><li class="l3"><a href="#what-the-rust-numbers-do-not-say">What the Rust numbers do not say</a></li><li class="l2"><a href="#running-stryker">Running Stryker</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

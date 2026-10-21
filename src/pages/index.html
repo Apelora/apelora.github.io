@@ -11,7 +11,7 @@
             <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             See how it works
           </a>
-          <a class="more" href="/documentation/">Read the documentation
+          <a class="more" href="/docs/">Read the docs
             <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
@@ -146,11 +146,7 @@
           <div class="evidence"><span class="tag">Real Incus tested</span><span class="tag road">Virtual machines: roadmap</span></div>
           <p style="margin-top:20px"><a class="more" href="/product/#recover">More about recovery <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
         </div>
-        <figure class="shot">
-          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Health</span></div>
-          <img src="/assets/img/crop-console-health.webp" width="790" height="610" loading="lazy" alt="Fabric Console, Health, during a failure: overall status is Down, the deployment worker is down with the instruction to start it, the job queue says three jobs wait and no worker is running, and Incus reports one of three servers offline with its next step.">
-          <figcaption>A simulated failure: each problem names its cause and the next step. Detail of a Console screen, sample data.</figcaption>
-        </figure>
+        {{include:failover}}
       </article>
 
     </div>
@@ -224,10 +220,10 @@
             <p class="price">Free<small>Open source, AGPL-3.0</small></p>
             <ul class="checks">
               <li><span>The complete software and source code</span></li>
-              <li><span>Documentation, runbooks and design decisions</span></li>
+              <li><span>Step-by-step docs, runbooks and design decisions</span></li>
               <li><span>Questions and bug reports in public on GitHub</span></li>
             </ul>
-            <a class="btn btn-line" href="https://github.com/Apelora/apelora-fabric">Get the source</a>
+            <a class="btn btn-line" href="/docs/start/what-you-need/">Start building</a>
           </article>
           <article class="offer">
             <h3>Deployment</h3>

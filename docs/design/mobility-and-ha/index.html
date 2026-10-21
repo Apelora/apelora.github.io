@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moving modules and surviving failures · Design notes · Apelora</title>
+  <meta name="description" content="Moving modules between servers and surviving failures, with the measured timings.">
+  <link rel="canonical" href="https://apelora.github.io/docs/design/mobility-and-ha/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Moving modules and surviving failures · Design notes · Apelora">
+  <meta property="og:description" content="Moving modules between servers and surviving failures, with the measured timings.">
+  <meta property="og:url" content="https://apelora.github.io/docs/design/mobility-and-ha/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group" open><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/" aria-current="page">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/design/">Design notes</a></nav>
+        <h1>Moving modules and surviving failures</h1>
+        <div class="prose">
+<p>Status: <strong>agreed; slices A and B built (see §3a, §3c for evidence), slice C next</strong> · Date: 2026-10-21 · Related: <a href="/docs/concepts/platform-architecture/">platform architecture §7</a>, <a href="/docs/concepts/storage/">storage</a>, <a href="/assets/docs/svg/storage-options.svg">storage options</a>, <a href="/docs/runbooks/member-failure/">member failure</a></p>
+<h2 id="1-what-incus-does-measured-on-the-test-cluster-incus-701-four-members-btrfs-local-pools">1. What Incus does, measured on the test cluster (Incus 7.0.1, four members, btrfs local pools)</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Case</th><th scope="col">Result</th><th scope="col">Evidence</th></tr></thead><tbody><tr><td>Move a running VM (<code>migration.stateful=true</code>) to another member</td><td>Moves running; the disk on the local pool is copied, then memory. Boot time unchanged; longest pause of a 0.1 s ticker inside: <strong>0.80 s</strong></td><td>REAL INCUS TESTED, 2026-10-21</td></tr><tr><td>Evacuate the VM's member with <code>cluster.evacuate=live-migrate</code>; restore</td><td>Moved running to another member and back; longest pause <strong>0.29 s</strong>; no reboot</td><td>REAL INCUS TESTED, 2026-10-21</td></tr><tr><td>Container</td><td>No live move (needs CRIU): it stops, moves and starts</td><td>Incus documentation</td></tr><tr><td>Instance with an attached custom volume on a member-local pool</td><td>The volume does not follow (unless marked <code>dependent</code>, which ties its life to the instance); evacuation stops the instance in place</td><td>REAL INCUS TESTED (containers), Incus documentation (VMs)</td></tr><tr><td>A member fails</td><td>Its instances stop. Incus can restart those on <strong>shared</strong> storage elsewhere (<code>cluster.healing_threshold</code>), and warns that it must be sure the member is really off (fencing), or two copies may write the same disk. Apelora does it per instance after fencing (§3b): a container on <code>lvmcluster</code> ran again on another member 144–155 s after its member's VM was force-stopped</td><td>Incus documentation; REAL INCUS TESTED, 2026-10-21 (§3c)</td></tr><tr><td>Load balancing</td><td>Incus can live-migrate VMs to the least loaded member (<code>cluster.rebalance.*</code>)</td><td>Incus documentation</td></tr></tbody></table></div>
+<p>The restricted deploy identity may not choose a member for an instance unless the project allows it (<code>restricted.cluster.target=allow</code>).</p>
+<h2 id="2-what-each-workload-gets">2. What each workload gets</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Workload</th><th scope="col">Planned move (maintenance, rebalancing)</th><th scope="col">Unplanned failure</th></tr></thead><tbody><tr><td>Stateless replicas behind a service address</td><td>Replace, then retire (built)</td><td>Other replicas keep serving; the lost one is replaced (built, REAL INCUS TESTED)</td></tr><tr><td>VM without local data volumes, live migration on</td><td><strong>Moves running, under a second</strong> (slice A)</td><td>Restarts elsewhere only on shared storage, after fencing (slice B)</td></tr><tr><td>Container, or VM with <code>data-local</code> volumes</td><td>Stop, copy the volumes to the new member, move, start: a short stop (slice A)</td><td>Waits for its member, or is restored from a backup on another member</td></tr><tr><td>Anything on a shared pool (SAN with clustered LVM, distributed storage)</td><td>Moves without copying</td><td>Restarts on another member once the failed one is fenced (slice B)</td></tr></tbody></table></div>
+<p>No interruption at all through a failure needs more than one copy running: replicas for stateless modules, the application's own replication for databases.</p>
+<h2 id="3-slices">3. Slices</h2>
+<p><strong>A. Moves.</strong> A module can ask for live migration (VMs only; refused together with <code>data-local</code> volumes, which cannot follow it). Apelora then sets <code>migration.stateful=true</code> and <code>cluster.evacuate=live-migrate</code>, so evacuations move it running. A <em>Move…</em> action (dry run first) moves one instance to a chosen member: live when it can, otherwise only when the person allows a short stop, copying its volumes to the new member and deleting the old copies once it runs there. The move is a worker job (<code>instance.move</code>) so a crash resumes it; it needs <code>restricted.cluster.target=allow</code> on the project.</p>
+<p><strong>B. Failure recovery on shared storage, with fencing.</strong> Shared pools (clustered LVM on a SAN, or distributed storage) back the <code>data-replicated</code> class. Apelora restarts a failed server's modules from a shared pool on another server only once that server is fenced: its storage lease is dead (sanlock, read on a healthy server), or a person confirmed it is off (typed name, approval); a BMC fence provider can be added later. Incus's own healing stays off. This applies to every Apelora instance whose disks are all on a shared pool, container or VM, and to nothing on a member-local pool. Design: §3b; decision: ADR 0013.</p>
+<p><strong>C. Rebalancing.</strong> Expose Incus's rebalancing settings for live-migratable VMs and include replica spread in the decision.</p>
+<h2 id="3a-slice-a-as-built">3a. Slice A as built</h2>
+<ul><li><code>apelora_domain::mobility::plan_move</code> decides live or stopped, what is copied and what blocks it (not Apelora's, the same member, not Online, another architecture, a stop not allowed).</li><li><code>GET|POST /api/v1/instances/{project}/{name}/move</code> (dry run; request with the name typed and <code>allowStop</code>), needs <code>instance.manage</code>; queues <code>instance.move</code>, audited.</li><li>The worker's <code>instance.move</code> job re-reads the instance at every step: live move, or stop → copy volumes to the target member → move → start → delete the old copies and record the volumes' new member. A failed copy or move starts it again where it was.</li><li>Studio: <em>Keep running when moved</em> for VM modules (refused with <code>data-local</code> volumes); the request sets <code>migration.stateful=true</code> and <code>cluster.evacuate=live-migrate</code>. Fabric Console: <em>Move…</em> on Apelora's instances.</li><li>REAL INCUS TESTED (2026-10-21): <code>instances_move_with_their_volumes_and_vms_move_live</code>; from the console in a real browser, a VM module moved running from member 1 to member 2 with a longest pause of 0.26 s and no reboot.</li></ul>
+<h2 id="3b-slice-b-restart-on-another-server-after-fencing-design">3b. Slice B: restart on another server after fencing (design)</h2>
+<p>Decision record: <a href="/docs/decisions/0013-fencing-before-restart/">ADR 0013</a>. Built 2026-10-21; evidence in §3c.</p>
+<p><strong>Scope.</strong> After a server fails, Apelora restarts its stateful modules whose disks are all on a shared pool on another server, once the failed server is fenced. Out of scope: planned moves (slice A), stateless replicas (substitutes, built), member-local data (waits, or a restore), Ceph-specific fencing, BMC fence providers, failback.</p>
+<p><strong>Who decides what.</strong></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Concern</th><th scope="col">Owner</th></tr></thead><tbody><tr><td>Member offline (heartbeats)</td><td>Incus (<code>cluster.offline_threshold</code>, 20 s)</td></tr><tr><td>Whether the failed server can still write</td><td>sanlock's host lease (and its watchdog), read by Apelora; or a person</td></tr><tr><td>Which instances may restart elsewhere</td><td>Apelora: deployment record, class <code>data-replicated</code> (root disk and volumes on the shared pool)</td></tr><tr><td>Where it restarts</td><td>Apelora names an Online member; Incus's placement scriptlet may refuse</td></tr><tr><td>Relinking and starting</td><td>Incus (<code>POST /1.0/instances/&lt;name&gt;?target=</code> with <code>migration: true</code>, then <code>start</code>)</td></tr></tbody></table></div>
+<figure class="diagram"><a href="/assets/docs/diagrams/design-mobility-and-ha-0.svg"><img width="1712" height="732" src="/assets/docs/diagrams/design-mobility-and-ha-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>sequenceDiagram
+  autonumber
+  participant I as Incus
+  participant S as Supervisor (leader)
+  participant P as Fence probe (SSH forced command)
+  participant H as Healthy member (sanlock)
+  participant DB as PostgreSQL
+  participant W as Worker
+  I--&gt;&gt;S: member m2 Offline (no heartbeat 20 s)
+  S-&gt;&gt;DB: open member_failures row (fenced, audited)
+  loop every supervision pass
+    S-&gt;&gt;P: sanlock client gets -h 1
+    P-&gt;&gt;H: (read-only)
+    H--&gt;&gt;S: h 2 gen 1 … LIVE / FAIL / DEAD
+    S-&gt;&gt;DB: latest fencing state
+  end
+  S-&gt;&gt;DB: fenced (DEAD, generation matches), decision, audit
+  S-&gt;&gt;DB: instance.recover jobs (one per instance, idempotency key per failure)
+  W-&gt;&gt;I: POST /1.0/instances/db?target=m3 {migration:true}
+  W-&gt;&gt;I: PUT state start
+  W-&gt;&gt;DB: audit application.instance.recovered</code></pre></details></figure>
+<p><strong>Policy.</strong> A module restarts elsewhere when every volume it has is <code>data-replicated</code> (at least one): the control plane resolves the class to the shared pool (<code>APELORA_SHARED_POOL</code>, which must exist in Incus with driver <code>lvmcluster</code> or <code>ceph</code>) and puts the module's root disk there too (<code>InstanceSpec.rootPool</code>, never set by a caller). A module mixing <code>data-local</code> and <code>data-replicated</code> volumes is refused. Stateless modules still cannot have volumes. Everything else on a failed server waits, and Servers → Members says why: &quot;root disk on the member's own pool&quot;, &quot;volume data on member-local pool local: waits for the server or a restore&quot;, &quot;not created by Apelora&quot;.</p>
+<p><strong>Fencing state machine (per failure).</strong></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">State</th><th scope="col">Means</th><th scope="col">Next</th></tr></thead><tbody><tr><td><code>waiting</code></td><td>Offline, not fenced; the reason says why (lease still LIVE/FAIL; no fresh reading; lease never seen while Online; generation changed; no probe)</td><td>Lease DEAD → <code>fenced</code>; a person confirms → <code>fenced</code>; member Online → closed</td></tr><tr><td><code>fenced</code></td><td>Evidence recorded (kind, who observed, host id, generation, when; or who confirmed)</td><td>Decision recorded once, jobs queued</td></tr><tr><td>closed</td><td>Member Online again (<code>resolved_at</code>)</td><td>Mapping re-learned; a new failure opens a new row</td></tr></tbody></table></div>
+<p><strong>Data (migration 0028).</strong> <code>member_failures</code> (one open row per member: detected, Incus's last heartbeat, latest fencing state, fenced at and evidence, confirmation, decided at and decision, resolved at) and <code>member_lock_hosts</code> (member → lockspace, host id, generation, seen at; learned from each member's own lockspace line while it is Online).</p>
+<p><strong>Contracts.</strong> <code>GET /api/v1/cluster/recovery</code> (<code>cluster.view</code>): per failed member its fencing state, reason and next step, and per instance whether it restarts (and on which member) or waits (and why). <code>POST /api/v1/cluster/members/{member}/fencing</code> (<code>cluster.fence_confirm</code>, approval, typed name): a person confirms the server is off; refused unless Incus reports it Offline. Job <code>instance.recover</code> (<code>{project, name, application, module, failedMember, failure}</code>).</p>
+<p><strong>The job, step by step</strong> (each step re-reads Incus, so a reclaimed or retried job continues):</p>
+<ol><li>Instance gone → rejected. On another Online member and running → done.</li><li>Still on the failed member: the failure must still be open and fenced, and the member still Offline (else rejected: nothing changes). Safe point (a cancellation stops here, nothing changed). Choose the member (§ ADR decision 5), relink (recorded Incus operation).</li><li>On the new member, stopped: ownership marker checked (<code>user.apelora.managed</code>, readable again), start (recorded operation).</li><li>Running there: audit <code>application.instance.recovered</code> with the failure, the evidence kind and the seconds since the failure was detected.</li></ol>
+<p><strong>Failure handling.</strong></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Failure</th><th scope="col">Behaviour</th></tr></thead><tbody><tr><td>Probe unreachable, refused or slow (10 s)</td><td>No fresh reading: <code>waiting</code>; counted in <code>apelora_fence_probes{outcome=&quot;failed&quot;}</code></td></tr><tr><td>The failed server is partitioned but reaches the SAN</td><td>Lease stays LIVE: <code>waiting</code> forever; alert <code>member-unfenced</code> after 5 min; a person decides</td></tr><tr><td>Failed server returns before fencing</td><td>Row closed; nothing was changed</td></tr><tr><td>Failed server returns after relinking</td><td>Its instance records now point elsewhere; Incus does not start them there. The lockspace is rejoined at boot</td></tr><tr><td>Relink refused (scriptlet, target offline)</td><td>Attempt fails, retried with back-off; the next attempt chooses again</td></tr><tr><td>Start refused (lock still held: this member's sanlock does not see the host dead yet)</td><td>The job waits (5 s steps, no attempt used) for up to 120 s after fencing, then fails and is retried; data cannot be written twice</td></tr><tr><td>Worker dies mid-job</td><td>Lease expires, another worker resumes from the observed state</td></tr><tr><td>Supervisor leader changes</td><td>The decision is in the row; jobs have idempotency keys: no second decision</td></tr></tbody></table></div>
+<p><strong>Observability.</strong> Logs <code>recovery: …</code> (member, failure, evidence, instance). Metrics <code>apelora_member_failures{state}</code>, <code>apelora_fence_probes{outcome}</code>, <code>apelora_recoveries{outcome}</code>. Alert <code>member-unfenced</code> (&quot;A failed server is waiting for fencing&quot;, 300 s). Audit <code>cluster.member.failed</code>, <code>cluster.member.fenced</code>, <code>cluster.member.fence.confirmed</code>, <code>application.instance.recover</code>, <code>application.instance.recovered</code>.</p>
+<p><strong>Security.</strong> The probe key can only run one read-only command as an unprivileged account; host keys are pinned; nothing secret is stored in the database or logged. Confirmation is a protected action (approval). The worker still uses only the restricted deploy identity (<code>restricted.cluster.target=allow</code> lets it name the member).</p>
+<h2 id="3c-slice-b-as-built-2026-10-21">3c. Slice B as built (2026-10-21)</h2>
+<ul><li>Domain: <code>apelora_domain::fencing</code> (sanlock output parser, <code>learn</code>, <code>decide</code>, Incus heartbeat time), <code>apelora_domain::recovery</code> (<code>plan_recovery</code>, <code>choose_target</code>, <code>blocked_by_storage</code>), <code>storage::VolumeClass::DataReplicated</code>, <code>InstanceSpec.rootPool</code>.</li><li>Persistence: <code>member_failures</code>, <code>member_lock_hosts</code> (migration 0028), <code>apelora_persistence::recovery</code>.</li><li>Worker: <code>fencing.rs</code> (SSH probe), <code>recovery.rs</code> (supervisor step and the <code>instance.recover</code> job), metrics, alert rule <code>member-unfenced</code>.</li><li>API: <code>GET /api/v1/cluster/recovery</code>, <code>POST /api/v1/cluster/members/{member}/fencing</code> (<code>cluster.fence_confirm</code>, approval); the control plane resolves <code>data-replicated</code> to <code>APELORA_SHARED_POOL</code>; the Health page's Incus row says whether each failed server is fenced.</li><li>Console: Servers → Members, <em>Failed servers</em>: fencing state, the reason or the evidence, per instance <em>Restarts on …</em> or <em>Waits for its server</em> with why, <em>Confirm powered off…</em> (typed name).</li><li>Evidence: MOCK VERIFIED (worker, API, Console with a stubbed API and axe); REAL INCUS TESTED: <code>shared_pool_instances_keep_their_disks_on_it_and_move_without_copying</code> and three <code>ha-drill.sh</code> runs (timeline in the <a href="/docs/runbooks/member-failure/#modules-on-shared-storage">runbook</a>). Not drilled: a VM on the shared pool, a partitioned (not stopped) member, the confirmation path against the lab.</li><li>Open: the Studio cannot choose <code>data-replicated</code> yet (the API accepts it); a BMC fence provider; Ceph-specific evidence; fencing as soon as any healthy observer (whose own lease is LIVE) reports DEAD, instead of the freshest reading only (run 3 fenced 9 s after member 1 saw DEAD).</li></ul>
+<h2 id="4-failure-handling-of-a-move">4. Failure handling of a move</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Failure during a move</th><th scope="col">Behaviour</th></tr></thead><tbody><tr><td>The copy of a volume fails</td><td>The instance is started again where it was; the partial copy is deleted</td></tr><tr><td>The instance move fails</td><td>The old volumes are still there; the instance is started where it was</td></tr><tr><td>The worker stops half way</td><td>The job is resumed: it reads where the instance and the volumes are, and continues</td></tr><tr><td>The instance does not start on the new member</td><td>The old volumes are kept; the job fails and says so; the runbook moves it back</td></tr></tbody></table></div>
+<p>Old volumes are deleted only after the instance runs on the new member.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/design/mobility-and-ha.md">docs/design/mobility-and-ha.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/design/mobility-and-ha.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/design/alerts/"><span>Previous</span>Alerts</a><a class="next" href="/docs/design/vm-recovery-on-shared-storage/"><span>Next</span>VM recovery on shared storage (planned)</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#1-what-incus-does-measured-on-the-test-cluster-incus-701-four-members-btrfs-local-pools">1. What Incus does, measured on the test cluster (Incus 7.0.1, four members, btrfs local pools)</a></li><li class="l2"><a href="#2-what-each-workload-gets">2. What each workload gets</a></li><li class="l2"><a href="#3-slices">3. Slices</a></li><li class="l2"><a href="#3a-slice-a-as-built">3a. Slice A as built</a></li><li class="l2"><a href="#3b-slice-b-restart-on-another-server-after-fencing-design">3b. Slice B: restart on another server after fencing (design)</a></li><li class="l2"><a href="#3c-slice-b-as-built-2026-10-21">3c. Slice B as built (2026-10-21)</a></li><li class="l2"><a href="#4-failure-handling-of-a-move">4. Failure handling of a move</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

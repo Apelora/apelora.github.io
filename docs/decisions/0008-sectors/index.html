@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ADR 0008 — Sectors: linking Incus clusters into one… · Apelora</title>
+  <meta name="description" content="Why several Incus clusters are linked as sectors rather than made one large cluster.">
+  <link rel="canonical" href="https://apelora.github.io/docs/decisions/0008-sectors/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="ADR 0008 — Sectors: linking Incus clusters into one… · Apelora">
+  <meta property="og:description" content="Why several Incus clusters are linked as sectors rather than made one large cluster.">
+  <meta property="og:url" content="https://apelora.github.io/docs/decisions/0008-sectors/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group" open><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/" aria-current="page">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/decisions/">Decisions</a></nav>
+        <h1>ADR 0008 — Sectors: linking Incus clusters into one fabric</h1>
+        <div class="prose">
+<p>Status: <strong>accepted; not built yet; extended by <a href="/docs/decisions/0009-global-fabric/">ADR 0009</a> (regions, sites and a plane per region)</strong> · Date: 2026-10-21 · Related: <a href="/docs/decisions/0001-incus-first/">ADR 0001</a>, <a href="/docs/concepts/connections-and-scale/">connections and scale</a></p>
+<h2 id="context">Context</h2>
+<p>Apelora manages one Incus cluster today. The owner asked how many physical servers one installation can use. The Incus maintainers recommend at most about 50 servers per cluster (clusters of 100–150 run in practice; 250 has been tested), require at most 10 ms between members, and advise running several standalone clusters rather than one very large one: a single control-plane fault, or a bad database update, stops the whole cluster's API. The real limit is the cluster database's write rate, not the number of running instances.</p>
+<p>So a large installation is several clusters, and Apelora needs a name and a model for them. <em>Zone</em> is taken (Studio zones), <em>pool</em> is taken (hardware pools in the access model), <em>region</em> suggests geography only.</p>
+<h2 id="decision">Decision</h2>
+<ol><li><strong>A sector is one Incus cluster</strong> that Apelora manages: one site (members within 10 ms), <strong>at most 50 members by default</strong> (configurable; Apelora warns at the limit and refuses to enrol beyond it unless an administrator raises it), its own cluster database, OVN deployment and storage pools.</li><li><strong>One Apelora control plane manages many sectors.</strong> Each sector has its own Incus endpoint and client certificates (restricted and administrative, as in ADR 0003); connections 8 and 9 exist once per sector. A sector that is down affects only its own applications.</li><li><strong>An application lives in one sector.</strong> Its replicas, application network and stateful storage stay inside it. Cross-site availability is two deployments of the same application in two sectors, published behind one address, with data replicated by the application.</li><li><strong>Sectors appear in the access model</strong> as a scope under the platform (like hardware pools), so a team can be given operations on one sector only.</li><li><strong>The fabric is all sectors together.</strong> Sectors are joined by four kinds of link, each optional and added in this order:
+<ol><li><strong>Management link</strong> — the one control plane reaches every sector's Incus API (connections 8 and 9 per sector). One Console, one audit log, one set of people and roles; inventory, health and capacity are summed across sectors; placement chooses the sector.</li><li><strong>Network link</strong> — application networks in two sectors are peered at layer 3 through OVN interconnection (Incus <em>network integrations</em> and remote network peers). It needs an interconnection database shared by the linked sectors, at least one gateway member per sector, one certificate authority for the OVN databases, and <strong>non-overlapping subnets</strong>: Apelora allocates each sector its own ranges for application networks and service addresses. A connection drawn in the Studio from a module in one sector to an application in another becomes an <em>export</em> on one side and an allow rule on the other; ACLs still allow only what was drawn. Where interconnection is not available, the same connection goes to the other application's published address over the routed uplink.</li><li><strong>Data link</strong> — instances and volumes are copied or moved between sectors through Incus migration between clusters, as an Apelora job with a dry run (the target sector needs pools, networks and profiles with the same names; Apelora checks that first). A move across sectors stops the instance unless live migration between those two sectors has been tested; we do not claim it until then.</li><li><strong>Recovery link</strong> — backups are copied to the <code>backup</code> pool of another sector; when a whole sector is lost, an operator redeploys its applications in another sector from Apelora's desired state and the latest backups. Apelora shows what is out of date before it does anything.</li></ol></li><li><strong>Sites group sectors</strong> (for failure domains, latency and recovery targets) and are only a label. Workers can be assigned to the sectors near them (<code>APELORA_WORKER_SECTORS</code>), so job traffic stays local and a busy sector cannot starve another.</li></ol>
+<h3 id="how-far-that-goes">How far that goes</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Step</th><th scope="col">Servers</th><th scope="col">Shape</th></tr></thead><tbody><tr><td>One sector</td><td>3–50</td><td>one cluster, one rack; what is built today</td></tr><tr><td>Several sectors in one site</td><td>50–500</td><td>a sector per rack, linked by management and network links; one control plane (two or more API processes and workers)</td></tr><tr><td>Sectors across sites</td><td>500–2,000+</td><td>sites linked by management and recovery links (and network links where the WAN allows); applications that must survive a site run in two sectors in two sites</td></tr></tbody></table></div>
+<p>These are <em>estimates</em>: the per-sector limit comes from Incus; above that the limits are Apelora's own (PostgreSQL and the job rate), see <a href="/docs/concepts/connections-and-scale/#3-how-far-each-layer-scales">connections and scale §3</a>.</p>
+<h2 id="consequences">Consequences</h2>
+<ul><li>Capacity grows by adding sectors: 20 sectors of 50 servers is 1,000 servers under one Console, each sector small enough to keep its blast radius to one rack.</li><li>Placement first chooses a sector (by the application's setting, capacity and labels), then Incus places instances inside it.</li><li>The Console groups servers, health and capacity by sector; the Studio asks for a sector only when there is more than one.</li><li>Work needed: a <code>sectors</code> table and API, an adapter per sector, <code>sector</code> on applications, the scope in the access model, sector-aware health and capacity views, and the per-process state fixes in <a href="/docs/concepts/connections-and-scale/#4-scaling-issues-found-and-the-fix-for-each">connections and scale §4</a> so the control plane itself can run as several processes.</li></ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul><li><strong>Stretch one application network across sectors at layer 2.</strong> Simpler addressing, but it couples the sectors' failure domains again; layer-3 peering keeps a fault inside its sector.</li><li><strong>One very large Incus cluster.</strong> Simplest for Apelora, but against the upstream recommendation, and one fault takes everything down.</li><li><strong>Stretch one cluster across sites.</strong> Breaks the 10 ms rule; Raft and heartbeats become unreliable.</li><li><strong>A cluster of control planes, one per sector, federated.</strong> More moving parts than needed: Apelora's own state is small and lives in PostgreSQL; one control plane with one adapter per sector is enough.</li></ul>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/adr/0008-sectors.md">docs/adr/0008-sectors.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/adr/0008-sectors.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/decisions/0007-sign-in-methods/"><span>Previous</span>0007 · Sign-in methods: identity providers, local accounts and a directory</a><a class="next" href="/docs/decisions/0009-global-fabric/"><span>Next</span>0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#context">Context</a></li><li class="l2"><a href="#decision">Decision</a></li><li class="l3"><a href="#how-far-that-goes">How far that goes</a></li><li class="l2"><a href="#consequences">Consequences</a></li><li class="l2"><a href="#alternatives-considered">Alternatives considered</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

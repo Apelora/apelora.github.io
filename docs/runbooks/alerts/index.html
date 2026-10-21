@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alerts · Runbooks · Apelora</title>
+  <meta name="description" content="What each alert means and what to do about it. Apelora Fabric documentation and website.">
+  <link rel="canonical" href="https://apelora.github.io/docs/runbooks/alerts/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Alerts · Runbooks · Apelora">
+  <meta property="og:description" content="What each alert means and what to do about it. Apelora Fabric documentation and website.">
+  <meta property="og:url" content="https://apelora.github.io/docs/runbooks/alerts/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group" open><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/" aria-current="page">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/runbooks/">Runbooks</a></nav>
+        <h1>Alerts</h1>
+        <div class="prose">
+<p>Status: <strong>NOT YET VERIFIED on the test cluster</strong> (MOCK VERIFIED: evaluator, API, webhook delivery to a local HTTPS receiver, Console) · Design: <a href="/docs/design/alerts/">alerts</a> · Related: <a href="/docs/concepts/monitoring/">monitoring</a>, <a href="/docs/runbooks/troubleshooting/">troubleshooting</a></p>
+<p>Apelora watches a fixed set of conditions about itself and its applications and raises <strong>alerts</strong> in the Fabric Console (<code>#/alerts</code>) and, if set up, at <strong>webhooks</strong>. This page says how to set them up, how to respond, and what to check for each rule. Built-in alerts do not replace your metrics collector (<a href="/docs/concepts/monitoring/">MONITORING.md</a>); they cover what Apelora itself knows.</p>
+<h2 id="set-up">Set up</h2>
+<ol><li><strong>Evaluator.</strong> Every deployment worker can evaluate alerts; one at a time does, under the <code>alert-evaluator</code> lease. It is on by default every 30 s: <code>APELORA_ALERT_EVALUATE_SECS</code> (5–3600, <code>0</code> turns it off on that worker). If no worker evaluates, the Alerts page says so (&quot;Alerts may be out of date&quot;).</li><li><strong>Restore drill record (optional).</strong> To be warned when Apelora's own database restore has not been proven, make the drill's <code>restore-drill-last-verified.json</code> readable on the worker's host (for example the backup directory mounted read-only) and set <code>APELORA_RESTORE_DRILL_RECORD=/path/to/restore-drill-last-verified.json</code>. Without it the rule shows &quot;Not set up&quot;.</li><li><strong>Webhook (optional).</strong> Needs <code>alert.configure</code>.
+<ol><li>Choose a name for the signing secret's variable, e.g. <code>APELORA_ALERT_SECRET_OPS</code>. It must start with <code>APELORA_ALERT_SECRET_</code>.</li><li>Put a long random secret into that variable on <strong>every worker</strong> (your secret manager, a systemd credential or the service's environment file; never in the repository). Restart the workers.</li><li>Console → Alerts → Channels → <strong>Add webhook</strong>: name, <code>https://</code> URL, the variable's <strong>name</strong>, which severities to send. Apelora stores the name only.</li><li><strong>Send test</strong>. Within seconds the channel shows <strong>Delivered</strong>, or <strong>Failing</strong> with the reason.</li></ol></li><li><strong>Receiver.</strong> For each request, check:
+<ul><li><code>Apelora-Signature: v1=&lt;hex&gt;</code> equals HMAC-SHA256(secret, <code>&lt;Apelora-Timestamp&gt;.&lt;raw body&gt;</code>), compared in constant time;</li><li><code>Apelora-Timestamp</code> is within five minutes;</li><li><code>Apelora-Event-Id</code> was not seen before (delivery is at least once; drop duplicates).
+The body is JSON: <code>version</code>, <code>event</code> (<code>fired</code>, <code>resolved</code>, <code>test</code>), <code>alert</code> (id, rule, title, subject, severity, summary, value, threshold, unit, times) and <code>installation</code> (region, site, sector). Answer 2xx quickly; anything else is retried with backoff (2 s doubling to 5 min). Redirects are not followed.</li></ul></li></ol>
+<h2 id="respond">Respond</h2>
+<ul><li><strong>Acknowledge</strong> (<code>alert.respond</code>): tells others you are handling it; notifications continue. Recorded with your name, the time and your note; audited as <code>alert.acknowledge</code>.</li><li><strong>Silence</strong> (<code>alert.respond</code>): pauses notifications for one subject or the whole rule for 30 minutes to a week (planned maintenance, a known issue). The alert is still evaluated and shown. <strong>End silence</strong> stops it early. Audited.</li><li><strong>Tune a rule</strong> (<code>alert.configure</code>): Console → Alerts → Rules → Edit. Change the threshold (within the rule's bounds), the wait (seconds the condition must hold before firing and stay clear before resolving), the severity, or turn it off. Turning a rule off resolves its alerts. Audited as <code>alert.rule.update</code> with before and after.</li><li>An alert <strong>resolves on its own</strong> once its condition has stayed clear for the rule's wait. Resolved alerts stay in the history for 90 days.</li></ul>
+<h2 id="when-a-channel-shows-failing">When a channel shows &quot;Failing&quot;</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Reason shown</th><th scope="col">Do</th></tr></thead><tbody><tr><td><code>secret APELORA_ALERT_SECRET_… is not set on the worker</code></td><td>Set the variable on every worker and restart them. The waiting messages are retried.</td></tr><tr><td><code>could not connect to the receiver</code> / <code>did not answer within 5 s</code></td><td>Check the receiver is up and reachable from the workers (firewall, DNS, proxy).</td></tr><tr><td><code>the receiver answered 401/403</code></td><td>The receiver refused the signature or token: compare secrets; check its clock (timestamps older than five minutes are refused).</td></tr><tr><td><code>the receiver answered 3xx (a redirect…)</code></td><td>Use the final URL; Apelora does not follow redirects.</td></tr><tr><td>TLS errors</td><td>The receiver's certificate must be valid for its name and trusted by the workers' system trust store.</td></tr></tbody></table></div>
+<p>Messages for a deleted or turned-off channel are dropped. Undelivered messages are never dropped otherwise; the <code>outbox-stuck</code> rule fires when they wait more than 10 minutes.</p>
+<h2 id="rules">Rules</h2>
+<h3 id="jobs-are-failing">Jobs are failing</h3>
+<p><code>job-failures</code> · subject: job kind. Jobs of that kind ended failed in the last 15 minutes. Open Operations, filter by the kind, read the job page's attempts and Incus operations; retry once the cause is fixed. See <a href="/docs/runbooks/troubleshooting/#retrying-and-cancelling-a-job">troubleshooting</a>.</p>
+<h3 id="jobs-are-waiting-too-long">Jobs are waiting too long</h3>
+<p><code>job-queue-wait</code>. No worker is claiming jobs, or all are busy. Check the Health page (workers), the worker logs, and the <code>jobs_oldest_runnable_age_seconds</code> metric. See <a href="/docs/runbooks/api-outage/">API outage</a>.</p>
+<h3 id="running-jobs-lost-their-worker">Running jobs lost their worker</h3>
+<p><code>job-leases-expired</code>. A worker stopped renewing a running job's lease (crash, pause, lost database). Another worker takes it over; if none runs, start one.</p>
+<h3 id="a-worker-stopped-reporting">A worker stopped reporting</h3>
+<p><code>worker-silent</code> · subject: worker id. The worker did not stop cleanly and has not written its heartbeat. Check its host and service; if it is gone for good, its row disappears after a day.</p>
+<h3 id="nobody-holds-a-leader-role">Nobody holds a leader role</h3>
+<p><code>leader-missing</code> · subject: <code>replica-supervisor</code>, <code>outbox-relay</code> or <code>alert-evaluator</code>. No worker plays that role. Start a worker, or check why the role is off (<code>APELORA_SUPERVISE_SECS=0</code>, <code>APELORA_OUTBOX_SINK=off</code>, <code>APELORA_ALERT_EVALUATE_SECS=0</code>). If it is off on purpose, turn this rule off.</p>
+<h3 id="the-supervisor-is-acting-often">The supervisor is acting often</h3>
+<p><code>supervisor-actions</code>. The supervisor recreated, restarted, substituted or retired replicas several times in an hour, which usually means one cause keeps coming back. Read the audit trail (actor <code>supervisor</code>) and <a href="/docs/runbooks/replica-unhealthy/">replica unhealthy</a>.</p>
+<h3 id="a-replica-is-unhealthy">A replica is unhealthy</h3>
+<p><code>replica-unhealthy</code> · subject: <code>project/instance</code>. Its port check keeps failing. See <a href="/docs/runbooks/replica-unhealthy/">replica unhealthy</a>.</p>
+<h3 id="an-application-is-failed-or-degraded">An application is failed or degraded</h3>
+<p><code>application-status</code> · subject: application. Its last start, stop or restart failed, or fewer instances run than it should have. Open the application in the Console; start or restart it once the cause is fixed.</p>
+<h3 id="incus-cannot-be-reached">Incus cannot be reached</h3>
+<p><code>incus-unreachable</code>. The worker cannot read the cluster. Deployments, moves and recovery wait. Rules that read Incus keep their alerts as they were. See <a href="/docs/runbooks/member-failure/">member failure</a>, <a href="/docs/runbooks/quorum-loss/">quorum loss</a> and the worker's <code>APELORA_INCUS_*</code> settings.</p>
+<h3 id="a-cluster-member-is-not-online">A cluster member is not online</h3>
+<p><code>member-offline</code> · subject: member. See <a href="/docs/runbooks/member-failure/">member failure</a>; two of three members offline puts quorum at risk (<a href="/docs/runbooks/quorum-loss/">quorum loss</a>).</p>
+<h3 id="a-failed-server-is-waiting-for-fencing">A failed server is waiting for fencing</h3>
+<p><code>member-unfenced</code> · subject: member. The server is Offline and holds modules on shared storage that Apelora restarts elsewhere only once it is fenced (ADR 0013). Normally fenced about 140 s after it stopped (its storage lease expires). Servers → Members says why it waits: the lease is still renewed (the server may be cut off from the others but still running), the probe cannot reach a healthy server, or no probe is configured. See <a href="/docs/runbooks/member-failure/#modules-on-shared-storage">member failure</a>.</p>
+<h3 id="a-certificate-expires-soon">A certificate expires soon</h3>
+<p><code>certificate-expiry</code> · subject: <code>deploy</code> (Apelora's Incus identity) or <code>server</code> (the pinned Incus server certificate). See <a href="/docs/runbooks/certificates/">certificates</a>. The admin identity's certificate is loaded only by the control plane; watch it with the <code>apelora_certificate_expiry_timestamp_seconds</code> metric.</p>
+<h3 id="a-scheduled-snapshot-or-backup-failed">A scheduled snapshot or backup failed</h3>
+<p><code>backup-failed</code> · subject: <code>project/volume snapshot|backup</code>. Read the reason on the alert; see <a href="/docs/runbooks/volumes/">volumes</a>. &quot;Not configured&quot; means no backup pool is set (<code>APELORA_BACKUP_POOL</code>).</p>
+<h3 id="a-backup-is-overdue">A backup is overdue</h3>
+<p><code>backup-age</code> · subject: <code>project/volume</code>. The newest backup is older than the threshold in schedule periods. Check the volume's schedule and the backup pool's space; see <a href="/docs/runbooks/volumes/">volumes</a>.</p>
+<h3 id="messages-are-not-being-delivered">Messages are not being delivered</h3>
+<p><code>outbox-stuck</code>. The oldest undelivered outbox message (audit copies, alert notifications) has waited too long. Check that a worker holds <code>outbox-relay</code>, that <code>APELORA_OUTBOX_SINK</code> is not <code>off</code>, and the Channels tab for failing webhooks. See <a href="/docs/runbooks/troubleshooting/#the-outbox-backlog-grows">troubleshooting</a>.</p>
+<h3 id="apeloras-database-restore-is-not-proven">Apelora's database restore is not proven</h3>
+<p><code>restore-drill-age</code>. No restore drill has passed for the threshold in days. Run the drill: <a href="/docs/runbooks/apelora-database-backup/">database backup</a>.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/runbooks/alerts.md">docs/runbooks/alerts.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/runbooks/alerts.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/runbooks/health-page/"><span>Previous</span>Reading the Health page</a><a class="next" href="/docs/runbooks/troubleshooting/"><span>Next</span>Troubleshooting with logs and the audit trail</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#set-up">Set up</a></li><li class="l2"><a href="#respond">Respond</a></li><li class="l2"><a href="#when-a-channel-shows-failing">When a channel shows &quot;Failing&quot;</a></li><li class="l2"><a href="#rules">Rules</a></li><li class="l3"><a href="#jobs-are-failing">Jobs are failing</a></li><li class="l3"><a href="#jobs-are-waiting-too-long">Jobs are waiting too long</a></li><li class="l3"><a href="#running-jobs-lost-their-worker">Running jobs lost their worker</a></li><li class="l3"><a href="#a-worker-stopped-reporting">A worker stopped reporting</a></li><li class="l3"><a href="#nobody-holds-a-leader-role">Nobody holds a leader role</a></li><li class="l3"><a href="#the-supervisor-is-acting-often">The supervisor is acting often</a></li><li class="l3"><a href="#a-replica-is-unhealthy">A replica is unhealthy</a></li><li class="l3"><a href="#an-application-is-failed-or-degraded">An application is failed or degraded</a></li><li class="l3"><a href="#incus-cannot-be-reached">Incus cannot be reached</a></li><li class="l3"><a href="#a-cluster-member-is-not-online">A cluster member is not online</a></li><li class="l3"><a href="#a-failed-server-is-waiting-for-fencing">A failed server is waiting for fencing</a></li><li class="l3"><a href="#a-certificate-expires-soon">A certificate expires soon</a></li><li class="l3"><a href="#a-scheduled-snapshot-or-backup-failed">A scheduled snapshot or backup failed</a></li><li class="l3"><a href="#a-backup-is-overdue">A backup is overdue</a></li><li class="l3"><a href="#messages-are-not-being-delivered">Messages are not being delivered</a></li><li class="l3"><a href="#apeloras-database-restore-is-not-proven">Apelora's database restore is not proven</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

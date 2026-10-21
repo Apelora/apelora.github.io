@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Storage: how Incus does it, and how Apelora abstracts it… · Apelora</title>
+  <meta name="description" content="How Incus does storage, how Apelora abstracts it, and which options exist for module data.">
+  <link rel="canonical" href="https://apelora.github.io/docs/concepts/storage/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Storage: how Incus does it, and how Apelora abstracts it… · Apelora">
+  <meta property="og:description" content="How Incus does storage, how Apelora abstracts it, and which options exist for module data.">
+  <meta property="og:url" content="https://apelora.github.io/docs/concepts/storage/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group" open><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/" aria-current="page">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/concepts/">Concepts</a></nav>
+        <h1>Storage: how Incus does it, and how Apelora abstracts it</h1>
+        <div class="prose">
+<p>Status: <strong>target design, partly built</strong> (2026-10-21; the authoritative list is <a href="/docs/reference/current-state/">current state</a>). Built and REAL INCUS TESTED: the storage pool list (<code>GET /api/v1/storage-pools</code>, Fabric Console); root disks from the project's default profile on the member's <code>local</code> pool (btrfs in the lab); <code>data-local</code> volumes (<code>&lt;instance&gt;-&lt;volume&gt;</code> on the pool in <code>APELORA_VOLUME_POOL</code>, on the instance's member), with records, listing, grow and explicit delete; snapshots (manual and scheduled, restore); backups copied into the <code>backup</code> pool on another member (scheduled or on request); moving an instance with its volumes (<code>instance.move</code>). Built 2026-10-21 (MOCK VERIFIED; the restore job is not yet REAL INCUS TESTED): the backup API and the Console's Storage page — backups per volume, back up now, schedules, restore from a backup (§10, step 5) and volumes no application uses. Built 2026-10-21 (HA slice B, <a href="/docs/decisions/0013-fencing-before-restart/">ADR 0013</a>): the <code>data-replicated</code> class on the shared pool (<code>APELORA_SHARED_POOL</code>), with the module's root disk there too, and restart on another member after its member fails and is fenced — REAL INCUS TESTED on the lab's <code>shared</code> pool (clustered LVM on an iSCSI SAN, <code>scripts/test-cluster/shared-storage.sh</code>; drill timings in the <a href="/docs/runbooks/member-failure/#modules-on-shared-storage">member-failure runbook</a>). <strong>Not built:</strong> the Console view for classes, choosing <code>data-replicated</code> in the Studio (the API accepts it), deleting a backup, Ceph-specific fencing. How a module's volumes fit the rest of the chain: <a href="/docs/concepts/platform-architecture/#41-from-an-application-to-running-instances">platform architecture §4.1</a>. Statements about Incus below come from its documentation unless §10 records them as REAL INCUS TESTED on the pinned release (7.0.1); each build step verifies what it relies on, on the disposable test cluster, and records the result. Date: 2026-10-20. Related: <a href="/docs/concepts/platform-architecture/">platform architecture</a> §8, <a href="/docs/decisions/0001-incus-first/">ADR 0001</a>, skills <code>storage-recovery</code> and <code>storage-volumes</code>.</p>
+<h2 id="1-how-incus-models-storage">1. How Incus models storage</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Object</th><th scope="col">What it is</th></tr></thead><tbody><tr><td><strong>Storage pool</strong></td><td>A place where Incus keeps data, backed by a <em>driver</em> (for example directory, btrfs, LVM, ZFS, Ceph RBD, CephFS). Created and operated by an administrator.</td></tr><tr><td><strong>Volume</strong></td><td>A unit of data inside a pool. Kinds: instance volumes (a container's or VM's root), <strong>image</strong> volumes (cached images), <strong>custom</strong> volumes (data you create and attach). A custom volume has a content type: <em>filesystem</em> or <em>block</em>.</td></tr><tr><td><strong>Disk device</strong></td><td>How an instance uses storage: its <strong>root disk</strong> (<code>pool</code>, path <code>/</code>, optional <code>size</code> quota) and any attached custom volume (<code>source</code>, <code>pool</code>, <code>path</code>). Usually inherited from a <strong>profile</strong>.</td></tr><tr><td><strong>Snapshot / backup</strong></td><td>Snapshots live in the same pool as their volume. Backups are exported archives that can be stored elsewhere.</td></tr><tr><td><strong>Project</strong></td><td>Scopes instances, images, profiles and (by project features) custom volumes, and can <strong>restrict</strong> which devices and pools a tenant may use and how much it may consume.</td></tr><tr><td><strong>Bucket</strong></td><td>S3-style object storage offered by some drivers; not used by Apelora yet.</td></tr></tbody></table></div>
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-storage-0.svg"><img width="1261" height="597" src="/assets/docs/diagrams/architecture-storage-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart LR
+  subgraph CL[&quot;Incus cluster&quot;]
+    M1[&quot;Member 1&quot;]
+    M2[&quot;Member 2&quot;]
+    M3[&quot;Member 3&quot;]
+  end
+  subgraph PR[&quot;Project: team-a (restricted)&quot;]
+    PROF[&quot;Profile&lt;br/&gt;root disk, NIC&quot;]
+    INST[&quot;Instance&lt;br/&gt;web-01&quot;]
+    CV[&quot;Custom volume&lt;br/&gt;data-db-01&quot;]
+  end
+  POOL1[&quot;Pool: local&lt;br/&gt;driver: btrfs in the lab (zfs, lvm, dir possible)&lt;br/&gt;one copy per member&quot;]
+  POOL2[&quot;Pool: shared&lt;br/&gt;driver: lvmcluster on a SAN, or distributed storage&lt;br/&gt;visible to all members&quot;]
+
+  INST -- &quot;root disk device&quot; --&gt; POOL1
+  PROF -- &quot;supplies defaults&quot; --&gt; INST
+  INST -- &quot;disk device: source=data-db-01&quot; --&gt; CV
+  CV -- &quot;lives in&quot; --&gt; POOL2
+  M1 --- POOL1
+  M2 --- POOL1
+  M3 --- POOL1
+  M1 --- POOL2
+  M2 --- POOL2
+  M3 --- POOL2</code></pre></details></figure>
+<h3 id="11-local-pools-and-shared-pools-the-part-that-decides-ha">1.1 Local pools and shared pools (the part that decides HA)</h3>
+<p><img width="1200" height="870" src="/assets/docs/svg/storage-options.svg" alt="Where module data can live" loading="lazy"></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col"></th><th scope="col">Local pool (directory, btrfs, LVM, ZFS)</th><th scope="col">Shared pool (clustered LVM on a SAN; distributed storage such as Ceph RBD or CephFS)</th></tr></thead><tbody><tr><td>Where data is</td><td>On <strong>one member's</strong> disks. In a cluster the pool exists on every member under the same name, each with its own storage.</td><td>In a storage system <strong>outside</strong> Incus that every member reaches over the network</td></tr><tr><td>Move an instance to another member</td><td>Data must be <strong>copied</strong>: planned stop, copy, start</td><td>The instance can start elsewhere <strong>without copying data</strong>; live migration depends on instance type and is never assumed</td></tr><tr><td>Member fails</td><td>Data is <strong>unavailable</strong> until the member returns (or a backup is restored)</td><td>Data remains reachable; another member may start the instance <strong>after</strong> fencing proves the old one cannot write</td></tr><tr><td>Cost / complexity</td><td>Low, fast, simple</td><td>A separate system to deploy, monitor and upgrade</td></tr></tbody></table></div>
+<p>Rule from the architecture: <em>a local pool across several members is not shared data.</em> Apelora must say so in plans instead of implying failover that cannot happen.</p>
+<p>Two kinds of shared pool, side by side: <strong>clustered LVM on a SAN</strong> (<code>lvmcluster</code>: every member logs in to the same block device over iSCSI, Fibre Channel or NVMe over fabrics, and a lock manager coordinates the volume group; thick volumes, no snapshots of shared custom volumes) and <strong>distributed storage</strong> (a separate cluster of storage machines that replicates data). The lab runs the first: pool <code>shared</code> on an iSCSI LUN from the <code>apelora-san</code> VM (<a href="/docs/contribute/test-cluster/">test cluster</a>). Apelora puts <code>data-replicated</code> volumes and their modules' root disks there and restarts them on another member once a failed member is fenced (slice B of <a href="/docs/design/mobility-and-ha/">moving modules</a>, ADR 0013). On <code>lvmcluster</code> Incus activates container file systems exclusively but VM disks and block volumes shared, so only the failed host's dead sanlock lease, not the LV lock, rules out a second writer of a VM disk.</p>
+<h2 id="2-where-apelora-fits-one-authority-per-piece-of-state">2. Where Apelora fits: one authority per piece of state</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Concern</th><th scope="col">Authority</th></tr></thead><tbody><tr><td>Pools, drivers, disks, replication, Ceph health</td><td><strong>Administrators and Incus</strong> (Apelora reads and reports, never configures a driver)</td></tr><tr><td>Volumes of an application: what exists, how big, which class, who owns it, retention</td><td><strong>Apelora</strong> (desired state in PostgreSQL)</td></tr><tr><td>Creating, attaching, snapshotting, resizing, deleting volumes</td><td><strong>Incus</strong>, driven by Apelora's worker through the adapter</td></tr><tr><td>Which member runs a stateful instance</td><td><strong>Incus</strong> places; <strong>Apelora</strong> constrains it (a local volume pins the instance to its member)</td></tr></tbody></table></div>
+<p>Apelora never writes Incus's database and never invents its own volume store or cluster filesystem.</p>
+<h2 id="3-the-abstraction-designers-pick-a-class-not-a-pool">3. The abstraction: designers pick a class, not a pool</h2>
+<p><img width="1200" height="760" src="/assets/docs/svg/storage-layers.svg" alt="Storage for modules, layer by layer" loading="lazy"></p>
+<p>A design must not contain pool names, driver names, hosts or addresses (same rule as hosts: <a href="/docs/concepts/platform-architecture/">architecture</a> §4). Instead:</p>
+<ul><li>An <strong>module class</strong> declares the volumes it can use: name, mount path, default size, whether required, and a suggested class. (A database class asks for <code>data</code>; a web server asks for none.)</li><li>A <strong>volume class</strong> is an Apelora policy an administrator defines and maps to a pool. The designer chooses a class and a size.</li><li>Administrators map each class to a pool in the Console. If no pool can satisfy a class, the plan says so and refuses; it never silently falls back to a weaker pool.</li></ul>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Volume class</th><th scope="col">Meaning</th><th scope="col">Typical backing</th><th scope="col">Relocation</th><th scope="col">Deleted with the application?</th></tr></thead><tbody><tr><td><code>scratch</code></td><td>Disposable working space</td><td>Local pool, instance root</td><td>Recreated</td><td>Yes</td></tr><tr><td><code>data-local</code></td><td>Persistent, one writer</td><td>Local pool</td><td>Planned stop, copy, start</td><td><strong>No</strong> (retained)</td></tr><tr><td><code>data-replicated</code></td><td>Persistent, one writer, survives a member loss</td><td>Shared pool (<code>APELORA_SHARED_POOL</code>); the module's root disk goes there too</td><td>Moves without copying; restart elsewhere after fencing (built, ADR 0013)</td><td><strong>No</strong> (retained)</td></tr><tr><td><code>shared-read-only</code></td><td>Many readers (assets, models)</td><td>Filesystem on a shared pool</td><td>Not applicable</td><td>No</td></tr><tr><td><code>backup-target</code></td><td>Receives backups</td><td>Separate pool or external target</td><td>Not applicable</td><td>No</td></tr><tr><td><code>secret</code></td><td>Not a volume: a reference resolved from the secret store at start</td><td>Secret store</td><td>Not applicable</td><td>Not applicable</td></tr></tbody></table></div>
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-storage-1.svg"><img width="616" height="988" src="/assets/docs/diagrams/architecture-storage-1.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart TB
+  subgraph D[&quot;Design (Studio) — provider-neutral&quot;]
+    A[&quot;Module: postgresql&lt;br/&gt;volume data · class data-replicated · 50 GiB&quot;]
+  end
+  subgraph AP[&quot;Apelora control plane&quot;]
+    PL[&quot;Planner&lt;br/&gt;capacity, class → pool, anti-affinity,&lt;br/&gt;replica and volume rules&quot;]
+    DB[(&quot;PostgreSQL&lt;br/&gt;desired volumes, ownership, retention&quot;)]
+    VP[&quot;VolumeProvider&lt;br/&gt;create · attach · detach · snapshot ·&lt;br/&gt;restore · grow · delete&quot;]
+    AD[&quot;incus-adapter&quot;]
+  end
+  subgraph IN[&quot;Incus&quot;]
+    PO[&quot;Pool (admin-chosen)&quot;]
+    VO[&quot;Custom volume&lt;br/&gt;labelled user.apelora.*&quot;]
+    DV[&quot;disk device on the instance&quot;]
+  end
+  A --&gt; PL --&gt; DB --&gt; VP --&gt; AD --&gt; VO
+  PO --&gt; VO --&gt; DV</code></pre></details></figure>
+<h3 id="31-rules-carried-from-the-storage-volumes-skill-restated-for-this-design">3.1 Rules (carried from the <code>storage-volumes</code> skill, restated for this design)</h3>
+<ol><li>Removing a module from the canvas <strong>never</strong> deletes data. Deleting a volume is an explicit, typed-name confirmed action; retained volumes show as <em>orphaned</em> until an owner decides.</li><li>A read-write <strong>block</strong> volume attaches to at most one instance. A design that gives several replicas the same exclusive volume is invalid (validation error with a hint: use one volume per replica or a shared filesystem class).</li><li>Resize is <strong>grow-only</strong> by default; shrinking is not offered.</li><li>Snapshots are taken stopped or with an application-aware hook unless the backend guarantees consistency; Apelora records which one was achieved. <strong>Snapshots are not backups.</strong></li><li>All operations are idempotent and level-triggered like every other desired state: re-read Incus, then act.</li><li>Encrypt at rest where the backend supports it; keys are referenced, never stored in designs or the database.</li><li>Ownership labels <code>user.apelora.application</code>, <code>user.apelora.module</code>, <code>user.apelora.volume</code> are written only by Apelora; anything without them is never touched.</li></ol>
+<h2 id="4-data-model-proposed">4. Data model (PROPOSED)</h2>
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-storage-2.svg"><img width="1098" height="741" src="/assets/docs/diagrams/architecture-storage-2.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>erDiagram
+  APPLICATION ||--o{ REVISION : has
+  APPLICATION ||--o{ VOLUME : owns
+  REVISION ||--o{ VOLUME_SPEC : declares
+  VOLUME_CLASS ||--o{ VOLUME : &quot;defines policy of&quot;
+  VOLUME_CLASS }o--|| POOL_MAPPING : &quot;resolves to&quot;
+  VOLUME ||--o{ SNAPSHOT : has
+  VOLUME ||--o| ATTACHMENT : &quot;attached by&quot;
+  MODULE_INSTANCE ||--o{ ATTACHMENT : uses
+
+  VOLUME {
+    string id
+    string application
+    string project
+    string module_id
+    string name
+    string class
+    int size_gib
+    string pool &quot;resolved, never in the design&quot;
+    string state &quot;requested|creating|available|attached|retained|deleting|error&quot;
+    string retention &quot;delete-with-app|retain&quot;
+    int generation &quot;fences stale workers&quot;
+  }
+  VOLUME_CLASS {
+    string name
+    string kind &quot;scratch|data-local|data-replicated|shared-read-only|backup-target&quot;
+    int rpo_minutes
+    int rto_minutes
+    string snapshot_schedule
+    string snapshot_expiry
+  }</code></pre></details></figure>
+<h2 id="5-lifecycle">5. Lifecycle</h2>
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-storage-3.svg"><img width="731" height="640" src="/assets/docs/diagrams/architecture-storage-3.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>stateDiagram-v2
+  [*] --&gt; Requested : plan approved
+  Requested --&gt; Creating : worker claims job
+  Creating --&gt; Available : volume exists in the pool
+  Creating --&gt; Error : pool full / class unavailable
+  Available --&gt; Attached : disk device added
+  Attached --&gt; Available : stop and detach
+  Attached --&gt; Attached : grow (online if supported)
+  Available --&gt; Retained : application removed, retention = retain
+  Retained --&gt; Available : application redeployed
+  Available --&gt; Deleting : explicit delete, typed name
+  Retained --&gt; Deleting : explicit delete, typed name
+  Deleting --&gt; [*]
+  Error --&gt; Requested : operator fixes cause, retries</code></pre></details></figure>
+<h3 id="51-deploying-a-module-with-a-volume">5.1 Deploying a module with a volume</h3>
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-storage-4.svg"><img width="1867" height="829" src="/assets/docs/diagrams/architecture-storage-4.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>sequenceDiagram
+  autonumber
+  actor D as Designer / operator
+  participant S as Studio
+  participant API as Control plane
+  participant W as Worker
+  participant I as Incus
+
+  D-&gt;&gt;S: Set volume data = 50 GiB, class data-replicated
+  S-&gt;&gt;API: POST /applications/shop/plan
+  API-&gt;&gt;API: Resolve class to pool, check capacity and rules
+  API--&gt;&gt;S: Plan: create volume, create instance, attach (or refusal with reason)
+  D-&gt;&gt;S: Approve
+  S-&gt;&gt;API: POST /applications/shop/deployments
+  API-&gt;&gt;API: Save revision, desired volumes, queue jobs, audit
+  W-&gt;&gt;I: Create custom volume (project, pool, size, labels)
+  W-&gt;&gt;I: Create instance with root disk
+  W-&gt;&gt;I: Add disk device for the volume, start
+  W-&gt;&gt;I: Readiness check
+  W--&gt;&gt;API: Record result
+  S-&gt;&gt;API: GET status (volume state, instance state)</code></pre></details></figure>
+<h2 id="6-interaction-with-mobility-and-recovery">6. Interaction with mobility and recovery</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Workload</th><th scope="col">Volume</th><th scope="col">Evacuation / failure behaviour</th></tr></thead><tbody><tr><td>Stateless replicas</td><td>none (or <code>scratch</code>)</td><td>Replace then retire; no data to move</td></tr><tr><td>Stateful single instance</td><td><code>data-local</code></td><td><strong>Blocked</strong> for automatic recovery. Planned maintenance offers <em>stop, copy, start</em> with the size and an estimated interruption; member failure waits for the member or a restore</td></tr><tr><td>Stateful single instance</td><td><code>data-replicated</code></td><td>Restarts on another member <strong>only after</strong> the failed member is fenced (dead storage lease, or a person's confirmation) and only for Apelora's own instances (built, ADR 0013)</td></tr><tr><td>Replicated database</td><td>One volume per replica</td><td>Application-specific failover adapter; Apelora does not guess</td></tr></tbody></table></div>
+<p>The evacuation dry run lists every volume that blocks a move and why. It never reports &quot;no downtime&quot; for stateful workloads.</p>
+<h2 id="7-security">7. Security</h2>
+<ul><li>Volumes are created in the <strong>application's project</strong>, with project limits on disk and volume counts; tenants cannot reach other projects' volumes.</li><li>Restricted projects allow only managed (Apelora-created) disk devices: no host path mounts, no raw device passthrough for tenants.</li><li>Pool configuration and driver credentials (for example Ceph keys) are administrator-only and live in the backend's secret store, never in the browser, designs, logs or the repository.</li><li>Storage actions require their own permission (<code>manage-storage</code>, see <a href="/docs/concepts/access-and-roles/">roles</a>) and are audited.</li><li>Backup copies are independent of the pool they protect.</li></ul>
+<h2 id="8-failure-handling">8. Failure handling</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Failure</th><th scope="col">Behaviour</th></tr></thead><tbody><tr><td>Pool full or class unavailable</td><td>Plan refuses with the reason; nothing is changed</td></tr><tr><td>Create succeeds but attach fails</td><td>Volume stays <code>available</code>; the job retries; the application is reported as not ready</td></tr><tr><td>Worker crashes between steps</td><td>Next worker re-reads Incus (labels, devices) and continues; generation number stops a stale worker</td></tr><tr><td>Member with a <code>data-local</code> volume fails</td><td>Application reported unavailable; no automatic recovery; runbook offers restore from backup</td></tr><tr><td>Shared storage unreachable</td><td>Instances may stall; health shows storage as a separate detector; no automatic restart that could create two writers</td></tr><tr><td>Someone resizes or deletes a volume in Incus directly</td><td>Detected as drift on the next reconcile; reported, not silently &quot;fixed&quot; for destructive differences</td></tr></tbody></table></div>
+<h2 id="9-ui">9. UI</h2>
+<ul><li><strong>Studio:</strong> a <em>Volumes</em> section in the module properties (add volume, class, size, mount path); a small disk badge on the node; validation messages for rule 2 and unavailable classes; the deploy review lists volumes to create, keep, grow or leave retained.</li><li><strong>Fabric Console, Storage:</strong> pools (exists), volume classes and their pool mapping (admin), volumes per project with state, attachment, size and used space, snapshots, orphans; destructive actions need the typed name.</li></ul>
+<h2 id="10-build-order">10. Build order</h2>
+<p><strong>Step 1 progress (REAL INCUS TESTED, 2026-10-20, Incus 7.0.1, btrfs pool <code>local</code> on four members, through the restricted deploy identity):</strong></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Check</th><th scope="col">Result</th></tr></thead><tbody><tr><td>Create a filesystem custom volume in the restricted project</td><td>Works (<code>features.storage.volumes=true</code>); it lands on the member that received the request unless <code>target</code> is given; the restricted identity <strong>may</strong> target volumes (it may not target instances)</td></tr><tr><td>Size quota</td><td>Enforced: a 1 GiB volume stopped a write at 1.0 GiB (<code>df</code> inside shows the pool, not the quota)</td></tr><tr><td>Attach at creation</td><td>Works when the instance runs on the volume's member</td></tr><tr><td>Placement and a member-local volume</td><td><strong>Incus does not follow the volume</strong>: an instance referencing a volume on another member failed (<code>Storage volume not found</code>). Working order: create the instance stopped (Incus places it), create the volume on that member, add the disk device, start — verified</td></tr><tr><td>Host-path disk in the restricted project</td><td>Refused (<code>Attaching disks not backed by a pool is forbidden</code>)</td></tr><tr><td>Grow while attached and running</td><td>Works (512 MiB → 1 GiB)</td></tr><tr><td>Shrink</td><td><strong>Accepted by Incus</strong> (1 GiB → 256 MiB): Apelora must enforce grow-only itself</td></tr><tr><td>Snapshot</td><td>Refused in a restricted project unless an administrator sets <code>restricted.snapshots=allow</code> (<code>doesn't allow for snapshot creation</code>); with it, the restricted identity snapshots a volume, also while it is attached and running (crash-consistent only). The test cluster scripts set it</td></tr><tr><td>Restore</td><td>Refused while the instance runs (<code>Cannot restore custom volume used by running instances</code>); after a stop, <code>PUT</code> with <code>restore</code> brought back the snapshot's data (verified with a marker file)</td></tr><tr><td>Attach to a VM</td><td>A <code>block</code> volume appears as a second disk (<code>sdb</code>); a <code>filesystem</code> volume added to a running VM is mounted over virtiofs</td></tr><tr><td>Instance deleted</td><td>The volume stays, with <code>used_by</code> empty: data outlives the instance, so Apelora must track and delete volumes itself</td></tr><tr><td>Delete</td><td>Deletes the volume together with its snapshots, in one call</td></tr><tr><td>Evacuation</td><td>Incus <strong>stops</strong> an instance with a member-local volume in place (it does not move it) and starts it again when the member is restored</td></tr><tr><td><code>used_by</code></td><td>Lists the instances the volume is attached to</td></tr></tbody></table></div>
+<p>Step 1 is complete. Consequences for step 2 and later: create order is instance (stopped) → volume on its member → disk device → start; grow-only and deletion are Apelora's rules, not Incus's; a project needs <code>restricted.snapshots=allow</code> before snapshots are offered; evacuation of a member with <code>data-local</code> volumes means downtime, never a move.</p>
+<p><strong>Step 2 progress (part A, 2026-10-20):</strong> volumes are part of the instance spec (<code>apelora_domain::storage::VolumeMount</code>: name, size in MiB, <code>filesystem</code> or <code>block</code>, class, mount path; at most four; block only for virtual machines; stateless modules cannot have them). The control plane resolves the class to the pool in <code>APELORA_VOLUME_POOL</code> and refuses a design with volumes when it is unset or Incus has no such pool; a caller can never name a pool. The worker creates the instance stopped, then each volume <code>&lt;instance&gt;-&lt;volume&gt;</code> on the instance's member with ownership labels, attaches it as <code>vol-&lt;volume&gt;</code> and starts the instance; a volume that exists without Apelora's labels or for another application is refused. Deleting the instance keeps the volume. The adapter's operations are methods of <code>Provider</code> (as for networks) rather than a separate trait; the mock holds volumes and injects create and attach failures. REAL INCUS TESTED: <code>volumes_follow_the_instance_and_outlive_it</code>. <strong>Part B (2026-10-20):</strong> the worker records each volume as soon as it exists (<code>volumes</code>, migration 0012; an application with recorded volumes cannot be deleted from the database). <code>GET /api/v1/applications/{name}/volumes</code> lists them with what Incus reports now (attached, kept, missing); <code>DELETE …/volumes/{volume}</code> deletes one with its snapshots after the name is typed again, refused while an instance uses it, needs <code>application.delete</code>, audited <code>application.volume.delete</code>. The Fabric Console shows them under Applications → Show details. REAL INCUS TESTED (four members): volumes on two members, one kept after its module was removed, both deleted from the console and the API. Runbook: <code>docs/runbooks/volumes.md</code>. <strong>Step 3 (2026-10-20):</strong> <code>@apelora/assembly-model</code> has <code>VolumeSchema</code> (name, size in MiB, mount path; unique names and paths, at most four), class defaults in <code>runtime.volumes</code> and per-module <code>volumes</code> (absent: the class's). <code>instanceRequestFor</code> sends them as <code>spec.volumes</code> and refuses them for stateless classes. The Studio's Properties window has a Volumes section (add, rename, mount path, size in GiB, remove; every change checked before it is kept) and the deploy review lists what each module keeps. Filesystem volumes only in the Studio for now; block volumes for virtual machines are accepted by the API. Grow: <code>PATCH /api/v1/applications/{name}/volumes/{volume}</code> with <code>sizeMib</code> (needs <code>application.deploy</code>, audited <code>application.volume.grow</code>) and <em>Grow…</em> in the Fabric Console; grow-only, refused before Incus is asked; REAL INCUS TESTED on a running instance. Snapshots (step 5, first part): <code>GET|POST /api/v1/applications/{name}/volumes/{volume}/snapshots</code>, <code>POST …/snapshots/{snapshot}/restore</code> (name typed, refused while an instance using the volume runs, approval where the policy asks), <code>DELETE …/snapshots/{snapshot}</code>; snapshots are named <code>snap-YYYYMMDD-HHMMSS</code> and the response says <code>crash-consistent</code> or <code>stopped</code>; a project without <code>restricted.snapshots=allow</code> is reported as such. REAL INCUS TESTED (adapter test, and take, refused restore, restore after stop and delete from the Fabric Console against the cluster). Next: the Console Storage view for classes and orphans (step 4), scheduled snapshots and backups to a separate pool.</p>
+<p><strong>Step 4 and 5, backups and restore (2026-10-21, MOCK VERIFIED with a real PostgreSQL):</strong></p>
+<ul><li><strong>Read side.</strong> <code>GET /api/v1/storage/pools</code> (<code>cluster.view</code>): each pool's use per member from the members' state, a shared pool counted once, and what Apelora uses it for (<code>APELORA_VOLUME_POOL</code>, <code>APELORA_BACKUP_POOL</code>, which the control plane now reads too). <code>GET /api/v1/storage/volumes</code> (per application the caller may view): every recorded volume with what Incus reports (one custom-volume list per project and pool), its schedules and how many backups it has. <code>GET /api/v1/storage/orphans</code> (<code>cluster.view</code>): custom volumes in Apelora's projects (deploy projects and every environment's) that neither the <code>volumes</code> nor the <code>volume_backups</code> table records, with their size and why they are listed; read-only.</li><li><strong>Per volume.</strong> <code>GET …/volumes/{volume}/backups</code> (<code>application.view</code>) lists its backups, oldest first, with whether each still exists in Incus and the volume's schedules. <code>POST …/backups</code> (<code>application.operate</code>) queues a <code>volume.backup</code> job (the existing worker job; its audit row <code>application.volume.backup.requested</code> is written with the job). <code>PUT …/schedules</code> (<code>application.deploy</code>) sets or clears the snapshot and backup schedules (15 minutes to a week, keep 1–50; backups need a backup pool), audited <code>application.volume.schedules</code> in the same transaction.</li><li><strong>Restore from a backup.</strong> <code>GET …/backups/{backup}/restore</code> is the dry run (<code>apelora_domain::storage::plan_restore</code>): the volume, the backup and when it was taken, the volume's snapshots that will be deleted, the instances using it and which run, where the safety backup goes, what blocks it and the steps. <code>POST</code> runs the same check again, needs the volume's name typed, <code>application.operate</code> (and an approval where a policy asks) and queues a <code>volume.restore</code> job with its audit row (<code>application.volume.restore.requested</code>) in one transaction. The job (<code>deployment-worker/src/storage.rs</code>) re-reads Incus before each change: refused (nothing changed) while an instance using the volume runs or when the volume or the backup is missing; then a <strong>safety backup</strong> of the current data into the backup pool, recorded with the job (<code>volume_backups.before_restore</code>, migration 0024), so a retried attempt finds it instead of taking another; then a <strong>safe point</strong> (a cancellation stops here, keeping the safety backup); the check again; then an Incus <code>refresh</code> copy of the backup over the volume — one Incus operation, no safe point inside; a copy that fails part-way is repeated whole by the next attempt and the safety backup holds what was there. Incus deletes the volume's own snapshots during a refresh and would accept it under a running instance (REAL INCUS TESTED earlier, <a href="/docs/contribute/test-cluster/">test cluster</a>): Apelora refuses that first. The instances stay stopped; the person starts them after checking the data. A failed restore is not retried as is (the dry run is read and the name typed again). Audited <code>application.volume.restored</code> by the worker. Runbook: <a href="/docs/runbooks/volumes/#restore-a-volume-from-a-backup">volumes</a>.</li></ul>
+<ol><li>Verify on the test cluster, labelled REAL INCUS TESTED: custom volume create, attach to a container and to a VM, snapshot, restore, grow, delete, and the project restrictions in §7; write down what the pinned release actually does.</li><li><code>VolumeProvider</code> trait, fake provider with fault injection, adapter implementation, <code>volumes</code> table and migration.</li><li>Module class <code>volumes</code> field and Studio properties section; planner rules; deploy review.</li><li>Console Storage: classes, volumes, orphans.</li><li>Snapshots and scheduled backups with a restore drill; then relocation of <code>data-local</code> volumes (stop, copy, start).</li><li>Only with a verified shared pool and tested fencing: <code>data-replicated</code> recovery (M3).</li></ol>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/STORAGE.md">docs/architecture/STORAGE.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/architecture/STORAGE.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/concepts/every-size/"><span>Previous</span>One design at every size</a><a class="next" href="/docs/concepts/access-and-roles/"><span>Next</span>Access, roles and security</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#1-how-incus-models-storage">1. How Incus models storage</a></li><li class="l3"><a href="#11-local-pools-and-shared-pools-the-part-that-decides-ha">1.1 Local pools and shared pools (the part that decides HA)</a></li><li class="l2"><a href="#2-where-apelora-fits-one-authority-per-piece-of-state">2. Where Apelora fits: one authority per piece of state</a></li><li class="l2"><a href="#3-the-abstraction-designers-pick-a-class-not-a-pool">3. The abstraction: designers pick a class, not a pool</a></li><li class="l3"><a href="#31-rules-carried-from-the-storage-volumes-skill-restated-for-this-design">3.1 Rules (carried from the storage-volumes skill, restated for this design)</a></li><li class="l2"><a href="#4-data-model-proposed">4. Data model (PROPOSED)</a></li><li class="l2"><a href="#5-lifecycle">5. Lifecycle</a></li><li class="l3"><a href="#51-deploying-a-module-with-a-volume">5.1 Deploying a module with a volume</a></li><li class="l2"><a href="#6-interaction-with-mobility-and-recovery">6. Interaction with mobility and recovery</a></li><li class="l2"><a href="#7-security">7. Security</a></li><li class="l2"><a href="#8-failure-handling">8. Failure handling</a></li><li class="l2"><a href="#9-ui">9. UI</a></li><li class="l2"><a href="#10-build-order">10. Build order</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

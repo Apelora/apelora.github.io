@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Health and capacity · Design notes · Apelora</title>
+  <meta name="description" content="The Health page and the capacity check: one place to ask whether Apelora is working.">
+  <link rel="canonical" href="https://apelora.github.io/docs/design/health-and-capacity/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Health and capacity · Design notes · Apelora">
+  <meta property="og:description" content="The Health page and the capacity check: one place to ask whether Apelora is working.">
+  <meta property="og:url" content="https://apelora.github.io/docs/design/health-and-capacity/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group" open><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/" aria-current="page">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/design/">Design notes</a></nav>
+        <h1>Health and capacity</h1>
+        <div class="prose">
+<p>Status: <strong>built (first slice)</strong> · Date: 2026-10-21 · Related: <a href="https://github.com/Apelora/apelora-fabric/blob/main/.agents/skills/observability/SKILL.md" rel="noopener">observability skill</a>, <a href="/docs/runbooks/troubleshooting/">troubleshooting runbook</a>, <a href="/docs/runbooks/health-page/">Health page runbook</a></p>
+<h2 id="1-problem-and-scope">1. Problem and scope</h2>
+<p>An operator needs one place that answers &quot;is Apelora working, and if not, which part and why?&quot;, and a designer needs to know, while drawing, whether the cluster has room for the design. Today the Console's Overview shows only whether the control plane and Incus answer, and the Studio says nothing about resources.</p>
+<p><strong>Goals</strong></p>
+<ul><li>A <strong>Health</strong> page in the Fabric Console: one row per component with its state in words, when it was checked and, when it is not healthy, the reason and the next step. It refreshes while visible and says how old its data is.</li><li>A <strong>Servers</strong> section on the same page: per server (&quot;minion&quot;, an Incus cluster member) its status, roles, CPU threads and load, memory used of total, each storage pool used of total, the instances running there, and warnings.</li><li>A small <strong>Capacity</strong> indicator in the Studio: what the design asks for next to what the cluster has free, and whether it fits on one server or across servers.</li></ul>
+<p><strong>Non-goals (cut, with reasons)</strong></p>
+<ul><li><em>Time series, charts and alert delivery.</em> They need a metrics store (Prometheus-style scraping, retention). The page shows the present; trends are a later slice when metrics are exported.</li><li><em>Per-instance CPU and memory usage.</em> Incus reports it per instance (<code>/1.0/instances/{name}/state</code>), but that is one request per instance per refresh; it belongs to an instance detail view, not a cluster overview.</li><li><em>Disk I/O, network throughput, temperatures, hardware faults.</em> Not in the Incus endpoints read here; hardware belongs to the bare-metal slice.</li><li><em>Actively probing identity providers on each refresh.</em> The page reports the control plane's own last result (it retries unreachable providers every minute), so a refresh never sends traffic to the provider.</li><li><em>Reserving capacity.</em> Incus does not reserve CPU or memory for limits, so &quot;fits&quot; is advice, never a promise; the deploy itself decides.</li></ul>
+<p><strong>Users and scale.</strong> A handful of operators per installation; 1–20 servers today, ~100 later. A refresh every 20 s per open page.</p>
+<p><strong>Constraints.</strong> Incus only through its REST API (read-only GETs here); every number comes from Incus, PostgreSQL or the services; mock data is labelled; names are original.</p>
+<h2 id="2-what-each-component-shows-and-why">2. What each component shows, and why</h2>
+<p>The rule for every row: <strong>state in words</strong> (Healthy, Degraded, Down, Unknown, Not set up) with a dot that never carries the meaning alone; <strong>one line of facts</strong>; <strong>the reason and a next step</strong> when it is not healthy. &quot;Unknown&quot; is used whenever something could not be observed; nothing is guessed.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Component</th><th scope="col">Facts shown</th><th scope="col">Healthy when</th><th scope="col">Degraded / Down when</th><th scope="col">Source</th></tr></thead><tbody><tr><td>Control plane</td><td>version, API version, uptime, start time, sign-in mode, inventory source (mock or Incus)</td><td>it answers (the page itself is the proof)</td><td>development mode (sign-in off) is Degraded</td><td>the process</td></tr><tr><td>Database</td><td>reachable, round-trip time of <code>SELECT 1</code>, schema version applied vs expected</td><td>reachable and schema current</td><td>round trip &gt; 500 ms (Degraded); unreachable or schema behind (Down)</td><td>PostgreSQL, <code>_sqlx_migrations</code></td></tr><tr><td>Deployment workers</td><td>each worker's id, host, version, started, last heartbeat</td><td>at least one heartbeat within 45 s</td><td>none live (Down: nothing is deployed, moved or recovered); a worker lost in the last 10 minutes (Degraded)</td><td><code>worker_heartbeats</code> (new)</td></tr><tr><td>Job queue</td><td>waiting, waiting to retry, running, stalled (lease expired), failed in the last hour, age of the oldest waiting job</td><td>nothing old, stalled or failed</td><td>jobs wait and no worker runs (Down); oldest waiting &gt; 2 min, stalled jobs, failures in the last hour (Degraded)</td><td><code>jobs</code></td></tr><tr><td>Incus</td><td>reachable, server and API version, clustered, members by status, round-trip time</td><td>reachable, every member Online</td><td>any member not Online (Degraded); unreachable (Down)</td><td><code>GET /1.0</code>, <code>/1.0/cluster/members</code></td></tr><tr><td>Networks</td><td>count, managed, which are not <code>Created</code>, members missing a non-OVN network</td><td>all created everywhere</td><td>any errored or missing on a member (Degraded)</td><td><code>/1.0/networks</code></td></tr><tr><td>Storage pools</td><td>count, which are not <code>Created</code>, members missing a pool</td><td>all created everywhere</td><td>any errored or missing (Degraded)</td><td><code>/1.0/storage-pools</code></td></tr><tr><td>Identity providers</td><td>each provider: enabled, reachable at the last check, the error; API tokens on/off</td><td>every enabled provider reachable</td><td>an enabled one unreachable (Degraded); none set up is &quot;Not set up&quot;, not an error</td><td>the control plane's sign-in runtime (read-only)</td></tr></tbody></table></div>
+<p><strong>Servers</strong> (one card each): Incus status and message, roles, architecture, failure domain, whether automatic placement is held, uptime; CPU threads with the 1/5/15-minute load; memory used of total; every storage pool's used of total; the instances there (running / total, and a list in the detail dialog). Warnings are decided by the server, not the browser: status not Online; memory above 90 %; a pool above 85 %; 1-minute load above the thread count; resources not readable (with the reason). Bars always show <em>used of total</em> in bytes, never a percentage without its base.</p>
+<p><strong>Why one Health page, not an upgraded Overview.</strong> The Overview works before sign-in and for every role (it uses only the public <code>/health</code>), and it is where a broken connection is explained. The Health page needs <code>cluster.view</code>, refreshes on its own and reads several sources; keeping it separate keeps the Overview fast and the sign-in path simple. The Health page is the second navigation entry.</p>
+<p><strong>Studio capacity.</strong> A chip in the Studio header: &quot;Capacity: fits on one server&quot;, &quot;fits across servers&quot;, &quot;does not fit&quot; or &quot;unknown&quot;. Its popover lists what the design asks for (vCPU and memory per instance times replicas, volume sizes) and what is free (sum and per server). Fit is decided by a pure function (<code>packages/assembly-model/src/capacity.ts</code>): memory and volume space are hard limits (a shared volume pool, such as clustered LVM or Ceph, is one budget, not one per server); a single instance cannot have more vCPUs than a server has threads; total vCPUs above the threads is shown as sharing, not as a failure (Incus shares CPU time). Root disks are not counted (image sizes are unknown before deployment), and the popover says so. Without a control plane it says &quot;Capacity unknown: this browser is not connected to a control plane.&quot;</p>
+<h2 id="3-contracts">3. Contracts</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Method and path</th><th scope="col">Permission</th><th scope="col">Returns</th></tr></thead><tbody><tr><td><code>GET /api/v1/health/components</code></td><td><code>cluster.view</code> (platform)</td><td><code>HealthReport</code>: overall state, checked time and one object per component above</td></tr><tr><td><code>GET /api/v1/health/servers</code></td><td><code>cluster.view</code> (platform)</td><td><code>HealthServers</code>: source (mock/Incus) and one <code>HealthServer</code> per member (or the standalone server)</td></tr><tr><td><code>GET /api/v1/capacity</code></td><td><code>cluster.view</code> (platform, server names shown) or <code>capacity.view</code> (any scope, servers numbered, no names)</td><td><code>CapacityReport</code>: per server whether it accepts new modules, CPU threads, load, memory free/total, volume-pool space free/total; totals</td></tr></tbody></table></div>
+<p><code>capacity.view</code> is a new <strong>tenant</strong> permission (floor: application) held by Application designer, Application operator, Project administrator, Organisation owner and Viewer. Designers do not hold <code>cluster.view</code> (an infrastructure permission granted only at platform level), so without it the Studio could not show capacity to the people drawing designs. It reveals free totals only: no server names, addresses or instances.</p>
+<p><strong>Data model.</strong> Migration <code>0016_worker_heartbeats.sql</code>: <code>worker_heartbeats (id text primary key, host, version, started_at, last_seen, stopped_at)</code>. The worker writes it at start, every 15 s from its own task (so a long job does not make it look dead), and marks <code>stopped_at</code> on a clean shutdown. Rows unseen for a day are deleted at worker start.</p>
+<p><strong>Incus reads (all GET).</strong> Per member: <code>/1.0/resources?target=&lt;m&gt;</code> (CPU threads, memory total/used) and <code>/1.0/cluster/members/&lt;m&gt;/state</code> (load averages, uptime, per-pool space). A standalone server: <code>/1.0/resources</code> and <code>/1.0/storage-pools/&lt;p&gt;/resources</code>. Each member is read concurrently with a 5 s budget; an offline member's resources are &quot;unavailable&quot; with the reason, never zero. The restricted deploy identity can read these (REAL INCUS TESTED, see §5).</p>
+<h2 id="4-failure-handling">4. Failure handling</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Failure</th><th scope="col">What the page shows</th></tr></thead><tbody><tr><td>Incus unreachable</td><td>Incus row Down with the adapter's message; Networks, Storage pools Unknown; Servers section shows the error with Try again</td></tr><tr><td>One member offline</td><td>That server card: status Offline, resources &quot;unavailable: …&quot;; others normal</td></tr><tr><td>Database down</td><td>Database Down, Workers and Job queue Unknown (&quot;needs the database&quot;)</td></tr><tr><td>Development mode (no database)</td><td>Database &quot;Not set up&quot;, workers/queue Unknown, control plane Degraded (sign-in off)</td></tr><tr><td>A refresh fails after data was shown</td><td>The last data stays, marked with its age, and a notice says the refresh failed and why</td></tr><tr><td>A slow Incus</td><td>Each member read is capped at 5 s, so the page answers within ~5 s</td></tr></tbody></table></div>
+<p><strong>Load.</strong> One page refresh = 2 + 2 × members Incus GETs and three small SQL queries. At 20 servers and 5 open pages every 20 s that is ~10 requests/s against Incus, acceptable; past that, cache the server read for 10 s in the control plane (trigger: Incus request latency in debug logs).</p>
+<h2 id="5-evidence">5. Evidence</h2>
+<ul><li>Unit tests: state rules (<code>apelora_domain::capacity</code>), heartbeats and queue counts (PostgreSQL), API (mock provider, permissions), fit function (vitest), Playwright with stubbed API (healthy, degraded, loading, error, phone width, axe).</li><li>Lab (REAL INCUS TESTED, read-only, 2026-10-21, four members, Incus 7.0.1): the restricted identity may read <code>/1.0/resources?target=…</code> and <code>/1.0/cluster/members/…/state</code>; the API's CPU, memory and pool figures equal direct reads; the test cluster's <code>shared</code> pool (clustered LVM) is reported once in capacity totals. The instance list per server covers only the projects Apelora's identity may see.</li></ul>
+<h2 id="6-next-steps">6. Next steps</h2>
+<ol><li>Export Prometheus metrics (queue depth, heartbeat age, Incus latency) and alert on symptoms; link alerts to runbooks.</li><li>Per-instance usage in an instance detail view.</li><li>Cache the server read when installations grow (see Load).</li></ol>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/design/health-and-capacity.md">docs/design/health-and-capacity.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/design/health-and-capacity.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/design/application-readiness/"><span>Previous</span>Application-level readiness</a><a class="next" href="/docs/design/alerts/"><span>Next</span>Alerts</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#1-problem-and-scope">1. Problem and scope</a></li><li class="l2"><a href="#2-what-each-component-shows-and-why">2. What each component shows, and why</a></li><li class="l2"><a href="#3-contracts">3. Contracts</a></li><li class="l2"><a href="#4-failure-handling">4. Failure handling</a></li><li class="l2"><a href="#5-evidence">5. Evidence</a></li><li class="l2"><a href="#6-next-steps">6. Next steps</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

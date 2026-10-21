@@ -1,0 +1,44 @@
+---
+title: Runbooks
+section: runbooks
+slug: overview
+order: 0
+label: Runbooks: start here
+source: docs/runbooks/README.md
+summary: Step-by-step procedures for operating an Apelora fabric. Every procedure states how far it has been verified:
+---
+Step-by-step procedures for operating an Apelora fabric. Every procedure states how far it has
+been verified:
+
+- **REAL INCUS TESTED** — carried out on the disposable test cluster (docs/development/TEST-CLUSTER.md:
+  Lima VMs standing in for physical servers), with the date and cluster size.
+- **NOT YET VERIFIED** — written from the Incus documentation and our design; follow it with care
+  and record the result here when it has been done.
+
+Apelora never writes Incus's database and moves instances only by asking Incus (the `instance.move`
+job): membership, placement, evacuation and migration are Incus operations that Apelora requests,
+previews and audits.
+
+| Situation | Runbook |
+|---|---|
+| Add a server to the cluster | [member-join.md](member-join.md) |
+| Maintenance on a server | [member-maintenance.md](member-maintenance.md) |
+| A server fails | [member-failure.md](member-failure.md) |
+| Remove a server for good | [member-removal.md](member-removal.md) |
+| The cluster loses quorum | [quorum-loss.md](quorum-loss.md) |
+| Read quorum; upgrade Incus one member at a time | [incus-rolling-upgrade.md](incus-rolling-upgrade.md) |
+| OVN or the uplink fails | [network-incident.md](network-incident.md) |
+| A replica fails its health check | [replica-unhealthy.md](replica-unhealthy.md) |
+| A volume is kept, missing or to be deleted | [volumes.md](volumes.md) |
+| A pool is filling up or down, or backups stop | [storage-incident.md](storage-incident.md) |
+| The deploy identity cannot see its project | [deploy-identity.md](deploy-identity.md) |
+| Raise a quota; an environment's Incus project is not prepared | [tenancy-quotas.md](tenancy-quotas.md) |
+| Revoke access (people, automation, servers) | [access-revocation.md](access-revocation.md) |
+| A credential is stolen or an account or session is misused | [security-incident.md](security-incident.md) |
+| The control plane or worker is down | [api-outage.md](api-outage.md) |
+| Find out why something failed (logs, request ids, audit) | [troubleshooting.md](troubleshooting.md) |
+| Read the Health page (components, servers, what each state means) | [health-page.md](health-page.md) |
+| Set up and respond to alerts (webhooks, acknowledge, silence, each rule) | [alerts.md](alerts.md) |
+| Rotate Apelora's Incus certificates | [certificates.md](certificates.md) |
+| Back up Apelora's own database, drill a restore, restore the plane onto a new host | [apelora-database-backup.md](apelora-database-backup.md) |
+| Update Apelora without internet access | [offline-update.md](offline-update.md) |

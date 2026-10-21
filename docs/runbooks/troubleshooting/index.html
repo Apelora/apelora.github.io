@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Troubleshooting with logs and the audit trail · Runbooks · Apelora</title>
+  <meta name="description" content="Using logs and the audit trail, and retrying or cancelling jobs.">
+  <link rel="canonical" href="https://apelora.github.io/docs/runbooks/troubleshooting/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Troubleshooting with logs and the audit trail · Runbooks · Apelora">
+  <meta property="og:description" content="Using logs and the audit trail, and retrying or cancelling jobs.">
+  <meta property="og:url" content="https://apelora.github.io/docs/runbooks/troubleshooting/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group" open><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/" aria-current="page">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/runbooks/">Runbooks</a></nav>
+        <h1>Troubleshooting with logs and the audit trail</h1>
+        <div class="prose">
+<p class="ev"><strong>Evidence:</strong> the log lines and request ids below were produced by the control plane with the
+mock provider (2026-10-21); the worker and Incus lines are covered by unit and contract tests
+(MOCK VERIFIED / CONTRACT VERIFIED). They have not yet been read off a real cluster incident.</p>
+<p>Both services, <code>apelora-control-plane</code> and <code>apelora-deployment-worker</code>, write one line per event
+to standard output. The audit trail (<code>GET /api/v1/audit</code>, Fabric Console → Audit) is a
+separate, append-only record of who did what. Use the logs to find out <strong>why</strong> something
+happened; use the audit trail to find out <strong>who</strong> asked for it and what was decided.</p>
+<h2 id="choosing-what-is-logged">Choosing what is logged</h2>
+<p><code>RUST_LOG</code> selects what is written; without it both services log at <code>info</code>. Directives are
+comma-separated <code>target=level</code> pairs, the most specific one wins:</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Goal</th><th scope="col"><code>RUST_LOG</code></th></tr></thead><tbody><tr><td>Normal operation</td><td>unset, or <code>info</code></td></tr><tr><td>Every API request with status and latency</td><td><code>info,apelora_control_plane::api::requests=debug</code></td></tr><tr><td>Why the API refused something (code and message of every 4xx)</td><td><code>info,apelora_control_plane=debug</code></td></tr><tr><td>Every Incus request (method, path, status, latency)</td><td><code>info,apelora_incus_adapter=debug</code></td></tr><tr><td>Worker decisions (lifecycle steps, moves, supervisor skips)</td><td><code>info,apelora_deployment_worker=debug</code></td></tr><tr><td>Only problems</td><td><code>warn</code></td></tr><tr><td>Database driver detail</td><td>add <code>sqlx=debug</code> (verbose: every statement)</td></tr></tbody></table></div>
+<p>An invalid <code>RUST_LOG</code> is reported on standard error and the service logs at <code>info</code>.</p>
+<p><code>APELORA_LOG_FORMAT=json</code> writes one JSON object per line (<code>timestamp</code>, <code>level</code>, <code>target</code>,
+<code>fields</code> with <code>message</code> and the structured fields, and <code>span</code> with the request or job the line
+belongs to). The default, <code>text</code>, is meant for a terminal. Ship JSON to a log store.</p>
+<h2 id="the-request-id">The request id</h2>
+<p>Every API response has an <code>x-request-id</code> header. A caller may send its own (at most 64
+characters of letters, digits, <code>.</code>, <code>_</code>, <code>-</code>); anything else is replaced by a new UUID. The id:</p>
+<ul><li>is on every log line written while the request is handled, in the <code>request</code> span together
+with the method and the path (never the query string);</li><li>is added as <code>requestId</code> to the detail of every audit event recorded during the request;</li><li>is named in the message of a <code>500 store_error</code>, so a person reporting a failure can quote it.</li></ul>
+<p>To follow one request: take the id from the browser's network panel (or the error message) and
+search the logs for it, e.g. <code>grep 'request_id=3f2a…'</code>, or <code>jq 'select(.span.request_id==&quot;3f2a…&quot;)'</code>
+for JSON logs. Then look for the same id in the audit detail.</p>
+<p>Worker lines carry a <code>job</code> span instead: <code>job</code> (id), <code>kind</code>, <code>target</code> (<code>project/name</code> or the
+application) and <code>request_id</code>, the id of the request that queued the job (<code>-</code> for jobs the
+supervisor or the scheduler queued). <code>GET /api/v1/jobs/{id}</code> shows the same job's status and
+last error; <code>GET /api/v1/jobs/{id}/detail</code> adds every attempt and the linked jobs (see
+<a href="#retrying-and-cancelling-a-job">Retrying and cancelling a job</a>).</p>
+<h3 id="from-a-request-id-to-the-job-and-the-incus-operation">From a request id to the job and the Incus operation</h3>
+<p class="ev"><strong>Evidence:</strong> CONTRACT VERIFIED with the mock provider and a real PostgreSQL (2026-10-21,
+<code>one_request_id_links_the_request_its_audit_row_the_job_and_the_incus_operation</code>); not yet
+followed on a real cluster incident.</p>
+<ol><li><strong>Request → job.</strong> The audit row of the request (<code>&lt;kind&gt;.requested</code>, <code>application.deploy.requested</code>,
+<code>application.&lt;action&gt;.requested</code>) has <code>requestId</code> and, for single jobs, <code>jobId</code> in its detail.
+The job itself stores the id: <code>GET /api/v1/jobs/{id}</code> and <code>GET /api/v1/jobs</code> return
+<code>requestId</code>, and the Console's Operations view shows it under the change, with a copy
+button. In the database: <code>SELECT id, kind, status FROM jobs WHERE request_id = '3f2a…'</code>
+(indexed). An application start, stop or restart queues a coordinating
+<code>application.operation</code> job, and every instance job it queues carries the same request id.</li><li><strong>Job → worker log lines.</strong> Search for the job id or the request id: the worker's <code>job</code> span
+has both, e.g. <code>jq 'select(.span.request_id==&quot;3f2a…&quot;)'</code>.</li><li><strong>Job → Incus operation.</strong> <code>incusOperations</code> on the job lists every Incus operation it started,
+oldest first; <code>incusOperation</code> is the one the current attempt is still waiting on. The worker
+logs <code>started operation operation=…</code> (lifecycle jobs) or <code>move: waiting on the Incus operation
+operation=…</code> (moves) inside the job span. On a member, <code>incus operation show &lt;id&gt;</code> shows what
+Incus did while it still keeps the operation; Incus forgets finished operations after a
+while, the id in Apelora stays. Operations an adapter call waits on internally (volume
+copies, backups) are logged at debug as <code>incus: operation succeeded operation=…</code> in the job
+span but are not yet listed on the job.</li></ol>
+<h2 id="logged-or-audited">Logged or audited</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Event</th><th scope="col">Log</th><th scope="col">Audit</th></tr></thead><tbody><tr><td>A request completes</td><td>debug (2xx/3xx), info (4xx), warn (5xx), with status, latency and error <code>code</code></td><td>—</td></tr><tr><td>No or unknown credential (401)</td><td>debug (no token) / warn <code>credential refused</code> with the credential kind and, for provider tokens, the issuer</td><td>not audited: anyone could fill the trail with them</td></tr><tr><td>Refused by permission (403: <code>forbidden</code>, <code>mfa_required</code>, <code>route_not_authorizable</code>, <code>account_disabled</code>)</td><td>warn <code>request denied</code></td><td><code>access.denied</code> with <code>code</code> and <code>reason</code></td></tr><tr><td>Action that needs an approval, none presented (<code>approval_required</code>)</td><td>info</td><td>not audited: it is the normal first step of the approval flow</td></tr><tr><td>Approval presented that is spent, someone else's or for another action (<code>approval_invalid</code>)</td><td>warn <code>approval refused</code></td><td><code>access.denied</code> with <code>code: approval_invalid</code>, the approval id and permission</td></tr><tr><td>Every change made through the API</td><td>info where useful</td><td>always, with actor, target and outcome, in the same transaction as the change (exceptions: <a href="/docs/concepts/identity-and-authorization/#8-audit-trail">identity and authorization §8</a>)</td></tr><tr><td>Sign-in with an identity provider's token</td><td>debug</td><td><code>auth.oidc.signed_in</code>, on the first request of each hour per person</td></tr><tr><td>An audit export</td><td>info</td><td><code>audit.exported</code> with the format and filters</td></tr><tr><td>The audit write itself fails</td><td>error <code>audit: could not record &lt;action&gt;</code></td><td>— (that is the failure)</td></tr></tbody></table></div>
+<p>Never in logs, audit detail or error messages: bearer tokens, API and service tokens, Incus join
+tokens, certificates and keys, passwords, the <code>Authorization</code> header, request bodies. Only the
+<strong>kind</strong> of a refused credential is logged. Values read from an unverified token (issuer,
+audience, key id) are public identifiers; they are shown without control characters and
+shortened to 120 characters.</p>
+<h2 id="common-problems-and-the-lines-to-look-for">Common problems and the lines to look for</h2>
+<h3 id="cannot-sign-in">Cannot sign in</h3>
+<ul><li><code>WARN credential refused credential=&quot;identity-provider token&quot; issuer=… code=&quot;invalid_token&quot; reason=…</code>
+The reason says what did not match, for example
+<code>the token was issued by a different identity provider (https://id.example/realms/x; expected https://id.example/realms/main)</code>
+(a trailing slash or another realm), <code>the token is not meant for this API (audience apelora-console; expected one of apelora-api)</code>
+(the provider puts the client id, not the API's identifier, in the audience), or
+<code>signed with a key the identity provider does not publish (key id …)</code> (keys rotated; they are re-read at most once a minute).</li><li><code>credential=&quot;API token&quot; … the API token is unknown, revoked or expired</code>, or <code>legacy API tokens are disabled</code>.</li><li><code>request denied code=&quot;account_disabled&quot;</code>: the person's account is turned off (also audited as <code>auth.refused</code>).</li></ul>
+<h3 id="the-identity-provider-is-not-reachable">The identity provider is not reachable</h3>
+<ul><li>At start and after a change: <code>WARN identity provider not reachable: its tokens are refused until it answers (retried every minute) provider=… issuer=… error=…</code>.</li><li>When it answers again: <code>INFO identity provider accepted for sign-in</code>.</li></ul>
+<h3 id="incus-is-unreachable-or-refuses-apelora">Incus is unreachable or refuses Apelora</h3>
+<ul><li>API answers <code>502 incus_unreachable</code> / <code>incus_authentication</code> / <code>incus_api_error</code>; the access log
+line is <code>WARN request failed code=&quot;incus_unreachable&quot;</code> and the message names the Incus request,
+e.g. <code>cannot reach the Incus server: GET /1.0/instances?recursion=1&amp;all-projects=true: … Connection refused</code>.</li><li><code>HTTP 401</code>/<code>403</code> in the message: the client certificate is not trusted or not allowed in the
+project (see <a href="/docs/runbooks/deploy-identity/">deploy-identity.md</a>, <a href="/docs/runbooks/certificates/">certificates.md</a>).</li><li><code>HTTP 502 with a reply that is not from the Incus API</code>: something between Apelora and Incus
+(a proxy or load balancer) answered instead of Incus.</li><li>With <code>RUST_LOG=info,apelora_incus_adapter=debug</code>: <code>DEBUG incus: response request=&quot;GET /1.0/…&quot; status=200 latency_ms=12</code>
+for every call, and <code>incus: request not sent or not answered</code> with the cause chain (TLS
+verification, DNS, timeout).</li></ul>
+<h3 id="429-ratelimited-too-many-requests"><code>429 rate_limited</code> (too many requests)</h3>
+<p>The answer has <code>Retry-After</code> (seconds) and the code <code>rate_limited</code>. The first refusal while a
+limit is spent is logged at warn in the request's span (with its request id; never a token):
+<code>WARN rate limit: refusing requests limit=&quot;public&quot; client=203.0.113.7 retry_after_secs=1</code>.
+Further refusals are logged at debug, so a flood does not flood the log.</p>
+<ul><li><code>limit=&quot;public&quot;</code>: one address called the public routes (<code>/health</code>, <code>/sign-in</code>, the OpenAPI
+document, the terminal websocket) or sent requests without a token too often
+(<code>APELORA_RATE_LIMIT_PUBLIC_*</code>). A load balancer probing <code>/health</code> every 2 s uses 30 a minute.</li><li><code>limit=&quot;failed-sign-in&quot;</code>: tokens from this address were refused repeatedly; until the bucket
+refills, every request with a token from it is refused before the token is checked
+(<code>APELORA_RATE_LIMIT_FAILED_AUTH_*</code>). Look for the <code>credential refused</code> lines before it.</li><li><code>limit=&quot;writes&quot;</code> with <code>client=user:…</code>/<code>service:…</code>/<code>token:…</code>: one caller sent many changes
+(<code>APELORA_RATE_LIMIT_WRITES_*</code>), typically a script in a loop.</li><li><strong>Every browser is limited together:</strong> the control plane sits behind a proxy and sees only the
+proxy's address. Set <code>APELORA_TRUSTED_PROXIES</code> to the proxy's address; the start-up warning
+<code>APELORA_BEHIND_PROXY is set without APELORA_TRUSTED_PROXIES</code> says so too.</li><li>The limits are per API process (in memory); with several processes the effective limit is
+that many times larger.</li></ul>
+<h3 id="the-control-plane-refuses-to-start-listening-and-tls">The control plane refuses to start (listening and TLS)</h3>
+<ul><li><code>refusing to serve plain HTTP on 0.0.0.0:8080: bearer tokens would cross the network unencrypted …</code>:
+<code>APELORA_API_ADDR</code> is not a loopback address. Set <code>APELORA_TLS_CERT</code> and <code>APELORA_TLS_KEY</code>
+(PEM files), or put a TLS-terminating proxy in front (<code>infra/serve/apelora.conf</code>) and set
+<code>APELORA_BEHIND_PROXY=1</code> (and <code>APELORA_TRUSTED_PROXIES</code>), or listen on <code>127.0.0.1</code>.</li><li><code>APELORA_TLS_CERT is set but APELORA_TLS_KEY is not</code> (or the reverse): set both or neither.</li><li><code>APELORA_TLS_CERT (/path): cannot read a PEM certificate chain: …</code> / <code>APELORA_TLS_KEY (/path): cannot read a PEM private key: …</code>:
+the file is missing, unreadable for the service user, or not PEM.</li><li><code>APELORA_TLS_CERT/APELORA_TLS_KEY do not form a usable pair</code>: the key does not belong to the
+certificate, or the key type is not supported.</li><li><code>APELORA_BEHIND_PROXY must be 1 … or 0</code>, <code>APELORA_TRUSTED_PROXIES: &quot;…&quot; is not an address or CIDR range</code>,
+<code>APELORA_RATE_LIMIT_… must be a whole number …</code>: a setting could not be read.</li><li>After start, <code>control plane listening … tls=true</code> confirms HTTPS. Failed handshakes are logged
+at debug (<code>tls: handshake failed</code>), so a client that cannot connect is visible with
+<code>RUST_LOG=info,apelora_control_plane=debug</code>.</li></ul>
+<h3 id="health-says-incus-is-not-connected-but-not-why"><code>/health</code> says Incus is not connected, but not why</h3>
+<p>The public <code>/api/v1/health</code> says only whether Incus answered (asked at most every 15 s). The
+reason and the versions are on <code>GET /api/v1/system</code> (Fabric Console → Administration → System,
+signed in) and in the log: <code>WARN health: Incus is not reachable error=…</code> once when it stops
+answering, <code>INFO health: Incus is reachable again</code> when it is back.</p>
+<h3 id="a-job-fails-or-keeps-being-retried">A job fails or keeps being retried</h3>
+<ul><li><code>INFO job: claimed attempt=2 max_attempts=5</code> in the <code>job{job=… kind=… target=…}</code> span.</li><li><code>WARN job: attempt failed; will be retried attempt=2 max_attempts=5 retry_in_secs=4 error=…</code>:
+retried with exponential back-off (at most 300 s).</li><li><code>ERROR job: failed; no attempts left</code> or <code>ERROR job: rejected; retrying cannot help</code> (for
+example the instance is not Apelora's): the job is <code>failed</code> and <code>last_error</code> holds the reason.</li><li><code>WARN incus: operation failed operation=… error=…</code> or <code>incus: operation still running when the wait ended</code>
+just before: Incus itself reported the failure, or the operation is slower than the wait; the
+next attempt waits on the same operation.</li><li><code>INFO network: not everything has an address yet; the sync is retried</code>: normal while
+instances start; a <code>network.sync</code> job that ends <code>failed</code> with <code>waiting for …</code> means an
+instance never got an address.</li><li><code>ERROR job: database error while running the job</code>: PostgreSQL was unavailable; the job is
+taken over once its 30 s lease expires.</li><li><code>WARN job: stopped working on it (another worker holds it now)</code>: the lease was lost (a pause
+longer than the lease); the other worker's result counts.</li></ul>
+<h3 id="retrying-and-cancelling-a-job">Retrying and cancelling a job</h3>
+<p class="ev"><strong>Evidence:</strong> MOCK VERIFIED with a real PostgreSQL (API, worker and persistence tests,
+2026-10-21); not yet used on a real cluster incident.</p>
+<p>The job's page (Console → Operations → the change; <code>GET /api/v1/jobs/{id}/detail</code>) shows every
+attempt with its worker, start, duration, outcome, error and the Incus operations it started;
+who queued the job; its request id; and the jobs linked to it (retries, and other jobs the same
+request queued, such as an application operation's instance jobs). An attempt marked
+<strong>Worker stopped; taken over</strong> (<code>lost</code>) was claimed again after its worker stopped renewing the
+lease.</p>
+<p><strong>Retry</strong> (<code>POST /api/v1/jobs/{id}/retry</code>, Console: Retry) queues a <em>new</em> job with the same kind
+and request, linked by <code>retryOf</code>. The failed job stays exactly as it was, as evidence. Refusals
+(409, audited as a denied <code>job.retry</code>):</p>
+<ul><li><code>not_failed</code>: only failed jobs are retried;</li><li><code>already_retried</code>: the job was retried already; retry the newer job if it failed too;</li><li><code>superseded</code>: a newer job for the same instance (or the same kind for the same application)
+was queued since; retrying would undo it;</li><li><code>not_retryable</code>: an application operation; start, stop or restart the application again,
+which plans anew from what runs now.</li></ul>
+<p><strong>Cancel</strong> (<code>POST /api/v1/jobs/{id}/cancel</code>, Console: Cancel…): a waiting job with nothing in
+flight is cancelled at once (<code>outcome: cancelled</code>). Otherwise the request is recorded
+(<code>outcome: requested</code>, the status shows <em>cancelling</em>) and the worker stops at the kind's next
+safe point, logging <code>job: cancelled on request at a safe point note=…</code>. It never stops in the
+middle of an Incus change: a change already sent is waited on to its end.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Kind</th><th scope="col">Where it stops</th></tr></thead><tbody><tr><td><code>instance.start</code>, <code>stop</code>, <code>restart</code>, <code>delete</code></td><td>before each change it asks Incus for (a cancelled delete may leave the instance stopped)</td></tr><tr><td><code>instance.create</code></td><td>only before the instance exists; once created, its volumes are attached and it is started</td></tr><tr><td><code>instance.move</code></td><td>while the instance is still on its original member (started again there if the move had stopped it); once on the new member, the move is finished</td></tr><tr><td><code>application.operation</code></td><td>between phases: the running phase's instance jobs finish, later phases are skipped, the operation ends <code>cancelled</code></td></tr><tr><td><code>network.sync</code>, <code>volume.backup</code></td><td>only before they start</td></tr></tbody></table></div>
+<p>A job whose earlier attempt left an Incus operation unfinished waits on it first, then stops.
+Both actions need the permission that queues that kind of job, checked on its target:
+<code>instance.manage</code> on the environment for single instances, <code>application.operate</code> (start, stop,
+restart, backups, operations) or <code>application.deploy</code> (create, delete, networks) on the
+application. Others get 403 (audited as <code>access.denied</code>), and people who may not see the job get</p>
+<ol start="404"><li>Successful requests are audited as <code>job.retry</code> / <code>job.cancel</code> with the job ids.</li></ol>
+<p>In the database: <code>SELECT attempt, worker, started_at, ended_at, outcome, error, incus_operations
+FROM job_attempts WHERE job_id = '…' ORDER BY attempt</code>; <code>SELECT id, status FROM jobs WHERE
+retry_of = '…'</code>.</p>
+<h3 id="reading-an-instances-logs">Reading an instance's logs</h3>
+<p class="ev"><strong>Evidence:</strong> CONTRACT VERIFIED (adapter against spec-shaped replies) and MOCK VERIFIED (API and
+Console); against the real test cluster only the &quot;instance does not exist&quot; answer was checked
+(it had no instances), so real log content is NOT VERIFIED yet.</p>
+<p>Console → Instances → the instance → Logs, or the API:</p>
+<ul><li><code>GET /api/v1/instances/{project}/{name}/logs</code>: the log files Incus lists for it, by name only
+(typically <code>lxc.log</code> for containers, <code>qemu.log</code> for VMs; Incus's own paths are never shown);</li><li><code>GET …/logs/{file}?tailKib=64</code>: the end of one listed file;</li><li><code>GET …/console-log?tailKib=64</code>: the end of the console output (Incus <code>type=log</code>).</li></ul>
+<p><code>tailKib</code> is 1–1024 (default 64); the text starts at the first whole line, and the answer says
+whether it was cut and the whole log's size. Logs larger than 64 MiB are refused (read them on
+the member). Nothing is streamed; Refresh reads again. Reading needs <code>application.logs.read</code> on
+the instance's application or <code>instance.manage</code> on its environment; reads are logged at info
+(<code>instance log read</code>, without the content) and not audited. With the mock provider the text is
+labelled <code>Mock ·</code> and is fixture data. Incus keeps a container's console output in a ring
+buffer, so an empty console log right after a start is normal.</p>
+<h3 id="an-operation-start-stop-restart-reports-a-failed-phase">An operation (start, stop, restart) reports a failed phase</h3>
+<ul><li><code>WARN operation: phase failed; later phases skipped operation=… phase=0 action=start instance=apelora/shop-db-01-r1 reason=…</code>.
+The coordinating job still ends <code>succeeded</code>: the operation, not the job, records the failure
+(<code>GET /api/v1/applications/{name}/operations/{id}</code>).</li><li><code>WARN operation: cannot read the instance from Incus to confirm its state; looking again</code>:
+the phase waits instead of guessing.</li></ul>
+<h3 id="queued-jobs-start-only-after-a-delay">Queued jobs start only after a delay</h3>
+<p>Workers are woken by PostgreSQL <code>NOTIFY apelora_jobs</code> when a job is queued, and check every 2 s
+in any case. A job that starts about 2 s late means the wake-up is not working:</p>
+<ul><li><code>WARN job wake-up: cannot listen for queued jobs; checking for work on the idle interval until it can</code>
+(at start) or <code>WARN job wake-up: the listener failed; …</code>: the listening connection was refused
+or lost; <code>INFO job wake-up: listening for queued jobs again</code> follows once it is back.</li><li><code>WARN job wake-up: the listener's connection dropped and was re-established; checking for work now</code>:
+a connection reaper or a database restart cut it; nothing to do unless it repeats.</li><li>A connection pooler in transaction mode between the worker and PostgreSQL does not deliver
+notifications: connect the worker directly or in session mode.</li></ul>
+<h3 id="the-supervisor-does-not-restore-something">The supervisor does not restore something</h3>
+<ul><li>Only one worker supervises: the holder of the <code>replica-supervisor</code> leader lease. Look for
+<code>INFO leader: lease acquired; acting as the leader lease=replica-supervisor holder=&lt;worker&gt; generation=&lt;n&gt;</code>
+and <code>INFO leader: lease lost …</code>. In the database: <code>SELECT holder, generation, expires_at FROM
+leader_leases</code>. Workers that do not hold it skip their passes (debug: <code>another worker holds
+the leader lease</code>). A holder that stops renewing is replaced 15 s after its last renewal; a
+worker that stops cleanly gives the lease up by letting it expire, so expect up to 15 s plus
+one supervision interval before the new leader acts. Set a distinct <code>APELORA_WORKER_ID</code> per
+worker so the holder names the process.</li><li><code>WARN supervisor: pass stopped by a refused write</code>: a leader that stalled past its lease
+tried to write after another worker took over; nothing was written. Normal after a long pause
+(a suspended VM, a database outage); the new leader's next pass acts instead.</li><li><code>WARN leader: cannot renew the lease; writes stay fenced until it is renewed</code>: the database
+is not reachable; the supervisor writes nothing until it is.</li></ul>
+<ul><li><code>WARN supervisor: instance is missing or stopped; only stateless replicas are restored automatically</code>
+(logged again when the state changes, at most every 10 minutes otherwise).</li><li><code>WARN supervisor: cannot read the cluster members; offline detection and substitutes are skipped until they can be read</code>.</li><li>With <code>apelora_deployment_worker=debug</code>: why a replica was skipped (<code>a job for the instance is in flight or failed recently</code>,
+<code>stopped on purpose through Apelora</code>).</li></ul>
+<h3 id="the-database">The database</h3>
+<ul><li><code>503 store_unavailable</code> and <code>WARN store: the database is not reachable</code>: PostgreSQL is down,
+refusing connections or out of connections; check <code>DATABASE_URL</code> and the server.</li><li><code>500 store_error</code> (the message names the request id) and <code>ERROR store: database error error=…</code>
+in the log line with that id: the database refused one statement; the log has its text.</li></ul>
+<h3 id="the-audit-trail-is-not-being-written">The audit trail is not being written</h3>
+<ul><li>A change answers <code>500 store_error</code>, and the log line with its request id says
+<code>ERROR store: database error</code> with an error about <code>audit_events</code> or <code>outbox</code>: the change's audit
+row could not be written, so <strong>the change was rolled back</strong> with it; nothing was stored and the
+request can be repeated once the cause is fixed. Check that PostgreSQL is up and has disk
+space, that nobody added a trigger or permission change on <code>audit_events</code> or <code>outbox</code>, and the
+database log. Changes made in Incus (join tokens, evacuation, member removal, snapshots) and the
+Incus step of volume and machine changes are the exception: Incus has already acted, so look
+before repeating them.</li><li><code>ERROR audit: could not record access.denied error=…</code> (or another refusal, a failed sign-in,
+<code>auth.oidc.signed_in</code>, <code>emergency_access.request</code>): events that change nothing are written on
+their own; the request is still answered and only the log has it. Check the same things.</li></ul>
+<h3 id="truncate-auditevents-is-refused"><code>TRUNCATE audit_events</code> is refused</h3>
+<p>By design: <code>audit_events is append-only</code>. Triggers refuse <code>UPDATE</code>, <code>DELETE</code> and <code>TRUNCATE</code>
+(migration 0022). Retention will come with monthly partitions (EVERY-SIZE.md §5 item 9); until
+then the table only grows. When cleaning up test data, delete the other rows in their own
+statements and leave the audit trail alone.</p>
+<h3 id="the-outbox-backlog-grows">The outbox backlog grows</h3>
+<p>Every audit row writes an outbox message; the worker that holds the <code>outbox-relay</code> lease delivers
+them (today to its log, <code>INFO outbox: message</code>). If <code>apelora_outbox_pending</code> or
+<code>apelora_outbox_oldest_pending_age_seconds</code> keeps growing:</p>
+<ol><li>Is a relay running? <code>SELECT holder, generation, expires_at &gt; now() FROM leader_leases WHERE name = 'outbox-relay'</code>.
+No row, or an expired one, means no worker is relaying: check that a worker runs and that
+<code>APELORA_OUTBOX_SINK</code> is not <code>off</code> (with <code>off</code> nothing is relayed and the backlog only grows).
+The worker logs <code>outbox relay started</code> at start and <code>leader: lease acquired</code> when it takes over.</li><li>Are deliveries failing? The relay logs <code>WARN outbox: delivery failed; will retry</code> with the
+message id, topic, attempts and reason, and <code>apelora_outbox_failing</code> counts them. The reason is
+also in the table: <code>SELECT id, topic, attempts, last_error, next_attempt_at FROM outbox WHERE delivered_at IS NULL ORDER BY id LIMIT 20</code>.
+Retries wait 2, 4, 8 … seconds, at most five minutes; nothing is dropped.</li><li><code>WARN outbox: pass stopped: the relay lease is no longer held</code>: another worker took over; it
+delivers the rest (some messages may be delivered twice, by design).</li></ol>
+<p>Delivered messages are removed after seven days; undelivered ones are kept.</p>
+<h2 id="support-bundle-and-effective-settings">Support bundle and effective settings</h2>
+<p>When you ask someone for help, give them a <strong>support bundle</strong> instead of screenshots and copied
+settings: Fabric Console → Administration → Support bundle → <em>Download support bundle</em>, or
+<code>curl -H &quot;Authorization: Bearer $TOKEN&quot; -o bundle.tar https://&lt;api&gt;/api/v1/support-bundle</code>.
+It needs <code>support.bundle</code> (Fabric Administrator and Platform Super Admin hold it) and is recorded
+in the audit trail as <code>support.bundle.downloaded</code> before the first byte is sent. Nothing is
+uploaded anywhere; the file exists only where you save it, so it works without internet access.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">File</th><th scope="col">What it holds</th></tr></thead><tbody><tr><td><code>manifest.json</code></td><td>who made it, when, the request id, the control plane's version, every file with its size, and the parts left out with the reason (for example a part the caller may not read)</td></tr><tr><td><code>versions.json</code></td><td>the control plane, its API, the pinned Incus release, Incus as observed now, certificate expiry</td></tr><tr><td><code>settings.json</code></td><td>the effective settings (below), sign-in settings saved in the Console, the workers seen in the last day</td></tr><tr><td><code>health.json</code>, <code>preflight.json</code></td><td>the Health page's report and the preflight checks</td></tr><tr><td><code>jobs-failed.json</code></td><td>jobs that failed in the last 24 hours (at most 50) with every attempt, error, request id and Incus operation; never a job's request body, which can hold instance configuration</td></tr><tr><td><code>metrics.txt</code></td><td>the control plane's metrics, refreshed</td></tr><tr><td><code>logs/README.txt</code></td><td>where the log lines are: the control plane does <strong>not</strong> keep log lines in memory, so the bundle holds none; collect the last hour of errors from your service manager (<code>journalctl -u apelora-control-plane --since &quot;-1h&quot; -p err</code>)</td></tr></tbody></table></div>
+<p><strong>Never in a bundle:</strong> tokens, passwords, certificates or keys. Every part is built from listed
+fields, and every byte also passes through a scrubber that replaces Apelora tokens (<code>apl_</code>,
+<code>aps_</code>, <code>apu_</code>, <code>apt_</code>, <code>apw_</code>), PEM blocks, bearer values, JSON web tokens and passwords in URLs
+(<code>settings::scrub</code>; <code>account_tests::the_support_bundle_holds_the_parts_and_never_a_planted_secret</code>
+plants secrets in every source). Still look through log lines you add yourself.</p>
+<p><strong>Effective settings</strong> (Administration → Settings, <code>GET /api/v1/settings</code>, needs <code>cluster.view</code>):
+every setting the control plane and the worker read, with the value this control plane started
+with, whether it is the default, and where it came from (environment, default, not set, saved in
+the Console). Values are shown only by allow-list: secrets, <code>DATABASE_URL</code>, and the paths of key
+and certificate files say only <em>Set, not shown</em>; so does any value that looks like a credential.
+An <code>APELORA_*</code> variable this version does not read is listed as <em>Not a setting this version
+reads</em>: a misspelt name is a common reason for &quot;the setting does nothing&quot;. The worker does not
+report its settings; its own environment is what it runs with.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/runbooks/troubleshooting.md">docs/runbooks/troubleshooting.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/runbooks/troubleshooting.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/runbooks/alerts/"><span>Previous</span>Alerts</a><a class="next" href="/docs/runbooks/certificates/"><span>Next</span>Rotate Apelora's Incus certificates</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#choosing-what-is-logged">Choosing what is logged</a></li><li class="l2"><a href="#the-request-id">The request id</a></li><li class="l3"><a href="#from-a-request-id-to-the-job-and-the-incus-operation">From a request id to the job and the Incus operation</a></li><li class="l2"><a href="#logged-or-audited">Logged or audited</a></li><li class="l2"><a href="#common-problems-and-the-lines-to-look-for">Common problems and the lines to look for</a></li><li class="l3"><a href="#cannot-sign-in">Cannot sign in</a></li><li class="l3"><a href="#the-identity-provider-is-not-reachable">The identity provider is not reachable</a></li><li class="l3"><a href="#incus-is-unreachable-or-refuses-apelora">Incus is unreachable or refuses Apelora</a></li><li class="l3"><a href="#429-ratelimited-too-many-requests">429 ratelimited (too many requests)</a></li><li class="l3"><a href="#the-control-plane-refuses-to-start-listening-and-tls">The control plane refuses to start (listening and TLS)</a></li><li class="l3"><a href="#health-says-incus-is-not-connected-but-not-why">/health says Incus is not connected, but not why</a></li><li class="l3"><a href="#a-job-fails-or-keeps-being-retried">A job fails or keeps being retried</a></li><li class="l3"><a href="#retrying-and-cancelling-a-job">Retrying and cancelling a job</a></li><li class="l3"><a href="#reading-an-instances-logs">Reading an instance's logs</a></li><li class="l3"><a href="#an-operation-start-stop-restart-reports-a-failed-phase">An operation (start, stop, restart) reports a failed phase</a></li><li class="l3"><a href="#queued-jobs-start-only-after-a-delay">Queued jobs start only after a delay</a></li><li class="l3"><a href="#the-supervisor-does-not-restore-something">The supervisor does not restore something</a></li><li class="l3"><a href="#the-database">The database</a></li><li class="l3"><a href="#the-audit-trail-is-not-being-written">The audit trail is not being written</a></li><li class="l3"><a href="#truncate-auditevents-is-refused">TRUNCATE auditevents is refused</a></li><li class="l3"><a href="#the-outbox-backlog-grows">The outbox backlog grows</a></li><li class="l2"><a href="#support-bundle-and-effective-settings">Support bundle and effective settings</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

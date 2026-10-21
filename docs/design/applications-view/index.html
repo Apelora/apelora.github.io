@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Applications view: create an application, open its… · Apelora</title>
+  <meta name="description" content="The Applications list: creating an application, opening its canvas, and its lifecycle.">
+  <link rel="canonical" href="https://apelora.github.io/docs/design/applications-view/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Applications view: create an application, open its… · Apelora">
+  <meta property="og:description" content="The Applications list: creating an application, opening its canvas, and its lifecycle.">
+  <meta property="og:url" content="https://apelora.github.io/docs/design/applications-view/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group" open><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/" aria-current="page">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/design/">Design notes</a></nav>
+        <h1>Applications view: create an application, open its canvas</h1>
+        <div class="prose">
+<p>Status: <strong>built</strong> (control plane API and Studio; MOCK VERIFIED and stubbed-API tests, not yet REAL INCUS TESTED for Start/Stop/Restart). Routes are <code>/studio/applications[/:name[/:tab]]</code> and the Assembly Library stays at <code>/</code> · Date: 2026-10-20 · Extends <a href="/docs/design/application-deployment/">application deployment</a> · Roles: <a href="/docs/concepts/access-and-roles/">access and roles</a> · Storage: <a href="/docs/concepts/storage/">storage</a></p>
+<h2 id="1-problem">1. Problem</h2>
+<p>Today the Studio opens straight onto one diagram kept in the browser (<code>localStorage</code>). The control plane learns an application exists only when it is first deployed (<code>ApplicationInfo</code> has just a name, a creation time and a latest revision number). There is no place to see all applications, create one on purpose, choose where it lives, return to it later from another machine, or see what is running at a glance.</p>
+<p><strong>Goal.</strong> A designer lands on an <strong>Applications</strong> view, creates an application (or opens an existing one), and the canvas opens on that application. The canvas, deploy dialog and live overlay already built keep working unchanged on the opened application.</p>
+<p><strong>Non-goals (now).</strong> Multi-user live co-editing; cross-application dependencies; marketplace sharing; changing an application's name after creation (instance names derive from it).</p>
+<h2 id="2-navigation">2. Navigation</h2>
+<figure class="diagram"><a href="/assets/docs/diagrams/design-applications-view-0.svg"><img width="1564" height="300" src="/assets/docs/diagrams/design-applications-view-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart LR
+  SI[&quot;Sign in&lt;br/&gt;(API token now, OIDC later)&quot;] --&gt; LIST[&quot;Applications&lt;br/&gt;list and search&quot;]
+  LIST -- &quot;New application&quot; --&gt; NEW[&quot;Create dialog&lt;br/&gt;name, project, start from&quot;]
+  NEW -- &quot;Create&quot; --&gt; CANVAS
+  LIST -- &quot;click a row&quot; --&gt; CANVAS[&quot;Canvas&lt;br/&gt;/applications/:name&quot;]
+  CANVAS -- &quot;breadcrumb: Applications&quot; --&gt; LIST
+  CANVAS -- &quot;Deploy…&quot; --&gt; DEP[&quot;Deploy dialog&lt;br/&gt;plan, approve, jobs&quot;]
+  CANVAS -- &quot;History&quot; --&gt; REV[&quot;Revisions and snapshots&quot;]
+  CANVAS -- &quot;Properties of the application&quot; --&gt; SET[&quot;Settings&lt;br/&gt;description, target platform, danger zone&quot;]
+  LIST -- &quot;row menu&quot; --&gt; ACT[&quot;Duplicate · Export · Archive&quot;]</code></pre></details></figure>
+<p>The canvas is not a separate product: it is the existing Studio workspace bound to one application. Routes use the path <code>/applications</code> (list) and <code>/applications/:name</code> (canvas) so a link opens the right application.</p>
+<h2 id="3-the-applications-view">3. The Applications view</h2>
+<p>Layout follows the Studio design contract (white shell, light-gray framed content, daisyUI tokens, one primary button per toolbar, no gradients).</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Area</th><th scope="col">Content</th></tr></thead><tbody><tr><td>Toolbar</td><td>Search, filters (project, status), <strong>New application</strong> (the one primary button)</td></tr><tr><td>Table or cards</td><td>Name · project · status · modules · replicas running · last revision · last edited by and when</td></tr><tr><td>Row menu</td><td>Open · Duplicate · Export JSON · Archive (needs permission)</td></tr><tr><td>Empty state</td><td>&quot;No applications yet&quot; with <strong>New application</strong> and <strong>Start from a template</strong></td></tr><tr><td>Footer line</td><td>Counts per status; shows &quot;Mock data&quot; until the API is a real backend</td></tr></tbody></table></div>
+<p>Status, derived and never typed by a person:</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Meaning</th><th scope="col">Source</th></tr></thead><tbody><tr><td><strong>Draft</strong></td><td>Designed, never deployed</td><td>No revision deployed</td></tr><tr><td><strong>Running</strong></td><td>All deployable modules ready</td><td><code>GET /applications/{name}/status</code></td></tr><tr><td><strong>Degraded</strong></td><td>Some replicas or services unhealthy</td><td>Same, with health evidence</td></tr><tr><td><strong>Stopped</strong></td><td>Instances exist, none running</td><td>Same</td></tr><tr><td><strong>Changed</strong></td><td>The draft differs from the deployed revision</td><td>Compare draft with latest revision</td></tr><tr><td><strong>Archived</strong></td><td>Hidden from the list; data retained</td><td>Application record</td></tr></tbody></table></div>
+<figure class="diagram"><a href="/assets/docs/diagrams/design-applications-view-1.svg"><img width="689" height="454" src="/assets/docs/diagrams/design-applications-view-1.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>stateDiagram-v2
+  [*] --&gt; Draft : create
+  Draft --&gt; Running : deploy
+  Running --&gt; Degraded : replica or service unhealthy
+  Degraded --&gt; Running : recovered
+  Running --&gt; Stopped : stop
+  Stopped --&gt; Running : start
+  Running --&gt; Changed : edit draft
+  Changed --&gt; Running : deploy
+  Draft --&gt; Archived : archive
+  Stopped --&gt; Archived : archive (instances removed first)
+  Archived --&gt; Draft : restore</code></pre></details></figure>
+<h2 id="4-creating-an-application">4. Creating an application</h2>
+<p>The dialog asks for the least that is needed.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Rule</th></tr></thead><tbody><tr><td><strong>Name</strong></td><td>Lowercase letters, digits and <code>-</code>, starts with a letter; at most 40 characters, because instances are named <code>&lt;application&gt;-&lt;module id&gt;</code> (63-character limit). Unique within the platform. <strong>Cannot be changed later</strong>; &quot;Duplicate&quot; is the way to a new name.</td></tr><tr><td><strong>Project</strong></td><td>Chosen from the projects the signed-in identity may design in (<code>whoami</code>). Defaults to the only one. Decides where it can be deployed.</td></tr><tr><td><strong>Start from</strong></td><td><em>Blank canvas</em> · <em>Template</em> (the nine starters) · <em>Import file</em> (assembly JSON) · <em>Docker Compose</em> · <em>Duplicate of…</em></td></tr><tr><td><strong>Description</strong></td><td>Optional, 200 characters.</td></tr><tr><td><strong>Design target</strong></td><td>The runtime provider (Incus by default; see <a href="/docs/concepts/hypervisor-providers/">providers</a>).</td></tr></tbody></table></div>
+<p>On <strong>Create</strong> the control plane records the application and its first draft, then the Studio navigates to the canvas. Errors (name taken, no permission, invalid file) are shown in the dialog; nothing is created on failure.</p>
+<figure class="diagram"><a href="/assets/docs/diagrams/design-applications-view-2.svg"><img width="1792" height="827" src="/assets/docs/diagrams/design-applications-view-2.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>sequenceDiagram
+  autonumber
+  actor U as Designer
+  participant S as Studio
+  participant API as Control plane
+  participant DB as PostgreSQL
+
+  U-&gt;&gt;S: New application, enter name, project, start from template
+  S-&gt;&gt;S: Validate name locally (shape, length)
+  S-&gt;&gt;API: POST /api/v1/applications (name, project, document, Idempotency-Key)
+  API-&gt;&gt;API: Authenticate, require design-applications in project
+  API-&gt;&gt;API: Validate name and document (same schema as import)
+  API-&gt;&gt;DB: Insert application and draft v1, audit event (one transaction)
+  API--&gt;&gt;S: 201 application with draft version
+  S-&gt;&gt;S: Navigate to /applications/shop
+  S-&gt;&gt;API: GET /api/v1/applications/shop
+  API--&gt;&gt;S: Draft document, latest revision, status summary
+  S-&gt;&gt;S: Open canvas on the draft</code></pre></details></figure>
+<h2 id="5-drafts-revisions-and-the-local-copy">5. Drafts, revisions and the local copy</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Thing</th><th scope="col">What it is</th><th scope="col">Mutable</th></tr></thead><tbody><tr><td><strong>Draft</strong></td><td>The working document of an application, stored on the server with a version number</td><td>Yes</td></tr><tr><td><strong>Revision</strong></td><td>Immutable copy saved when a deployment is requested (exists today)</td><td>No</td></tr><tr><td><strong>Local copy</strong></td><td>The browser's cache (<code>localStorage</code>), used for instant load and offline editing</td><td>Yes, never authoritative</td></tr><tr><td><strong>Snapshot</strong></td><td>Named restore point (exists locally in the Studio; later stored with the application)</td><td>No</td></tr></tbody></table></div>
+<p>Autosave sends the draft after a short pause with <code>If-Match: &lt;version&gt;</code>. If another session saved first the server answers <strong>409</strong>; the Studio shows a <em>compare and choose</em> dialog (reusing the snapshot comparison): keep mine, take theirs, or save mine as a duplicate. Import is untrusted input exactly as today: validate, never replace the current draft on failure.</p>
+<h2 id="6-api-additions-proposed">6. API additions (PROPOSED)</h2>
+<p>All under <code>/api/v1</code>, documented in the OpenAPI document, regenerated into <code>@apelora/api-client</code>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Method and path</th><th scope="col">Permission (scope: project)</th><th scope="col">Purpose</th></tr></thead><tbody><tr><td><code>POST /applications</code></td><td><code>design-applications</code></td><td>Create application and first draft; <code>Idempotency-Key</code></td></tr><tr><td><code>GET /applications</code></td><td>read</td><td>List with summary: project, status, counts, last editor (extends today's <code>ApplicationInfo</code>)</td></tr><tr><td><code>GET /applications/{name}</code></td><td>read</td><td>Application, draft (with version), latest revision, status summary</td></tr><tr><td><code>PUT /applications/{name}/draft</code></td><td><code>design-applications</code></td><td>Save draft; <code>If-Match</code> required; 409 on conflict</td></tr><tr><td><code>GET /applications/{name}/revisions</code></td><td>read</td><td>Immutable revisions with who and when</td></tr><tr><td><code>POST /applications/{name}/duplicate</code></td><td><code>design-applications</code></td><td>New name, same draft</td></tr><tr><td><code>POST /applications/{name}/archive</code></td><td><code>deploy</code></td><td>Only when no instances remain, or after removal is queued</td></tr><tr><td><code>POST /applications/{name}/restore</code></td><td><code>deploy</code></td><td>Back to Draft</td></tr></tbody></table></div>
+<p>Existing <code>plan</code>, <code>deployments</code> and <code>status</code> routes stay; deploying an application that was never created is refused with a clear message pointing to <em>New application</em>. Every write is audited (<code>application.create</code>, <code>application.draft.save</code>, <code>application.archive</code>, …) without document contents.</p>
+<h2 id="7-roles-in-this-view">7. Roles in this view</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Action</th><th scope="col" style="text-align:center">admin</th><th scope="col" style="text-align:center">operator</th><th scope="col" style="text-align:center">designer</th><th scope="col" style="text-align:center">auditor</th><th scope="col" style="text-align:center">viewer (proposed)</th></tr></thead><tbody><tr><td>See the list and status</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td></tr><tr><td>Open the canvas read-only</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td></tr><tr><td>Create, edit, duplicate</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr><tr><td>Deploy, archive, restore</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">—</td><td style="text-align:center">—</td><td style="text-align:center">—</td></tr><tr><td>Change infrastructure from here</td><td style="text-align:center">never</td><td style="text-align:center">never</td><td style="text-align:center">never</td><td style="text-align:center">never</td><td style="text-align:center">never</td></tr></tbody></table></div>
+<p>When the signed-in identity cannot edit, the canvas opens read-only: the toolbar edit controls are disabled and a banner says why. The server enforces it either way.</p>
+<h2 id="8-studio-changes">8. Studio changes</h2>
+<ul><li>Add path routing (a small router; <code>/applications</code>, <code>/applications/:name</code>). The header breadcrumb becomes <em>Applications / name</em>.</li><li>New feature folder <code>features/applications</code> (list state, create dialog, API calls); the existing editor store is created per opened application and given the loaded draft.</li><li>Persistence layer: <code>loadAssembly</code>/<code>saveAssembly</code> become &quot;draft sync&quot; with the local copy as a cache and a visible save state (<em>Saved</em>, <em>Saving…</em>, <em>Offline</em>, <em>Conflict</em>).</li><li>Fabric Console's remaining Phase 05 item, an applications view with health, uses the same API with an operator emphasis (fleet-wide status, jobs, replicas) rather than design.</li></ul>
+<h2 id="9-failure-handling">9. Failure handling</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Failure</th><th scope="col">Behaviour</th></tr></thead><tbody><tr><td>Name taken</td><td>Dialog error on the name field; nothing created</td></tr><tr><td>Create succeeds, navigation fails</td><td>The application appears in the list; opening it works</td></tr><tr><td>Save conflict</td><td>409 → compare dialog; never silent overwrite</td></tr><tr><td>API unreachable while editing</td><td>Keep editing locally, state <em>Offline</em>; sync and conflict-check on return</td></tr><tr><td>Draft invalid on the server</td><td>Rejected with the schema errors; the local copy is kept</td></tr><tr><td>Archive with instances still present</td><td>Refused with the list of instances; offer <em>Remove instances first</em> (typed-name confirmation)</td></tr><tr><td>Opening an application the identity cannot see</td><td>404 (not 403), so names do not leak</td></tr></tbody></table></div>
+<h2 id="10-tests">10. Tests</h2>
+<ul><li>Server: create/list/open/save/conflict/duplicate/archive with every role; a designer in project A cannot read or write project B; idempotent create; invalid names; revision immutability.</li><li>Studio (Playwright, stubbed API first): empty state; create from blank and from template; name validation; open from the list and by URL; breadcrumb back; read-only canvas for an auditor; conflict dialog; offline banner.</li><li>Real browser against the test cluster: create, design, deploy, return to the list and see <em>Running</em>.</li></ul>
+<h2 id="11-build-order">11. Build order</h2>
+<ol><li>API: applications table gets project, description, archived flag; <code>drafts</code> table with version; <code>POST /applications</code>, <code>GET /applications/{name}</code>, <code>PUT …/draft</code>; tests.</li><li>Studio: router, Applications list, create dialog (blank first), open canvas on a draft, autosave with <code>If-Match</code>.</li><li>Templates, import and Compose in the create dialog; duplicate; export.</li><li>Status column from the status API; filters; read-only canvas for roles without edit.</li><li>Archive and restore; conflict dialog; revisions list.</li><li>Console applications view (operator emphasis).</li></ol>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/design/applications-view.md">docs/design/applications-view.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/design/applications-view.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/design/application-deployment/"><span>Previous</span>Deploying an application from the Studio</a><a class="next" href="/docs/design/application-readiness/"><span>Next</span>Application-level readiness</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#1-problem">1. Problem</a></li><li class="l2"><a href="#2-navigation">2. Navigation</a></li><li class="l2"><a href="#3-the-applications-view">3. The Applications view</a></li><li class="l2"><a href="#4-creating-an-application">4. Creating an application</a></li><li class="l2"><a href="#5-drafts-revisions-and-the-local-copy">5. Drafts, revisions and the local copy</a></li><li class="l2"><a href="#6-api-additions-proposed">6. API additions (PROPOSED)</a></li><li class="l2"><a href="#7-roles-in-this-view">7. Roles in this view</a></li><li class="l2"><a href="#8-studio-changes">8. Studio changes</a></li><li class="l2"><a href="#9-failure-handling">9. Failure handling</a></li><li class="l2"><a href="#10-tests">10. Tests</a></li><li class="l2"><a href="#11-build-order">11. Build order</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

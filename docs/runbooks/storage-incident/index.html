@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A storage problem: a pool filling up, a pool that is… · Apelora</title>
+  <meta name="description" content="A pool filling up, a pool that is down, or backups that stopped.">
+  <link rel="canonical" href="https://apelora.github.io/docs/runbooks/storage-incident/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="A storage problem: a pool filling up, a pool that is… · Apelora">
+  <meta property="og:description" content="A pool filling up, a pool that is down, or backups that stopped.">
+  <meta property="og:url" content="https://apelora.github.io/docs/runbooks/storage-incident/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group" open><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/" aria-current="page">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/runbooks/">Runbooks</a></nav>
+        <h1>A storage problem: a pool filling up, a pool that is down, or backups that stop</h1>
+        <div class="prose">
+<p class="ev"><strong>Evidence:</strong> written from the features Apelora has and from the Incus documentation. The
+individual operations it points to (grow, snapshot, backup, restore, delete) are REAL INCUS TESTED
+and say so in <a href="/docs/runbooks/volumes/">volumes.md</a>. The incident procedure itself has <strong>not been drilled</strong>:
+every section below is NOT YET VERIFIED as a whole. Follow it with care and record the result here
+when it has been done.</p>
+<p>Apelora does not manage Incus's storage drivers. It asks Incus to create, grow, snapshot and
+delete volumes in the pools it is told to use (<code>APELORA_VOLUME_POOL</code>, <code>APELORA_SHARED_POOL</code>, the
+backup pool) and shows what Incus reports. When a pool is unhealthy the repair happens in Incus or
+on the server; Apelora's part is to show it, refuse to make it worse, and recover the workloads.</p>
+<h2 id="find-out-what-is-wrong">Find out what is wrong</h2>
+<ol><li><strong>Fabric Console → Health → Servers.</strong> Each server shows pool usage and warnings. A pool near
+its limit is a warning; an unusable pool shows as such with Incus's reason.</li><li><strong>Fabric Console → Storage.</strong> Pools with use, the volumes each application holds (<em>In use</em>,
+<em>Kept, not in use</em>, <em>Missing</em>), schedules and backups, and custom volumes no application uses.</li><li><strong>Fabric Console → Alerts</strong> for <em>failed backups</em>, <em>old backups</em> and <em>an old restore drill</em>.</li><li><strong>Fabric Console → Operations</strong> for failed jobs that mention a volume, a pool or a quota. The
+job page names the Incus operation and its error (<a href="/docs/runbooks/troubleshooting/">troubleshooting.md</a>).</li><li><strong>Preflight</strong> fails while the pool for volumes is missing or not ready, and Apelora then refuses
+deployments that need it instead of guessing.</li></ol>
+<h2 id="a-pool-is-filling-up">A pool is filling up</h2>
+<p>Do the cheap, reversible things first, and never delete a volume you have not backed up.</p>
+<ol><li>Look at <em>Storage → Volumes no application uses</em> and the <em>Kept, not in use</em> volumes: these are
+volumes left behind by removed modules. Back one up if unsure, then delete it with its name
+typed (<a href="/docs/runbooks/volumes/">volumes.md</a>, <em>Delete a kept volume</em>).</li><li>Check snapshots. Scheduled snapshots are pruned to what the schedule keeps; manual ones never
+are. Delete manual snapshots that are no longer needed (Snapshots dialog).</li><li>Move a workload to a server with room: <em>Instance → Move</em> (dry run first). A module with a
+<code>data-local</code> volume stops while its volumes are copied; check the dry run says so
+(<a href="/docs/runbooks/member-maintenance/">member-maintenance.md</a>).</li><li>Add capacity in Incus (a bigger disk, another pool member). Apelora does not do this.</li><li>Do not grow volumes to &quot;fix&quot; a full pool: growing consumes more of it.</li></ol>
+<p>A full pool shows up first as failed jobs (a volume or instance that cannot be created) and
+applications that stay <em>Degraded</em> because a replica cannot be recreated. Once there is room the
+supervisor retries on its own; check the job list for anything left failed and retry it from the
+job page.</p>
+<h2 id="a-pool-or-its-disks-are-unavailable-on-one-server">A pool or its disks are unavailable on one server</h2>
+<ol><li>Treat it as a failing server for the workloads on it: <a href="/docs/runbooks/member-failure/">member-failure.md</a>.
+Stateless replicas are substituted on other servers on their own. Single-instance and
+stateful modules are recovered automatically <strong>only</strong> when all their disks are on the shared
+pool and the failed server has been fenced (<em>Modules on shared storage</em> in that runbook);
+otherwise they wait for you.</li><li>Do not delete the volumes of a module whose server is down. A volume shown <em>Missing</em> may only
+mean the server cannot be read right now.</li><li>Repair the pool in Incus (<code>incus storage show &lt;pool&gt; --target &lt;member&gt;</code>, the driver's own tools).
+When the server is back, <em>Storage</em> should show the volumes again; anything still <em>Missing</em>
+afterwards is a real loss: restore it from a backup.</li></ol>
+<h2 id="the-shared-pool-lvmcluster-with-sanlock-misbehaves">The shared pool (lvmcluster with sanlock) misbehaves</h2>
+<p>This is the pool that lets a failed server's modules restart elsewhere. Apelora restarts a module
+only after the server is fenced: Incus reports it offline <strong>and</strong> its storage lease reads DEAD
+through the read-only fence probe, or another person confirms the server is powered off. If the
+probe cannot be read, nothing restarts, by design.</p>
+<ol><li>Health → Servers shows <em>Failed servers</em> and says what restarts where or why it waits.</li><li>If it waits because the lease is not DEAD, the server may still be writing: do not confirm
+&quot;powered off&quot; until it really is (power it off at the BMC or the wall, then confirm).</li><li>Check the storage network and the SAN or iSCSI target from the other servers. Losing the
+storage network on every server is a cluster-wide storage outage: stop deploying, leave
+running workloads alone, and restore the network before anything else.</li></ol>
+<h2 id="backups-stop-or-are-old">Backups stop or are old</h2>
+<ol><li><em>Alerts</em> names which volume and whether the last attempt failed or is simply old.</li><li>A failed backup job (Operations) shows Incus's error. Common causes: the backup pool is full,
+the backup pool's server is down (backups are copied to <strong>another</strong> member), or the volume was
+busy beyond the copy-wait.</li><li>Fix the cause, then <em>Storage → Back up now</em> for that volume. Do not rely on snapshots for
+this: they live in the same pool as the data.</li><li>Apelora's own database is separate: <a href="/docs/runbooks/apelora-database-backup/">apelora-database-backup.md</a>.</li></ol>
+<h2 id="restore-a-volume">Restore a volume</h2>
+<ol><li>Read <a href="/docs/runbooks/volumes/">volumes.md</a> <em>Restore a volume from a backup</em> first. It is a worker job with a
+dry run, the volume's name typed, a safety backup first, and it is refused while an instance
+using the volume runs.</li><li>Restore into the same module when the data is only damaged; restore from a backup copy on the
+other member when the original pool is gone.</li><li>Start the module and check the application's own data, not only that it is running.</li></ol>
+<h2 id="after-the-incident">After the incident</h2>
+<ul><li>Note what filled or failed and why, and add an alert threshold or schedule that would have
+caught it earlier (Alerts → rules have editable thresholds).</li><li>Run a restore drill for the affected volume class; the <em>old restore drill</em> alert exists so this
+does not go stale.</li><li>If the procedure above was wrong or missing a step, correct it here and mark what was verified.</li></ul>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/runbooks/storage-incident.md">docs/runbooks/storage-incident.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/runbooks/storage-incident.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/runbooks/volumes/"><span>Previous</span>An application's volumes: kept, missing or to be deleted</a><a class="next" href="/docs/runbooks/network-incident/"><span>Next</span>Network incidents (OVN)</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#find-out-what-is-wrong">Find out what is wrong</a></li><li class="l2"><a href="#a-pool-is-filling-up">A pool is filling up</a></li><li class="l2"><a href="#a-pool-or-its-disks-are-unavailable-on-one-server">A pool or its disks are unavailable on one server</a></li><li class="l2"><a href="#the-shared-pool-lvmcluster-with-sanlock-misbehaves">The shared pool (lvmcluster with sanlock) misbehaves</a></li><li class="l2"><a href="#backups-stop-or-are-old">Backups stop or are old</a></li><li class="l2"><a href="#restore-a-volume">Restore a volume</a></li><li class="l2"><a href="#after-the-incident">After the incident</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

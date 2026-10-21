@@ -1,0 +1,27 @@
+        <figure class="shot recovery" data-recovery>
+          <div class="ar-stage">
+            <div class="ar-scene" role="img" aria-label="Two application modules, A and B, run on Server 1. Server 1 fails and is confirmed stopped. Then module A restarts on Server 2 and module B on Server 3, and both are healthy again. An illustration, not a measured recovery time.">
+              <div class="ar-ground"></div>
+              <svg class="ar-links" aria-hidden="true" focusable="false"><path class="ar-path ar-path-a"></path><path class="ar-path ar-path-b"></path><path class="ar-flow ar-flow-a"></path><path class="ar-flow ar-flow-b"></path></svg>
+              <div class="ar-fence" aria-hidden="true"><span class="ar-fence-mark">✓</span>Fencing confirmed</div>
+              <div class="ar-host ar-h1" aria-hidden="true"><div class="ar-tower"><div class="ar-badge">✓</div><div class="ar-vent"><span class="ar-slits"></span><span class="ar-led"></span></div><div class="ar-slot ar-source-a"></div><div class="ar-slot ar-source-b"></div><div class="ar-grille"></div></div><div class="ar-server-name">Server 1</div><div class="ar-server-state">2 modules running</div></div>
+              <div class="ar-host ar-h2" aria-hidden="true"><div class="ar-tower"><div class="ar-halo"></div><div class="ar-badge">✓</div><div class="ar-vent"><span class="ar-slits"></span><span class="ar-led"></span></div><div class="ar-vent"><span class="ar-slits"></span><span class="ar-led"></span></div><div class="ar-slot ar-target-a"></div><div class="ar-grille"></div></div><div class="ar-server-name">Server 2</div><div class="ar-server-state">Ready</div></div>
+              <div class="ar-host ar-h3" aria-hidden="true"><div class="ar-tower"><div class="ar-halo"></div><div class="ar-badge">✓</div><div class="ar-vent"><span class="ar-slits"></span><span class="ar-led"></span></div><div class="ar-vent"><span class="ar-slits"></span><span class="ar-led"></span></div><div class="ar-slot ar-target-b"></div><div class="ar-grille"></div></div><div class="ar-server-name">Server 3</div><div class="ar-server-state">Ready</div></div>
+              <div class="ar-module ar-module-a" aria-hidden="true"><span class="ar-node-port ar-port-l"></span><span class="ar-module-id">A</span><span class="ar-module-label">App</span><span class="ar-node-port ar-port-r"></span></div>
+              <div class="ar-module ar-module-b" aria-hidden="true"><span class="ar-node-port ar-port-l"></span><span class="ar-module-id">B</span><span class="ar-module-label">App</span><span class="ar-node-port ar-port-r"></span></div>
+            </div>
+            <div class="ar-footer">
+              <div class="ar-state-row">
+                <div class="ar-status" aria-live="polite"><span class="ar-dot"></span><span class="ar-status-text">Both modules are running.</span></div>
+                <button class="ar-control js-only" type="button">Pause</button>
+              </div>
+              <ol class="ar-steps" aria-label="The steps of a recovery">
+                <li class="ar-step"><span class="ar-step-dot"></span>Detect</li><li class="ar-step-link" aria-hidden="true"></li>
+                <li class="ar-step"><span class="ar-step-dot"></span>Fence</li><li class="ar-step-link" aria-hidden="true"></li>
+                <li class="ar-step"><span class="ar-step-dot"></span>Restart</li><li class="ar-step-link" aria-hidden="true"></li>
+                <li class="ar-step"><span class="ar-step-dot"></span>Healthy</li>
+              </ol>
+            </div>
+          </div>
+          <figcaption>Illustration, not a screenshot and not a measurement: the animation is faster than a real recovery. In the lab, a container with data ran again 144 to 155 seconds after its server was force-stopped. Virtual machines are not drilled yet.</figcaption>
+        </figure>

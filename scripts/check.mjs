@@ -11,7 +11,7 @@ const problems = [];
 const bad = (page, msg) => problems.push(`${page}: ${msg}`);
 
 const pages = [];
-const walk = (d) => { for (const f of readdirSync(d)) { if (["node_modules", ".git", "src", "scripts", "assets"].includes(f)) continue; const p = join(d, f); statSync(p).isDirectory() ? walk(p) : f.endsWith(".html") && pages.push(p); } };
+const walk = (d) => { for (const f of readdirSync(d)) { if (["node_modules", ".git", "src", "scripts", "assets", "content"].includes(f)) continue; const p = join(d, f); statSync(p).isDirectory() ? walk(p) : f.endsWith(".html") && pages.push(p); } };
 walk(root);
 
 const ids = new Map();

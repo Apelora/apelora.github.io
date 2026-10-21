@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A security incident: a stolen credential, a misused… · Apelora</title>
+  <meta name="description" content="A stolen credential, a misused account or a session you do not trust: contain, investigate, recover.">
+  <link rel="canonical" href="https://apelora.github.io/docs/runbooks/security-incident/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="A security incident: a stolen credential, a misused… · Apelora">
+  <meta property="og:description" content="A stolen credential, a misused account or a session you do not trust: contain, investigate, recover.">
+  <meta property="og:url" content="https://apelora.github.io/docs/runbooks/security-incident/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group" open><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/" aria-current="page">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/runbooks/">Runbooks</a></nav>
+        <h1>A security incident: a stolen credential, a misused account or a session you did not expect</h1>
+        <div class="prose">
+<p class="ev"><strong>Evidence:</strong> written from the controls Apelora has. Each control is tested (API and browser
+tests, MOCK VERIFIED; the certificate rotation is REAL INCUS TESTED). The procedure as a whole has
+<strong>not been drilled</strong> and no identity provider, directory or MAAS was involved: NOT YET VERIFIED.
+Record the result here after a drill.</p>
+<p>Order of work: <strong>contain, keep the evidence, find out what was done, recover, learn.</strong> Contain
+first and quickly: everything below that contains is reversible, and everything is audited.</p>
+<h2 id="0-know-what-apelora-can-and-cannot-tell-you">0. Know what Apelora can and cannot tell you</h2>
+<ul><li>Every change and every refusal is in the audit trail (append-only, written in the same
+transaction as the change). Sessions record who, which instance, when, from which address, why
+it ended and how many bytes moved.</li><li>A terminal session's <strong>content is not recorded</strong>. You can learn that someone had a shell on an
+instance and for how long, not what they typed. Look at what the instance itself logged
+(<em>Instance → logs</em>, or on the server) and at what changed afterwards.</li><li>Identity-provider tokens cannot be revoked by Apelora before they expire (at most an hour).
+Disable the <strong>person</strong> in Apelora to cut them off at once, and disable the account at the provider.</li><li>Terminal tickets and running sessions live in the control plane's memory: restarting it ends
+them all.</li><li>Legacy <code>apl_</code> tokens are platform-wide credentials and are exempt from approvals. If any exist,
+list them (<em>Administration</em>) and revoke what is not needed; set <code>APELORA_LEGACY_TOKENS=disabled</code>
+once everyone uses sign-in.</li></ul>
+<h2 id="1-contain">1. Contain</h2>
+<p>Pick what fits; do several.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">What is suspect</th><th scope="col">Do</th><th scope="col">Takes effect</th></tr></thead><tbody><tr><td>A person's account</td><td><em>Identity &amp; Access → Users → Disable</em>. Their Apelora sessions are revoked with it.</td><td>Next request; a running terminal ends within 30 s (<code>access-revoked</code>)</td></tr><tr><td>A person's open terminal</td><td><em>Identity &amp; Access → Sessions → End</em>, or <code>DELETE /api/v1/sessions/{id}</code></td><td>At once</td></tr><tr><td>Someone's role</td><td>Revoke the assignment (<em>Identity &amp; Access → Project memberships</em>), or remove them from the group that grants it</td><td>Next request; a running terminal ends within 30 s</td></tr><tr><td>An API token</td><td><em>Administration → Tokens → Revoke</em>, or <code>DELETE /api/v1/tokens/{id}</code></td><td>Next request</td></tr><tr><td>A person's personal token (<code>apt_…</code>)</td><td>Their <em>Your tokens</em> page, or an administrator revoking it; it is evaluated live against their roles, so disabling the person also stops it</td><td>Next request</td></tr><tr><td>A service identity (automation)</td><td><em>Service identities → Disable</em>, then rotate its token</td><td>Next request</td></tr><tr><td>An emergency-access grant</td><td>Revoke the assignment; grants end by themselves within 4 hours</td><td>Next request</td></tr><tr><td>A sign-in method</td><td><em>Identity &amp; Access → Sign-in</em>: turn off the identity provider, the directory, or local accounts. The server refuses a change that would lock everyone out.</td><td>At once</td></tr><tr><td>All terminal access</td><td>Set <code>APELORA_CONSOLE_ACCESS=disabled</code> and restart the control plane. This also ends every running session.</td><td>On restart</td></tr><tr><td>A person's pending approvals</td><td><em>Approvals → Cancel/Reject</em></td><td>At once</td></tr><tr><td>An Incus certificate (deploy or admin)</td><td>Rotate it: <a href="/docs/runbooks/certificates/">certificates.md</a></td><td>After rotation</td></tr><tr><td>A server</td><td><a href="/docs/runbooks/member-removal/">member-removal.md</a> or power it off and treat it as failed: <a href="/docs/runbooks/member-failure/">member-failure.md</a></td><td>—</td></tr></tbody></table></div>
+<p>Keep at least one trusted super administrator enabled and able to sign in; Apelora refuses to
+disable the last enabled one.</p>
+<h2 id="2-keep-the-evidence">2. Keep the evidence</h2>
+<ol><li><strong>Export the audit trail</strong> for the period of concern: <em>Audit → Export</em> (CSV or JSON lines), or
+<code>GET /api/v1/audit/export?…</code>. The export is itself audited (<code>audit.exported</code>). Store it outside
+the control plane.</li><li><strong>Support bundle:</strong> <em>Administration → Support bundle</em> (secrets are scrubbed; it is audited).</li><li>Note request ids from anything suspicious: they join the audit row, the log line, the job and
+the Incus operation (<a href="/docs/runbooks/troubleshooting/">troubleshooting.md</a>).</li><li>Do not delete anything to &quot;clean up&quot;. Apelora blocks <code>TRUNCATE</code> on the audit table; the same
+care applies to logs on the servers.</li></ol>
+<h2 id="3-find-out-what-was-done">3. Find out what was done</h2>
+<p>Filter the audit trail by actor, then read in time order. The actions that matter most:</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Question</th><th scope="col">Look for</th></tr></thead><tbody><tr><td>Did they get in?</td><td><code>auth.oidc.signed_in</code>, <code>auth.password.succeeded</code> and <code>auth.password.failed</code>, <code>auth.directory.*</code>, <code>auth.locked</code>, <code>auth.refused</code> (a disabled account)</td></tr><tr><td>Did they try things they could not do?</td><td><code>access.denied</code>, <code>session.denied</code>, refused approvals</td></tr><tr><td>Did they give themselves or others more access?</td><td><code>role.assign</code>, <code>role.revoke</code>, <code>role.create</code>, <code>group.member.add</code>, <code>emergency_access.request</code> and <code>emergency_access.grant</code>, <code>token.create</code> (and <code>token.create_admin</code>), <code>personal_token.create</code>, <code>service_identity.create</code></td></tr><tr><td>Did they get a shell?</td><td><code>session.request</code>, <code>session.open</code>, <code>session.close</code> (instance, source address, duration)</td></tr><tr><td>Did they change or remove workloads?</td><td><code>application.deploy.requested</code>, <code>application.operation</code>, <code>application.delete</code>, <code>application.volume.delete</code>, <code>application.volume.restore</code>, <code>instance.create</code>/<code>start</code>/<code>stop</code>/<code>delete</code>/<code>move</code>, <code>cluster.member.evacuate</code>, <code>cluster.member.remove</code></td></tr><tr><td>Did they read data out?</td><td><code>audit.exported</code>, support bundle downloads</td></tr><tr><td>Did they change security settings?</td><td>sign-in provider, directory, policy and approval-rule changes</td></tr></tbody></table></div>
+<p>For each terminal session, the instance's own logs and the changes that follow it are what shows
+the effect. If the instance may have been altered, rebuild it from the design rather than trusting
+it: redeploy, and restore its volumes from a backup taken before the incident
+(<a href="/docs/runbooks/storage-incident/">storage-incident.md</a>).</p>
+<h2 id="4-recover">4. Recover</h2>
+<ol><li>Rotate what the person or script could reach: service tokens, their personal tokens, the
+Incus certificates if the control plane host was involved (<a href="/docs/runbooks/certificates/">certificates.md</a>),
+the identity provider's client secret and any webhook secrets (the alert receiver's signing
+secret lives on the workers).</li><li>If the control plane host itself is suspect, restore onto a clean host from Apelora's database
+backup and re-issue every credential (<a href="/docs/runbooks/apelora-database-backup/">apelora-database-backup.md</a>);
+the old host's secrets must be treated as lost.</li><li>Re-enable what you turned off one thing at a time, and watch the audit trail as you do.</li><li>Make sure a person who needs access again gets it through a normal assignment, with the
+approval that production asks for, not a shortcut.</li></ol>
+<h2 id="5-learn">5. Learn</h2>
+<ul><li>Write what happened, when, how it was found and how long containment took.</li><li>Close the gap: a shorter session limit (<code>APELORA_CONSOLE_IDLE_SECS</code>, <code>APELORA_CONSOLE_MAX_SECS</code>),
+an approval rule or MFA requirement under <em>Access policies</em>, a narrower role, fewer legacy
+tokens.</li><li>Add an entry to <a href="/docs/contribute/lessons-learned/">LESSONS-LEARNED.md</a> if something
+non-obvious went wrong, and correct this runbook with what you verified.</li></ul>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/runbooks/security-incident.md">docs/runbooks/security-incident.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/runbooks/security-incident.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/runbooks/access-revocation/"><span>Previous</span>Revoke access</a><a class="next" href="/docs/runbooks/tenancy-quotas/"><span>Next</span>Tenancy: environments' Incus projects and quotas</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#0-know-what-apelora-can-and-cannot-tell-you">0. Know what Apelora can and cannot tell you</a></li><li class="l2"><a href="#1-contain">1. Contain</a></li><li class="l2"><a href="#2-keep-the-evidence">2. Keep the evidence</a></li><li class="l2"><a href="#3-find-out-what-was-done">3. Find out what was done</a></li><li class="l2"><a href="#4-recover">4. Recover</a></li><li class="l2"><a href="#5-learn">5. Learn</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

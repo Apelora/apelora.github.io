@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ADR 0001 — Incus-first runtime and control-plane… · Apelora</title>
+  <meta name="description" content="Why Apelora runs modules on Incus and keeps its own control plane to application state.">
+  <link rel="canonical" href="https://apelora.github.io/docs/decisions/0001-incus-first/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="ADR 0001 — Incus-first runtime and control-plane… · Apelora">
+  <meta property="og:description" content="Why Apelora runs modules on Incus and keeps its own control plane to application state.">
+  <meta property="og:url" content="https://apelora.github.io/docs/decisions/0001-incus-first/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group" open><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/" aria-current="page">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/decisions/">Decisions</a></nav>
+        <h1>ADR 0001 — Incus-first runtime and control-plane boundaries</h1>
+        <div class="prose">
+<p>Status: <strong>accepted</strong> · Date: 2026-10-20 · Supersedes: an earlier hypervisor-based node-agent design (never built)</p>
+<h2 id="context">Context</h2>
+<p>Apelora was planned as a Rust controller plus a Rust node agent driving a hypervisor directly, with every module a dedicated VM. Nothing of that backend was built: the repository contains the browser-only Studio (<code>apps/studio</code>) and two TypeScript packages. The plan carried three costs:</p>
+<ul><li><strong>Scope.</strong> We would have had to write host agents, cluster membership, placement, image handling, storage and network plumbing ourselves.</li><li><strong>Weight.</strong> Most catalog modules (web servers, APIs, caches, workers, databases) do not need their own kernel; a VM per module wastes memory and boot time.</li><li><strong>Licensing.</strong> That hypervisor is GPLv2-only, which cannot be combined with AGPLv3 code in one work, forcing a strict process boundary and legal review.</li></ul>
+<p>Incus 7.0 LTS (released May 2026, supported to June 2031) manages clusters of Linux hosts and runs LXC system containers, OCI application containers and QEMU virtual machines behind one documented REST API, with clustering (Raft-replicated database), projects, profiles, images, storage pools, networks (bridge and OVN), evacuation and metrics. It is Apache-2.0 licensed. Minimum host requirements include Linux kernel 6.12 and cgroup v2.</p>
+<h2 id="decision">Decision</h2>
+<ol><li><p><strong>Incus is the execution and cluster engine.</strong> Modules run as Incus instances: LXC system containers by default, OCI application containers for single-process images, QEMU VMs only where a container is unsuitable (other kernels or OSes, firewall-style modules, stronger isolation).</p>
+<p>Note (2026-10-21): in practice a class chooses its instance kind in <code>runtime.kind</code> (<code>incus-system-container</code>, <code>incus-oci-container</code>, <code>incus-vm</code>). VMs are used for another kernel or operating system (Windows), kernel modules, firewall-style modules, or live migration (<code>migration.stateful</code>); the catalog's VM class today (Linux base) is a VM for live migration. The full mapping is in <a href="/docs/concepts/platform-architecture/#4-modules-and-runtimes">platform architecture §4</a>.</p></li><li><p><strong>Authority is split, never shared.</strong></p>
+<ul><li>Incus owns cluster membership, quorum and leader election, its own database, instance placement and instance lifecycle.</li><li>Apelora owns application graphs, module classes, desired state, typed terminals and the connectivity they imply, replica and availability policy, application health, operations history and audit.</li><li>Apelora never writes Incus's database and never implements a competing cluster manager or scheduler. Stronger placement uses Incus mechanisms (cluster groups, targets, placement scriptlets) once verified.</li></ul></li><li><p><strong>Rust control plane.</strong> <code>services/control-plane</code> (Axum REST API) and <code>services/deployment-worker</code> (durable reconciler), with libraries under <code>crates/</code>. Apelora's own state and job coordination live in <strong>PostgreSQL</strong> (row locks, leases, generation numbers). No separate consensus service is added unless a measured need appears.</p></li><li><p><strong>Integration only through the documented Incus REST API</strong> over mutually authenticated TLS with server verification. Incus is installed as an ordinary system package on each host; we do not fork, vendor or rebuild it. The tracked version lives in <code>upstream.lock.yaml</code> (Phase 02).</p></li><li><p><strong>Two React apps, one API.</strong> <code>apps/studio</code> (designer, kept) and <code>apps/fabric-console</code> (administrators, new) talk only to the Apelora API; the browser never sees Incus credentials.</p></li><li><p><strong>Safety defaults.</strong> Restricted Incus projects, unprivileged containers, no host mounts or raw configuration for tenants; Incus automatic healing stays disabled unless an operator enables it deliberately; no automatic stateful failover without verified fencing and storage ownership.</p></li><li><p><strong>Honest results.</strong> Every test result is labelled MOCK VERIFIED, CONTRACT VERIFIED or REAL INCUS TESTED; the UI keeps saying &quot;Mock · Design only&quot; until it shows real backend data.</p></li></ol>
+<h2 id="consequences">Consequences</h2>
+<ul><li>The Studio and its data model are unaffected; a module class gains an optional <code>runtime</code> when deployment is added (Phase 06).</li><li>The earlier design's documents and skill were first marked superseded, then removed (2026-10-20, owner's decision); the commercial licence drafts were updated at the owner's explicit request.</li><li>Licensing simplifies: Apache-2.0 Incus may be combined with AGPLv3 work, and we talk to it over an API anyway. Upstream notices are kept for anything redistributed.</li><li>Hosts need a recent kernel (≥ 6.12). Live migration of ordinary LXC containers is limited; stateless modules move by replace-then-retire, stateful ones by planned stop-and-move (see <code>docs/architecture/PLATFORM-ARCHITECTURE.md</code>).</li><li>A single Incus cluster's quorum is not application availability. Application HA (replicas, health-gated routing, ingress redundancy, storage and fencing) remains Apelora's job and must be proven by tests.</li></ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Option</th><th scope="col">Why not</th></tr></thead><tbody><tr><td>Keep driving a hypervisor directly with our own node agent</td><td>Large amount of infrastructure code to write and maintain; VM-per-module overhead; GPLv2 boundary</td></tr><tr><td>A VM-cluster manager over a hypervisor</td><td>Still VM-centric; another daemon stack; little help for containers</td></tr><tr><td>A container orchestrator built around pods and custom resources</td><td>Large operational surface for a small cluster; its model differs from modules wired by typed terminals; explicitly out of scope</td></tr><tr><td>Per-host container runtime plus our own clustering</td><td>We would re-implement membership, placement and migration that Incus already provides</td></tr></tbody></table></div>
+<h2 id="reversibility">Reversibility</h2>
+<p>The Incus dependency sits behind <code>crates/incus-adapter</code> and provider traits in <code>crates/domain</code>. Studio documents contain no Incus-specific data. Replacing the runtime later means a new adapter, not a rewrite of the graph model or the UI.</p>
+<p>Note (2026-10-21): the sentence above no longer holds in full. The graph itself (modules, ports, cables, link tags) stays neutral, but module classes carry <code>runtime.kind</code> values named after Incus (<code>incus-*</code>), and a document that embeds custom classes (<code>catalog.classes</code>) carries them too; a module's <code>liveMigration</code> becomes Incus's <code>migration.stateful</code>. Another runtime would add its own runtime kinds and its own meaning for live migration; the graph model and the UI would still not need a rewrite. See <a href="/docs/concepts/hypervisor-providers/">runtime providers</a>.</p>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/adr/0001-incus-first.md">docs/adr/0001-incus-first.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/adr/0001-incus-first.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/design/studio-interface/"><span>Previous</span>Studio interface</a><a class="next" href="/docs/decisions/0002-bare-metal-provisioning-maas/"><span>Next</span>0002 · Bare-metal provisioning through MAAS</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#context">Context</a></li><li class="l2"><a href="#decision">Decision</a></li><li class="l2"><a href="#consequences">Consequences</a></li><li class="l2"><a href="#alternatives-considered">Alternatives considered</a></li><li class="l2"><a href="#reversibility">Reversibility</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

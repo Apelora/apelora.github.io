@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The global fabric: from three servers to tens of… · Apelora</title>
+  <meta name="description" content="How Apelora grows from three servers to regions, sites and sectors.">
+  <link rel="canonical" href="https://apelora.github.io/docs/concepts/global-fabric/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="The global fabric: from three servers to tens of… · Apelora">
+  <meta property="og:description" content="How Apelora grows from three servers to regions, sites and sectors.">
+  <meta property="og:url" content="https://apelora.github.io/docs/concepts/global-fabric/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group" open><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/" aria-current="page">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group"><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/concepts/">Concepts</a></nav>
+        <h1>The global fabric: from three servers to tens of thousands</h1>
+        <div class="prose">
+<p>Status: <strong>target design</strong> · Date: 2026-10-21 · Decisions: <a href="/docs/decisions/0008-sectors/">ADR 0008 — sectors</a>, <a href="/docs/decisions/0009-global-fabric/">ADR 0009 — global fabric</a> · Numbers: <a href="/docs/design/capacity-global-fabric/">capacity estimate</a> · Today's limits and connections: <a href="/docs/concepts/connections-and-scale/">connections and scale</a> · Where the product is going: <a href="/docs/concepts/cloud-roadmap/">cloud roadmap</a></p>
+<p>Apelora starts on three servers and is meant to grow into a cloud spread over cities, countries and continents. This page explains how the same building blocks scale to that, and what has to be added at each step. Nothing here is built yet beyond one sector; every section ends with what is built today.</p>
+<p><img width="1200" height="840" src="/assets/docs/svg/global-fabric.svg" alt="Regions, sites and sectors" loading="lazy"></p>
+<h2 id="1-levels">1. Levels</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Level</th><th scope="col">Is</th><th scope="col">Limit that defines it</th><th scope="col">Owns</th></tr></thead><tbody><tr><td>Fabric</td><td>everything one operator runs</td><td>—</td><td>the global plane</td></tr><tr><td>Region</td><td>a country or nearby countries</td><td>jurisdiction; ~30 ms between its sites; up to ~200 sectors</td><td>a regional control plane and its PostgreSQL</td></tr><tr><td>Site</td><td>one data centre (a city) or an edge location</td><td>its own power, cooling and network; under 2 ms inside</td><td>a backup target for its sectors, ingress addresses, a backbone link</td></tr><tr><td>Sector</td><td>one Incus cluster</td><td>Incus: about 50 servers, under 10 ms</td><td>its cluster database, OVN, storage pools</td></tr><tr><td>Server</td><td>a physical server</td><td>hardware</td><td>instances</td></tr></tbody></table></div>
+<p>How it grows:</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Step</th><th scope="col">Servers</th><th scope="col">Shape</th></tr></thead><tbody><tr><td>Start</td><td>3</td><td>one sector, one site, one region</td></tr><tr><td>Rack</td><td>3–50</td><td>one sector</td></tr><tr><td>Data centre</td><td>50–1,000</td><td>up to 20 sectors in one site, linked by OVN interconnection</td></tr><tr><td>Country</td><td>1,000–10,000</td><td>several sites in one region</td></tr><tr><td>Continents</td><td>10,000–100,000+</td><td>many regions under one global plane</td></tr></tbody></table></div>
+<h2 id="2-control-planes">2. Control planes</h2>
+<ul><li><p><strong>Regional plane</strong> (today's control plane, scoped to a region):</p>
+<ul><li>desired state, deployments, jobs, workers, health, capacity, terminal sessions and audit for its region;</li><li>its own PostgreSQL: a primary plus a synchronous standby in another site of the region;</li><li>workers sharded by sector;</li><li>it talks to its sectors' Incus APIs over at most ~30 ms.</li></ul></li><li><p><strong>Global plane:</strong></p>
+<ul><li>people, groups, roles, sign-in methods;</li><li>module classes, application designs and versions;</li><li>placement and residency policies;</li><li>the address plan; regions and sites;</li><li>read-only roll-ups; the audit archive.</li></ul>
+<p>It sees few writes and many reads. Its PostgreSQL has a primary in one region and read replicas in every region.</p></li><li><p><strong>Static stability.</strong> Each region keeps local copies of what it needs from the global plane, so it keeps operating when the global plane or the links between regions are down:</p>
+<ul><li>verification keys for identity-provider tokens;</li><li>role assignments;</li><li>module classes;</li><li>the designs it runs;</li><li>policies.</li></ul>
+<p>Revoking a role takes effect in a region as soon as the copy reaches it (seconds). Identity-provider tokens are short-lived (at most an hour), which bounds the rest.</p></li><li><p><strong>One Console.</strong> It asks the global plane for shared things and the region's plane for operations, with the same sign-in. Lists across regions come from the global roll-ups and say how fresh they are.</p></li></ul>
+<p><em>Built today:</em> one control plane, one sector.</p>
+<h2 id="3-networking">3. Networking</h2>
+<h3 id="what-is-there-and-how-far-it-carries">What is there and how far it carries</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Scope</th><th scope="col">Technology</th><th scope="col">Carries to</th></tr></thead><tbody><tr><td>Inside a sector</td><td>OVN: a logical network per application, ACLs, load balancers; Geneve overlay between servers (built)</td><td>the sector's 50 servers (OVN itself runs at hundreds of hypervisors)</td></tr><tr><td>Between sectors of a site</td><td>OVN interconnection: transit switches and gateway servers, layer-3 routes</td><td>a site's ~20 sectors</td></tr><tr><td>Between sites of a region</td><td>OVN interconnection over the regional backbone, encrypted (IPsec, or MACsec on owned fibre)</td><td>~30 ms between sites</td></tr><tr><td>Between regions</td><td>no shared application networks; published services with mutual TLS; private backbone or encrypted tunnels</td><td>the world</td></tr><tr><td>People → applications</td><td>published addresses per site; geographic DNS or anycast to the nearest healthy region</td><td>the world</td></tr></tbody></table></div>
+<h3 id="what-to-augment-and-when">What to augment, and when</h3>
+<p>The current stack (OVN on Geneve, driven through Incus) does not need replacing to grow. These additions make it carry more, run faster and need fewer hand-made steps. All of them are standards-based and can be driven through Incus or the switches' own APIs.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Augmentation</th><th scope="col">What it gives</th><th scope="col">When</th></tr></thead><tbody><tr><td><strong>Routed underlay</strong> (leaf-spine, BGP to every server, equal-cost multipath)</td><td>no large layer-2 domains, no spanning tree; any server reaches any other over several paths; failures reroute in under a second</td><td>from the first data centre beyond one rack</td></tr><tr><td><strong>BGP from Incus</strong> (<code>core.bgp_*</code> on members; OVN uplinks announce external subnets and forward addresses)</td><td>published and service addresses are routed, not NATed; an address can move with its application between sectors by being re-announced</td><td>with the routed underlay</td></tr><tr><td><strong>Anycast for published addresses</strong> (the same address announced from several sectors or sites)</td><td>load spreads across sites; a failed site stops announcing and traffic moves</td><td>multi-site applications</td></tr><tr><td><strong>EVPN with VXLAN in the underlay</strong></td><td>tenant isolation and layer-2 extension <em>between racks</em> where an application truly needs it (rare; layer 3 is the default)</td><td>only on request</td></tr><tr><td><strong>Hardware offload</strong> (<code>acceleration=sriov</code> or <code>vdpa</code> on OVN NICs; switchdev NICs, DPUs)</td><td>line-rate virtual networking with almost no host CPU; needed for high-throughput VMs</td><td>performance tiers</td></tr><tr><td><strong>Separate traffic classes</strong> (storage and replication, migration, tenant traffic, management) on separate VLANs or queues</td><td>backups and moves never starve applications</td><td>from the first SAN or cross-site copy</td></tr><tr><td><strong>Jumbo frames in the underlay</strong> (MTU 9000; tenant MTU 1500 stays intact under Geneve's ~50-byte overhead)</td><td>no fragmentation; faster copies</td><td>from the start in new sites</td></tr><tr><td><strong>Global address management</strong> (in the global plane)</td><td>non-overlapping IPv4 and IPv6 for every region, site, sector and application network</td><td>before the second sector</td></tr></tbody></table></div>
+<p>The address plan is hierarchical, for example:</p>
+<ul><li>IPv6: a /32 per fabric → /40 per region → /48 per site → /56 per sector → /64 per application network.</li><li>IPv4: private space split the same way; small public blocks only for published addresses.</li></ul>
+<p>Apelora allocates; Incus and OVN apply.</p>
+<p><em>Built today:</em> OVN networks per application with ACLs, service addresses and published addresses in one sector (REAL INCUS TESTED on the lab).</p>
+<h2 id="4-moving-things">4. Moving things</h2>
+<p>One mechanism, used at every distance; what changes is bandwidth, downtime and policy.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Distance</th><th scope="col">How</th><th scope="col">Downtime</th><th scope="col">Built</th></tr></thead><tbody><tr><td>Between servers of a sector</td><td>Incus move. VMs with live migration move running (0.26 s longest pause measured). Others stop, copy and start.</td><td>~0 s for live VMs; seconds to minutes otherwise</td><td>yes, REAL INCUS TESTED</td></tr><tr><td>Between sectors of a site</td><td>Apelora job. Pre-copy with <code>incus copy --refresh</code> while running, stop, final refresh, start in the target, re-point service and published addresses, delete the source once healthy.</td><td>the final refresh: seconds to minutes</td><td>no</td></tr><tr><td>Between sites of a region</td><td>the same job, over the regional backbone</td><td>the same, plus the backbone's speed</td><td>no</td></tr><tr><td>Between regions</td><td>the same job, <strong>only if the residency policy allows it</strong>; usually a second deployment plus application-level replication instead</td><td>—</td><td>no</td></tr><tr><td>A whole sector or site (maintenance, migration of hardware)</td><td>the job in waves, capped so the backbone keeps headroom</td><td>per application, as above</td><td>no</td></tr></tbody></table></div>
+<p>How long a copy takes (pre-copy, before any downtime):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Data</th><th scope="col">1 Gbit/s</th><th scope="col">10 Gbit/s</th><th scope="col">100 Gbit/s</th></tr></thead><tbody><tr><td>100 GB</td><td>~14 min</td><td>~1.5 min</td><td>~8 s</td></tr><tr><td>1 TB</td><td>~2.3 h</td><td>~14 min</td><td>~1.5 min</td></tr><tr><td>10 TB</td><td>~23 h</td><td>~2.3 h</td><td>~14 min</td></tr></tbody></table></div>
+<p>The final refresh only moves what changed since the pre-copy (typically 1–5 %), so downtime stays in the seconds-to-minutes range even for large volumes on 10 Gbit/s links.</p>
+<h2 id="5-backups-and-recovery">5. Backups and recovery</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Tier</th><th scope="col">Where</th><th scope="col">Protects against</th><th scope="col">Built</th></tr></thead><tbody><tr><td>0</td><td>snapshots on the volume's own pool, on a schedule</td><td>mistakes, bad updates</td><td>yes</td></tr><tr><td>1</td><td>a copy in the <code>backup</code> pool on another server; later in another sector of the same site</td><td>a server or a sector lost</td><td>another server: yes; another sector: no</td></tr><tr><td>2</td><td>a copy in another site of the same region</td><td>a site lost (fire, power, flood)</td><td>no</td></tr><tr><td>3</td><td>an exported, encrypted, immutable archive in object storage, outside the region only where policy allows</td><td>ransomware, a region lost, legal retention</td><td>no</td></tr></tbody></table></div>
+<ul><li><strong>Recovery classes</strong> per application, chosen in the Studio and shown in the Console:
+<ul><li>Gold: recovery point 15 minutes, recovery time 1 hour (tiers 0–2 plus database-level replication in the application).</li><li>Silver: 4 h / 8 h.</li><li>Bronze: 24 h / 72 h.</li></ul></li><li><strong>Restore drills.</strong> A scheduled job restores a sample of backups into an isolated project and checks that they start. The result is part of the Health page.</li><li><strong>Losing a region.</strong> The global plane holds the designs and the last desired state. The standby region redeploys from them and from tier 2 or 3 copies. People see what is older than the recovery point before anything starts.</li></ul>
+<h2 id="6-other-things-that-change-with-distance">6. Other things that change with distance</h2>
+<ul><li><p><strong>Residency.</strong> Policies per organisation or project list allowed regions or countries. Placement, moves, backups and the audit archive obey them; a refusal says which policy and which country.</p></li><li><p><strong>Identity.</strong></p>
+<ul><li>Identity-provider tokens are checked in each region with cached keys, so no call to the global plane is needed.</li><li>Local accounts and their sessions live in the global plane, with regional read copies; revocation reaches regions within seconds.</li><li>Directories can be per region (a country's own directory).</li></ul></li><li><p><strong>Images.</strong> Each region keeps a cache of module images; a new image version is pulled once per region, not once per server.</p></li><li><p><strong>Time.</strong> Every site runs NTP (or PTP for timing-sensitive workloads). Incus and the Raft database need synchronised clocks.</p></li><li><p><strong>Upgrades.</strong> In waves:</p>
+<ol><li>a canary sector;</li><li>one site;</li><li>one region;</li><li>the rest.</li></ol>
+<p>Incus is upgraded per sector (LTS releases; schema changes only between LTS releases). Regional planes are upgraded region by region and must accept one version of skew with the global plane.</p></li><li><p><strong>Observability.</strong> Metrics and logs stay in the region. The global plane keeps roll-ups and alert states. Every request carries a request id across planes.</p></li><li><p><strong>Security.</strong> Each sector has its own Incus client certificates; each region has its own intermediate certificate authority. Taking one region's credentials does not reach another.</p></li><li><p><strong>Operations.</strong> On-call per region, with a follow-the-sun handover. A region can be put in maintenance as a whole.</p></li></ul>
+<h2 id="7-order-of-work">7. Order of work</h2>
+<ol><li>Sectors (ADR 0008): a <code>sectors</code> table, an adapter per sector, <code>sector</code> on applications.</li><li>Regions and sites as labels, residency policies, global address management.</li><li>The per-process fixes (supervisor leader, sign-in reload, shared session tickets), so a plane runs as several processes.</li><li>Moves between sectors, then between sites (§4).</li><li>Backup tiers 1–3 and restore drills (§5).</li><li>A routed underlay with BGP from Incus, anycast for published addresses (§3).</li><li>Splitting the global plane from the regional plane, with replication and static stability (§2).</li><li>Global traffic steering.</li></ol>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/GLOBAL-FABRIC.md">docs/architecture/GLOBAL-FABRIC.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/architecture/GLOBAL-FABRIC.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/concepts/disconnected/"><span>Previous</span>Without internet access</a><a class="next" href="/docs/concepts/hypervisor-providers/"><span>Next</span>Runtime providers</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#1-levels">1. Levels</a></li><li class="l2"><a href="#2-control-planes">2. Control planes</a></li><li class="l2"><a href="#3-networking">3. Networking</a></li><li class="l3"><a href="#what-is-there-and-how-far-it-carries">What is there and how far it carries</a></li><li class="l3"><a href="#what-to-augment-and-when">What to augment, and when</a></li><li class="l2"><a href="#4-moving-things">4. Moving things</a></li><li class="l2"><a href="#5-backups-and-recovery">5. Backups and recovery</a></li><li class="l2"><a href="#6-other-things-that-change-with-distance">6. Other things that change with distance</a></li><li class="l2"><a href="#7-order-of-work">7. Order of work</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

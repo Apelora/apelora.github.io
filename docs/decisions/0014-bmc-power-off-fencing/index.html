@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ADR 0014 — Fencing by switching a server off through its… · Apelora</title>
+  <meta name="description" content="Fencing a failed server by switching it off through its management controller.">
+  <link rel="canonical" href="https://apelora.github.io/docs/decisions/0014-bmc-power-off-fencing/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="ADR 0014 — Fencing by switching a server off through its… · Apelora">
+  <meta property="og:description" content="Fencing a failed server by switching it off through its management controller.">
+  <meta property="og:url" content="https://apelora.github.io/docs/decisions/0014-bmc-power-off-fencing/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="docs">
+    <div class="wrap docs-wrap">
+      <button class="docs-menu-btn" type="button" aria-expanded="false" aria-controls="docs-nav" hidden>Documentation menu<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <nav class="docs-nav" id="docs-nav" aria-label="Documentation">
+      <div class="docs-search" role="search">
+        <label for="docs-q" class="sr-only">Search the documentation</label>
+        <input id="docs-q" type="search" role="combobox" aria-autocomplete="list" placeholder="Search the documentation" autocomplete="off" spellcheck="false" aria-controls="docs-results" aria-expanded="false" hidden>
+        <ul id="docs-results" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+      </div>
+      <a class="dn-home" href="/docs/">Documentation home</a>
+      <details class="dn-group"><summary>Get started<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/start/what-you-need/">Before you start</a></li><li><a href="/docs/start/try-it-on-your-workstation/">Try it on your workstation</a></li><li><a href="/docs/start/install-on-your-servers/">Install on your servers</a></li><li><a href="/docs/start/sign-in/">Sign in</a></li><li><a href="/docs/start/design-your-first-application/">Design your first application</a></li><li><a href="/docs/start/deploy-it/">Deploy it</a></li><li><a href="/docs/start/manage-it/">Manage it</a></li><li><a href="/docs/start/when-something-goes-wrong/">When something goes wrong</a></li></ul></details>
+      <details class="dn-group"><summary>Guides<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/guides/signing-in/">Signing in</a></li><li><a href="/docs/guides/terminal-sessions/">Terminal sessions</a></li><li><a href="/docs/guides/testing-without-hardware/">Testing without hardware</a></li></ul></details>
+      <details class="dn-group"><summary>Concepts<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/concepts/platform-architecture/">Platform architecture</a></li><li><a href="/docs/concepts/component-model/">Component model</a></li><li><a href="/docs/concepts/connections-and-scale/">Connections and scale</a></li><li><a href="/docs/concepts/every-size/">One design at every size</a></li><li><a href="/docs/concepts/storage/">Storage</a></li><li><a href="/docs/concepts/access-and-roles/">Access, roles and security</a></li><li><a href="/docs/concepts/identity-and-authorization/">Identity and authorization</a></li><li><a href="/docs/concepts/monitoring/">Monitoring</a></li><li><a href="/docs/concepts/disconnected/">Without internet access</a></li><li><a href="/docs/concepts/global-fabric/">The global fabric</a></li><li><a href="/docs/concepts/hypervisor-providers/">Runtime providers</a></li><li><a href="/docs/concepts/cloud-roadmap/">Roadmap to a full cloud</a></li></ul></details>
+      <details class="dn-group"><summary>Runbooks<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/runbooks/overview/">Runbooks: start here</a></li><li><a href="/docs/runbooks/member-join/">Add a server to the cluster</a></li><li><a href="/docs/runbooks/member-maintenance/">Maintenance on a server (evacuate, then restore)</a></li><li><a href="/docs/runbooks/member-failure/">A server fails</a></li><li><a href="/docs/runbooks/member-removal/">Remove a server from the cluster for good</a></li><li><a href="/docs/runbooks/quorum-loss/">The cluster loses quorum</a></li><li><a href="/docs/runbooks/incus-rolling-upgrade/">Reading quorum, and a rolling Incus upgrade</a></li><li><a href="/docs/runbooks/replica-unhealthy/">A replica fails its health check</a></li><li><a href="/docs/runbooks/volumes/">An application's volumes: kept, missing or to be deleted</a></li><li><a href="/docs/runbooks/storage-incident/">A storage problem: a pool filling up, a pool that is down, or backups that stop</a></li><li><a href="/docs/runbooks/network-incident/">Network incidents (OVN)</a></li><li><a href="/docs/runbooks/api-outage/">The control plane or the worker is down</a></li><li><a href="/docs/runbooks/health-page/">Reading the Health page</a></li><li><a href="/docs/runbooks/alerts/">Alerts</a></li><li><a href="/docs/runbooks/troubleshooting/">Troubleshooting with logs and the audit trail</a></li><li><a href="/docs/runbooks/certificates/">Rotate Apelora's Incus certificates</a></li><li><a href="/docs/runbooks/deploy-identity/">The deploy identity cannot see its project</a></li><li><a href="/docs/runbooks/access-revocation/">Revoke access</a></li><li><a href="/docs/runbooks/security-incident/">A security incident: a stolen credential, a misused account or a session you did not expect</a></li><li><a href="/docs/runbooks/tenancy-quotas/">Tenancy: environments' Incus projects and quotas</a></li><li><a href="/docs/runbooks/apelora-database-backup/">Back up and restore Apelora's own database</a></li><li><a href="/docs/runbooks/offline-update/">Update Apelora without internet access</a></li></ul></details>
+      <details class="dn-group"><summary>Reference<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/reference/current-state/">What works today</a></li><li><a href="/docs/reference/module-catalog/">Module catalog</a></li><li><a href="/docs/reference/module-ports/">Module ports</a></li><li><a href="/docs/reference/api/">API reference</a></li></ul></details>
+      <details class="dn-group"><summary>Design notes<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/design/application-deployment/">Deploying an application from the Studio</a></li><li><a href="/docs/design/applications-view/">Applications view: create an application, open its canvas</a></li><li><a href="/docs/design/application-readiness/">Application-level readiness</a></li><li><a href="/docs/design/health-and-capacity/">Health and capacity</a></li><li><a href="/docs/design/alerts/">Alerts</a></li><li><a href="/docs/design/mobility-and-ha/">Moving modules and surviving failures</a></li><li><a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage (planned)</a></li><li><a href="/docs/design/node-enrolment/">Node enrolment</a></li><li><a href="/docs/design/provisioner-maas/">The MAAS provisioner adapter</a></li><li><a href="/docs/design/sign-in-methods/">Sign-in methods: local accounts and a directory</a></li><li><a href="/docs/design/tenancy-isolation/">Tenancy isolation and quotas</a></li><li><a href="/docs/design/capacity-global-fabric/">Capacity: a global fabric</a></li><li><a href="/docs/design/studio-architecture/">Studio architecture</a></li><li><a href="/docs/design/studio-interface/">Studio interface</a></li></ul></details>
+      <details class="dn-group" open><summary>Decisions<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/decisions/0001-incus-first/">0001 · Incus-first runtime and control-plane boundaries</a></li><li><a href="/docs/decisions/0002-bare-metal-provisioning-maas/">0002 · Bare-metal provisioning through MAAS</a></li><li><a href="/docs/decisions/0003-incus-identities-and-cluster-join/">0003 · Two Incus identities; members join with single-use tokens</a></li><li><a href="/docs/decisions/0004-service-discovery/">0004 · Service discovery: stable addresses, delivered as environment; DNS optional later</a></li><li><a href="/docs/decisions/0005-access-model/">0005 · Access model: roles bound to scopes, applications owned by projects</a></li><li><a href="/docs/decisions/0006-modules/">0006 · The parts of an application are called modules</a></li><li><a href="/docs/decisions/0007-sign-in-methods/">0007 · Sign-in methods: identity providers, local accounts and a directory</a></li><li><a href="/docs/decisions/0008-sectors/">0008 · Sectors: linking Incus clusters into one fabric</a></li><li><a href="/docs/decisions/0009-global-fabric/">0009 · A global fabric: regions, sites and sectors, with a control plane per region</a></li><li><a href="/docs/decisions/0010-disconnected-installations/">0010 · Installations without internet access (air-gapped and disconnected)</a></li><li><a href="/docs/decisions/0011-one-design-every-size/">0011 · One design at every size: same mechanisms from three servers to the global fabric</a></li><li><a href="/docs/decisions/0012-tenancy-on-incus-projects/">0012 · Environments own restricted Incus projects that Apelora prepares; quotas are Apelora's, mirrored as Incus limits</a></li><li><a href="/docs/decisions/0013-fencing-before-restart/">0013 · Fencing before a module restarts on another server</a></li><li><a href="/docs/decisions/0014-bmc-power-off-fencing/" aria-current="page">0014 · Fencing by switching a server off through its BMC</a></li></ul></details>
+      <details class="dn-group"><summary>Contribute<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ul><li><a href="/docs/contribute/test-cluster/">Disposable Incus test cluster</a></li><li><a href="/docs/contribute/ci/">Continuous integration</a></li><li><a href="/docs/contribute/implementation-phases/">Implementation phases</a></li><li><a href="/docs/contribute/console-plan/">Fabric Console: what is missing, and the build plan</a></li><li><a href="/docs/contribute/lessons-learned/">Lessons learned</a></li><li><a href="/docs/contribute/mutation-testing/">Mutation testing</a></li><li><a href="/docs/contribute/upstream-incus/">Staying in sync with upstream Incus</a></li><li><a href="/docs/contribute/mcp-hosting/">MCP and tooling: what runs where</a></li></ul></details>
+    </nav>
+      <article class="docs-body">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/decisions/">Decisions</a></nav>
+        <h1>ADR 0014 — Fencing by switching a server off through its BMC</h1>
+        <div class="prose">
+<p>Status: <strong>accepted; built (fence provider slice)</strong> · Date: 2026-10-21 · Amends <a href="/docs/decisions/0013-fencing-before-restart/">ADR 0013</a> · Design: <a href="/docs/design/vm-recovery-on-shared-storage/">VM recovery on shared storage</a> §3 package 4 · Testing: <a href="/docs/guides/testing-without-hardware/">without hardware</a></p>
+<h2 id="context">Context</h2>
+<p>ADR 0013 lets a failed server's modules restart elsewhere only once the server is <em>fenced</em>, and offers two proofs: its storage lease is dead (sanlock, about 140 s after its last renewal) or a person confirms it is off. The first is slow, because 140 s is sanlock's floor; the second is slow at night. A server that is cut off from the other servers but still reaches the SAN is neither: its lease stays live, so nothing restarts, which is safe but leaves the application down.</p>
+<p>A server's baseboard management controller (BMC) can switch it off whatever state the operating system is in. Doing so is the standard way to fence: once the power state reads back <strong>Off</strong>, the server cannot write to shared storage, whatever it thought it was doing.</p>
+<p>The danger is the mirror image of the benefit. A wrong target powers off a healthy server. This is the riskiest code in the project.</p>
+<h2 id="decision">Decision</h2>
+<ol><li><strong>A third proof, <code>power-off</code>.</strong> A member is fenced when Incus reports it Offline <strong>and</strong> its power state, read back from the BMC after a power-off (or already Off), is <strong>Off</strong>. &quot;The power-off request was accepted&quot; is never evidence; only the read-back is. The evidence (provider, system, when) is recorded and audited with the decision, like the other two.</li><li><strong>A fence provider in the worker, not in the control plane.</strong> The supervisor leader asks the provider; the control plane never holds BMC credentials. Providers:
+<ul><li><code>redfish</code>: the standard DMTF Redfish interface over HTTPS (system power state read, <code>ComputerSystem.Reset</code> with <code>ForceOff</code>). The certificate is verified against the system roots or a CA file named for that BMC; there is no insecure mode. Redfish first; IPMI later behind the same interface.</li><li><code>lima</code>: lab only. Stops a Lima VM with <code>limactl stop --force</code>. Enabled only with <code>APELORA_BMC_ALLOW_LAB=1</code>, only for VMs named <code>apelora-…</code>, never the SAN VM. It exercises the same decision path as a real BMC, because the lab has none.</li><li>Later: the provisioner's own power control (MAAS, ADR 0002) as another provider.</li></ul></li><li><strong>An allowlist, not discovery.</strong> Providers act only on members named in a mapping file (<code>APELORA_BMC_MAP</code>, JSON, no secrets): member → provider, BMC address, user, the name of the secret (<code>APELORA_BMC_SECRET_…</code>, read from the worker's environment at the moment of use, never stored, logged or returned), an optional CA file, and <strong>the server's hardware UUID</strong>. For Redfish the UUID is required: the BMC must report that exact system UUID before anything is sent, so a mis-cabled or mis-mapped BMC refuses instead of powering off its neighbour.</li><li><strong>Guards that fail closed.</strong> Apelora powers a member off only when all of these hold, re-read in the same pass:
+<ul><li>Incus reports it Offline and has done so for at least <code>APELORA_BMC_FENCE_AFTER_SECS</code> (default 30, at least 20);</li><li>fewer than half of the members are Offline (more points at the control plane's own isolation, not at a failure of those servers);</li><li>no other member is currently being powered off by Apelora (one at a time; more needs a person);</li><li>the same member was not powered off in the last ten minutes without being seen Online since (no loop);</li><li>the worker holds the supervisor leader lease, and every write is fenced by it as before.</li></ul></li><li><strong>Automatic once the allowlist exists.</strong> Configuring the mapping is the operator's approval; nothing else is asked at night. A person can still confirm a server is off (ADR 0013) and that always wins.</li><li><strong>Every power-off is audited</strong> (<code>cluster.member.power_off</code>, outcome <code>success</code>, <code>failed</code> or <code>refused</code> with the reason) and counted (<code>apelora_bmc_power_offs_total{outcome}</code>). Powering off a server that still runs modules is by design what fencing is; the Servers page says what restarts where.</li><li><strong>Credentials never leave the worker.</strong> Not in the database, the audit log, logs, the OpenAPI document, the browser or the repository. The effective-settings page lists the mapping's member names and the secret names, never values.</li></ol>
+<h2 id="consequences">Consequences</h2>
+<ul><li><strong>What a BMC buys, measured on the lab (2026-10-21, REAL INCUS TESTED, the <code>lima</code> provider):</strong> a server cut off from the other servers but still reaching the SAN is fenced at 61 s (Incus Offline at 22 s, the 30 s grace, the power state read back Off); the storage lease alone never fences it (it stays LIVE). <strong>It does not make recovery faster on clustered LVM.</strong> The instance ran again at 220 s, because Incus refuses to start it while sanlock still counts the powered-off host's lease as held, which lasts about 140 s after its last renewal whatever switched it off. The first estimate (40–60 s) was wrong for this storage. Faster restarts need storage that lets a fenced host's locks be taken over at once (not clustered LVM); until then the BMC's value is correctness (no waiting for a person, no running on) not speed.</li><li>A partitioned server that still reaches the SAN is switched off, its modules restart elsewhere, and nobody has to wake up. That is the intended trade.</li><li>The worker needs network access to each BMC on the management network; the control plane does not.</li><li>Real BMCs differ. The Redfish provider is <strong>CONTRACT VERIFIED</strong> against a Redfish-shaped test server until it has run on real hardware; the lab's REAL INCUS TESTED result covers the decision path, the guards and the recovery that follows, not any vendor's BMC.</li><li>A wrong mapping is the main residual risk; the UUID check and the allowlist narrow it, and the runbook says to verify the mapping with a read-only check before enabling it.</li></ul>
+<h2 id="alternatives-considered">Alternatives considered</h2>
+<ul><li><strong>IPMI first.</strong> Older and everywhere, but unauthenticated sessions, weak ciphers and vendor quirks; Redfish is the same job over HTTPS with certificates. IPMI can be added behind the same interface.</li><li><strong>Let Incus's healing do it.</strong> Rejected in ADR 0013: it cannot fence.</li><li><strong>Ask a person to approve each power-off.</strong> Safe, but no better than today's confirmation path at night. Kept as the fallback, and as the default until a mapping is configured.</li><li><strong>Discover BMC addresses automatically.</strong> A guess about which controller belongs to which server is exactly the mistake this ADR exists to prevent.</li></ul>
+        </div>
+        <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/adr/0014-bmc-power-off-fencing.md">docs/adr/0014-bmc-power-off-fencing.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/adr/0014-bmc-power-off-fencing.md">Suggest a change</a>.</p>
+        <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/decisions/0013-fencing-before-restart/"><span>Previous</span>0013 · Fencing before a module restarts on another server</a><a class="next" href="/docs/contribute/test-cluster/"><span>Next</span>Disposable Incus test cluster</a></nav>
+      </article>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#context">Context</a></li><li class="l2"><a href="#decision">Decision</a></li><li class="l2"><a href="#consequences">Consequences</a></li><li class="l2"><a href="#alternatives-considered">Alternatives considered</a></li></ul></nav>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/reference/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
