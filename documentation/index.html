@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentation · Apelora</title>
+  <meta name="description" content="Documentation for Apelora Fabric: getting started, concepts, operating procedures, design decisions and reference. Everything lives in the open repository.">
+  <link rel="canonical" href="https://apelora.github.io/documentation/">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Documentation · Apelora">
+  <meta property="og:description" content="Documentation for Apelora Fabric: getting started, concepts, operating procedures, design decisions and reference. Everything lives in the open repository.">
+  <meta property="og:url" content="https://apelora.github.io/documentation/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/documentation/" aria-current="page">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+<main id="main">
+    <section class="page-head" style="padding-bottom:0">
+      <div class="wrap">
+        <h1>Documentation lives with the code.</h1>
+        <p>It is written in the repository, changes in the same commits as the software, and says for each result how it was checked.</p>
+        <div class="actions"><a class="btn btn-primary" href="https://github.com/Apelora/apelora-fabric#quick-start">Open the quick start</a><a class="more" href="https://github.com/Apelora/apelora-fabric">Browse the repository <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      </div>
+    </section>
+    <section style="padding-top:clamp(8px,2vw,24px)">
+      <div class="wrap">
+        <div class="doc-grid">
+          <div class="doc-group">
+            <h2>Get started</h2>
+            <ul>
+              <li><a href="https://github.com/Apelora/apelora-fabric#quick-start">Quick start<span>Run the designer in a minute, then connect a lab cluster.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/guides/testing-without-hardware.md">Testing without hardware<span>A lab on one Mac: what it proves and what only real servers can.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/development/TEST-CLUSTER.md">The test cluster<span>Creating the lab, adding servers, storage and networks.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/guides/signing-in.md">Signing in<span>Identity providers, API tokens and troubleshooting.</span></a></li>
+            </ul>
+          </div>
+          <div class="doc-group">
+            <h2>Understand it</h2>
+            <ul>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/PLATFORM-ARCHITECTURE.md">Platform architecture<span>Who owns which state, and how the layers connect.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/current-state.md">Current state<span>What works, how each result was checked, known limitations.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/EVERY-SIZE.md">One design at every size<span>Three servers to a global fabric.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/CATALOG.md">Module catalog<span>All 83 modules, their ports and which deploy.</span></a></li>
+            </ul>
+          </div>
+          <div class="doc-group">
+            <h2>Operate it</h2>
+            <ul>
+              <li><a href="https://github.com/Apelora/apelora-fabric/tree/main/docs/runbooks">Runbooks<span>A failed server, lost quorum, certificates, upgrades, backups.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/DISCONNECTED.md">Disconnected installations<span>Image mirrors and signed release bundles.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/design/provisioner-maas.md">MAAS provisioner<span>What is built, and how it was tested.</span></a></li>
+            </ul>
+          </div>
+          <div class="doc-group">
+            <h2>Decisions and reference</h2>
+            <ul>
+              <li><a href="https://github.com/Apelora/apelora-fabric/tree/main/docs/adr">Design decisions<span>Short records of why things are the way they are.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">API reference<span>The OpenAPI document of the control plane.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/development/IMPLEMENTATION-PHASES.md">Implementation phases<span>The build plan, phase by phase.</span></a></li>
+              <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/SECURITY.md">Security policy<span>How to report a vulnerability privately.</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+        <section class="cta-band" aria-labelledby="cta-title">
+      <div class="wrap">
+        <div class="cta-card">
+          <h2 id="cta-title">Tell us about your environment</h2>
+          <p>How many servers, what storage and network, who needs access. We will tell you what Apelora does for that today and what it does not.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="/contact/?type=demo">Request a demo</a>
+            <a class="btn btn-soft" href="/contact/?type=deployment">Ask about deployment</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/documentation/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/current-state.md">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

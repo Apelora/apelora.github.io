@@ -1,0 +1,262 @@
+<!--page {"home":true,"title":"Apelora Fabric: design your applications, control your infrastructure","description":"Apelora Fabric turns a drawing of connected modules into network rules, addresses and running containers or virtual machines on your own Linux servers. Open source. Request a demo.","path":"/","nav":""} -->
+  <main id="main">
+
+    <section class="hero" aria-labelledby="hero-title" style="padding-bottom:0">
+      <div class="wrap">
+        <h1 id="hero-title"><span>Design your applications.</span> <span>Control your infrastructure.</span></h1>
+        <p class="lede">Apelora Fabric is for platform and operations teams that run their own Linux servers. Draw an application once. Fabric sets up its network rules and addresses, runs it on your servers and handles failures.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/contact/?type=demo">Request a demo</a>
+          <a class="btn btn-soft" href="#how">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            See how it works
+          </a>
+          <a class="more" href="/documentation/">Read the documentation
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <a class="lozenge" href="/product/#roadmap">Early development: tested on a four-server lab, not yet on production hardware</a>
+
+        <div class="preview">
+          <div class="tabs" role="tablist" aria-label="Apelora Fabric screens">
+            <button class="tab" role="tab" id="tab-design" aria-controls="panel-design" aria-selected="true" type="button">Design</button>
+            <button class="tab" role="tab" id="tab-operate" aria-controls="panel-operate" aria-selected="false" tabindex="-1" type="button">Operate</button>
+            <button class="tab" role="tab" id="tab-recover" aria-controls="panel-recover" aria-selected="false" tabindex="-1" type="button">Recover</button>
+          </div>
+          <div class="panel" id="panel-design" role="tabpanel" aria-labelledby="tab-design">
+            <figure class="shot">
+              <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Apelora Studio</span></div>
+              <img src="/assets/img/studio-design.webp" width="1440" height="900" fetchpriority="high" alt="Apelora Studio: a gateway connects to a load balancer, which connects to two NGINX web servers and on to a PostgreSQL database; a Grafana module reads from the database. Each cable is labelled with its protocol.">
+              <figcaption>Apelora Studio, the designer. Sample data: the badge at the top reads "Mock · Design only", so nothing is deployed from this view.</figcaption>
+            </figure>
+          </div>
+          <div class="panel" id="panel-operate" role="tabpanel" aria-labelledby="tab-operate" hidden>
+            <figure class="shot">
+              <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console</span></div>
+              <img src="/assets/img/console-servers.webp" width="1440" height="900" loading="lazy" alt="Fabric Console, Servers: the cluster database shows three of three voters answering and a safe majority, followed by a table of four servers with status, database role, failure domain, Incus version and capacity.">
+              <figcaption>Fabric Console, the administrator's view. Sample data from a four-server lab.</figcaption>
+            </figure>
+          </div>
+          <div class="panel" id="panel-recover" role="tabpanel" aria-labelledby="tab-recover" hidden>
+            <figure class="shot">
+              <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console</span></div>
+              <img src="/assets/img/console-health.webp" width="1440" height="1000" loading="lazy" alt="Fabric Console, Health, during a failure: the deployment worker is down, the job queue shows three jobs waiting, one of three servers is offline, and each problem comes with its reason and the next step.">
+              <figcaption>Fabric Console, Health, during a simulated failure. Every problem says what is wrong and what to do next. Sample data.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="who-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2 id="who-title">Built for teams that run their own servers.</h2>
+          <p>If that is you, Fabric replaces a pile of hand-kept files. If it is not, it is better to know now.</p>
+        </div>
+        <div class="who reveal">
+          <div class="box">
+            <h3>A good fit if you</h3>
+            <ul class="dots">
+              <li>run Linux servers of your own, or plan to, and want one place to see and control them</li>
+              <li>keep container, network and firewall files in step by hand today</li>
+              <li>need roles, approvals and an audit trail, or work without internet access</li>
+            </ul>
+          </div>
+          <div class="box road">
+            <h3>Not yet a fit if you</h3>
+            <ul class="dots">
+              <li>need a proven production platform today: Fabric is in early development and has run only on a lab</li>
+              <li>want a hosted service: you run Fabric on servers you own</li>
+              <li>need many ready-to-run application types: three modules deploy today (NGINX, Debian and a Linux virtual machine)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tint" aria-labelledby="once-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2 id="once-title">Describe it once. Stop maintaining the rest.</h2>
+        </div>
+        <div class="compare stack-sm reveal">
+          <table>
+            <thead><tr><th scope="col"><span class="sr-only">Topic</span></th><th scope="col">By hand, typically</th><th scope="col">With Apelora Fabric</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Network rules</th><td data-label="By hand, typically">Written and updated for each service</td><td data-label="With Apelora Fabric">Generated from the cables you draw; what is not connected cannot talk</td></tr>
+              <tr><th scope="row">Addresses</th><td data-label="By hand, typically">Looked up and copied between configuration files</td><td data-label="With Apelora Fabric">A stable service address per module, handed to the modules that use it</td></tr>
+              <tr><th scope="row">A server fails</th><td data-label="By hand, typically">Someone is paged and hopes the runbook is current</td><td data-label="With Apelora Fabric">The Console says what failed, why, and what happens next</td></tr>
+              <tr><th scope="row">Who changed what</th><td data-label="By hand, typically">Remembered, or searched for in chat</td><td data-label="With Apelora Fabric">Recorded in an append-only audit log</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap" id="features">
+
+      <article class="feature reveal">
+        <div class="copy">
+          <h2>Design with guardrails.</h2>
+          <p>Drag modules onto a canvas and connect their ports. A link that cannot work is refused before anything is deployed.</p>
+          <ul class="checks">
+            <li><span><b>Typed ports.</b> Web traffic into a database port is refused.</span></li>
+            <li><span><b>83 modules to design with.</b> Three deploy today: NGINX, Debian and a Linux virtual machine.</span></li>
+            <li><span><b>A capacity check</b> tells you whether the design fits your cluster.</span></li>
+          </ul>
+          <div class="evidence"><span class="tag">Checked in a real browser</span><span class="tag plain">Deploys tested on a real cluster</span></div>
+          <p style="margin-top:20px"><a class="more" href="/product/#design">More about design <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+        </div>
+        <figure class="shot">
+          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Apelora Studio · module properties</span></div>
+          <img src="/assets/img/crop-studio-validation.webp" width="860" height="590" loading="lazy" alt="Apelora Studio: a module's Properties window is open on the Ports tab, and the validation panel at the bottom left reports one error, that a web server's required input has no connection.">
+          <figcaption>A required input with no connection is reported as an error. Detail of a Studio screen, sample data.</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature reverse reveal">
+        <div class="copy">
+          <h2>See the whole cluster in one place.</h2>
+          <p>Fabric Console shows servers, health and every change. Maintenance, joining servers and cluster settings happen here, with a preview before anything changes.</p>
+          <ul class="checks">
+            <li><span><b>Servers</b> and the cluster database majority, at a glance.</span></li>
+            <li><span><b>Every change is a job</b> you can follow, retry, or cancel at a safe point.</span></li>
+            <li><span><b>Sensitive changes</b> need a second person's approval.</span></li>
+          </ul>
+          <div class="evidence"><span class="tag">Real Incus tested</span><span class="tag plain">Checked in a real browser</span></div>
+          <p style="margin-top:20px"><a class="more" href="/product/#operate">More about operating <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+        </div>
+        <figure class="shot">
+          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Servers</span></div>
+          <img src="/assets/img/crop-console-servers.webp" width="1005" height="625" loading="lazy" alt="Fabric Console, Servers: the cluster database with three of three voters answering and a safe majority, then four servers with status, database role, failure domain, Incus version and capacity, and the cluster groups.">
+          <figcaption>The cluster database and four servers. Detail of a Console screen, sample data.</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature reveal">
+        <div class="copy">
+          <h2>When a server fails, you know what happens next.</h2>
+          <p>Health is written in words, with the reason and the next step. Fabric restarts a module on another server only once it knows the first one has stopped.</p>
+          <ul class="checks">
+            <li><span><b>Stopped first.</b> A failed server is "fenced": proven stopped, so two servers never write the same disk.</span></li>
+            <li><span><b>Measured.</b> A container with data ran again 144 to 155 seconds after its server was force-stopped, in three lab drills.</span></li>
+            <li><span><b>Virtual machines</b> are not drilled yet. That is on the roadmap.</span></li>
+          </ul>
+          <div class="evidence"><span class="tag">Real Incus tested</span><span class="tag road">Virtual machines: roadmap</span></div>
+          <p style="margin-top:20px"><a class="more" href="/product/#recover">More about recovery <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+        </div>
+        <figure class="shot">
+          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Health</span></div>
+          <img src="/assets/img/crop-console-health.webp" width="790" height="610" loading="lazy" alt="Fabric Console, Health, during a failure: overall status is Down, the deployment worker is down with the instruction to start it, the job queue says three jobs wait and no worker is running, and Incus reports one of three servers offline with its next step.">
+          <figcaption>A simulated failure: each problem names its cause and the next step. Detail of a Console screen, sample data.</figcaption>
+        </figure>
+      </article>
+
+    </div>
+
+    <section class="tint" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2 id="how-title">From drawing to running application.</h2>
+          <p>Fabric owns the application: its design, connections, replicas and health. Incus, the open-source system that runs containers and virtual machines on a cluster, owns the servers. Fabric talks to Incus only through its documented API.</p>
+        </div>
+        <ol class="steps reveal">
+          <li><h3>Design</h3><p>Connect modules on a canvas in Studio.</p></li>
+          <li><h3>Plan</h3><p>See what would be created, resized or removed, and whether it fits.</p></li>
+          <li><h3>Deploy</h3><p>A worker creates the instances as durable jobs. A crash or a repeated request never makes duplicates.</p></li>
+          <li><h3>Operate</h3><p>Health, recovery, backups and the audit log run from the Console.</p></li>
+        </ol>
+        <figure class="shot paper reveal" style="margin-top:48px">
+          <a href="/assets/diagrams/design-to-cluster.svg" aria-label="Open the diagram full size"><img src="/assets/diagrams/design-to-cluster.svg" width="1200" height="600" loading="lazy" alt="A design with a gateway, a web module with three replicas and a database with a volume. On three servers the web replicas run apart on the application's network behind one service address, and the database keeps its volume."></a>
+          <figcaption>Illustration, not a screenshot: a design and the instances it becomes on three servers. Select it to open full size.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section aria-labelledby="road-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2 id="road-title">What is available, and what is not yet.</h2>
+          <p>Fabric is in early development. This is the line between the two.</p>
+        </div>
+        <div class="split2 reveal">
+          <div class="box">
+            <h3>Available now</h3>
+            <p>Run on a disposable four-server lab.</p>
+            <ul class="dots">
+              <li>Designer, deploy, network rules and service addresses</li>
+              <li>Containers and virtual machines created in Incus</li>
+              <li>Replicas, health checks and restart of failed replicas</li>
+              <li>Volumes, snapshots, backups and restore</li>
+              <li>Recovery of a container's data after a server fails</li>
+              <li>Roles, approvals, audit and the Fabric Console</li>
+            </ul>
+          </div>
+          <div class="box road">
+            <h3>On the roadmap</h3>
+            <p>Designed or planned, not built, or not yet tested.</p>
+            <ul class="dots">
+              <li>Restarting virtual machines after a server dies</li>
+              <li>Installing operating systems on new servers through MAAS</li>
+              <li>Rebalancing running instances, and staged upgrades with rollback</li>
+              <li>IPMI power control, and Redfish on a real management controller</li>
+              <li>More deployable modules than the three today</li>
+              <li>Production use on real servers</li>
+            </ul>
+          </div>
+        </div>
+        <p style="margin-top:28px"><a class="more" href="/product/#roadmap">The full roadmap, and how each item was checked <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      </div>
+    </section>
+
+    <section class="tint" aria-labelledby="offers-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2 id="offers-title">The software is free. The help is optional.</h2>
+          <p>Apelora Fabric is open source under the GNU Affero General Public License (AGPL). Services add people and time, not features: the software is the same for everyone.</p>
+        </div>
+        <div class="offers reveal">
+          <article class="offer start">
+            <div class="head"><h3>Community</h3><span class="tag start">Start here</span></div>
+            <p class="for">Run it yourself.</p>
+            <hr>
+            <p class="price">Free<small>Open source, AGPL-3.0</small></p>
+            <ul class="checks">
+              <li><span>The complete software and source code</span></li>
+              <li><span>Documentation, runbooks and design decisions</span></li>
+              <li><span>Questions and bug reports in public on GitHub</span></li>
+            </ul>
+            <a class="btn btn-line" href="https://github.com/Apelora/apelora-fabric">Get the source</a>
+          </article>
+          <article class="offer">
+            <h3>Deployment</h3>
+            <p class="for">We set it up with you.</p>
+            <hr>
+            <p class="price">Request a quote<small>Quoted for your environment</small></p>
+            <ul class="checks">
+              <li><span>Installation and configuration</span></li>
+              <li><span>Validation on your servers</span></li>
+              <li><span>Handover with runbooks</span></li>
+            </ul>
+            <a class="btn btn-primary" href="/contact/?type=deployment">Request a quote</a>
+          </article>
+          <article class="offer">
+            <h3>Support</h3>
+            <p class="for">Someone to ask.</p>
+            <hr>
+            <p class="price">Request a quote<small>A subscription with defined coverage</small></p>
+            <ul class="checks">
+              <li><span>Help installing, upgrading and operating</span></li>
+              <li><span>Diagnosis from your logs and support bundle</span></li>
+              <li><span>Confirmed defects fixed in releases</span></li>
+            </ul>
+            <a class="btn btn-primary" href="/contact/?type=support">Request a quote</a>
+          </article>
+        </div>
+        <p style="margin-top:28px;color:var(--muted)">Integration, training or a larger deployment? <a href="/contact/?type=custom">Ask about custom services</a>. <a href="/pricing/">Compare what each option includes</a>.</p>
+      </div>
+    </section>
+
+    {{cta}}
+  </main>

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Use cases · Apelora</title>
+  <meta name="description" content="What Apelora Fabric does today, what was checked for each use, and what is not yet in place: a web tier, data through a server failure, a private cluster, disconnected sites and a laptop lab.">
+  <link rel="canonical" href="https://apelora.github.io/use-cases/">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Use cases · Apelora">
+  <meta property="og:description" content="What Apelora Fabric does today, what was checked for each use, and what is not yet in place: a web tier, data through a server failure, a private cluster, disconnected sites and a laptop lab.">
+  <meta property="og:url" content="https://apelora.github.io/use-cases/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/documentation/">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+<main id="main">
+    <section class="page-head" style="padding-bottom:0">
+      <div class="wrap">
+        <h1>What teams use Apelora Fabric for.</h1>
+        <p>Five scenarios the current implementation supports. Each one says what was verified and what is not in place yet.</p>
+      </div>
+    </section>
+
+    <section style="padding-top:clamp(24px,4vw,48px)">
+      <div class="wrap">
+
+        <article class="case" id="web-tier">
+          <div>
+            <h2>Put a web tier on your own servers</h2>
+            <p class="lead">Draw a gateway and web modules, connect them, and let Fabric run replicas on different servers behind one address.</p>
+          </div>
+          <div><dl>
+            <div><dt>What you do</dt><dd>Design in Studio, review the plan, deploy. Fabric creates the instances, the application's network, the access rules and a service address that the gateway publishes.</dd></div>
+            <div><dt>Verified</dt><dd>Real Incus tested on the lab: replicas on different servers, enforced connections, a service address with health checks, and the restart of a crashed replica.</dd></div>
+            <div><dt>Not yet</dt><dd>NGINX, Debian and a Linux virtual machine are the deployable modules. Other catalog modules can be designed but not deployed. Nothing has run on production servers.</dd></div>
+          </dl>
+          <figure class="shot paper"><a href="/assets/diagrams/design-to-cluster.svg" aria-label="Open the diagram full size"><img src="/assets/diagrams/design-to-cluster.svg" width="1200" height="600" loading="lazy" alt="A design with a gateway, a web module with three replicas and a database, and the instances it becomes on three servers behind one service address."></a><figcaption>Illustration: a design and the instances it becomes. Select it to open full size.</figcaption></figure></div>
+        </article>
+
+        <article class="case" id="survive-failure">
+          <div>
+            <h2>Keep data through a server failure</h2>
+            <p class="lead">Put a stateful module on shared storage so it can restart on another server, without two servers ever writing the same disk.</p>
+          </div>
+          <div><dl>
+            <div><dt>What you do</dt><dd>Choose "shared pool" for the module's data in Studio. When its server fails, the Console shows why it waits and when it is fenced; the restart follows.</dd></div>
+            <div><dt>Verified</dt><dd>Real Incus tested: a container with a volume ran again 144 to 155 seconds after its server was force-stopped, data intact, in three drills. A server cut off but still running was switched off through a lab stand-in for a management controller and fenced after 61 seconds.</dd></div>
+            <div><dt>Not yet</dt><dd>Virtual machines are not drilled. The Redfish controller provider has only met a test server. The shared storage in the lab is a clustered volume group on a virtual SAN, not real storage hardware.</dd></div>
+          </dl>
+          <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Health</span></div><img src="/assets/img/crop-console-health.webp" width="790" height="610" loading="lazy" alt="Fabric Console, Health, during a failure, with each problem showing its cause and next step."><figcaption>A simulated failure in the Console. Sample data.</figcaption></figure></div>
+        </article>
+
+        <article class="case" id="private-cluster">
+          <div>
+            <h2>Run a small private cluster with control</h2>
+            <p class="lead">Add servers deliberately, give people only the access they need, and keep a record of every change.</p>
+          </div>
+          <div><dl>
+            <div><dt>What you do</dt><dd>Register a server, approve it to get a single-use join token, run the enrolment script, then admit it after its checks pass. Assign roles per organisation, project or application. Evacuate a server before maintenance.</dd></div>
+            <div><dt>Verified</dt><dd>Real Incus tested for joining, admitting, evacuating and removing servers. Roles, approvals and the audit log are tested with a real database and checked in a browser against test identity servers.</dd></div>
+            <div><dt>Not yet</dt><dd>Not independently audited. Installing the operating system on a new server is yours to do; the MAAS part of that is on the roadmap.</dd></div>
+          </dl>
+          <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Sign-in</span></div><img src="/assets/img/crop-console-identity.webp" width="1005" height="600" loading="lazy" alt="Fabric Console, Sign-in settings with identity providers, local accounts and API tokens."><figcaption>Identity providers and access settings. Sample data.</figcaption></figure></div>
+        </article>
+
+        <article class="case" id="disconnected">
+          <div>
+            <h2>Operate without internet access</h2>
+            <p class="lead">Serve images from your own mirrors and verify releases offline.</p>
+          </div>
+          <dl>
+            <div><dt>What you do</dt><dd>Name your image mirrors; Fabric can refuse any image that is not served by one of them. Install from a signed release bundle and check its signature before use.</dd></div>
+            <div><dt>Verified</dt><dd>Checked against local test servers and in unit and API tests, and signed bundles verified with the standard SSH signature tool.</dd></div>
+            <div><dt>Not yet</dt><dd>Not run on the lab with outbound traffic blocked. Treat this as designed and tested in parts, not proven end to end.</dd></div>
+          </dl>
+        </article>
+
+        <article class="case" id="laptop-lab">
+          <div>
+            <h2>Try everything on one Mac, with no hardware</h2>
+            <p class="lead">A lab of virtual machines stands in for servers, a SAN and, if you want it, a provisioning system.</p>
+          </div>
+          <dl>
+            <div><dt>What you do</dt><dd>Run one script to start a disposable Incus cluster in virtual machines, point the control plane at it, and use Studio and the Console as you would on servers.</dd></div>
+            <div><dt>Verified</dt><dd>Everything labelled "real Incus tested" on this site ran on exactly this lab. The guide says what the lab proves and what only real hardware can.</dd></div>
+            <div><dt>Not yet</dt><dd>The lab says nothing about real management controllers, network switches, disk speed or hardware faults.</dd></div>
+          </dl>
+        </article>
+
+        <p style="margin-top:24px"><a class="more" href="https://github.com/Apelora/apelora-fabric/blob/main/docs/guides/testing-without-hardware.md">Read: testing without hardware <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      </div>
+    </section>
+        <section class="cta-band" aria-labelledby="cta-title">
+      <div class="wrap">
+        <div class="cta-card">
+          <h2 id="cta-title">Tell us about your environment</h2>
+          <p>How many servers, what storage and network, who needs access. We will tell you what Apelora does for that today and what it does not.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="/contact/?type=demo">Request a demo</a>
+            <a class="btn btn-soft" href="/contact/?type=deployment">Ask about deployment</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/documentation/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/current-state.md">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

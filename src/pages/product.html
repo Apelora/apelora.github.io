@@ -1,0 +1,183 @@
+<!--page {"title":"Product","description":"What Apelora Fabric does today and how each result was checked: design, plan and deploy, connect, recover, operate, secure and monitor, plus the roadmap of what is not built yet.","path":"/product/","nav":"product"} -->
+  <main id="main">
+
+    <section class="page-head" style="padding-bottom:0">
+      <div class="wrap">
+        <h1>One product, from the drawing to the audit log.</h1>
+        <p>Apelora Fabric has two screens and one control plane. Studio is where you design; Fabric Console is where you operate. Every result here says how it was checked.</p>
+        <nav class="subnav" aria-label="On this page">
+          <a class="chip" href="#design">Design</a><a class="chip" href="#deploy">Plan and deploy</a><a class="chip" href="#connect">Connect</a><a class="chip" href="#recover">Recover</a><a class="chip" href="#operate">Operate</a><a class="chip" href="#secure">Secure</a><a class="chip" href="#monitor">Monitor</a><a class="chip" href="#roadmap">Roadmap</a>
+        </nav>
+      </div>
+    </section>
+
+    <div class="wrap">
+
+      <article class="feature" id="design">
+        <div class="copy">
+          <h2>Design</h2>
+          <p>Apelora Studio is a canvas for connected modules. Ports are typed, so a cable that cannot work is refused.</p>
+          <ul class="checks">
+            <li><span>A catalog of 83 modules in 12 categories, and modules you define yourself.</span></li>
+            <li><span>Import and export designs as files; undo and redo.</span></li>
+            <li><span><b>Deploys today:</b> NGINX (an application container), Debian (a system container) and a Linux virtual machine. The other 80 modules are design-only until their images have run on the lab.</span></li>
+          </ul>
+          <div class="evidence"><span class="tag">Checked in a real browser</span></div>
+        </div>
+        <figure class="shot">
+          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Apelora Studio · canvas</span></div>
+          <img src="/assets/img/crop-studio-canvas.webp" width="900" height="570" loading="lazy" alt="Apelora Studio canvas: a gateway connects to a load balancer, which connects to two NGINX modules and on to a PostgreSQL database; a Grafana module reads from the database. Cables carry protocol labels such as http and postgres.">
+          <figcaption>A design on the canvas. Detail of a Studio screen, sample data.</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature reverse" id="deploy">
+        <div class="copy">
+          <h2>Plan and deploy</h2>
+          <p>Before anything changes, Fabric shows what would be created, resized or removed, and whether it fits your servers.</p>
+          <ul class="checks">
+            <li><span>Containers and virtual machines, one per replica, with CPU and memory limits.</span></li>
+            <li><span>Volumes that outlive their instance: grow online, snapshot, back up to another pool, restore.</span></li>
+            <li><span>Resize running instances in place, and move an instance to another server (virtual machines move live).</span></li>
+          </ul>
+          <div class="evidence"><span class="tag">Real Incus tested</span></div>
+        </div>
+        <figure class="shot">
+          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Apelora Studio · capacity check</span></div>
+          <img src="/assets/img/studio-capacity.webp" width="900" height="560" loading="lazy" alt="Apelora Studio showing a capacity check: the design fits on one server, with the vCPU, memory and volume space it asks for next to what is free, and the three servers listed.">
+          <figcaption>The capacity check: what the design asks for, next to what is free. Sample data.</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature" id="connect">
+        <div class="copy">
+          <h2>Connect</h2>
+          <p>Cables become network policy. Each application gets its own network, and only the connections you drew are allowed.</p>
+          <ul class="checks">
+            <li><span>Deny by default, with an access rule for each cable.</span></li>
+            <li><span>Service addresses with health checks; a gateway connection publishes a module.</span></li>
+            <li><span>Each module is told its providers' addresses. Internet access is optional, per module.</span></li>
+          </ul>
+          <div class="evidence"><span class="tag">Real Incus tested</span><span class="tag road">Service names (DNS): roadmap</span></div>
+        </div>
+        <figure class="shot paper">
+          <a href="/assets/diagrams/design-to-cluster.svg" aria-label="Open the diagram full size"><img src="/assets/diagrams/design-to-cluster.svg" width="1200" height="600" loading="lazy" alt="A design with a gateway, a web module with three replicas and a database with a volume, and the instances it becomes on three servers behind one service address."></a>
+          <figcaption>Illustration, not a screenshot: a design and the instances and network it becomes. Select it to open full size.</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature reverse" id="recover">
+        <div class="copy">
+          <h2>Recover</h2>
+          <p>Failed replicas are restarted or replaced. For a module that keeps data, Fabric fences first, then restarts.</p>
+          <ul class="checks">
+            <li><span><b>Fenced</b> means proven stopped: its storage lease is dead, its power is confirmed off, or a person confirms it. Two servers never write the same disk.</span></li>
+            <li><span>A container with data ran again 144 to 155 seconds after a forced stop, in three lab drills.</span></li>
+            <li><span>A server cut off but still running was switched off through its management controller and fenced after 61 seconds in the lab. That does not make the restart faster on this storage.</span></li>
+          </ul>
+          <div class="evidence"><span class="tag">Real Incus tested</span><span class="tag plain">Redfish: tested against a test server</span><span class="tag road">Virtual machines: roadmap</span></div>
+        </div>
+        <figure class="shot">
+          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Health</span></div>
+          <img src="/assets/img/crop-console-health.webp" width="790" height="610" loading="lazy" alt="Fabric Console, Health, during a failure: overall status Down, with the deployment worker, job queue and one offline server each showing their cause and next step.">
+          <figcaption>A simulated failure: each problem names its cause and the next step. Sample data.</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature" id="operate">
+        <div class="copy">
+          <h2>Operate</h2>
+          <p>Fabric Console, in your browser.</p>
+          <ul class="checks">
+            <li><span>Servers, maintenance with evacuation, joining and removing servers, and cluster settings with a dry-run review.</span></li>
+            <li><span>Instances with logs and terminals; operations you can retry or cancel; networks and storage.</span></li>
+            <li><span>Applications start, restart and stop in dependency order, with a warning when clients would lose service.</span></li>
+          </ul>
+          <div class="evidence"><span class="tag">Real Incus tested</span><span class="tag plain">Terminals: checked against a stand-in</span></div>
+        </div>
+        <figure class="shot">
+          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Servers</span></div>
+          <img src="/assets/img/crop-console-upgrades.webp" width="1005" height="560" loading="lazy" alt="Fabric Console, Servers, Upgrades tab: members run two different Incus releases, a warning says to wait before upgrading because one server is offline, and a numbered rolling-upgrade procedure follows.">
+          <figcaption>The Upgrades tab warns before a rolling upgrade and lists the steps. Sample data.</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature reverse" id="secure">
+        <div class="copy">
+          <h2>Secure</h2>
+          <p>Access is explicit, and every change is recorded.</p>
+          <ul class="checks">
+            <li><span>OpenID Connect, LDAP and local sign-in; roles at organisation, project and application scope.</span></li>
+            <li><span>A second person approves sensitive changes. A token can never grant more than its creator holds.</span></li>
+            <li><span>An append-only audit log, searchable and exportable. Credentials stay in the backend, never in the browser.</span></li>
+          </ul>
+          <div class="evidence"><span class="tag">Checked with test identity servers</span><span class="tag plain">Not independently audited</span></div>
+        </div>
+        <figure class="shot">
+          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Sign-in</span></div>
+          <img src="/assets/img/crop-console-identity.webp" width="1005" height="600" loading="lazy" alt="Fabric Console, Sign-in settings: three identity providers with their status, a local accounts switch, a directory section and an API tokens section.">
+          <figcaption>Identity providers, local accounts, directories and API tokens. Sample data.</figcaption>
+        </figure>
+      </article>
+
+      <article class="feature" id="monitor">
+        <div class="copy">
+          <h2>Monitor</h2>
+          <p>Know before your users do.</p>
+          <ul class="checks">
+            <li><span>Fifteen built-in alert rules (failed jobs, silent workers, offline servers, expiring certificates, failed backups) with signed webhooks.</span></li>
+            <li><span>A metrics endpoint for the control plane and the worker, for your own monitoring.</span></li>
+            <li><span>A support bundle with versions, health and failed jobs; secrets are never included.</span></li>
+          </ul>
+          <div class="evidence"><span class="tag plain">Checked against stand-ins and a real database</span></div>
+        </div>
+        <figure class="shot phone">
+          <img src="/assets/img/console-phone.webp" width="390" height="844" loading="lazy" alt="Fabric Console on a phone: the Servers page with its tabs and a member list.">
+          <figcaption>The Console works on a phone. Sample data.</figcaption>
+        </figure>
+      </article>
+
+    </div>
+
+    <section class="tint" id="roadmap" aria-labelledby="roadmap-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="roadmap-title">Roadmap: what is not built, or not yet tested.</h2>
+          <p>We would rather tell you now. Each item is in the repository's status document with its current state.</p>
+        </div>
+        <div class="table-wrap stack-sm">
+          <table>
+            <thead><tr><th scope="col">Item</th><th scope="col">State</th><th scope="col">What it means for you</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Production use</th><td data-label="State">Not yet</td><td data-label="Meaning">Tested on a four-server lab of virtual machines; no real servers have run it, and speed and scale are unmeasured.</td></tr>
+              <tr><th scope="row">Virtual machines after a server dies</th><td data-label="State">Planned</td><td data-label="Meaning">Containers with data on shared storage recover; virtual machines are not drilled.</td></tr>
+              <tr><th scope="row">Operating systems through MAAS</th><td data-label="State">Not built</td><td data-label="Meaning">Discovery and registration of MAAS machines is built and tested against a real MAAS; installing an OS through it is not. Servers installed by hand join with a token.</td></tr>
+              <tr><th scope="row">Management controllers</th><td data-label="State">Partly built</td><td data-label="Meaning">A Redfish fence provider exists, tested against a test server only; IPMI is not built.</td></tr>
+              <tr><th scope="row">More deployable modules</th><td data-label="State">Ongoing</td><td data-label="Meaning">Three of 83 modules deploy; each new runtime is added after its images have run on the lab.</td></tr>
+              <tr><th scope="row">Rebalancing and staged upgrades</th><td data-label="State">Not built</td><td data-label="Meaning">Instances are not moved automatically for balance; the rolling Incus upgrade is a written procedure, not an assistant.</td></tr>
+              <tr><th scope="row">Service names (DNS)</th><td data-label="State">Not built</td><td data-label="Meaning">Modules find each other through addresses injected as settings.</td></tr>
+              <tr><th scope="row">Several sites and regions</th><td data-label="State">Designed</td><td data-label="Meaning">A design from three servers to a global fabric is written down; the multi-site parts are not built.</td></tr>
+              <tr><th scope="row">Remote desktop sessions</th><td data-label="State">Not built</td><td data-label="Meaning">Terminal sessions exist; remote desktop does not.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption" style="margin-top:20px">Source of truth: <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/current-state.md">current state</a> in the repository, updated with every change.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="terms-title">
+      <div class="wrap">
+        <div class="sec-head"><h2 id="terms-title">Words used on this site.</h2></div>
+        <dl class="terms">
+          <div><dt>Module</dt><dd>A building block on the canvas, such as a web server or a database, with typed ports.</dd></div>
+          <div><dt>Instance</dt><dd>A running container or virtual machine that a module becomes. A module with three replicas becomes three instances.</dd></div>
+          <div><dt>Incus</dt><dd>The open-source system that runs containers and virtual machines across a cluster of servers. Fabric builds on it and does not replace it.</dd></div>
+          <div><dt>Fenced</dt><dd>A failed server is proven stopped, so it cannot write to shared storage while its modules restart elsewhere.</dd></div>
+          <div><dt>Replica</dt><dd>One of several identical copies of a module, run on different servers.</dd></div>
+          <div><dt>Runbook</dt><dd>A written procedure for a situation such as a failed server, with each step marked as tested or not.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    {{cta}}
+  </main>

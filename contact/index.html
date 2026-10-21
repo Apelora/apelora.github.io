@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact · Apelora</title>
+  <meta name="description" content="Request a demo of Apelora Fabric or a quote for deployment, support or custom services. A short form, and the public channels that work today.">
+  <link rel="canonical" href="https://apelora.github.io/contact/">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Contact · Apelora">
+  <meta property="og:description" content="Request a demo of Apelora Fabric or a quote for deployment, support or custom services. A short form, and the public channels that work today.">
+  <meta property="og:url" content="https://apelora.github.io/contact/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/documentation/">Documentation</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+<main id="main">
+    <section class="page-head" style="padding-bottom:0">
+      <div class="wrap">
+        <h1>Tell us about your environment.</h1>
+        <p>Ask for a demo, or for a quote for deployment, support or custom services. Say how many servers you have and what you want to run; that is enough to start.</p>
+      </div>
+    </section>
+    <section style="padding-top:clamp(24px,4vw,48px)">
+      <div class="wrap contact">
+        <div>
+          <form class="form" id="contact-form" novalidate aria-labelledby="form-title">
+            <h2 id="form-title">Send a message</h2>
+            <div class="notice" id="form-notice" role="note" hidden><b>Preview.</b> This form is not connected to a message service yet. You can fill it in and check it, but nothing is sent.</div>
+            <div class="row2">
+              <div class="field">
+                <label for="f-name">Name</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="err-name">
+                <p class="error" id="err-name" role="alert"></p>
+              </div>
+              <div class="field">
+                <label for="f-email">Email</label>
+                <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" required aria-describedby="err-email">
+                <p class="error" id="err-email" role="alert"></p>
+              </div>
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label for="f-org">Organisation <span class="opt">(optional)</span></label>
+                <input id="f-org" name="organisation" type="text" autocomplete="organization">
+              </div>
+              <div class="field">
+                <label for="f-type">What is this about?</label>
+                <select id="f-type" name="type" required aria-describedby="err-type">
+                  <option value="demo">Request a demo</option>
+                  <option value="deployment">Quote: deployment</option>
+                  <option value="support">Quote: support</option>
+                  <option value="custom">Quote: integration, training or a larger deployment</option>
+                  <option value="other">Something else</option>
+                </select>
+                <p class="error" id="err-type" role="alert"></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-message">Message</label>
+              <textarea id="f-message" name="message" required aria-describedby="err-message hint-message" placeholder="How many servers, what storage and network, and what you want to run…"></textarea>
+              <p class="opt" id="hint-message" style="margin-top:8px;font-size:0.9rem;color:var(--muted)">Press Ctrl or Cmd and Enter to send.</p>
+              <p class="error" id="err-message" role="alert"></p>
+            </div>
+            <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+            <button class="btn btn-primary" type="submit"><span>Send message</span></button>
+            <div class="status" id="form-status" role="status" aria-live="polite" tabindex="-1" hidden></div>
+            <noscript><p class="notice">This form needs JavaScript. Use one of the channels beside it instead.</p></noscript>
+          </form>
+        </div>
+        <aside class="aside" aria-labelledby="other-title">
+          <h2 id="other-title">Other ways to reach us today</h2>
+          <ul>
+            <li><b>Questions and ideas, in public</b><a href="https://github.com/Apelora/apelora-fabric/discussions">GitHub Discussions</a></li>
+            <li><b>A bug or a missing feature, in public</b><a href="https://github.com/Apelora/apelora-fabric/issues">GitHub Issues</a></li>
+            <li><b>A security problem, in private</b><a href="https://github.com/Apelora/apelora-fabric/security/advisories/new">Report a vulnerability</a> (see the <a href="https://github.com/Apelora/apelora-fabric/blob/main/SECURITY.md">security policy</a>)</li>
+          </ul>
+          <p style="margin-top:22px;color:var(--muted);font-size:0.95rem">GitHub discussions and issues are public. Do not post details of your environment, credentials or anything confidential there.</p>
+          <h2 style="margin-top:40px">What a demo is</h2>
+          <p style="margin-top:12px;color:var(--muted)">A walk through Studio and the Fabric Console on a lab cluster with sample data, including a simulated server failure, and time for your questions. It is not a trial on your servers.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/documentation/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/architecture/current-state.md">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

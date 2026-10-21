@@ -1,0 +1,11 @@
+{
+  "name": "apelora-website",
+  "private": true,
+  "type": "module",
+  "description": "The Apelora website: static pages built from src/ by a dependency-free script.",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node scripts/check.mjs",
+    "preview": "python3 -m http.server 4173 --bind 127.0.0.1"
+  }
+}

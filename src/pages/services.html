@@ -1,0 +1,99 @@
+<!--page {"title":"Services","description":"Deployment, integration, training and support for Apelora Fabric, with what each one covers and does not cover. Request a quote: prices are not published yet.","path":"/services/","nav":"services"} -->
+  <main id="main">
+    <section class="page-head" style="padding-bottom:0">
+      <div class="wrap">
+        <h1><span>Help where you want it.</span> <span>Software you can run without it.</span></h1>
+        <p>Apelora Fabric is free, open source software. Services add people and time: we deploy it with you, connect it to your systems, train your team and support it. Every service is quoted for your environment.</p>
+        <div class="actions"><a class="btn btn-primary" href="/contact/?type=deployment">Request a quote</a><a class="more" href="/pricing/">Compare options</a></div>
+        <nav class="subnav" aria-label="Services"><a class="chip" href="#deployment">Deployment</a><a class="chip" href="#integration">Integration</a><a class="chip" href="#training">Training</a><a class="chip" href="#support">Support</a></nav>
+      </div>
+    </section>
+
+    <section id="deployment" aria-labelledby="dep-title" style="padding-bottom:0">
+      <div class="wrap">
+        <div class="sec-head"><h2 id="dep-title">Deployment</h2><p>We install Apelora Fabric on your servers, prove that it works there and hand it over.</p></div>
+        <ol class="steps">
+          <li><h3>Review</h3><p>Servers, network, storage, identity provider and how you operate today.</p></li>
+          <li><h3>Install</h3><p>Control plane, worker and Console, connected to your identity provider and secured with TLS; servers joined with single-use tokens.</p></li>
+          <li><h3>Validate</h3><p>Preflight on every server, test deployments, and a failure test you can watch.</p></li>
+          <li><h3>Hand over</h3><p>Roles, backups, alerts and runbooks configured and explained; the audit log on from the first change.</p></li>
+        </ol>
+        <div class="split2">
+          <div class="box">
+            <h3>You receive</h3>
+            <ul class="dots">
+              <li>A working cluster with Apelora Fabric installed and connected to your identity provider</li>
+              <li>A written record of what was installed and how it was validated</li>
+              <li>Runbooks adapted to your environment, and a handover session</li>
+            </ul>
+          </div>
+          <div class="box road">
+            <h3>Outside the standard scope</h3>
+            <ul class="dots">
+              <li>Buying or racking hardware</li>
+              <li>Installing operating systems on servers</li>
+              <li>Migrating existing applications</li>
+            </ul>
+            <p style="margin-top:14px">We can quote these as custom services.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="integration" class="tint" aria-labelledby="int-title" style="margin-top:clamp(56px,8vw,104px)">
+      <div class="wrap">
+        <div class="sec-head"><h2 id="int-title">Integration</h2><p>Connect Apelora Fabric to what you already run.</p></div>
+        <ul class="mini">
+          <li><h3>Identity</h3><p>OpenID Connect providers and LDAP directories, with roles mapped to your groups.</p></li>
+          <li><h3>Monitoring</h3><p>The metrics endpoint and signed alert webhooks into your own monitoring and paging.</p></li>
+          <li><h3>Provisioning</h3><p>Discovery of servers from MAAS, if you use it.</p></li>
+          <li><h3>Image mirrors</h3><p>Mirrors and signed bundles for sites without internet access.</p></li>
+          <li><h3>Custom modules</h3><p>Your own module definitions, ports and defaults in the catalog.</p></li>
+          <li><h3>Larger deployments</h3><p>More servers, more sites, and the questions that come with them.</p></li>
+        </ul>
+        <div class="actions"><a class="btn btn-primary" href="/contact/?type=custom">Request a quote</a></div>
+      </div>
+    </section>
+
+    <section id="training" aria-labelledby="train-title">
+      <div class="wrap">
+        <div class="sec-head"><h2 id="train-title">Training</h2><p>For the people who will design with Fabric and the people who will keep it running. Format and length are agreed in the quote.</p></div>
+        <ul class="mini">
+          <li><h3>For designers</h3><p>Studio: modules, ports and connections, plans, deploying and changing an application.</p></li>
+          <li><h3>For operators</h3><p>Fabric Console: servers, maintenance, health, alerts, backups and restore, roles and the audit log.</p></li>
+          <li><h3>For incidents</h3><p>The runbooks, walked through on your own cluster: a server fails, quorum is lost, a certificate expires.</p></li>
+        </ul>
+        <div class="actions"><a class="btn btn-primary" href="/contact/?type=custom">Request a quote</a></div>
+      </div>
+    </section>
+
+    <section id="support" class="tint" aria-labelledby="sup-title">
+      <div class="wrap">
+        <div class="sec-head"><h2 id="sup-title">Support</h2><p>A subscription with defined coverage. Proposed scope below; the final terms, hours, channels and response times are written in each quote.</p></div>
+        <div class="split2">
+          <div class="box">
+            <h3>Covered</h3>
+            <ul class="dots">
+              <li>Questions about installing, configuring and operating Apelora Fabric</li>
+              <li>Diagnosing problems from your logs, the support bundle and the audit log</li>
+              <li>Guidance for upgrades of Apelora Fabric and of the Incus release it is pinned to</li>
+              <li>Fixes for confirmed defects in Apelora Fabric, delivered in releases</li>
+              <li>Help with failed servers, using the runbooks</li>
+            </ul>
+          </div>
+          <div class="box road">
+            <h3>Not covered</h3>
+            <ul class="dots">
+              <li>The code and images of your own applications</li>
+              <li>Hardware, network and storage faults outside Apelora Fabric</li>
+              <li>Incus, OVN, PostgreSQL and other upstream software beyond how Fabric configures them; defects there are reported upstream</li>
+              <li>Features that are on the roadmap but not built</li>
+            </ul>
+          </div>
+        </div>
+        <div class="actions"><a class="btn btn-primary" href="/contact/?type=support">Request a quote</a></div>
+        <p class="caption" style="margin-top:16px">Apelora Fabric is in early development. We will discuss your use of it, and what it is ready for, before recommending a subscription.</p>
+      </div>
+    </section>
+    {{cta}}
+  </main>

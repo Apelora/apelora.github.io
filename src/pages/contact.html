@@ -1,0 +1,69 @@
+<!--page {"title":"Contact","description":"Request a demo of Apelora Fabric or a quote for deployment, support or custom services. A short form, and the public channels that work today.","path":"/contact/","nav":""} -->
+  <main id="main">
+    <section class="page-head" style="padding-bottom:0">
+      <div class="wrap">
+        <h1>Tell us about your environment.</h1>
+        <p>Ask for a demo, or for a quote for deployment, support or custom services. Say how many servers you have and what you want to run; that is enough to start.</p>
+      </div>
+    </section>
+    <section style="padding-top:clamp(24px,4vw,48px)">
+      <div class="wrap contact">
+        <div>
+          <form class="form" id="contact-form" novalidate aria-labelledby="form-title">
+            <h2 id="form-title">Send a message</h2>
+            <div class="notice" id="form-notice" role="note" hidden><b>Preview.</b> This form is not connected to a message service yet. You can fill it in and check it, but nothing is sent.</div>
+            <div class="row2">
+              <div class="field">
+                <label for="f-name">Name</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="err-name">
+                <p class="error" id="err-name" role="alert"></p>
+              </div>
+              <div class="field">
+                <label for="f-email">Email</label>
+                <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" required aria-describedby="err-email">
+                <p class="error" id="err-email" role="alert"></p>
+              </div>
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label for="f-org">Organisation <span class="opt">(optional)</span></label>
+                <input id="f-org" name="organisation" type="text" autocomplete="organization">
+              </div>
+              <div class="field">
+                <label for="f-type">What is this about?</label>
+                <select id="f-type" name="type" required aria-describedby="err-type">
+                  <option value="demo">Request a demo</option>
+                  <option value="deployment">Quote: deployment</option>
+                  <option value="support">Quote: support</option>
+                  <option value="custom">Quote: integration, training or a larger deployment</option>
+                  <option value="other">Something else</option>
+                </select>
+                <p class="error" id="err-type" role="alert"></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-message">Message</label>
+              <textarea id="f-message" name="message" required aria-describedby="err-message hint-message" placeholder="How many servers, what storage and network, and what you want to run…"></textarea>
+              <p class="opt" id="hint-message" style="margin-top:8px;font-size:0.9rem;color:var(--muted)">Press Ctrl or Cmd and Enter to send.</p>
+              <p class="error" id="err-message" role="alert"></p>
+            </div>
+            <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+            <button class="btn btn-primary" type="submit"><span>Send message</span></button>
+            <div class="status" id="form-status" role="status" aria-live="polite" tabindex="-1" hidden></div>
+            <noscript><p class="notice">This form needs JavaScript. Use one of the channels beside it instead.</p></noscript>
+          </form>
+        </div>
+        <aside class="aside" aria-labelledby="other-title">
+          <h2 id="other-title">Other ways to reach us today</h2>
+          <ul>
+            <li><b>Questions and ideas, in public</b><a href="https://github.com/Apelora/apelora-fabric/discussions">GitHub Discussions</a></li>
+            <li><b>A bug or a missing feature, in public</b><a href="https://github.com/Apelora/apelora-fabric/issues">GitHub Issues</a></li>
+            <li><b>A security problem, in private</b><a href="https://github.com/Apelora/apelora-fabric/security/advisories/new">Report a vulnerability</a> (see the <a href="https://github.com/Apelora/apelora-fabric/blob/main/SECURITY.md">security policy</a>)</li>
+          </ul>
+          <p style="margin-top:22px;color:var(--muted);font-size:0.95rem">GitHub discussions and issues are public. Do not post details of your environment, credentials or anything confidential there.</p>
+          <h2 style="margin-top:40px">What a demo is</h2>
+          <p style="margin-top:12px;color:var(--muted)">A walk through Studio and the Fabric Console on a lab cluster with sample data, including a simulated server failure, and time for your questions. It is not a trial on your servers.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
