@@ -7,7 +7,7 @@ label: API reference
 source: packages/api-client/openapi.json
 summary: Every operation of the control plane's REST API, by area. Generated from its OpenAPI document.
 ---
-The control plane's REST API, version `v1`: 180 operations. Calls are made with a bearer token (an API token or an identity provider's access token) and checked against the caller's permissions; a few, such as health and sign-in, are public. The complete machine-readable description, with request and response shapes, is the OpenAPI document `packages/api-client/openapi.json` in the repository; `apelora-control-plane openapi` prints it. This page is generated from it.
+The control plane's REST API, version `v1`: 181 operations. Calls are made with a bearer token (an API token or an identity provider's access token) and checked against the caller's permissions; a few, such as health and sign-in, are public. The complete machine-readable description, with request and response shapes, is the OpenAPI document `packages/api-client/openapi.json` in the repository; `apelora-control-plane openapi` prints it. This page is generated from it.
 
 ## System
 
@@ -77,8 +77,9 @@ The control plane's REST API, version `v1`: 180 operations. Calls are made with 
 | `GET` | `/api/v1/applications/{name}/draft` | The application's working document. |
 | `PUT` | `/api/v1/applications/{name}/draft` | Saves the draft as the next version. |
 | `GET` | `/api/v1/applications/{name}/events` | What happened to the application: creation, saves, versions, deployments, operations, refusals. |
+| `GET` | `/api/v1/applications/{name}/migration` | Dry run of migrating the application to another server: for each instance whether it keeps running, what is copied and what blocks it. |
 | `GET` | `/api/v1/applications/{name}/operations` | Recent operations of the application, newest first. |
-| `POST` | `/api/v1/applications/{name}/operations` | Starts, stops or restarts the application's instances, in dependency order, as an asynchronous operation. |
+| `POST` | `/api/v1/applications/{name}/operations` | Starts, shuts down (graceful), stops (immediate), restarts or migrates the application's instances, in dependency order where that matters, as an asynchronous operation. |
 | `GET` | `/api/v1/applications/{name}/operations/{id}` | One operation with the progress of each phase and instance. |
 | `POST` | `/api/v1/applications/{name}/plan` | What deploying the design would change, without changing anything. |
 | `POST` | `/api/v1/applications/{name}/restore` | Brings an archived application back. |

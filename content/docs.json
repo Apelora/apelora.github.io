@@ -120,7 +120,8 @@
       "adr/0011-one-design-every-size",
       "adr/0012-tenancy-on-incus-projects",
       "adr/0013-fencing-before-restart",
-      "adr/0014-bmc-power-off-fencing"
+      "adr/0014-bmc-power-off-fencing",
+      "adr/0015-application-lifecycle-verbs"
     ],
     "contribute": [
       "development/TEST-CLUSTER",
@@ -190,7 +191,12 @@
     "38-console-machines-1440x900",
     "39-studio-deploy-dialog-1440x900",
     "40-studio-deploy-plan-1440x900",
-    "41-studio-live-status-1440x900"
+    "41-studio-live-status-1440x900",
+    "42-studio-applications-1440x900",
+    "43-studio-applications-list-1440x900",
+    "44-studio-canvas-autosaved-1440x900",
+    "45-studio-applications-deploy-1440x900",
+    "46-studio-migrate-1440x900"
   ],
   "summaries": {
     "concepts/access-and-roles": "Who can do what at each layer: Studio, Console, API, Incus and the servers.",
@@ -268,6 +274,7 @@
     "runbooks/storage-incident": "A pool filling up, a pool that is down, or backups that stopped.",
     "runbooks/tenancy-quotas": "Environments' Incus projects and quotas: checking and fixing them.",
     "runbooks/troubleshooting": "Using logs and the audit trail, and retrying or cancelling jobs.",
-    "runbooks/volumes": "An application's volumes: kept, missing, or to be deleted."
+    "runbooks/volumes": "An application's volumes: kept, missing, or to be deleted.",
+    "decisions/0015-application-lifecycle-verbs": "Why an application has Shut down, Stop and Migrate beside Start and Restart, and what each does."
   }
 }

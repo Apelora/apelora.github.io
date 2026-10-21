@@ -40,6 +40,7 @@
   <url><loc>https://apelora.github.io/docs/decisions/0012-tenancy-on-incus-projects/</loc></url>
   <url><loc>https://apelora.github.io/docs/decisions/0013-fencing-before-restart/</loc></url>
   <url><loc>https://apelora.github.io/docs/decisions/0014-bmc-power-off-fencing/</loc></url>
+  <url><loc>https://apelora.github.io/docs/decisions/0015-application-lifecycle-verbs/</loc></url>
   <url><loc>https://apelora.github.io/docs/design/</loc></url>
   <url><loc>https://apelora.github.io/docs/design/alerts/</loc></url>
   <url><loc>https://apelora.github.io/docs/design/application-deployment/</loc></url>

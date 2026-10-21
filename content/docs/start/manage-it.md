@@ -13,7 +13,7 @@ Fabric Console is the administrator's screen. The menu on the left is the whole 
 | **Overview** | Connection, version and sign-in mode at a glance |
 | **Health** | Is Apelora working, and if not, which part and why |
 | **Servers** | Members, machines and join tokens, cluster settings, certificates, upgrades, preflight |
-| **Applications** | Your applications, with Start, Restart and Stop |
+| **Applications** | Your applications, with Start, Restart, Shut down and Stop |
 | **Instances** | Every container and virtual machine, with logs and terminals |
 | **Operations** | What the worker is doing and has done |
 | **Networks**, **Storage** | Application networks; volumes, snapshots and backups |
@@ -40,11 +40,29 @@ Reading it: [the Health page](/docs/runbooks/health-page/).
 
 <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Machines</span></div><img src="/assets/docs/img/38-console-machines-1440x900.webp" width="1440" height="900" loading="lazy" alt="Fabric Console, Servers, Machines and join tokens: a form to add a machine, and a list of the machines MAAS manages with status, power state and hardware, with a Register button."><figcaption>Machines and join tokens, with machines from MAAS. Sample data.</figcaption></figure>
 
-## Applications: start, restart, stop
+## Applications: start, shut down, stop, migrate
 
-**Applications** lists each application with how many instances run. Only the actions the server allows are offered, and when none is, it says why. Stop and Restart ask first; when clients of a single-instance or stateful module would lose service, the same dialog says so and asks again. Instances are stopped in dependency order and data is kept.
+Applications are operated from **Studio's Applications list** and, for the basics, from the Console's **Applications** page. Each application offers the verbs the server allows right now, and says why when one is greyed out.
 
-<figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Applications</span></div><img src="/assets/docs/img/36-console-application-stop-1440x900.webp" width="1440" height="900" loading="lazy" alt="Fabric Console, Applications: a dialog asking Stop shop? and explaining that instances are stopped in dependency order and data and volumes are kept."><figcaption>Stopping asks first. Sample data.</figcaption></figure>
+| Verb | What it does |
+|---|---|
+| **Start** | Starts every instance, providers first |
+| **Restart** | Stops and starts again, in dependency order; offered when something is wrong |
+| **Shut down** | Asks each instance to shut down and gives it time, what depends on a module first. Data is kept |
+| **Stop** | Powers every instance off at once, without waiting. Anything held only in memory is lost; use it when Shut down does not work |
+| **Migrate…** | Moves every instance to one server you choose, after a dry run |
+
+Shut down, Stop and Restart ask first; when clients of a single-instance or stateful module would lose service, the same dialog says so and asks again.
+
+<figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Apelora Studio · Applications</span></div><img src="/assets/docs/img/43-studio-applications-list-1440x900.webp" width="1440" height="900" loading="lazy" alt="Studio's Applications list in its list layout: each application with its status, project and health, and the Deploy, Start, Restart, Shut down, Stop and Migrate buttons the server allows."><figcaption>The Applications list. Import and New application are at the top; Export is in each row's menu. Sample data.</figcaption></figure>
+
+**Migrate** first shows, per instance, whether it keeps running while it moves, what is copied, and what blocks it; what has to stop needs a tick. All instances end up on the one server, so a module's replicas then share it. A migration changes real placement; it has been checked against the mock provider only, not yet on the lab.
+
+<figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Apelora Studio · Migrate</span></div><img src="/assets/docs/img/46-studio-migrate-1440x900.webp" width="1440" height="900" loading="lazy" alt="The Migrate dialog: a server chosen from a list, a table with each instance, where it runs now and what happens to it, a note that replicas will share the server, and a tick for instances that stop while they move."><figcaption>What would happen to each instance, before anything is asked. Sample data.</figcaption></figure>
+
+**Import** creates an application from a design file; **Export JSON** in a row's menu saves its design. The Console's page is the administrator's view:
+
+<figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Applications</span></div><img src="/assets/docs/img/36-console-application-stop-1440x900.webp" width="1440" height="900" loading="lazy" alt="Fabric Console, Applications: a dialog asking Shut down shop? and explaining that instances are asked to shut down in dependency order and data and volumes are kept."><figcaption>Shut down asks first. Sample data.</figcaption></figure>
 
 ## Operations
 

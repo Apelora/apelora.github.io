@@ -12,7 +12,7 @@ Apelora Studio is where you design. A design is a set of **modules** (a gateway,
 
 ## 1. Start
 
-Open the Studio. With the lab or your own installation connected, the Studio lists your **applications** and **New application** creates one; on its own, the Studio keeps a design in your browser (header: *This browser · not connected*). **New** also offers an empty canvas or a sample.
+Open the Studio. It starts on the **Applications** list: **New application** creates one (a blank canvas, a template, a copy of the Assembly library's design, or a file you **Import**). Connected to a control plane the applications live there; on its own, the Studio keeps them in your browser (the chip says *This browser · not connected*). The **Assembly library** is a scratch canvas kept in your browser.
 
 ## 2. Add modules
 
@@ -42,6 +42,14 @@ Everything else on the canvas (zones, density, layout) is view-only and never ch
 - The **validation** panel at the bottom left reports problems: a required input without a cable, an incompatible cable.
 - The **capacity chip** in the header (once connected) says whether the design fits the free servers, and why not. [See the plan on the next page.](/docs/start/deploy-it/)
 - **Undo** and **Redo** (Ctrl+Z, Ctrl+Shift+Z) keep 100 steps. **Export JSON** saves the design as a file; **Import** reads one back, validating it first and never replacing your design if the file is wrong.
+
+## 6. It saves itself
+
+There is no Save button. Every change is stored a moment after you make it, and again when you leave the page; the header says **All changes saved** (or *Saving…*). An application's draft is saved to the control plane, the Assembly library in your browser. To rename a design, **double-click its name** on the canvas strip (Enter saves, Escape cancels). An application's own name is fixed, because its instances are named after it.
+
+<figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Apelora Studio · saved automatically</span></div><img src="/assets/docs/img/44-studio-canvas-autosaved-1440x900.webp" width="1440" height="900" loading="lazy" alt="Studio canvas with the header showing Applications / Assembly library / commerce-stack and the words All changes saved. There is no Deploy button in the header."><figcaption>The header shows the save state. Deploying is not done from the canvas but from the Applications list. Sample data.</figcaption></figure>
+
+When the design is ready, **Publish version…** (in an application's designer) freezes the saved draft as a version you can deploy.
 
 Shortcuts and every interaction: the [Studio interface](/docs/design/studio-interface/). Modules you define yourself, groups and zones are covered there too.
 
