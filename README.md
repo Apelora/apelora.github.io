@@ -32,7 +32,7 @@ Repository `Apelora/apelora.github.io`, Settings → Pages → Deploy from a bra
 
 ## The contact form
 
-`assets/js/config.js` holds the form's endpoint, and it is **empty**: the form validates, says plainly that it is not connected, and sends nothing. To connect it, set `endpoint` to a service (or your own server) that accepts a `multipart/form-data` POST and answers 2xx when it has accepted the message. The page says "Message sent" only after such an answer. Then update the privacy section in `src/pages/legal.html`, which currently says the form sends nothing and must name the service.
+`assets/js/config.js` holds the form's endpoint, and it is **empty**: the form validates, says plainly that it is not connected, and sends nothing. To connect it, set `endpoint` to a service (or your own server) that accepts a `multipart/form-data` POST and answers 2xx when it has accepted the message. The page says "Message sent" only after such an answer. Then update the privacy section in `src/pages/legal.html`, which currently says the form sends nothing and must name the service. To receive the messages by email through your own SMTP server, run the small program in [`contact-service/`](contact-service/README.md) and point `endpoint` at it.
 
 ## Keep the facts true
 
