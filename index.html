@@ -49,22 +49,25 @@
 
 <main id="main">
 
-    <section class="hero" aria-labelledby="hero-title" style="padding-bottom:0">
-      <div class="wrap">
-        <h1 id="hero-title"><span>Design your applications.</span> <span>Control your infrastructure.</span></h1>
-        <p class="lede">Apelora Fabric is for platform and operations teams that run their own Linux servers. Draw an application once. Fabric sets up its network rules and addresses, runs it on your servers and handles failures.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="/contact/?type=demo">Request a demo</a>
-          <a class="btn btn-soft" href="#how">
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            See how it works
-          </a>
-          <a class="more" href="/docs/">Read the docs
-            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+    <section class="hero hero-split" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1 id="hero-title"><span>Design your applications.</span> <span>Control your infrastructure.</span></h1>
+          <p class="lede">For platform and operations teams that run their own Linux servers. Draw an application once; Apelora Fabric sets up its network rules and addresses, runs it on your servers and handles failures.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="/contact/?type=demo">Request a demo</a>
+            <a class="btn btn-line" href="/docs/start/what-you-need/">Start building</a>
+          </div>
+          <div class="try">
+            <span class="try-label" id="try-label">Try the designer on your machine</span>
+            <div class="cmd" role="group" aria-labelledby="try-label">
+              <code>npm install &amp;&amp; npm run dev</code>
+              <button type="button" class="js-only" data-copy="npm install &amp;&amp; npm run dev" aria-label="Copy the command">Copy</button>
+            </div>
+            <span class="try-note">Needs Node.js 22 or newer. Mock data, nothing is deployed. <a href="/docs/start/try-it-on-your-workstation/">All the steps</a></span>
+          </div>
+          <a class="lozenge" href="/product/#roadmap">Early development: tested on a four-server lab, not yet on production hardware</a>
         </div>
-        <a class="lozenge" href="/product/#roadmap">Early development: tested on a four-server lab, not yet on production hardware</a>
-
         <div class="preview">
           <div class="tabs" role="tablist" aria-label="Apelora Fabric screens">
             <button class="tab" role="tab" id="tab-design" aria-controls="panel-design" aria-selected="true" type="button">Design</button>
@@ -96,30 +99,15 @@
       </div>
     </section>
 
-    <section aria-labelledby="who-title">
+    <section class="facts-band" aria-label="Apelora Fabric at a glance">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <h2 id="who-title">Built for teams that run their own servers.</h2>
-          <p>If that is you, Fabric replaces a pile of hand-kept files. If it is not, it is better to know now.</p>
-        </div>
-        <div class="who reveal">
-          <div class="box">
-            <h3>A good fit if you</h3>
-            <ul class="dots">
-              <li>run Linux servers of your own, or plan to, and want one place to see and control them</li>
-              <li>keep container, network and firewall files in step by hand today</li>
-              <li>need roles, approvals and an audit trail, or work without internet access</li>
-            </ul>
-          </div>
-          <div class="box road">
-            <h3>Not yet a fit if you</h3>
-            <ul class="dots">
-              <li>need a proven production platform today: Fabric is in early development and has run only on a lab</li>
-              <li>want a hosted service: you run Fabric on servers you own</li>
-              <li>need many ready-to-run application types: three modules deploy today (NGINX, Debian and a Linux virtual machine)</li>
-            </ul>
-          </div>
-        </div>
+        <ul class="facts">
+          <li><b>83</b><span>modules to design with, in 12 categories. Three deploy today.</span></li>
+          <li><b>4</b><span>servers in the lab it has been tested on, running Incus 7.0 LTS.</span></li>
+          <li><b>15</b><span>built-in alert rules, with signed webhooks.</span></li>
+          <li><b>180+</b><span>API operations, from one documented OpenAPI file.</span></li>
+          <li><b>AGPL</b><span>open source. No tracking, no cookies on this site.</span></li>
+        </ul>
       </div>
     </section>
 
@@ -142,45 +130,50 @@
       </div>
     </section>
 
-    <div class="wrap" id="features">
-
-      <article class="feature reveal">
-        <div class="copy">
-          <h2>Design with guardrails.</h2>
-          <p>Drag modules onto a canvas and connect their ports. A link that cannot work is refused before anything is deployed.</p>
-          <ul class="checks">
-            <li><span><b>Typed ports.</b> Web traffic into a database port is refused.</span></li>
-            <li><span><b>83 modules to design with.</b> Three deploy today: NGINX, Debian and a Linux virtual machine.</span></li>
-            <li><span><b>A capacity check</b> tells you whether the design fits your cluster.</span></li>
-          </ul>
-          <div class="evidence"><span class="tag">Checked in a real browser</span><span class="tag plain">Deploys tested on a real cluster</span></div>
-          <p style="margin-top:20px"><a class="more" href="/product/#design">More about design <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+    <section id="features" aria-labelledby="features-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2 id="features-title">From the drawing to the audit log.</h2>
+          <p>Two screens and one control plane. Each result says how it was checked.</p>
         </div>
-        <figure class="shot">
-          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Apelora Studio · module properties</span></div>
-          <img src="/assets/img/crop-studio-validation.webp" width="860" height="590" loading="lazy" alt="Apelora Studio: a module's Properties window is open on the Ports tab, and the validation panel at the bottom left reports one error, that a web server's required input has no connection.">
-          <figcaption>A required input with no connection is reported as an error. Detail of a Studio screen, sample data.</figcaption>
-        </figure>
-      </article>
-
-      <article class="feature reverse reveal">
-        <div class="copy">
-          <h2>See the whole cluster in one place.</h2>
-          <p>Fabric Console shows servers, health and every change. Maintenance, joining servers and cluster settings happen here, with a preview before anything changes.</p>
-          <ul class="checks">
-            <li><span><b>Servers</b> and the cluster database majority, at a glance.</span></li>
-            <li><span><b>Every change is a job</b> you can follow, retry, or cancel at a safe point.</span></li>
-            <li><span><b>Sensitive changes</b> need a second person's approval.</span></li>
-          </ul>
-          <div class="evidence"><span class="tag">Real Incus tested</span><span class="tag plain">Checked in a real browser</span></div>
-          <p style="margin-top:20px"><a class="more" href="/product/#operate">More about operating <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+        <div class="bento reveal">
+          <article class="tile big">
+            <h3>Design with guardrails</h3>
+            <p>Drag modules onto a canvas and connect their typed ports. A link that cannot work is refused before anything is deployed, and a capacity check says whether the design fits your cluster.</p>
+            <div class="evidence"><span class="tag">Checked in a real browser</span></div>
+            <a class="more" href="/product/#design">More about design <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <img src="/assets/img/crop-studio-validation.webp" width="860" height="590" loading="lazy" alt="Apelora Studio: a module's Properties window is open on the Ports tab, and the validation panel at the bottom left reports one error, that a web server's required input has no connection.">
+          </article>
+          <article class="tile big">
+            <h3>See the whole cluster in one place</h3>
+            <p>Servers, health and every change in Fabric Console. Maintenance, joining servers and cluster settings show a preview before anything changes; every change is a job you can follow, retry or cancel.</p>
+            <div class="evidence"><span class="tag">Real Incus tested</span></div>
+            <a class="more" href="/product/#operate">More about operating <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <img src="/assets/img/crop-console-servers.webp" width="1005" height="625" loading="lazy" alt="Fabric Console, Servers: the cluster database with three of three voters answering and a safe majority, then four servers with status, database role, failure domain, Incus version and capacity.">
+          </article>
+          <article class="tile sm">
+            <h3>Connections become rules</h3>
+            <p>Each cable becomes an access rule and a stable service address. Deny by default: what you did not draw cannot talk.</p>
+            <div class="evidence"><span class="tag">Real Incus tested</span></div>
+            <a class="more" href="/product/#connect">How connections work <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+          <article class="tile sm">
+            <h3>Access is explicit</h3>
+            <p>Roles at organisation, project and application scope. A second person approves sensitive changes, and every change lands in an append-only audit log.</p>
+            <div class="evidence"><span class="tag plain">Not independently audited</span></div>
+            <a class="more" href="/product/#secure">How access works <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+          <article class="tile sm">
+            <h3>Know before your users do</h3>
+            <p>Fifteen built-in alert rules for failed jobs, silent workers, offline servers and expiring certificates, plus metrics for your own monitoring.</p>
+            <div class="evidence"><span class="tag plain">Checked against stand-ins</span></div>
+            <a class="more" href="/product/#monitor">About monitoring <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
         </div>
-        <figure class="shot">
-          <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Servers</span></div>
-          <img src="/assets/img/crop-console-servers.webp" width="1005" height="625" loading="lazy" alt="Fabric Console, Servers: the cluster database with three of three voters answering and a safe majority, then four servers with status, database role, failure domain, Incus version and capacity, and the cluster groups.">
-          <figcaption>The cluster database and four servers. Detail of a Console screen, sample data.</figcaption>
-        </figure>
-      </article>
+      </div>
+    </section>
+
+    <div class="wrap">
 
       <article class="feature reveal">
         <div class="copy">
@@ -245,12 +238,46 @@
       </div>
     </section>
 
-    <section aria-labelledby="road-title">
+    <section class="tint docs-band" aria-labelledby="docs-title">
       <div class="wrap">
         <div class="sec-head reveal">
-          <h2 id="road-title">What is available, and what is not yet.</h2>
-          <p>Fabric is in early development. This is the line between the two.</p>
+          <h2 id="docs-title">Start building in three steps.</h2>
+          <p>The documentation takes you from nothing to a managed application, and is kept with the code.</p>
         </div>
+        <ol class="start-cards reveal">
+          <li><a href="/docs/start/try-it-on-your-workstation/"><span class="n">1</span><b>Try it on your machine</b><small>The designer in a minute, or the whole stack against a lab cluster. No hardware to buy.</small><span class="go">Open the guide</span></a></li>
+          <li><a href="/docs/start/install-on-your-servers/"><span class="n">2</span><b>Install on your servers</b><small>An Incus cluster, PostgreSQL, the control plane and worker, and the two screens.</small><span class="go">Open the guide</span></a></li>
+          <li><a href="/docs/start/deploy-it/"><span class="n">3</span><b>Deploy and manage</b><small>Review the plan, deploy, then start, shut down, stop or migrate from the Applications list.</small><span class="go">Open the guide</span></a></li>
+        </ol>
+        <p style="margin-top:28px"><a class="more" href="/docs/">Browse all documentation: runbooks, concepts, reference and decisions <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      </div>
+    </section>
+
+    <section aria-labelledby="who-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2 id="who-title">Is it right for you, today?</h2>
+          <p>Fabric replaces a pile of hand-kept files for teams that run their own servers. It is in early development, so here is where it fits and where it does not yet.</p>
+        </div>
+        <div class="who reveal">
+          <div class="box">
+            <h3>A good fit if you</h3>
+            <ul class="dots">
+              <li>run Linux servers of your own, or plan to, and want one place to see and control them</li>
+              <li>keep container, network and firewall files in step by hand today</li>
+              <li>need roles, approvals and an audit trail, or work without internet access</li>
+            </ul>
+          </div>
+          <div class="box road">
+            <h3>Not yet a fit if you</h3>
+            <ul class="dots">
+              <li>need a proven production platform today: Fabric is in early development and has run only on a lab</li>
+              <li>want a hosted service: you run Fabric on servers you own</li>
+              <li>need many ready-to-run application types: three modules deploy today (NGINX, Debian and a Linux virtual machine)</li>
+            </ul>
+          </div>
+        </div>
+        <h3 class="subhead reveal">What is available, and what is not yet.</h3>
         <div class="split2 reveal">
           <div class="box">
             <h3>Available now</h3>
