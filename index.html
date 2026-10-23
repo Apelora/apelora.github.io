@@ -111,25 +111,6 @@
       </div>
     </section>
 
-    <section class="tint" aria-labelledby="once-title">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <h2 id="once-title">Describe it once. Stop maintaining the rest.</h2>
-        </div>
-        <div class="compare stack-sm reveal">
-          <table>
-            <thead><tr><th scope="col"><span class="sr-only">Topic</span></th><th scope="col">By hand, typically</th><th scope="col">With Apelora Fabric</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Network rules</th><td data-label="By hand, typically">Written and updated for each service</td><td data-label="With Apelora Fabric">Generated from the cables you draw; what is not connected cannot talk</td></tr>
-              <tr><th scope="row">Addresses</th><td data-label="By hand, typically">Looked up and copied between configuration files</td><td data-label="With Apelora Fabric">A stable service address per module, handed to the modules that use it</td></tr>
-              <tr><th scope="row">A server fails</th><td data-label="By hand, typically">Someone is paged and hopes the runbook is current</td><td data-label="With Apelora Fabric">The Console says what failed, why, and what happens next</td></tr>
-              <tr><th scope="row">Who changed what</th><td data-label="By hand, typically">Remembered, or searched for in chat</td><td data-label="With Apelora Fabric">Recorded in an append-only audit log</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
     <section id="features" aria-labelledby="features-title">
       <div class="wrap">
         <div class="sec-head reveal">
@@ -250,61 +231,6 @@
           <li><a href="/docs/start/deploy-it/"><span class="n">3</span><b>Deploy and manage</b><small>Review the plan, deploy, then start, shut down, stop or migrate from the Applications list.</small><span class="go">Open the guide</span></a></li>
         </ol>
         <p style="margin-top:28px"><a class="more" href="/docs/">Browse all documentation: runbooks, concepts, reference and decisions <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
-      </div>
-    </section>
-
-    <section aria-labelledby="who-title">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <h2 id="who-title">Is it right for you, today?</h2>
-          <p>Fabric replaces a pile of hand-kept files for teams that run their own servers. It is in early development, so here is where it fits and where it does not yet.</p>
-        </div>
-        <div class="who reveal">
-          <div class="box">
-            <h3>A good fit if you</h3>
-            <ul class="dots">
-              <li>run Linux servers of your own, or plan to, and want one place to see and control them</li>
-              <li>keep container, network and firewall files in step by hand today</li>
-              <li>need roles, approvals and an audit trail, or work without internet access</li>
-            </ul>
-          </div>
-          <div class="box road">
-            <h3>Not yet a fit if you</h3>
-            <ul class="dots">
-              <li>need a proven production platform today: Fabric is in early development and has run only on a lab</li>
-              <li>want a hosted service: you run Fabric on servers you own</li>
-              <li>need many ready-to-run application types: three modules deploy today (NGINX, Debian and a Linux virtual machine)</li>
-            </ul>
-          </div>
-        </div>
-        <h3 class="subhead reveal">What is available, and what is not yet.</h3>
-        <div class="split2 reveal">
-          <div class="box">
-            <h3>Available now</h3>
-            <p>Run on a disposable four-server lab.</p>
-            <ul class="dots">
-              <li>Designer, deploy, network rules and service addresses</li>
-              <li>Containers and virtual machines created in Incus</li>
-              <li>Replicas, health checks and restart of failed replicas</li>
-              <li>Volumes, snapshots, backups and restore</li>
-              <li>Recovery of a container's data after a server fails</li>
-              <li>Roles, approvals, audit and the Fabric Console</li>
-            </ul>
-          </div>
-          <div class="box road">
-            <h3>On the roadmap</h3>
-            <p>Designed or planned, not built, or not yet tested.</p>
-            <ul class="dots">
-              <li>Restarting virtual machines after a server dies</li>
-              <li>Installing operating systems on new servers through MAAS</li>
-              <li>Rebalancing running instances, and staged upgrades with rollback</li>
-              <li>IPMI power control, and Redfish on a real management controller</li>
-              <li>More deployable modules than the three today</li>
-              <li>Production use on real servers</li>
-            </ul>
-          </div>
-        </div>
-        <p style="margin-top:28px"><a class="more" href="/product/#roadmap">The full roadmap, and how each item was checked <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m5 2.5 4.5 4.5L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
       </div>
     </section>
 
