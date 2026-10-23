@@ -603,10 +603,6 @@ td.cell { vertical-align: middle; }
 .cmd button:hover { background: #334155; }
 .try-note { font-size: 0.85rem; color: var(--muted); }
 .hero-split .lozenge { margin-top: 1.5rem; }
-@media (min-width: 1000px) {
-  .hero-split .preview { margin-right: calc((min(100vw - 2 * var(--gutter), var(--wrap)) - 100vw) / 2); }
-  .hero-split .preview .shot { border-radius: var(--radius-lg) 0 0 var(--radius-lg); border-right: 0; }
-}
 @media (max-width: 999px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } }
 
 .facts-band { padding: 0; border-block: 0.0625rem solid var(--line); background: #fff; }
