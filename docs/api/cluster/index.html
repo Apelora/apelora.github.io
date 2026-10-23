@@ -72,64 +72,78 @@
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/api/">API</a></nav>
         <h1>Cluster API</h1>
         <div class="prose">
-<p>The cluster's servers: members, maintenance, machines and join tokens, cluster settings, groups, certificates and recovery. This page documents all 22 operations, each with a request you can copy. Set <code>APELORA_URL</code> and <code>APELORA_TOKEN</code> as described in <a href="/docs/api/overview/">the API overview</a>.</p>
+<p>The cluster's servers: members, maintenance, machines and join tokens, cluster settings, groups, certificates and recovery. This page lists 27 operations.</p>
+<p>Set variables in the <a href="/docs/api/overview/">API overview</a>. Download <a href="/assets/api/openapi.json">OpenAPI</a>. Examples: <strong>MOCK VERIFIED</strong> (tested with simulated inventory); <strong>Illustrative</strong> (schema values).</p>
 <h2 id="operations">Operations</h2>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#get-apiv1clustergroups">undefined</a></td><td>Cluster groups and their members (empty on a standalone server).</td></tr><tr><td><a href="#get-apiv1clusterjoin-tokens">undefined</a></td><td>Join tokens waiting to be used (no secrets).</td></tr><tr><td><a href="#post-apiv1clusterjoin-tokens">undefined</a></td><td>Approves a new cluster member: asks Incus for a single-use join token.</td></tr><tr><td><a href="#delete-apiv1clusterjoin-tokensmember">undefined</a></td><td>Withdraws a new member's approval: revokes its unused join token.</td></tr><tr><td><a href="#get-apiv1clustermembers">undefined</a></td><td>Members with their database role (voter, stand-by, spare), the leader, other roles, failure domain, groups and Incus release; the database majority (how many voters answer, how many are needed, how many more can be lost); and version skew against the pinned Incus release with what blocks an upgrade.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberevacuate">undefined</a></td><td>Evacuates a cluster member through Incus after re-running the dry run: refused while anything blocks it.</td></tr><tr><td><a href="#get-apiv1clustermembersmemberevacuation">undefined</a></td><td>Dry run of evacuating a cluster member: per instance, what Incus will do and what it means for the application; what blocks it; what to accept.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberfencing">undefined</a></td><td>Confirms that a failed server is powered off (or cut off from the shared storage).</td></tr><tr><td><a href="#get-apiv1clustermembersmemberremoval">undefined</a></td><td>Dry run of removing a cluster member for good: what is still on it, what blocks it and what to accept.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberremove">undefined</a></td><td>Removes an evacuated, empty member from the cluster for good, after the check runs again: refused while anything blocks it.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberrestore">undefined</a></td><td>Restores an evacuated member: Incus moves its instances back and starts them.</td></tr><tr><td><a href="#get-apiv1clusterrecovery">undefined</a></td><td>Failed members: whether each is fenced (and the evidence), or why Apelora waits; and per instance whether it restarts on another server (and where) or waits (and why).</td></tr><tr><td><a href="#get-apiv1clustersettings">undefined</a></td><td>Cluster-wide settings (offline and healing thresholds, database voters and stand-bys, join-token lifetime, image replication and updates): the value set, Incus's default and whether the default applies.</td></tr><tr><td><a href="#patch-apiv1clustersettings">undefined</a></td><td>Changes cluster settings through Incus with the admin identity.</td></tr><tr><td><a href="#get-apiv1machines">undefined</a></td><td>Machines being enrolled, with their state derived from Incus.</td></tr><tr><td><a href="#post-apiv1machines">undefined</a></td><td>Registers a machine.</td></tr><tr><td><a href="#delete-apiv1machinesname">undefined</a></td><td>Forgets a machine that is not a cluster member (revoking an unused join token).</td></tr><tr><td><a href="#get-apiv1machinesnameadmission">undefined</a></td><td>The admission checks for a joined machine (dry run; changes nothing).</td></tr><tr><td><a href="#post-apiv1machinesnameadmit">undefined</a></td><td>Admits a joined machine: re-runs the admission checks and, when none fails, lets Incus place instances on it.</td></tr><tr><td><a href="#delete-apiv1machinesnameapproval">undefined</a></td><td>Withdraws an approval: revokes the machine's unused join token.</td></tr><tr><td><a href="#post-apiv1machinesnameapprove">undefined</a></td><td>Approves a machine: asks Incus for its single-use join token, returned only in this response with the command to run on the server.</td></tr><tr><td><a href="#get-apiv1provisionersmaasmachines">undefined</a></td><td>The machines MAAS manages, with the Apelora machine and Incus member each became.</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#get-apiv1clustergroups"><code>GET /api/v1/cluster/groups</code></a></td><td>Cluster groups and their members (empty on a standalone server).</td></tr><tr><td><a href="#get-apiv1clusterjoin-tokens"><code>GET /api/v1/cluster/join-tokens</code></a></td><td>Join tokens waiting to be used (no secrets).</td></tr><tr><td><a href="#post-apiv1clusterjoin-tokens"><code>POST /api/v1/cluster/join-tokens</code></a></td><td>Approves a new cluster member: asks Incus for a single-use join token.</td></tr><tr><td><a href="#delete-apiv1clusterjoin-tokensmember"><code>DELETE /api/v1/cluster/join-tokens/{member}</code></a></td><td>Withdraws a new member's approval: revokes its unused join token.</td></tr><tr><td><a href="#get-apiv1clustermembers"><code>GET /api/v1/cluster/members</code></a></td><td>Members with their database role (voter, stand-by, spare), the leader, other roles, failure domain, groups and Incus release; the database majority (how many voters answer, how many are needed, how many more can be lost); and version skew against the pinned Incus release with what blocks an upgrade.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberevacuate"><code>POST /api/v1/cluster/members/{member}/evacuate</code></a></td><td>Evacuates a cluster member through Incus after re-running the dry run: refused while anything blocks it.</td></tr><tr><td><a href="#get-apiv1clustermembersmemberevacuation"><code>GET /api/v1/cluster/members/{member}/evacuation</code></a></td><td>Dry run of evacuating a cluster member: per instance, what Incus will do and what it means for the application; what blocks it; what to accept.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberfencing"><code>POST /api/v1/cluster/members/{member}/fencing</code></a></td><td>Confirms that a failed server is powered off (or cut off from the shared storage).</td></tr><tr><td><a href="#get-apiv1clustermembersmemberremoval"><code>GET /api/v1/cluster/members/{member}/removal</code></a></td><td>Dry run of removing a cluster member for good: what is still on it, what blocks it and what to accept.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberremove"><code>POST /api/v1/cluster/members/{member}/remove</code></a></td><td>Removes an evacuated, empty member from the cluster for good, after the check runs again: refused while anything blocks it.</td></tr><tr><td><a href="#post-apiv1clustermembersmemberrestore"><code>POST /api/v1/cluster/members/{member}/restore</code></a></td><td>Restores an evacuated member: Incus moves its instances back and starts them.</td></tr><tr><td><a href="#get-apiv1clusterrecovery"><code>GET /api/v1/cluster/recovery</code></a></td><td>Failed members: whether each is fenced (and the evidence), or why Apelora waits; and per instance whether it restarts on another server (and where) or waits (and why).</td></tr><tr><td><a href="#get-apiv1clustersettings"><code>GET /api/v1/cluster/settings</code></a></td><td>Cluster-wide settings (offline and healing thresholds, database voters and stand-bys, join-token lifetime, image replication and updates): the value set, Incus's default and whether the default applies.</td></tr><tr><td><a href="#patch-apiv1clustersettings"><code>PATCH /api/v1/cluster/settings</code></a></td><td>Changes cluster settings through Incus with the admin identity.</td></tr><tr><td><a href="#post-apiv1clusterupgrade"><code>POST /api/v1/cluster/upgrade</code></a></td><td>One step of the rolling upgrade.</td></tr><tr><td><a href="#get-apiv1machines"><code>GET /api/v1/machines</code></a></td><td>Machines being enrolled, with their state derived from Incus.</td></tr><tr><td><a href="#post-apiv1machines"><code>POST /api/v1/machines</code></a></td><td>Registers a machine.</td></tr><tr><td><a href="#delete-apiv1machinesname"><code>DELETE /api/v1/machines/{name}</code></a></td><td>Forgets a machine that is not a cluster member (revoking an unused join token).</td></tr><tr><td><a href="#get-apiv1machinesnameadmission"><code>GET /api/v1/machines/{name}/admission</code></a></td><td>The admission checks for a joined machine (dry run; changes nothing).</td></tr><tr><td><a href="#post-apiv1machinesnameadmit"><code>POST /api/v1/machines/{name}/admit</code></a></td><td>Admits a joined machine: re-runs the admission checks and, when none fails, lets Incus place instances on it.</td></tr><tr><td><a href="#delete-apiv1machinesnameapproval"><code>DELETE /api/v1/machines/{name}/approval</code></a></td><td>Withdraws an approval: revokes the machine's unused join token.</td></tr><tr><td><a href="#post-apiv1machinesnameapprove"><code>POST /api/v1/machines/{name}/approve</code></a></td><td>Approves a machine: asks Incus for its single-use join token, returned only in this response with the command to run on the server.</td></tr><tr><td><a href="#get-apiv1provisionersmaasmachines"><code>GET /api/v1/provisioners/maas/machines</code></a></td><td>The machines MAAS manages, with the Apelora machine and Incus member each became.</td></tr><tr><td><a href="#post-apiv1provisionersmaasmachinessystem_idcommission"><code>POST /api/v1/provisioners/maas/machines/{system_id}/commission</code></a></td><td>Starts commissioning.</td></tr><tr><td><a href="#post-apiv1provisionersmaasmachinessystem_iddeploy"><code>POST /api/v1/provisioners/maas/machines/{system_id}/deploy</code></a></td><td>Installs an operating system.</td></tr><tr><td><a href="#post-apiv1provisionersmaasmachinessystem_idrelease"><code>POST /api/v1/provisioners/maas/machines/{system_id}/release</code></a></td><td>Returns the machine to MAAS's pool.</td></tr><tr><td><a href="#post-apiv1provisionersmaasmachinessystem_idtest"><code>POST /api/v1/provisioners/maas/machines/{system_id}/test</code></a></td><td>Starts a hardware test run (burn-in) through MAAS.</td></tr></tbody></table></div>
 <h2 id="details">Details</h2>
 <h3 id="get-apiv1clustergroups"><code>GET /api/v1/cluster/groups</code></h3>
 <p>Cluster groups and their members (empty on a standalone server). Read-only; needs <code>cluster.view</code>.</p>
-<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/groups&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<p><strong>Operation ID:</strong> <code>cluster_groups</code></p>
+<p><strong>Needs:</strong> <code>cluster.view</code>.</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/cluster/groups&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>MOCK VERIFIED output</strong> (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.</p>
 <pre data-lang="json" tabindex="0"><code>{
+  &quot;source&quot;: {
+    &quot;provider&quot;: &quot;mock&quot;,
+    &quot;observedAt&quot;: &quot;2026-10-23T22:12:58.163324Z&quot;
+  },
   &quot;items&quot;: [
     {
-      &quot;description&quot;: &quot;A description&quot;,
+      &quot;name&quot;: &quot;default&quot;,
+      &quot;description&quot;: &quot;mock data&quot;,
       &quot;members&quot;: [
-        &quot;example&quot;
-      ],
-      &quot;name&quot;: &quot;example&quot;
+        &quot;mock-member-01&quot;,
+        &quot;mock-member-02&quot;,
+        &quot;mock-member-03&quot;
+      ]
     }
-  ],
-  &quot;source&quot;: {
-    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-    &quot;provider&quot;: &quot;mock&quot;
-  }
+  ]
 }</code></pre>
 <p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="get-apiv1clusterjoin-tokens"><code>GET /api/v1/cluster/join-tokens</code></h3>
-<p>Join tokens waiting to be used (no secrets).</p>
+<p>Join tokens waiting to be used (no secrets). Needs <code>manage-infrastructure</code>.</p>
+<p><strong>Operation ID:</strong> <code>list_join_tokens</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/join-tokens&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/cluster/join-tokens&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>MOCK VERIFIED output</strong> (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;items&quot;: [
-    {
-      &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-      &quot;memberName&quot;: &quot;example&quot;
-    }
-  ],
   &quot;source&quot;: {
-    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-    &quot;provider&quot;: &quot;mock&quot;
-  }
+    &quot;provider&quot;: &quot;mock&quot;,
+    &quot;observedAt&quot;: &quot;2026-10-23T22:12:58.166283Z&quot;
+  },
+  &quot;items&quot;: []
 }</code></pre>
 <p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="post-apiv1clusterjoin-tokens"><code>POST /api/v1/cluster/join-tokens</code></h3>
-<p>Approves a new cluster member: asks Incus for a single-use join token. The token is in this response only.</p>
+<p>Approves a new cluster member: asks Incus for a single-use join token. Needs <code>manage-infrastructure</code>. The token is in this response only.</p>
+<p><strong>Operation ID:</strong> <code>create_join_token</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
-<p><strong>Request body</strong> (JSON):</p>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>memberName</code></td><td>string</td><td>yes</td><td>Name the new member will join with.</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;memberName&quot;: &quot;example&quot;
 }</code></pre>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/cluster/join-tokens&quot; \
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/cluster/join-tokens&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  -d '{&quot;memberName&quot;:&quot;example&quot;}'</code></pre>
-<p><strong>Response <code>201</code></strong>:</p>
+  --data-raw '{&quot;memberName&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
   &quot;memberName&quot;: &quot;example&quot;,
@@ -140,100 +154,169 @@
 }</code></pre>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="delete-apiv1clusterjoin-tokensmember"><code>DELETE /api/v1/cluster/join-tokens/{member}</code></h3>
-<p>Withdraws a new member's approval: revokes its unused join token.</p>
+<p>Withdraws a new member's approval: revokes its unused join token. Needs <code>manage-infrastructure</code>.</p>
+<p><strong>Operation ID:</strong> <code>revoke_join_token</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Name the token was issued for</td></tr></tbody></table></div>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/cluster/join-tokens/node-1&quot; \
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/cluster/join-tokens/node-1&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="get-apiv1clustermembers"><code>GET /api/v1/cluster/members</code></h3>
 <p>Members with their database role (voter, stand-by, spare), the leader, other roles, failure domain, groups and Incus release; the database majority (how many voters answer, how many are needed, how many more can be lost); and version skew against the pinned Incus release with what blocks an upgrade. Read-only; needs <code>cluster.view</code>.</p>
-<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/members&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<p><strong>Operation ID:</strong> <code>cluster_members</code></p>
+<p><strong>Needs:</strong> <code>cluster.view</code>.</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/cluster/members&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>MOCK VERIFIED output</strong> (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;clustered&quot;: false,
+  &quot;source&quot;: {
+    &quot;provider&quot;: &quot;mock&quot;,
+    &quot;observedAt&quot;: &quot;2026-10-23T22:12:58.174263Z&quot;
+  },
+  &quot;clustered&quot;: true,
   &quot;members&quot;: [
     {
-      &quot;architecture&quot;: &quot;example&quot;,
-      &quot;databaseExcluded&quot;: false,
-      &quot;databaseRole&quot;: &quot;voter&quot;,
-      &quot;eventHub&quot;: false,
-      &quot;failureDomain&quot;: &quot;example&quot;,
-      &quot;groups&quot;: [
-        &quot;example&quot;
-      ],
-      &quot;held&quot;: false,
-      &quot;incusVersion&quot;: &quot;example&quot;,
-      &quot;leader&quot;: false,
-      &quot;message&quot;: &quot;example&quot;,
-      &quot;name&quot;: &quot;example&quot;,
-      &quot;ovnChassis&quot;: false,
+      &quot;name&quot;: &quot;mock-member-01&quot;,
+      &quot;status&quot;: &quot;Online&quot;,
+      &quot;message&quot;: &quot;Fully operational&quot;,
       &quot;roles&quot;: [
-        &quot;example&quot;
+        &quot;database-leader&quot;,
+        &quot;database&quot;
       ],
-      &quot;status&quot;: &quot;example&quot;
+      &quot;databaseRole&quot;: &quot;voter&quot;,
+      &quot;leader&quot;: true,
+      &quot;eventHub&quot;: false,
+      &quot;ovnChassis&quot;: false,
+      &quot;databaseExcluded&quot;: false,
+      &quot;upForDatabase&quot;: true,
+      &quot;failureDomain&quot;: &quot;default&quot;,
+      &quot;groups&quot;: [
+        &quot;default&quot;
+      ],
+      &quot;architecture&quot;: &quot;x86_64&quot;,
+      &quot;held&quot;: false,
+      &quot;incusVersion&quot;: null,
+      &quot;versionError&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;mock-member-02&quot;,
+      &quot;status&quot;: &quot;Online&quot;,
+      &quot;message&quot;: &quot;Fully operational&quot;,
+      &quot;roles&quot;: [
+        &quot;database&quot;
+      ],
+      &quot;databaseRole&quot;: &quot;voter&quot;,
+      &quot;leader&quot;: false,
+      &quot;eventHub&quot;: false,
+      &quot;ovnChassis&quot;: false,
+      &quot;databaseExcluded&quot;: false,
+      &quot;upForDatabase&quot;: true,
+      &quot;failureDomain&quot;: &quot;default&quot;,
+      &quot;groups&quot;: [
+        &quot;default&quot;
+      ],
+      &quot;architecture&quot;: &quot;x86_64&quot;,
+      &quot;held&quot;: false,
+      &quot;incusVersion&quot;: null,
+      &quot;versionError&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;mock-member-03&quot;,
+      &quot;status&quot;: &quot;Online&quot;,
+      &quot;message&quot;: &quot;Fully operational&quot;,
+      &quot;roles&quot;: [
+        &quot;database&quot;
+      ],
+      &quot;databaseRole&quot;: &quot;voter&quot;,
+      &quot;leader&quot;: false,
+      &quot;eventHub&quot;: false,
+      &quot;ovnChassis&quot;: false,
+      &quot;databaseExcluded&quot;: false,
+      &quot;upForDatabase&quot;: true,
+      &quot;failureDomain&quot;: &quot;default&quot;,
+      &quot;groups&quot;: [
+        &quot;default&quot;
+      ],
+      &quot;architecture&quot;: &quot;x86_64&quot;,
+      &quot;held&quot;: false,
+      &quot;incusVersion&quot;: null,
+      &quot;versionError&quot;: null
     }
   ],
   &quot;quorum&quot;: {
-    &quot;canLose&quot;: 0,
-    &quot;leader&quot;: &quot;example&quot;,
-    &quot;needed&quot;: 0,
-    &quot;nextStep&quot;: &quot;example&quot;,
-    &quot;spares&quot;: 0,
+    &quot;state&quot;: &quot;healthy&quot;,
+    &quot;voters&quot;: 3,
+    &quot;votersUp&quot;: 3,
+    &quot;needed&quot;: 2,
     &quot;standbys&quot;: 0,
     &quot;standbysUp&quot;: 0,
-    &quot;state&quot;: &quot;healthy&quot;,
-    &quot;summary&quot;: &quot;example&quot;,
-    &quot;voters&quot;: 0,
-    &quot;votersUp&quot;: 0,
-    &quot;warnings&quot;: [
-      &quot;example&quot;
-    ]
-  },
-  &quot;source&quot;: {
-    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-    &quot;provider&quot;: &quot;mock&quot;
+    &quot;spares&quot;: 0,
+    &quot;leader&quot;: &quot;mock-member-01&quot;,
+    &quot;canLose&quot;: 1,
+    &quot;summary&quot;: &quot;3 of 3 voters answer; 2 needed. 1 voter can be lost at once without stopping changes.&quot;,
+    &quot;nextStep&quot;: null,
+    &quot;warnings&quot;: []
   },
   &quot;versions&quot;: {
-    &quot;blockers&quot;: [
-      &quot;example&quot;
-    ],
+    &quot;pinned&quot;: &quot;7.0.2&quot;,
     &quot;groups&quot;: [
       {
-        &quot;againstPin&quot;: &quot;same&quot;,
+        &quot;version&quot;: null,
         &quot;members&quot;: [
-          &quot;example&quot;
+          &quot;mock-member-01&quot;,
+          &quot;mock-member-02&quot;,
+          &quot;mock-member-03&quot;
         ],
-        &quot;version&quot;: &quot;example&quot;
+        &quot;againstPin&quot;: &quot;unknown&quot;
       }
     ],
-    &quot;notes&quot;: [
-      &quot;example&quot;
-    ],
-    &quot;pinned&quot;: &quot;example&quot;,
+    &quot;state&quot;: &quot;unknown&quot;,
+    &quot;summary&quot;: &quot;The Incus release of some members could not be read.&quot;,
     &quot;ready&quot;: false,
-    &quot;state&quot;: &quot;matches-pin&quot;,
-    &quot;summary&quot;: &quot;example&quot;
+    &quot;blockers&quot;: [
+      &quot;read every member's release first&quot;
+    ],
+    &quot;notes&quot;: []
+  },
+  &quot;upgrade&quot;: {
+    &quot;running&quot;: false,
+    &quot;order&quot;: [
+      &quot;mock-member-02&quot;,
+      &quot;mock-member-03&quot;,
+      &quot;mock-member-01&quot;
+    ],
+    &quot;next&quot;: &quot;start&quot;,
+    &quot;summary&quot;: &quot;No upgrade is in progress. Starting one walks the members below, spares and stand-bys first and the database leader last. Apelora evacuates and restores; the package upgrade happens on the server.&quot;
   }
 }</code></pre>
 <p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="post-apiv1clustermembersmemberevacuate"><code>POST /api/v1/cluster/members/{member}/evacuate</code></h3>
-<p>Evacuates a cluster member through Incus after re-running the dry run: refused while anything blocks it.</p>
+<p>Evacuates a cluster member through Incus after re-running the dry run: refused while anything blocks it. Needs <code>manage-infrastructure</code> and the admin identity; audited.</p>
+<p><strong>Operation ID:</strong> <code>evacuate_member</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code> and the admin identity; audited.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
-<p><strong>Request body</strong> (JSON):</p>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The member's name again, typed by the administrator.</td></tr><tr><td><code>force</code></td><td>boolean</td><td>no</td><td>Evacuate although the dry run found blockers (a workload may lose service). Needs the unsafe-evacuation permission and an approval from another person.</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;confirm&quot;: &quot;example&quot;
 }</code></pre>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/evacuate&quot; \
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/evacuate&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
-<p><strong>Response <code>202</code></strong>:</p>
+  --data-raw '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;member&quot;: &quot;example&quot;,
   &quot;operation&quot;: &quot;example&quot;
@@ -241,11 +324,16 @@
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="get-apiv1clustermembersmemberevacuation"><code>GET /api/v1/cluster/members/{member}/evacuation</code></h3>
 <p>Dry run of evacuating a cluster member: per instance, what Incus will do and what it means for the application; what blocks it; what to accept. Changes nothing.</p>
+<p><strong>Operation ID:</strong> <code>preview_evacuation</code></p>
 <p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/members/node-1/evacuation&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/cluster/members/node-1/evacuation&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;plan&quot;: {
     &quot;blocked&quot;: [
@@ -278,20 +366,26 @@
 }</code></pre>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="post-apiv1clustermembersmemberfencing"><code>POST /api/v1/cluster/members/{member}/fencing</code></h3>
-<p>Confirms that a failed server is powered off (or cut off from the shared storage). This fences it: Apelora then restarts its modules on shared storage on other servers. Refused unless Incus reports the member Offline.</p>
+<p>Confirms that a failed server is powered off (or cut off from the shared storage). This fences it: Apelora then restarts its modules on shared storage on other servers. Refused unless Incus reports the member Offline. Needs <code>cluster.fence_confirm</code> and another person's approval; the member's name typed again; audited.</p>
+<p><strong>Operation ID:</strong> <code>confirm_fenced</code></p>
 <p><strong>Needs:</strong> <code>cluster.fence_confirm</code> and another person's approval; the member's name typed again; audited.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
-<p><strong>Request body</strong> (JSON):</p>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The member's name again, typed by the person.</td></tr><tr><td><code>poweredOff</code></td><td>boolean</td><td>yes</td><td>Must be <code>true</code>: the server is switched off (or cut off from the shared storage).</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;confirm&quot;: &quot;example&quot;,
   &quot;poweredOff&quot;: false
 }</code></pre>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/fencing&quot; \
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/fencing&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  -d '{&quot;confirm&quot;:&quot;example&quot;,&quot;poweredOff&quot;:false}'</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+  --data-raw '{&quot;confirm&quot;:&quot;example&quot;,&quot;poweredOff&quot;:false}'</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;fencing&quot;: {
     &quot;condition&quot;: &quot;waiting&quot;,
@@ -346,11 +440,16 @@
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="get-apiv1clustermembersmemberremoval"><code>GET /api/v1/cluster/members/{member}/removal</code></h3>
 <p>Dry run of removing a cluster member for good: what is still on it, what blocks it and what to accept. Changes nothing.</p>
+<p><strong>Operation ID:</strong> <code>preview_member_removal</code></p>
 <p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/members/node-1/removal&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/cluster/members/node-1/removal&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;plan&quot;: {
     &quot;blocked&quot;: [
@@ -375,34 +474,43 @@
 }</code></pre>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="post-apiv1clustermembersmemberremove"><code>POST /api/v1/cluster/members/{member}/remove</code></h3>
-<p>Removes an evacuated, empty member from the cluster for good, after the check runs again: refused while anything blocks it.</p>
+<p>Removes an evacuated, empty member from the cluster for good, after the check runs again: refused while anything blocks it. Needs <code>cluster.manage</code>, the admin identity and the member's name typed again; audited.</p>
+<p><strong>Operation ID:</strong> <code>remove_member</code></p>
 <p><strong>Needs:</strong> <code>cluster.manage</code>, the admin identity and the member's name typed again; audited.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
-<p><strong>Request body</strong> (JSON):</p>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The member's name again, typed by the administrator.</td></tr><tr><td><code>force</code></td><td>boolean</td><td>no</td><td>Evacuate although the dry run found blockers (a workload may lose service). Needs the unsafe-evacuation permission and an approval from another person.</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;confirm&quot;: &quot;example&quot;
 }</code></pre>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/remove&quot; \
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/remove&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
-<p><strong>Response <code>204</code></strong>, with no body.</p>
+  --data-raw '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="post-apiv1clustermembersmemberrestore"><code>POST /api/v1/cluster/members/{member}/restore</code></h3>
-<p>Restores an evacuated member: Incus moves its instances back and starts them.</p>
+<p>Restores an evacuated member: Incus moves its instances back and starts them. Needs <code>manage-infrastructure</code> and the admin identity; audited.</p>
+<p><strong>Operation ID:</strong> <code>restore_member</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code> and the admin identity; audited.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>member</code></td><td>path</td><td>string</td><td>yes</td><td>Cluster member name</td></tr></tbody></table></div>
-<p><strong>Request body</strong> (JSON):</p>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The member's name again, typed by the administrator.</td></tr><tr><td><code>force</code></td><td>boolean</td><td>no</td><td>Evacuate although the dry run found blockers (a workload may lose service). Needs the unsafe-evacuation permission and an approval from another person.</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;confirm&quot;: &quot;example&quot;
 }</code></pre>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/restore&quot; \
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/cluster/members/node-1/restore&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  -d '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
-<p><strong>Response <code>202</code></strong>:</p>
+  --data-raw '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;member&quot;: &quot;example&quot;,
   &quot;operation&quot;: &quot;example&quot;
@@ -410,109 +518,137 @@
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="get-apiv1clusterrecovery"><code>GET /api/v1/cluster/recovery</code></h3>
 <p>Failed members: whether each is fenced (and the evidence), or why Apelora waits; and per instance whether it restarts on another server (and where) or waits (and why). Read-only; needs <code>cluster.view</code>.</p>
-<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/recovery&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<p><strong>Operation ID:</strong> <code>cluster_recovery</code></p>
+<p><strong>Needs:</strong> <code>cluster.view</code>.</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/cluster/recovery&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>MOCK VERIFIED output</strong> (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;items&quot;: [
-    {
-      &quot;fencing&quot;: {
-        &quot;condition&quot;: &quot;waiting&quot;,
-        &quot;reason&quot;: &quot;example&quot;,
-        &quot;evidence&quot;: {
-          &quot;at&quot;: 1,
-          &quot;kind&quot;: &quot;storage-lease&quot;,
-          &quot;summary&quot;: &quot;example&quot;,
-          &quot;confirmedBy&quot;: &quot;example&quot;,
-          &quot;generation&quot;: 0,
-          &quot;hostId&quot;: 0,
-          &quot;lockspace&quot;: &quot;example&quot;,
-          &quot;observedBy&quot;: &quot;example&quot;,
-          &quot;provider&quot;: &quot;example&quot;
-        },
-        &quot;leaseState&quot;: &quot;free&quot;,
-        &quot;nextStep&quot;: &quot;example&quot;,
-        &quot;observedAt&quot;: 1,
-        &quot;observedBy&quot;: &quot;example&quot;
-      },
-      &quot;items&quot;: [
-        {
-          &quot;action&quot;: &quot;restart&quot;,
-          &quot;instance&quot;: &quot;example&quot;,
-          &quot;project&quot;: &quot;apelora&quot;,
-          &quot;reason&quot;: &quot;example&quot;,
-          &quot;application&quot;: &quot;example&quot;,
-          &quot;module&quot;: &quot;example&quot;,
-          &quot;target&quot;: &quot;example&quot;
-        }
-      ],
-      &quot;member&quot;: &quot;example&quot;,
-      &quot;status&quot;: &quot;example&quot;,
-      &quot;confirmedBy&quot;: &quot;example&quot;,
-      &quot;decidedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-      &quot;detectedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-      &quot;evidence&quot;: {
-        &quot;at&quot;: 1,
-        &quot;kind&quot;: &quot;storage-lease&quot;,
-        &quot;summary&quot;: &quot;example&quot;,
-        &quot;confirmedBy&quot;: &quot;example&quot;,
-        &quot;generation&quot;: 0,
-        &quot;hostId&quot;: 0,
-        &quot;lockspace&quot;: &quot;example&quot;,
-        &quot;observedBy&quot;: &quot;example&quot;,
-        &quot;provider&quot;: &quot;example&quot;
-      },
-      &quot;failure&quot;: &quot;example&quot;,
-      &quot;fencedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-      &quot;lastHeartbeat&quot;: &quot;2026-01-01T09:00:00Z&quot;
-    }
-  ],
   &quot;source&quot;: {
-    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-    &quot;provider&quot;: &quot;mock&quot;
-  }
+    &quot;provider&quot;: &quot;mock&quot;,
+    &quot;observedAt&quot;: &quot;2026-10-23T22:12:58.17745Z&quot;
+  },
+  &quot;items&quot;: []
 }</code></pre>
 <p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="get-apiv1clustersettings"><code>GET /api/v1/cluster/settings</code></h3>
 <p>Cluster-wide settings (offline and healing thresholds, database voters and stand-bys, join-token lifetime, image replication and updates): the value set, Incus's default and whether the default applies. Read with the admin identity, since Incus shows its configuration only to an unrestricted one (503 <code>cluster_admin_not_configured</code> without it); only these keys are returned. Read-only; needs <code>cluster.view</code>.</p>
-<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/cluster/settings&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<p><strong>Operation ID:</strong> <code>cluster_settings</code></p>
+<p><strong>Needs:</strong> <code>cluster.view</code>.</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/cluster/settings&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>MOCK VERIFIED output</strong> (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;identity&quot;: &quot;example&quot;,
+  &quot;source&quot;: {
+    &quot;provider&quot;: &quot;mock&quot;,
+    &quot;observedAt&quot;: &quot;2026-10-23T22:12:58.180011Z&quot;
+  },
+  &quot;identity&quot;: &quot;admin&quot;,
   &quot;items&quot;: [
     {
-      &quot;default&quot;: &quot;example&quot;,
-      &quot;key&quot;: &quot;example&quot;,
-      &quot;label&quot;: &quot;example&quot;,
-      &quot;meaning&quot;: &quot;example&quot;,
-      &quot;usesDefault&quot;: false,
-      &quot;value&quot;: &quot;example&quot;
+      &quot;key&quot;: &quot;cluster.offline_threshold&quot;,
+      &quot;label&quot;: &quot;Offline after (seconds)&quot;,
+      &quot;meaning&quot;: &quot;How long a member may miss heartbeats before it counts as offline.&quot;,
+      &quot;value&quot;: null,
+      &quot;default&quot;: &quot;20&quot;,
+      &quot;usesDefault&quot;: true
+    },
+    {
+      &quot;key&quot;: &quot;cluster.healing_threshold&quot;,
+      &quot;label&quot;: &quot;Evacuate offline members after (seconds)&quot;,
+      &quot;meaning&quot;: &quot;0 leaves offline members alone; otherwise Incus evacuates them after this long.&quot;,
+      &quot;value&quot;: null,
+      &quot;default&quot;: &quot;0&quot;,
+      &quot;usesDefault&quot;: true
+    },
+    {
+      &quot;key&quot;: &quot;cluster.max_voters&quot;,
+      &quot;label&quot;: &quot;Database voters&quot;,
+      &quot;meaning&quot;: &quot;How many members vote in the cluster database (an odd number, 3 or more).&quot;,
+      &quot;value&quot;: null,
+      &quot;default&quot;: &quot;3&quot;,
+      &quot;usesDefault&quot;: true
+    },
+    {
+      &quot;key&quot;: &quot;cluster.max_standby&quot;,
+      &quot;label&quot;: &quot;Database stand-bys&quot;,
+      &quot;meaning&quot;: &quot;How many members keep a copy of the cluster database without voting (0 to 5).&quot;,
+      &quot;value&quot;: null,
+      &quot;default&quot;: &quot;2&quot;,
+      &quot;usesDefault&quot;: true
+    },
+    {
+      &quot;key&quot;: &quot;cluster.join_token_expiry&quot;,
+      &quot;label&quot;: &quot;Join tokens expire after&quot;,
+      &quot;meaning&quot;: &quot;Apelora recommends one hour or less.&quot;,
+      &quot;value&quot;: &quot;1H&quot;,
+      &quot;default&quot;: &quot;3H&quot;,
+      &quot;usesDefault&quot;: false
+    },
+    {
+      &quot;key&quot;: &quot;cluster.images_minimal_replica&quot;,
+      &quot;label&quot;: &quot;Copies of each image&quot;,
+      &quot;meaning&quot;: &quot;How many members keep each image (-1: every member).&quot;,
+      &quot;value&quot;: null,
+      &quot;default&quot;: &quot;3&quot;,
+      &quot;usesDefault&quot;: true
+    },
+    {
+      &quot;key&quot;: &quot;cluster.rebalance.interval&quot;,
+      &quot;label&quot;: &quot;Rebalance every (minutes)&quot;,
+      &quot;meaning&quot;: &quot;0: Incus does not move instances to even out load.&quot;,
+      &quot;value&quot;: null,
+      &quot;default&quot;: &quot;0&quot;,
+      &quot;usesDefault&quot;: true
+    },
+    {
+      &quot;key&quot;: &quot;images.auto_update_interval&quot;,
+      &quot;label&quot;: &quot;Check for image updates every (hours)&quot;,
+      &quot;meaning&quot;: &quot;0 turns the checks off.&quot;,
+      &quot;value&quot;: null,
+      &quot;default&quot;: &quot;6&quot;,
+      &quot;usesDefault&quot;: true
+    },
+    {
+      &quot;key&quot;: &quot;images.auto_update_cached&quot;,
+      &quot;label&quot;: &quot;Update cached images&quot;,
+      &quot;meaning&quot;: &quot;Whether images cached from image servers are refreshed automatically.&quot;,
+      &quot;value&quot;: null,
+      &quot;default&quot;: &quot;true&quot;,
+      &quot;usesDefault&quot;: true
     }
-  ],
-  &quot;source&quot;: {
-    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-    &quot;provider&quot;: &quot;mock&quot;
-  }
+  ]
 }</code></pre>
 <p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="patch-apiv1clustersettings"><code>PATCH /api/v1/cluster/settings</code></h3>
 <p>Changes cluster settings through Incus with the admin identity. Every key must be one the Servers page lists and every value is checked. Settings that already hold the value are left out; nothing to change is refused. With <code>dryRun</code> it only reports (what each becomes and what to watch for). Applying needs <code>cluster.sensitive_change</code> and another person's approval of <code>cluster-settings:&lt;keys joined by /&gt;</code> (<code>Apelora-Approval</code>), spent before the change, and is audited with the old and new values.</p>
-<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
-<p><strong>Request body</strong> (JSON):</p>
+<p><strong>Operation ID:</strong> <code>change_cluster_settings</code></p>
+<p><strong>Needs:</strong> <code>cluster.sensitive_change</code> and another person's approval of <code>cluster-settings:&lt;keys joined by /&gt;</code> (<code>Apelora-Approval</code>), spent before the change, and is audited with the old and new values.</p>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>changes</code></td><td>object</td><td>yes</td><td>—</td></tr><tr><td><code>dryRun</code></td><td>boolean</td><td>no</td><td>Only report what would change and what to watch for; nothing is changed and no approval is needed.</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;changes&quot;: {
     &quot;key&quot;: &quot;example&quot;
   }
 }</code></pre>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X PATCH &quot;$APELORA_URL/api/v1/cluster/settings&quot; \
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PATCH &quot;$APELORA_URL/api/v1/cluster/settings&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  -d '{&quot;changes&quot;:{&quot;key&quot;:&quot;example&quot;}}'</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+  --data-raw '{&quot;changes&quot;:{&quot;key&quot;:&quot;example&quot;}}'</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;applied&quot;: false,
   &quot;approvalTarget&quot;: &quot;example&quot;,
@@ -529,56 +665,86 @@
   ]
 }</code></pre>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
-<h3 id="get-apiv1machines"><code>GET /api/v1/machines</code></h3>
-<p>Machines being enrolled, with their state derived from Incus.</p>
-<p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/machines&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<h3 id="post-apiv1clusterupgrade"><code>POST /api/v1/cluster/upgrade</code></h3>
+<p>One step of the rolling upgrade. Apelora evacuates and restores. It does not install Incus: <code>upgraded</code> records that the package was upgraded on the server. Needs <code>cluster.evacuate</code>.</p>
+<p><strong>Operation ID:</strong> <code>cluster_upgrade</code></p>
+<p><strong>Needs:</strong> <code>cluster.evacuate</code>.</p>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>action</code></td><td>string</td><td>yes</td><td><code>start</code>, <code>evacuate</code>, <code>upgraded</code>, <code>restore</code> or <code>abandon</code>.</td></tr><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td><code>upgrade</code> to start or abandon; the member's name for the other actions.</td></tr><tr><td><code>member</code></td><td>string</td><td>no</td><td>The member, for evacuate, upgraded and restore.</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;items&quot;: [
-    {
-      &quot;capabilities&quot;: {
-        &quot;discovers&quot;: false,
-        &quot;installs&quot;: false,
-        &quot;powers&quot;: false
-      },
-      &quot;description&quot;: &quot;A description&quot;,
-      &quot;name&quot;: &quot;example&quot;,
-      &quot;nextStep&quot;: &quot;example&quot;,
-      &quot;provider&quot;: &quot;manual&quot;,
-      &quot;registeredAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-      &quot;registeredBy&quot;: &quot;example&quot;,
-      &quot;state&quot;: &quot;registered&quot;,
-      &quot;warnings&quot;: [
-        &quot;example&quot;
-      ],
-      &quot;admittedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-      &quot;admittedBy&quot;: &quot;example&quot;,
-      &quot;approvalExpiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-      &quot;approvedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-      &quot;approvedBy&quot;: &quot;example&quot;
-    }
+  &quot;action&quot;: &quot;example&quot;,
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/cluster/upgrade&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  --data-raw '{&quot;action&quot;:&quot;example&quot;,&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;next&quot;: &quot;example&quot;,
+  &quot;order&quot;: [
+    &quot;example&quot;
   ],
+  &quot;running&quot;: false,
+  &quot;summary&quot;: &quot;example&quot;,
+  &quot;member&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Response <code>202</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;next&quot;: &quot;example&quot;,
+  &quot;order&quot;: [
+    &quot;example&quot;
+  ],
+  &quot;running&quot;: false,
+  &quot;summary&quot;: &quot;example&quot;,
+  &quot;member&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="get-apiv1machines"><code>GET /api/v1/machines</code></h3>
+<p>Machines being enrolled, with their state derived from Incus. Needs <code>manage-infrastructure</code>.</p>
+<p><strong>Operation ID:</strong> <code>list_machines</code></p>
+<p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/machines&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>MOCK VERIFIED output</strong> (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.</p>
+<pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
-    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-    &quot;provider&quot;: &quot;mock&quot;
-  }
+    &quot;provider&quot;: &quot;mock&quot;,
+    &quot;observedAt&quot;: &quot;2026-10-23T22:12:58.307258Z&quot;
+  },
+  &quot;items&quot;: []
 }</code></pre>
 <p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="post-apiv1machines"><code>POST /api/v1/machines</code></h3>
-<p>Registers a machine. A name that is already an eligible member is adopted as admitted.</p>
+<p>Registers a machine. A name that is already an eligible member is adopted as admitted. Needs <code>manage-infrastructure</code>; audited.</p>
+<p><strong>Operation ID:</strong> <code>register_machine</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code>; audited.</p>
-<p><strong>Request body</strong> (JSON):</p>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>description</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>The name it will have as a cluster member.</td></tr><tr><td><code>provider</code></td><td>one of several</td><td>no</td><td>—</td></tr><tr><td><code>systemId</code></td><td>string</td><td>no</td><td>For a <code>maas</code> machine: its MAAS system id (from <code>GET /api/v1/provisioners/maas/machines</code>).</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;name&quot;: &quot;example&quot;
 }</code></pre>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/machines&quot; \
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/machines&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  -d '{&quot;name&quot;:&quot;example&quot;}'</code></pre>
-<p><strong>Response <code>201</code></strong>:</p>
+  --data-raw '{&quot;name&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>201</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;capabilities&quot;: {
     &quot;discovers&quot;: false,
@@ -599,24 +765,35 @@
   &quot;admittedBy&quot;: &quot;example&quot;,
   &quot;approvalExpiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
   &quot;approvedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;approvedBy&quot;: &quot;example&quot;
+  &quot;approvedBy&quot;: &quot;example&quot;,
+  &quot;architecture&quot;: &quot;example&quot;,
+  &quot;memberStatus&quot;: &quot;example&quot;,
+  &quot;providerRef&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="delete-apiv1machinesname"><code>DELETE /api/v1/machines/{name}</code></h3>
-<p>Forgets a machine that is not a cluster member (revoking an unused join token).</p>
+<p>Forgets a machine that is not a cluster member (revoking an unused join token). Needs <code>manage-infrastructure</code>; audited.</p>
+<p><strong>Operation ID:</strong> <code>remove_machine</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code>; audited.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Machine name</td></tr></tbody></table></div>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/machines/shop&quot; \
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/machines/shop&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="get-apiv1machinesnameadmission"><code>GET /api/v1/machines/{name}/admission</code></h3>
-<p>The admission checks for a joined machine (dry run; changes nothing).</p>
+<p>The admission checks for a joined machine (dry run; changes nothing). Needs <code>manage-infrastructure</code>.</p>
+<p><strong>Operation ID:</strong> <code>machine_admission</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code>.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Machine name</td></tr></tbody></table></div>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/machines/shop/admission&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/machines/shop/admission&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;admissible&quot;: false,
   &quot;checks&quot;: [
@@ -635,12 +812,18 @@
 }</code></pre>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="post-apiv1machinesnameadmit"><code>POST /api/v1/machines/{name}/admit</code></h3>
-<p>Admits a joined machine: re-runs the admission checks and, when none fails, lets Incus place instances on it.</p>
+<p>Admits a joined machine: re-runs the admission checks and, when none fails, lets Incus place instances on it. Needs <code>manage-infrastructure</code>; audited.</p>
+<p><strong>Operation ID:</strong> <code>admit_machine</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code>; audited.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Machine name</td></tr></tbody></table></div>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/machines/shop/admit&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/machines/shop/admit&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;admissible&quot;: false,
   &quot;checks&quot;: [
@@ -659,20 +842,29 @@
 }</code></pre>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="delete-apiv1machinesnameapproval"><code>DELETE /api/v1/machines/{name}/approval</code></h3>
-<p>Withdraws an approval: revokes the machine's unused join token.</p>
+<p>Withdraws an approval: revokes the machine's unused join token. Needs <code>manage-infrastructure</code>; audited.</p>
+<p><strong>Operation ID:</strong> <code>withdraw_machine_approval</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code>; audited.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Machine name</td></tr></tbody></table></div>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X DELETE &quot;$APELORA_URL/api/v1/machines/shop/approval&quot; \
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/machines/shop/approval&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>204</code></strong>, with no body.</p>
+<p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="post-apiv1machinesnameapprove"><code>POST /api/v1/machines/{name}/approve</code></h3>
-<p>Approves a machine: asks Incus for its single-use join token, returned only in this response with the command to run on the server.</p>
+<p>Approves a machine: asks Incus for its single-use join token, returned only in this response with the command to run on the server. Needs <code>manage-infrastructure</code>; audited without the token.</p>
+<p><strong>Operation ID:</strong> <code>approve_machine</code></p>
 <p><strong>Needs:</strong> <code>manage-infrastructure</code>; audited without the token.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>path</td><td>string</td><td>yes</td><td>Machine name</td></tr></tbody></table></div>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X POST &quot;$APELORA_URL/api/v1/machines/shop/approve&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>201</code></strong>:</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/machines/shop/approve&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>201</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;enrolCommand&quot;: &quot;example&quot;,
   &quot;expiresAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
@@ -684,44 +876,136 @@
 }</code></pre>
 <p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
 <h3 id="get-apiv1provisionersmaasmachines"><code>GET /api/v1/provisioners/maas/machines</code></h3>
-<p>The machines MAAS manages, with the Apelora machine and Incus member each became. Read-only: MAAS is asked to list, nothing else.</p>
+<p>The machines MAAS manages, with the Apelora machine and Incus member each became. Needs <code>cluster.view</code>. Read-only: MAAS is asked to list, nothing else.</p>
+<p><strong>Operation ID:</strong> <code>maas_machines</code></p>
 <p><strong>Needs:</strong> <code>cluster.view</code>.</p>
-<pre data-lang="sh" tabindex="0"><code>curl -sS -X GET &quot;$APELORA_URL/api/v1/provisioners/maas/machines&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p><strong>Response <code>200</code></strong>:</p>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/provisioners/maas/machines&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Response <code>200</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>MOCK VERIFIED output</strong> (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;configured&quot;: false,
-  &quot;items&quot;: [
-    {
-      &quot;addresses&quot;: [
-        &quot;example&quot;
-      ],
-      &quot;architecture&quot;: &quot;example&quot;,
-      &quot;cpuCount&quot;: 0,
-      &quot;hostname&quot;: &quot;example&quot;,
-      &quot;memoryMib&quot;: 0,
-      &quot;os&quot;: &quot;example&quot;,
-      &quot;pool&quot;: &quot;example&quot;,
-      &quot;powerState&quot;: &quot;example&quot;,
-      &quot;powerType&quot;: &quot;example&quot;,
-      &quot;status&quot;: &quot;example&quot;,
-      &quot;systemId&quot;: &quot;example&quot;,
-      &quot;zone&quot;: &quot;example&quot;,
-      &quot;hardwareUuid&quot;: &quot;example&quot;,
-      &quot;memberStatus&quot;: &quot;example&quot;
-    }
-  ],
   &quot;source&quot;: {
-    &quot;observedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-    &quot;provider&quot;: &quot;mock&quot;
-  }
+    &quot;provider&quot;: &quot;mock&quot;,
+    &quot;observedAt&quot;: &quot;2026-10-23T22:12:58.329317Z&quot;
+  },
+  &quot;configured&quot;: false,
+  &quot;items&quot;: []
 }</code></pre>
 <p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1provisionersmaasmachinessystem_idcommission"><code>POST /api/v1/provisioners/maas/machines/{system_id}/commission</code></h3>
+<p>Starts commissioning. Needs <code>hardware.commission</code> and the hostname typed again. The cloud-init of a later deploy is not part of this. Audited; MAAS is asked first.</p>
+<p><strong>Operation ID:</strong> <code>maas_commission</code></p>
+<p><strong>Needs:</strong> <code>hardware.commission</code> and the hostname typed again.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>system_id</code></td><td>path</td><td>string</td><td>yes</td><td>MAAS system id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The machine's hostname, typed again.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/provisioners/maas/machines/00000000-0000-4000-8000-000000000001/commission&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  --data-raw '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;example&quot;,
+  &quot;hostname&quot;: &quot;example&quot;,
+  &quot;systemId&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1provisionersmaasmachinessystem_iddeploy"><code>POST /api/v1/provisioners/maas/machines/{system_id}/deploy</code></h3>
+<p>Installs an operating system. Needs <code>hardware.deploy</code> and the hostname typed again. <code>userData</code> is sent to MAAS and is not stored or written to the audit log. Audited.</p>
+<p><strong>Operation ID:</strong> <code>maas_deploy</code></p>
+<p><strong>Needs:</strong> <code>hardware.deploy</code> and the hostname typed again.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>system_id</code></td><td>path</td><td>string</td><td>yes</td><td>MAAS system id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>distroSeries</code></td><td>string</td><td>yes</td><td>MAAS's series name, such as <code>noble</code>.</td></tr><tr><td><code>userData</code></td><td>string</td><td>yes</td><td>Cloud-init. Sent to MAAS and not stored. A join token in it is not kept.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;,
+  &quot;distroSeries&quot;: &quot;example&quot;,
+  &quot;userData&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/provisioners/maas/machines/00000000-0000-4000-8000-000000000001/deploy&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  --data-raw '{&quot;confirm&quot;:&quot;example&quot;,&quot;distroSeries&quot;:&quot;example&quot;,&quot;userData&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;example&quot;,
+  &quot;hostname&quot;: &quot;example&quot;,
+  &quot;systemId&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1provisionersmaasmachinessystem_idrelease"><code>POST /api/v1/provisioners/maas/machines/{system_id}/release</code></h3>
+<p>Returns the machine to MAAS's pool. Needs <code>hardware.deploy</code> and the hostname typed again. Disk erasure needs <code>hardware.delete</code> as well and is off unless asked. A secure wipe is not offered. Audited; MAAS is asked first.</p>
+<p><strong>Operation ID:</strong> <code>maas_release</code></p>
+<p><strong>Needs:</strong> <code>hardware.deploy</code> and the hostname typed again. <code>hardware.delete</code> as well and is off unless asked.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>system_id</code></td><td>path</td><td>string</td><td>yes</td><td>MAAS system id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>eraseDisks</code></td><td>boolean</td><td>no</td><td>Wipe the installed system. Off unless the caller sets it. A secure wipe is not offered.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/provisioners/maas/machines/00000000-0000-4000-8000-000000000001/release&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  --data-raw '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;example&quot;,
+  &quot;hostname&quot;: &quot;example&quot;,
+  &quot;systemId&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<h3 id="post-apiv1provisionersmaasmachinessystem_idtest"><code>POST /api/v1/provisioners/maas/machines/{system_id}/test</code></h3>
+<p>Starts a hardware test run (burn-in) through MAAS. Needs <code>hardware.commission</code> and the hostname typed again. Only a machine that is <code>Ready</code>, <code>Broken</code> or <code>Failed testing</code>: one that is allocated or deployed (an Incus member, for one) is refused, so tests never load a running server. Audited with the test names; MAAS is asked first.</p>
+<p><strong>Operation ID:</strong> <code>maas_test</code></p>
+<p><strong>Needs:</strong> <code>hardware.commission</code> and the hostname typed again.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>system_id</code></td><td>path</td><td>string</td><td>yes</td><td>MAAS system id</td></tr></tbody></table></div>
+<p><strong>Request body</strong> (JSON, illustrative values):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>scripts</code></td><td>list of string</td><td>no</td><td>MAAS test script or tag names (up to 16). Empty runs MAAS's default tests.</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;confirm&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/provisioners/maas/machines/00000000-0000-4000-8000-000000000001/test&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  --data-raw '{&quot;confirm&quot;:&quot;example&quot;}'</code></pre>
+<p><strong>Response <code>202</code></strong> — Success.</p>
+<p>Content-Type: <code>application/json</code>.</p>
+<p><strong>Illustrative response</strong> — generated from the OpenAPI schema; these values are not an observed result.</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;action&quot;: &quot;example&quot;,
+  &quot;hostname&quot;: &quot;example&quot;,
+  &quot;systemId&quot;: &quot;example&quot;
+}</code></pre>
+<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>502</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
         </div>
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/applications/"><span>Previous</span>Applications</a><a class="next" href="/docs/api/administration/"><span>Next</span>Administration</a></nav>
       </article>
-      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#get-apiv1clustergroups">GET /api/v1/cluster/groups</a></li><li class="l3"><a href="#get-apiv1clusterjoin-tokens">GET /api/v1/cluster/join-tokens</a></li><li class="l3"><a href="#post-apiv1clusterjoin-tokens">POST /api/v1/cluster/join-tokens</a></li><li class="l3"><a href="#delete-apiv1clusterjoin-tokensmember">DELETE /api/v1/cluster/join-tokens/{member}</a></li><li class="l3"><a href="#get-apiv1clustermembers">GET /api/v1/cluster/members</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberevacuate">POST /api/v1/cluster/members/{member}/evacuate</a></li><li class="l3"><a href="#get-apiv1clustermembersmemberevacuation">GET /api/v1/cluster/members/{member}/evacuation</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberfencing">POST /api/v1/cluster/members/{member}/fencing</a></li><li class="l3"><a href="#get-apiv1clustermembersmemberremoval">GET /api/v1/cluster/members/{member}/removal</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberremove">POST /api/v1/cluster/members/{member}/remove</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberrestore">POST /api/v1/cluster/members/{member}/restore</a></li><li class="l3"><a href="#get-apiv1clusterrecovery">GET /api/v1/cluster/recovery</a></li><li class="l3"><a href="#get-apiv1clustersettings">GET /api/v1/cluster/settings</a></li><li class="l3"><a href="#patch-apiv1clustersettings">PATCH /api/v1/cluster/settings</a></li><li class="l3"><a href="#get-apiv1machines">GET /api/v1/machines</a></li><li class="l3"><a href="#post-apiv1machines">POST /api/v1/machines</a></li><li class="l3"><a href="#delete-apiv1machinesname">DELETE /api/v1/machines/{name}</a></li><li class="l3"><a href="#get-apiv1machinesnameadmission">GET /api/v1/machines/{name}/admission</a></li><li class="l3"><a href="#post-apiv1machinesnameadmit">POST /api/v1/machines/{name}/admit</a></li><li class="l3"><a href="#delete-apiv1machinesnameapproval">DELETE /api/v1/machines/{name}/approval</a></li><li class="l3"><a href="#post-apiv1machinesnameapprove">POST /api/v1/machines/{name}/approve</a></li><li class="l3"><a href="#get-apiv1provisionersmaasmachines">GET /api/v1/provisioners/maas/machines</a></li></ul></nav>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#get-apiv1clustergroups">GET /api/v1/cluster/groups</a></li><li class="l3"><a href="#get-apiv1clusterjoin-tokens">GET /api/v1/cluster/join-tokens</a></li><li class="l3"><a href="#post-apiv1clusterjoin-tokens">POST /api/v1/cluster/join-tokens</a></li><li class="l3"><a href="#delete-apiv1clusterjoin-tokensmember">DELETE /api/v1/cluster/join-tokens/{member}</a></li><li class="l3"><a href="#get-apiv1clustermembers">GET /api/v1/cluster/members</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberevacuate">POST /api/v1/cluster/members/{member}/evacuate</a></li><li class="l3"><a href="#get-apiv1clustermembersmemberevacuation">GET /api/v1/cluster/members/{member}/evacuation</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberfencing">POST /api/v1/cluster/members/{member}/fencing</a></li><li class="l3"><a href="#get-apiv1clustermembersmemberremoval">GET /api/v1/cluster/members/{member}/removal</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberremove">POST /api/v1/cluster/members/{member}/remove</a></li><li class="l3"><a href="#post-apiv1clustermembersmemberrestore">POST /api/v1/cluster/members/{member}/restore</a></li><li class="l3"><a href="#get-apiv1clusterrecovery">GET /api/v1/cluster/recovery</a></li><li class="l3"><a href="#get-apiv1clustersettings">GET /api/v1/cluster/settings</a></li><li class="l3"><a href="#patch-apiv1clustersettings">PATCH /api/v1/cluster/settings</a></li><li class="l3"><a href="#post-apiv1clusterupgrade">POST /api/v1/cluster/upgrade</a></li><li class="l3"><a href="#get-apiv1machines">GET /api/v1/machines</a></li><li class="l3"><a href="#post-apiv1machines">POST /api/v1/machines</a></li><li class="l3"><a href="#delete-apiv1machinesname">DELETE /api/v1/machines/{name}</a></li><li class="l3"><a href="#get-apiv1machinesnameadmission">GET /api/v1/machines/{name}/admission</a></li><li class="l3"><a href="#post-apiv1machinesnameadmit">POST /api/v1/machines/{name}/admit</a></li><li class="l3"><a href="#delete-apiv1machinesnameapproval">DELETE /api/v1/machines/{name}/approval</a></li><li class="l3"><a href="#post-apiv1machinesnameapprove">POST /api/v1/machines/{name}/approve</a></li><li class="l3"><a href="#get-apiv1provisionersmaasmachines">GET /api/v1/provisioners/maas/machines</a></li><li class="l3"><a href="#post-apiv1provisionersmaasmachinessystem_idcommission">POST /api/v1/provisioners/maas/machines/{system_id}/commission</a></li><li class="l3"><a href="#post-apiv1provisionersmaasmachinessystem_iddeploy">POST /api/v1/provisioners/maas/machines/{system_id}/deploy</a></li><li class="l3"><a href="#post-apiv1provisionersmaasmachinessystem_idrelease">POST /api/v1/provisioners/maas/machines/{system_id}/release</a></li><li class="l3"><a href="#post-apiv1provisionersmaasmachinessystem_idtest">POST /api/v1/provisioners/maas/machines/{system_id}/test</a></li></ul></nav>
     </div>
   </main>
   <footer class="site-footer">

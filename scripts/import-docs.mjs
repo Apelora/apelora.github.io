@@ -7,7 +7,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, rmSync
 import { join, dirname, basename, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
-import { apiPages } from "./lib/api-docs.mjs";
+import { importApi } from "./lib/import-api.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const repo = resolve(process.argv[2] ?? join(root, "../apelora-fabric"));
@@ -82,15 +82,7 @@ for (const n of config.extraImages ?? []) images.add(join(repo, "docs/screenshot
 
 // API reference: one page per area, every operation with its parameters, an example body and response and a curl command,
 // generated from the control plane's OpenAPI document
-{
-  const api = JSON.parse(readFileSync(join(repo, "packages/api-client/openapi.json"), "utf8"));
-  mkdirSync(join(out, "api"), { recursive: true });
-  for (const page of apiPages(api, config.apiTags ?? {})) {
-    const fm = ["---", `title: ${page.title}`, "section: api", `slug: ${page.tag}`, `order: ${page.order}`, `label: ${page.label}`, "source: packages/api-client/openapi.json", `summary: ${page.summary}`, "---", ""].join("\n");
-    writeFileSync(join(out, "api", `${page.tag}.md`), fm + page.md);
-    count++;
-  }
-}
+count += importApi(root, repo);
 // images: screenshots to WebP (at most 1440 px wide), diagrams copied
 mkdirSync(join(root, "assets/docs/img"), { recursive: true });
 mkdirSync(join(root, "assets/docs/svg"), { recursive: true });

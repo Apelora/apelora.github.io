@@ -13,11 +13,20 @@ Everything the Studio and the Console do goes through one HTTP API served by the
 The examples on every page use two variables:
 
 ```sh
-APELORA_URL=...      # where the API is served, without a path
-APELORA_TOKEN=...    # an API token: see "Get a token"
+export APELORA_URL="https://fabric.example.org"  # replace with your API origin
+read -r -s -p "API token: " APELORA_TOKEN
+export APELORA_TOKEN
 ```
 
-All paths start with `/api/v1`. Bodies are JSON (`Content-Type: application/json`), and so are the answers, except a few downloads (metrics, the support bundle, audit exports).
+Most paths start with `/api/v1`; the metrics endpoint is `/metrics`. Request bodies are JSON (`Content-Type: application/json`). Responses are JSON except metrics (`text/plain`), support bundles (`application/x-tar`), and audit exports (`text/csv` or `application/x-ndjson`). A `204` response has no body. The examples use Bash and curl 7.76 or later for `--fail-with-body`.
+
+Try a public, read-only request first:
+
+```sh
+curl --fail-with-body -sS "$APELORA_URL/api/v1/health"
+```
+
+Its [System API entry](/docs/api/system/#get-apiv1health) shows captured output. Examples labelled **MOCK VERIFIED** were run against a local, authenticated control plane with a disposable PostgreSQL database and mock inventory. Other JSON responses are **illustrative**, generated from schemas. Neither label means a deployment was tested on real Incus servers. Replace sample resource names, IDs and settings before using a command against your installation.
 
 ## Get a token
 
@@ -37,26 +46,28 @@ The token is shown once. Which roles exist and what each may do is in [roles and
 | `apl_` | A legacy API token from `token create` |
 | (none) | An access token from your identity provider |
 
-Send it as a bearer token on every request. Check it with `whoami`, which shows the roles and permissions in force:
+Send it as a bearer token on authenticated requests. Health, sign-in options, password sign-in, setup-link completion and the OpenAPI download are public. Check your token with `whoami`, which shows the roles and permissions in force:
 
 ```sh
-curl -sS "$APELORA_URL/api/v1/whoami" -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS "$APELORA_URL/api/v1/whoami" -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-Each operation page says what it **needs**: a named permission, or only a signed-in caller where the server decides what that caller may see. A missing permission is a `403`, never a silent empty answer.
+Each operation page gives the HTTP method, path, generated client operation ID, permissions documented by the handler, parameters, request and response. A missing permission returns `403`; collection results may also be filtered to the caller's scope. Personal-token and personal-session endpoints require a person credential; a legacy CLI token receives `403 people_only` even when its role is fabric-admin.
 
 ## Changing things safely
 
-- **Idempotency-Key.** Operations that change something accept an `Idempotency-Key` header. Repeat a request with the same key and you get the first result instead of a second change. Send a new key (`uuidgen`) for each distinct change.
-- **Jobs.** Deploying, starting, stopping and migrating are carried out by the worker, so the answer is a job. Poll `GET /api/v1/jobs/{id}` until its `status` is `succeeded`, `failed` or `cancelled`. The worker retries with backoff, so a job can stay pending for a while.
+- **Idempotency-Key.** Use this header where it appears in the operation's parameter table. Generate a key once per distinct change and retain it for retries. Repeating the same request with the same key returns the first result. Other writes do not automatically gain retry protection.
+- **Jobs and operations.** Instance writes return a `jobId`; poll `GET /api/v1/jobs/{id}` until `status` is `succeeded`, `failed` or `cancelled`. Application actions return an `operation` object; poll `GET /api/v1/applications/{name}/operations/{id}` using `operation.id`. Deployment responses include their jobs. Use the response shape on each operation's page; the worker retries jobs with backoff.
 - **Approvals.** Some protected actions need a second person to approve first; the request then names the approval in an `Apelora-Approval` header.
 - **Versions.** Applications keep numbered, immutable versions; a deployment saves the design as a new revision and queues the changes.
 
 ```sh
-# a request that changes something, safe to repeat
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/operations" \
+# Requires an existing shop application, deploy permission, and any required approval.
+# Generate once; reuse this value and the same body when retrying this change.
+IDEMPOTENCY_KEY=$(uuidgen)
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/operations" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Idempotency-Key: $(uuidgen)" \
+  -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
   -d '{"action":"start"}'
 ```
@@ -65,7 +76,7 @@ The request body of each operation is on its page of this section; this one star
 
 ## Errors
 
-A failed request has a status code and, for anything but a network failure, a body:
+API handler errors use a status code and the following JSON envelope. Transport failures, proxies and malformed HTTP requests can return a different format:
 
 ```json
 { "error": { "code": "not_found", "message": "No application called shop." } }
@@ -98,17 +109,38 @@ const job = await client.request("job", { params: { id: "00000000-0000-4000-8000
 await followJob(client, job.id, (j) => console.log(j.status));
 ```
 
-Pass `idempotencyKey: newIdempotencyKey()` in the options of any call that changes something. Errors are thrown as `ApiRequestError` with the HTTP `status` and the API's `code`.
+For operations that document `Idempotency-Key`, pass `idempotencyKey: newIdempotencyKey()` and retain that key for retries. Errors are thrown as `ApiRequestError` with the HTTP `status` and the API's `code`.
 
 ## The OpenAPI document
 
-The machine-readable description of every operation is `packages/api-client/openapi.json`, and the running control plane can print the document of the version it runs:
+Download the [complete OpenAPI document](/assets/api/openapi.json) used to build this reference. It defines all operations, request and response schemas, authentication requirements and documented status codes. The repository source is `packages/api-client/openapi.json`. Fetch the contract of the running API without a token:
+
+```sh
+curl --fail-with-body -sS "$APELORA_URL/api/v1/openapi.json" --output openapi.json
+```
+
+The control-plane executable can also print its version's document:
 
 ```sh
 apelora-control-plane openapi > openapi.json
 ```
 
 Use it to generate a client in another language, or to check your own calls against what the version you run accepts.
+
+## Verify and refresh this reference
+
+In the website repository, with the product checkout at `../apelora-fabric`, its current debug binary built, and the development PostgreSQL container running:
+
+```sh
+# Requires uv, Docker and the product's apelora-dev-db container.
+uv run scripts/verify-api-examples.py ../apelora-fabric --record
+node scripts/import-api.mjs ../apelora-fabric
+npm test
+npm run build
+npm run check
+```
+
+The verifier compares the binary's and running server's OpenAPI documents with the source, checks authenticated reads, exercises application metadata changes in its own database, downloads audit exports and a support bundle, and validates every documented JSON example against its schema. It deletes its database and stops its API on exit. It never receives Incus credentials or starts a deployment worker. Operations requiring real machines, identity providers or deployment jobs retain illustrative outputs until those prerequisites are tested.
 
 ## The groups
 

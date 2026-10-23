@@ -36,6 +36,8 @@ for (const [p, h] of html) {
   const desc = (h.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
   if (desc.length < 50 || desc.length > 200) bad(name, `description length ${desc.length}`);
   if (!/<html lang="en">/.test(h)) bad(name, "no lang");
+  if (name.startsWith("docs/api/") && /<a\b[^>]*>(?:<code>)?undefined(?:<\/code>)?<\/a>/.test(h)) bad(name, "undefined API operation label");
+  if (name.startsWith("docs/api/") && /<code>undefined<\/code>/.test(h)) bad(name, "undefined API example output");
   for (const m of h.matchAll(/<img\b[^>]*>/g)) {
     const tag = m[0];
     const src = (tag.match(/src="([^"]+)"/) || [])[1];

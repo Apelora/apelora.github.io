@@ -7,7 +7,9 @@ label: Sessions
 source: packages/api-client/openapi.json
 summary: Terminal sessions into modules.
 ---
-Terminal sessions into running modules. This page documents all 4 operations, each with a request you can copy. Set `APELORA_URL` and `APELORA_TOKEN` as described in [the API overview](/docs/api/overview/).
+Terminal sessions into running modules. This page lists 4 operations.
+
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
 
 ## Operations
 
@@ -22,7 +24,9 @@ Terminal sessions into running modules. This page documents all 4 operations, ea
 
 ### `GET /api/v1/applications/{name}/access`
 
-What the caller may open on each instance of the application now, with the reason when not. This is the source for the interface's menu entries.
+What the caller may open on each instance of the application now, with the reason when not. This is the source for the interface's menu entries. Needs `application.view`.
+
+**Operation ID:** `application_access`
 
 **Needs:** `application.view`.
 
@@ -30,12 +34,19 @@ What the caller may open on each instance of the application now, with the reaso
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/access" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/access" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -66,7 +77,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/access" \
 
 ### `POST /api/v1/applications/{name}/instances/{instance}/sessions`
 
-Opens a session: checks the caller, the instance and the approval rule, and answers with a single-use ticket for the websocket.
+Opens a session: checks the caller, the instance and the approval rule, and answers with a single-use ticket for the websocket. Needs `instance.console` (terminal, PowerShell) or `instance.desktop` (RDP) on the application; in production also an approval (`Apelora-Approval: <id>`) of `instance.console` on `instance:<application>/<instance>`.
+
+**Operation ID:** `open_session`
 
 **Needs:** `instance.console` (terminal, PowerShell) or `instance.desktop` (RDP) on the application; in production also an approval (`Apelora-Approval: <id>`) of `instance.console` on `instance:<application>/<instance>`.
 
@@ -75,7 +88,7 @@ Opens a session: checks the caller, the instance and the approval rule, and answ
 | `name` | path | string | yes | Application name |
 | `instance` | path | string | yes | Instance name |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -89,14 +102,23 @@ Opens a session: checks the caller, the instance and the approval rule, and answ
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/instances/web-01/sessions" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/instances/web-01/sessions" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"kind":"terminal"}'
+  --data-raw '{"kind":"terminal"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -119,31 +141,27 @@ curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/instances/web-01/session
 
 Open sessions the caller started, and those on applications they may operate.
 
+**Operation ID:** `sessions`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/sessions" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/sessions" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "application": "example",
-      "endsBy": "example",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "idleEndsAt": "2026-01-01T09:00:00Z",
-      "instance": "example",
-      "kind": "terminal",
-      "lastActivityAt": "2026-01-01T09:00:00Z",
-      "mine": false,
-      "person": "example",
-      "startedAt": "2026-01-01T09:00:00Z"
-    }
-  ]
+  "items": []
 }
 ```
 
@@ -151,18 +169,24 @@ curl -sS -X GET "$APELORA_URL/api/v1/sessions" \
 
 Ends a session now. Allowed for the person who has it and for whoever may operate its application. Anything else answers 404.
 
+**Operation ID:** `terminate_session`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
 | Parameter | In | Type | Required | Meaning |
 |---|---|---|---|---|
 | `id` | path | string | yes | Session id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/sessions/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `404`. The body is `{ "error": { "code": …, "message": … } }`.
 

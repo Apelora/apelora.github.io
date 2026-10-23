@@ -311,7 +311,7 @@
     "system": {
       "title": "System",
       "summary": "Health, version, sign-in, settings, who am I.",
-      "intro": "Health, version and sign-in options (some of them public), the settings the control plane runs with, the support bundle, and who the caller is."
+      "intro": "Health, versions, sign-in, settings, support bundles and caller identity."
     },
     "inventory": {
       "title": "Inventory",

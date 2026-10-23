@@ -7,7 +7,9 @@ label: Applications
 source: packages/api-client/openapi.json
 summary: Applications, drafts, versions, operations and migration.
 ---
-Applications: drafts and published versions, deploying a version, start, shut down, stop, restart and migrate, volumes and status. This page documents all 33 operations, each with a request you can copy. Set `APELORA_URL` and `APELORA_TOKEN` as described in [the API overview](/docs/api/overview/).
+Applications: drafts and published versions, deploying a version, start, shut down, stop, restart and migrate, volumes and status. This page lists 34 operations.
+
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
 
 ## Operations
 
@@ -37,6 +39,7 @@ Applications: drafts and published versions, deploying a version, start, shut do
 | [`DELETE /api/v1/applications/{name}/volumes/{volume}`](#delete-apiv1applicationsnamevolumesvolume) | Deletes one of the application's volumes and its snapshots, for good. |
 | [`GET /api/v1/applications/{name}/volumes/{volume}/backups`](#get-apiv1applicationsnamevolumesvolumebackups) | The volume's backups, oldest first, whether each still exists, and its schedules. |
 | [`POST /api/v1/applications/{name}/volumes/{volume}/backups`](#post-apiv1applicationsnamevolumesvolumebackups) | Backs the volume up now: a copy, through a short-lived snapshot, into the backup pool on another member. |
+| [`DELETE /api/v1/applications/{name}/volumes/{volume}/backups/{backup}`](#delete-apiv1applicationsnamevolumesvolumebackupsbackup) | Deletes one backup copy. |
 | [`GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`](#get-apiv1applicationsnamevolumesvolumebackupsbackuprestore) | Dry run of restoring the volume from one of its backups: what is replaced (data written since the backup, the volume's snapshots), which instances must be stopped, where the safety backup goes, and the steps. |
 | [`POST /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`](#post-apiv1applicationsnamevolumesvolumebackupsbackuprestore) | Restores the volume from one of its backups, after the dry run passes again and the volume's name is typed: a safety backup of the current data first (unless declined), then the backup is copied over the volume. |
 | [`PUT /api/v1/applications/{name}/volumes/{volume}/schedules`](#put-apiv1applicationsnamevolumesvolumeschedules) | Sets or turns off the volume's snapshot and backup schedules. |
@@ -51,7 +54,9 @@ Applications: drafts and published versions, deploying a version, start, shut do
 
 ### `GET /api/v1/applications`
 
-Applications the caller may see, each with design status, derived runtime status, replica health, and the actions they may take now.
+Applications the caller may see, each with design status, derived runtime status, replica health, and the actions they may take now. Needs `application.view`.
+
+**Operation ID:** `applications`
 
 **Needs:** `application.view`.
 
@@ -59,96 +64,109 @@ Applications the caller may see, each with design status, derived runtime status
 |---|---|---|---|---|
 | `includeArchived` | query | boolean | no | — |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
   "items": [
     {
+      "name": "shop",
+      "latestRevision": null,
+      "createdAt": "2026-10-23T22:12:58.07016Z",
+      "updatedAt": "2026-10-23T22:12:58.096314Z",
+      "description": "Updated through the API",
+      "icon": "box",
+      "project": {
+        "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+        "slug": "docs-project",
+        "name": "Documentation project",
+        "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "organizationSlug": "docs-org"
+      },
+      "environment": {
+        "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+        "slug": "development",
+        "name": "Development",
+        "kind": "development",
+        "incusProject": "docs-org-docs-project-development"
+      },
+      "archived": false,
+      "design": {
+        "status": "draft",
+        "draftVersion": null,
+        "validationErrors": 0,
+        "publishedVersion": null,
+        "hasUnpublishedChanges": false,
+        "updatedAt": null
+      },
+      "deployment": {
+        "status": "not-deployed",
+        "observedAt": "2026-10-23T22:12:58.129707Z",
+        "stale": false,
+        "source": "mock",
+        "deployedVersion": null,
+        "modules": 0,
+        "replicas": {
+          "desired": 0,
+          "running": 0,
+          "healthy": 0,
+          "unhealthy": 0
+        },
+        "lastActivityAt": null,
+        "operation": null
+      },
       "actions": {
-        "migrate": {
-          "allowed": false,
-          "reason": "example"
-        },
-        "restart": {
-          "allowed": false,
-          "reason": "example"
-        },
-        "shutdown": {
-          "allowed": false,
-          "reason": "example"
-        },
         "start": {
           "allowed": false,
-          "reason": "example"
+          "reason": "deploy a published version first"
         },
         "stop": {
           "allowed": false,
-          "reason": "example"
-        }
-      },
-      "archived": false,
-      "createdAt": "2026-01-01T09:00:00Z",
-      "deployment": {
-        "modules": 0,
-        "observedAt": "2026-01-01T09:00:00Z",
-        "replicas": {
-          "desired": 0,
-          "healthy": 0,
-          "running": 0,
-          "unhealthy": 0
+          "reason": "deploy a published version first"
         },
-        "source": "mock",
-        "stale": false,
-        "status": "not-deployed",
-        "deployedVersion": 1,
-        "lastActivityAt": "2026-01-01T09:00:00Z",
-        "operation": {
-          "createdAt": "2026-01-01T09:00:00Z",
-          "id": "00000000-0000-4000-8000-000000000001",
-          "kind": "start",
-          "state": "pending",
-          "error": "example"
+        "shutdown": {
+          "allowed": false,
+          "reason": "deploy a published version first"
+        },
+        "restart": {
+          "allowed": false,
+          "reason": "deploy a published version first"
+        },
+        "migrate": {
+          "allowed": false,
+          "reason": "deploy a published version first"
         }
-      },
-      "description": "A description",
-      "design": {
-        "hasUnpublishedChanges": false,
-        "status": "draft",
-        "validationErrors": 1,
-        "draftVersion": 1,
-        "publishedVersion": 1,
-        "updatedAt": "2026-01-01T09:00:00Z"
-      },
-      "icon": "example",
-      "name": "example",
-      "project": {
-        "id": "00000000-0000-4000-8000-000000000001",
-        "name": "example",
-        "organizationId": "00000000-0000-4000-8000-000000000001",
-        "organizationSlug": "example",
-        "slug": "example"
-      },
-      "updatedAt": "2026-01-01T09:00:00Z",
-      "environment": {
-        "id": "00000000-0000-4000-8000-000000000001",
-  …
+      }
+    }
+  ],
+  "observedAt": "2026-10-23T22:12:58.129707Z",
+  "stale": false
+}
 ```
 
 **Errors:** `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `POST /api/v1/applications`
 
-Creates an application in an environment, optionally with its first draft.
+Creates an application in an environment, optionally with its first draft. Needs `application.create` on the environment's project.
+
+**Operation ID:** `create_application`
 
 **Needs:** `application.create` on the environment's project.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -160,99 +178,109 @@ Creates an application in an environment, optionally with its first draft.
 
 ```json
 {
-  "name": "example",
-  "environmentId": "00000000-0000-4000-8000-000000000001"
+  "name": "shop",
+  "environmentId": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+  "description": "API documentation example"
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example","environmentId":"00000000-0000-4000-8000-000000000001"}'
+  --data-raw '{"name":"shop","environmentId":"900a36cf-8241-4afe-8ad4-6a84215a0ca0","description":"API documentation example"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
+  "name": "shop",
+  "latestRevision": null,
+  "createdAt": "2026-10-23T22:12:58.07016Z",
+  "updatedAt": "2026-10-23T22:12:58.07016Z",
+  "description": "API documentation example",
+  "icon": "box",
+  "project": {
+    "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+    "slug": "docs-project",
+    "name": "Documentation project",
+    "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+    "organizationSlug": "docs-org"
+  },
+  "environment": {
+    "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+    "slug": "development",
+    "name": "Development",
+    "kind": "development",
+    "incusProject": "docs-org-docs-project-development"
+  },
+  "archived": false,
+  "design": {
+    "status": "draft",
+    "draftVersion": null,
+    "validationErrors": 0,
+    "publishedVersion": null,
+    "hasUnpublishedChanges": false,
+    "updatedAt": null
+  },
+  "deployment": {
+    "status": "not-deployed",
+    "observedAt": "2026-10-23T22:12:58.077795Z",
+    "stale": false,
+    "source": "mock",
+    "deployedVersion": null,
+    "modules": 0,
+    "replicas": {
+      "desired": 0,
+      "running": 0,
+      "healthy": 0,
+      "unhealthy": 0
+    },
+    "lastActivityAt": null,
+    "operation": null
+  },
   "actions": {
-    "migrate": {
-      "allowed": false,
-      "reason": "example"
-    },
-    "restart": {
-      "allowed": false,
-      "reason": "example"
-    },
-    "shutdown": {
-      "allowed": false,
-      "reason": "example"
-    },
     "start": {
       "allowed": false,
-      "reason": "example"
+      "reason": "deploy a published version first"
     },
     "stop": {
       "allowed": false,
-      "reason": "example"
-    }
-  },
-  "archived": false,
-  "createdAt": "2026-01-01T09:00:00Z",
-  "deployment": {
-    "modules": 0,
-    "observedAt": "2026-01-01T09:00:00Z",
-    "replicas": {
-      "desired": 0,
-      "healthy": 0,
-      "running": 0,
-      "unhealthy": 0
+      "reason": "deploy a published version first"
     },
-    "source": "mock",
-    "stale": false,
-    "status": "not-deployed",
-    "deployedVersion": 1,
-    "lastActivityAt": "2026-01-01T09:00:00Z",
-    "operation": {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "kind": "start",
-      "state": "pending",
-      "error": "example"
+    "shutdown": {
+      "allowed": false,
+      "reason": "deploy a published version first"
+    },
+    "restart": {
+      "allowed": false,
+      "reason": "deploy a published version first"
+    },
+    "migrate": {
+      "allowed": false,
+      "reason": "deploy a published version first"
     }
-  },
-  "description": "A description",
-  "design": {
-    "hasUnpublishedChanges": false,
-    "status": "draft",
-    "validationErrors": 1,
-    "draftVersion": 1,
-    "publishedVersion": 1,
-    "updatedAt": "2026-01-01T09:00:00Z"
-  },
-  "icon": "example",
-  "name": "example",
-  "project": {
-    "id": "00000000-0000-4000-8000-000000000001",
-    "name": "example",
-    "organizationId": "00000000-0000-4000-8000-000000000001",
-    "organizationSlug": "example",
-    "slug": "example"
-  },
-  "updatedAt": "2026-01-01T09:00:00Z",
-  "environment": {
-    "id": "00000000-0000-4000-8000-000000000001",
-    "kind": "production",
-    "name": "example",
-  …
+  }
+}
 ```
 
 **Errors:** `400`, `403`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/applications/{name}`
 
-One application with its modules (desired and observed), versions and recent operations.
+One application with its modules (desired and observed), versions and recent operations. Needs `application.view`.
+
+**Operation ID:** `application`
 
 **Needs:** `application.view`.
 
@@ -260,92 +288,104 @@ One application with its modules (desired and observed), versions and recent ope
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
   "application": {
+    "name": "shop",
+    "latestRevision": null,
+    "createdAt": "2026-10-23T22:12:58.07016Z",
+    "updatedAt": "2026-10-23T22:12:58.07016Z",
+    "description": "API documentation example",
+    "icon": "box",
+    "project": {
+      "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+      "slug": "docs-project",
+      "name": "Documentation project",
+      "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+      "organizationSlug": "docs-org"
+    },
+    "environment": {
+      "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+      "slug": "development",
+      "name": "Development",
+      "kind": "development",
+      "incusProject": "docs-org-docs-project-development"
+    },
+    "archived": false,
+    "design": {
+      "status": "draft",
+      "draftVersion": null,
+      "validationErrors": 0,
+      "publishedVersion": null,
+      "hasUnpublishedChanges": false,
+      "updatedAt": null
+    },
+    "deployment": {
+      "status": "not-deployed",
+      "observedAt": "2026-10-23T22:12:58.084424Z",
+      "stale": false,
+      "source": "mock",
+      "deployedVersion": null,
+      "modules": 0,
+      "replicas": {
+        "desired": 0,
+        "running": 0,
+        "healthy": 0,
+        "unhealthy": 0
+      },
+      "lastActivityAt": null,
+      "operation": null
+    },
     "actions": {
-      "migrate": {
-        "allowed": false,
-        "reason": "example"
-      },
-      "restart": {
-        "allowed": false,
-        "reason": "example"
-      },
-      "shutdown": {
-        "allowed": false,
-        "reason": "example"
-      },
       "start": {
         "allowed": false,
-        "reason": "example"
+        "reason": "deploy a published version first"
       },
       "stop": {
         "allowed": false,
-        "reason": "example"
-      }
-    },
-    "archived": false,
-    "createdAt": "2026-01-01T09:00:00Z",
-    "deployment": {
-      "modules": 0,
-      "observedAt": "2026-01-01T09:00:00Z",
-      "replicas": {
-        "desired": 0,
-        "healthy": 0,
-        "running": 0,
-        "unhealthy": 0
+        "reason": "deploy a published version first"
       },
-      "source": "mock",
-      "stale": false,
-      "status": "not-deployed",
-      "deployedVersion": 1,
-      "lastActivityAt": "2026-01-01T09:00:00Z",
-      "operation": {
-        "createdAt": "2026-01-01T09:00:00Z",
-        "id": "00000000-0000-4000-8000-000000000001",
-        "kind": "start",
-        "state": "pending",
-        "error": "example"
+      "shutdown": {
+        "allowed": false,
+        "reason": "deploy a published version first"
+      },
+      "restart": {
+        "allowed": false,
+        "reason": "deploy a published version first"
+      },
+      "migrate": {
+        "allowed": false,
+        "reason": "deploy a published version first"
       }
-    },
-    "description": "A description",
-    "design": {
-      "hasUnpublishedChanges": false,
-      "status": "draft",
-      "validationErrors": 1,
-      "draftVersion": 1,
-      "publishedVersion": 1,
-      "updatedAt": "2026-01-01T09:00:00Z"
-    },
-    "icon": "example",
-    "name": "example",
-    "project": {
-      "id": "00000000-0000-4000-8000-000000000001",
-      "name": "example",
-      "organizationId": "00000000-0000-4000-8000-000000000001",
-      "organizationSlug": "example",
-      "slug": "example"
-    },
-    "updatedAt": "2026-01-01T09:00:00Z",
-    "environment": {
-      "id": "00000000-0000-4000-8000-000000000001",
-      "kind": "production",
-  …
+    }
+  },
+  "modules": [],
+  "versions": [],
+  "operations": []
+}
 ```
 
 **Errors:** `401`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `PATCH /api/v1/applications/{name}`
 
-Changes an application's description or icon (its name cannot change).
+Changes an application's description or icon (its name cannot change). Needs `application.design`.
+
+**Operation ID:** `update_application`
 
 **Needs:** `application.design`.
 
@@ -353,7 +393,7 @@ Changes an application's description or icon (its name cannot change).
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -362,98 +402,107 @@ Changes an application's description or icon (its name cannot change).
 
 ```json
 {
-  "description": "A description"
+  "description": "Updated through the API"
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PATCH "$APELORA_URL/api/v1/applications/shop" \
+curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/applications/shop" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"description":"A description"}'
+  --data-raw '{"description":"Updated through the API"}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
+  "name": "shop",
+  "latestRevision": null,
+  "createdAt": "2026-10-23T22:12:58.07016Z",
+  "updatedAt": "2026-10-23T22:12:58.096314Z",
+  "description": "Updated through the API",
+  "icon": "box",
+  "project": {
+    "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+    "slug": "docs-project",
+    "name": "Documentation project",
+    "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+    "organizationSlug": "docs-org"
+  },
+  "environment": {
+    "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+    "slug": "development",
+    "name": "Development",
+    "kind": "development",
+    "incusProject": "docs-org-docs-project-development"
+  },
+  "archived": false,
+  "design": {
+    "status": "draft",
+    "draftVersion": null,
+    "validationErrors": 0,
+    "publishedVersion": null,
+    "hasUnpublishedChanges": false,
+    "updatedAt": null
+  },
+  "deployment": {
+    "status": "not-deployed",
+    "observedAt": "2026-10-23T22:12:58.100469Z",
+    "stale": false,
+    "source": "mock",
+    "deployedVersion": null,
+    "modules": 0,
+    "replicas": {
+      "desired": 0,
+      "running": 0,
+      "healthy": 0,
+      "unhealthy": 0
+    },
+    "lastActivityAt": null,
+    "operation": null
+  },
   "actions": {
-    "migrate": {
-      "allowed": false,
-      "reason": "example"
-    },
-    "restart": {
-      "allowed": false,
-      "reason": "example"
-    },
-    "shutdown": {
-      "allowed": false,
-      "reason": "example"
-    },
     "start": {
       "allowed": false,
-      "reason": "example"
+      "reason": "deploy a published version first"
     },
     "stop": {
       "allowed": false,
-      "reason": "example"
-    }
-  },
-  "archived": false,
-  "createdAt": "2026-01-01T09:00:00Z",
-  "deployment": {
-    "modules": 0,
-    "observedAt": "2026-01-01T09:00:00Z",
-    "replicas": {
-      "desired": 0,
-      "healthy": 0,
-      "running": 0,
-      "unhealthy": 0
+      "reason": "deploy a published version first"
     },
-    "source": "mock",
-    "stale": false,
-    "status": "not-deployed",
-    "deployedVersion": 1,
-    "lastActivityAt": "2026-01-01T09:00:00Z",
-    "operation": {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "kind": "start",
-      "state": "pending",
-      "error": "example"
+    "shutdown": {
+      "allowed": false,
+      "reason": "deploy a published version first"
+    },
+    "restart": {
+      "allowed": false,
+      "reason": "deploy a published version first"
+    },
+    "migrate": {
+      "allowed": false,
+      "reason": "deploy a published version first"
     }
-  },
-  "description": "A description",
-  "design": {
-    "hasUnpublishedChanges": false,
-    "status": "draft",
-    "validationErrors": 1,
-    "draftVersion": 1,
-    "publishedVersion": 1,
-    "updatedAt": "2026-01-01T09:00:00Z"
-  },
-  "icon": "example",
-  "name": "example",
-  "project": {
-    "id": "00000000-0000-4000-8000-000000000001",
-    "name": "example",
-    "organizationId": "00000000-0000-4000-8000-000000000001",
-    "organizationSlug": "example",
-    "slug": "example"
-  },
-  "updatedAt": "2026-01-01T09:00:00Z",
-  "environment": {
-    "id": "00000000-0000-4000-8000-000000000001",
-    "kind": "production",
-    "name": "example",
-  …
+  }
+}
 ```
 
 **Errors:** `400`, `403`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `POST /api/v1/applications/{name}/archive`
 
-Archives an application that is not running; it leaves the default list and keeps its data.
+Archives an application that is not running; it leaves the default list and keeps its data. Needs `application.delete`.
+
+**Operation ID:** `archive_application`
 
 **Needs:** `application.delete`.
 
@@ -461,18 +510,24 @@ Archives an application that is not running; it leaves the default list and keep
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/archive" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/archive" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `POST /api/v1/applications/{name}/deployments`
 
-Deploys the design: saves it as a new revision and queues the planned changes. Refuses the whole deployment if any module conflicts with an existing instance.
+Deploys the design: saves it as a new revision and queues the planned changes. Refuses the whole deployment if any module conflicts with an existing instance. Needs `deploy`.
+
+**Operation ID:** `deploy_application`
 
 **Needs:** `deploy`.
 
@@ -481,7 +536,7 @@ Deploys the design: saves it as a new revision and queues the planned changes. R
 | `name` | path | string | yes | Application name |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -535,6 +590,8 @@ Deploys the design: saves it as a new revision and queues the planned changes. R
           {
             "name": "example",
             "sizeMib": 0,
+            "class": "data-local",
+            "content": "filesystem",
             "path": "example",
             "pool": "example"
           }
@@ -555,15 +612,26 @@ Deploys the design: saves it as a new revision and queues the planned changes. R
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/deployments" \
+# Generate once per distinct change; keep this value when retrying.
+IDEMPOTENCY_KEY=$(uuidgen)
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/deployments" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Idempotency-Key: $(uuidgen)" \
+  -H "Accept: application/json" \
+  -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"project":"apelora","document":{},"modules":[{"module":"example","spec":{"kind":"container","name":"example","project":"apelora","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"},"architectures":["example"],"config":{"key":"example"},"network":{"acl":"example","network":"example","uplink":"example"},"owner":{"application":"example","module":"example","replica":0},"profiles":["example"],"rootPool":"example","start":false,"volumes":[{"name":"example","sizeMib":0,"path":"example","pool":"example"}]},"availability":"stateless","guestOs":"linux","internet":"none","readiness":{"command":["example"],"timeoutSecs":0},"replicas":0}]}'
+  --data-raw '{"project":"apelora","document":{},"modules":[{"module":"example","spec":{"kind":"container","name":"example","project":"apelora","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"},"architectures":["example"],"config":{"key":"example"},"network":{"acl":"example","network":"example","uplink":"example"},"owner":{"application":"example","module":"example","replica":0},"profiles":["example"],"rootPool":"example","start":false,"volumes":[{"name":"example","sizeMib":0,"class":"data-local","content":"filesystem","path":"example","pool":"example"}]},"availability":"stateless","guestOs":"linux","internet":"none","readiness":{"command":["example"],"timeoutSecs":0},"replicas":0}]}'
 ```
 
-**Response `202`**:
+**Response `202`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -606,7 +674,15 @@ curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/deployments" \
       "allowed": false,
       "scopes": [
         {
-          "dimensions": [],
+          "dimensions": [
+            {
+              "adding": 1,
+              "dimension": "instances",
+              "exceeded": false,
+              "limit": 1,
+              "used": 1
+            }
+          ],
           "id": "example",
           "kind": "organization",
           "name": "example"
@@ -623,7 +699,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/deployments" \
 
 ### `GET /api/v1/applications/{name}/draft`
 
-The application's working document. 404 when it has none yet.
+The application's working document. 404 when it has none yet. Needs `application.view`.
+
+**Operation ID:** `application_draft`
 
 **Needs:** `application.view`.
 
@@ -631,12 +709,19 @@ The application's working document. 404 when it has none yet.
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/draft" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/draft" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -654,7 +739,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/draft" \
 
 ### `PUT /api/v1/applications/{name}/draft`
 
-Saves the draft as the next version. Refused with 409 `draft_conflict` (and the current version) when someone saved since `baseVersion`; nothing is overwritten.
+Saves the draft as the next version. Refused with 409 `draft_conflict` (and the current version) when someone saved since `baseVersion`; nothing is overwritten. Needs `application.design`.
+
+**Operation ID:** `save_application_draft`
 
 **Needs:** `application.design`.
 
@@ -662,7 +749,7 @@ Saves the draft as the next version. Refused with 409 `draft_conflict` (and the 
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -675,14 +762,23 @@ Saves the draft as the next version. Refused with 409 `draft_conflict` (and the 
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PUT "$APELORA_URL/api/v1/applications/shop/draft" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/applications/shop/draft" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"document":{}}'
+  --data-raw '{"document":{}}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -700,7 +796,9 @@ curl -sS -X PUT "$APELORA_URL/api/v1/applications/shop/draft" \
 
 ### `GET /api/v1/applications/{name}/events`
 
-What happened to the application: creation, saves, versions, deployments, operations, refusals.
+What happened to the application: creation, saves, versions, deployments, operations, refusals. Needs `application.view`.
+
+**Operation ID:** `application_events`
 
 **Needs:** `application.view`.
 
@@ -708,12 +806,19 @@ What happened to the application: creation, saves, versions, deployments, operat
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/events" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/events" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -738,7 +843,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/events" \
 
 ### `GET /api/v1/applications/{name}/migration`
 
-Dry run of migrating the application to another server: for each instance whether it keeps running, what is copied and what blocks it. Changes nothing.
+Dry run of migrating the application to another server: for each instance whether it keeps running, what is copied and what blocks it. Changes nothing. Needs `application.operate`.
+
+**Operation ID:** `preview_application_migration`
 
 **Needs:** `application.operate`.
 
@@ -747,12 +854,19 @@ Dry run of migrating the application to another server: for each instance whethe
 | `name` | path | string | yes | Application name |
 | `target` | query | string | yes | The server to move the application to. |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/migration?target=example" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/migration?target=example" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -789,7 +903,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/migration?target=example"
 
 ### `GET /api/v1/applications/{name}/operations`
 
-Recent operations of the application, newest first.
+Recent operations of the application, newest first. Needs `application.view`.
+
+**Operation ID:** `application_operations`
 
 **Needs:** `application.view`.
 
@@ -797,12 +913,19 @@ Recent operations of the application, newest first.
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -815,7 +938,14 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations" \
         {
           "action": "example",
           "state": "example",
-          "steps": []
+          "steps": [
+            {
+              "instance": "example",
+              "module": "example",
+              "state": "example",
+              "error": "example"
+            }
+          ]
         }
       ],
       "requestedBy": "example",
@@ -834,7 +964,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations" \
 
 ### `POST /api/v1/applications/{name}/operations`
 
-Starts, shuts down (graceful), stops (immediate), restarts or migrates the application's instances, in dependency order where that matters, as an asynchronous operation. Succeeds only when Incus confirms each instance's state (and, for a migration, its new server). It only touches instances this application owns; networks, volumes, data and other applications are left alone.
+Starts, shuts down (graceful), stops (immediate), restarts or migrates the application's instances, in dependency order where that matters, as an asynchronous operation. Succeeds only when Incus confirms each instance's state (and, for a migration, its new server). Needs `application.operate` on the application. It only touches instances this application owns; networks, volumes, data and other applications are left alone.
+
+**Operation ID:** `operate_application`
 
 **Needs:** `application.operate` on the application.
 
@@ -843,7 +975,7 @@ Starts, shuts down (graceful), stops (immediate), restarts or migrates the appli
 | `name` | path | string | yes | Application name |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -857,15 +989,26 @@ Starts, shuts down (graceful), stops (immediate), restarts or migrates the appli
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/operations" \
+# Generate once per distinct change; keep this value when retrying.
+IDEMPOTENCY_KEY=$(uuidgen)
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/operations" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Idempotency-Key: $(uuidgen)" \
+  -H "Accept: application/json" \
+  -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"action":"start"}'
+  --data-raw '{"action":"start"}'
 ```
 
-**Response `202`**:
+**Response `202`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -903,7 +1046,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/operations" \
 
 ### `GET /api/v1/applications/{name}/operations/{id}`
 
-One operation with the progress of each phase and instance.
+One operation with the progress of each phase and instance. Needs `application.view`.
+
+**Operation ID:** `application_operation`
 
 **Needs:** `application.view`.
 
@@ -912,12 +1057,19 @@ One operation with the progress of each phase and instance.
 | `name` | path | string | yes | Application name |
 | `id` | path | string | yes | Operation id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/00000000-0000-4000-8000-000000000001" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/00000000-0000-4000-8000-000000000001" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -952,7 +1104,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/00000000-0000-
 
 ### `POST /api/v1/applications/{name}/plan`
 
-What deploying the design would change, without changing anything.
+What deploying the design would change, without changing anything. Needs `deploy`.
+
+**Operation ID:** `plan_application`
 
 **Needs:** `deploy`.
 
@@ -960,7 +1114,7 @@ What deploying the design would change, without changing anything.
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1010,6 +1164,8 @@ What deploying the design would change, without changing anything.
           {
             "name": "example",
             "sizeMib": 0,
+            "class": "data-local",
+            "content": "filesystem",
             "path": "example",
             "pool": "example"
           }
@@ -1030,14 +1186,23 @@ What deploying the design would change, without changing anything.
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/plan" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/plan" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"project":"apelora","modules":[{"module":"example","spec":{"kind":"container","name":"example","project":"apelora","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"},"architectures":["example"],"config":{"key":"example"},"network":{"acl":"example","network":"example","uplink":"example"},"owner":{"application":"example","module":"example","replica":0},"profiles":["example"],"rootPool":"example","start":false,"volumes":[{"name":"example","sizeMib":0,"path":"example","pool":"example"}]},"availability":"stateless","guestOs":"linux","internet":"none","readiness":{"command":["example"],"timeoutSecs":0},"replicas":0}]}'
+  --data-raw '{"project":"apelora","modules":[{"module":"example","spec":{"kind":"container","name":"example","project":"apelora","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"},"architectures":["example"],"config":{"key":"example"},"network":{"acl":"example","network":"example","uplink":"example"},"owner":{"application":"example","module":"example","replica":0},"profiles":["example"],"rootPool":"example","start":false,"volumes":[{"name":"example","sizeMib":0,"class":"data-local","content":"filesystem","path":"example","pool":"example"}]},"availability":"stateless","guestOs":"linux","internet":"none","readiness":{"command":["example"],"timeoutSecs":0},"replicas":0}]}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1073,6 +1238,7 @@ curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/plan" \
         "dimensions": [
           {
             "adding": 1,
+            "dimension": "instances",
             "exceeded": false,
             "limit": 1,
             "used": 1
@@ -1091,7 +1257,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/plan" \
 
 ### `POST /api/v1/applications/{name}/restore`
 
-Brings an archived application back.
+Brings an archived application back. Needs `application.delete`.
+
+**Operation ID:** `restore_application`
 
 **Needs:** `application.delete`.
 
@@ -1099,18 +1267,24 @@ Brings an archived application back.
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/applications/{name}/status`
 
-The application's instances as Incus reports them, by module.
+The application's instances as Incus reports them, by module. Needs `read-inventory`.
+
+**Operation ID:** `application_status`
 
 **Needs:** `read-inventory`.
 
@@ -1119,12 +1293,19 @@ The application's instances as Incus reports them, by module.
 | `name` | path | string | yes | Application name |
 | `project` | query | string | no | Only this Incus project. |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/status" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/status" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1161,7 +1342,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/status" \
 
 ### `GET /api/v1/applications/{name}/versions`
 
-Versions of the application, newest first.
+Versions of the application, newest first. Needs `application.view`.
+
+**Operation ID:** `application_versions`
 
 **Needs:** `application.view`.
 
@@ -1169,12 +1352,19 @@ Versions of the application, newest first.
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1195,7 +1385,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions" \
 
 ### `POST /api/v1/applications/{name}/versions`
 
-Releases the current draft as the next immutable published version. Refused while the draft is invalid or when this draft version is already published.
+Releases the current draft as the next immutable published version. Refused while the draft is invalid or when this draft version is already published. Needs `application.design`.
+
+**Operation ID:** `publish_application`
 
 **Needs:** `application.design`.
 
@@ -1203,7 +1395,7 @@ Releases the current draft as the next immutable published version. Refused whil
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1215,14 +1407,23 @@ Releases the current draft as the next immutable published version. Refused whil
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/versions" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/versions" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"label":"example"}'
+  --data-raw '{"label":"example"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1239,7 +1440,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/versions" \
 
 ### `GET /api/v1/applications/{name}/versions/{revision}`
 
-The document of one version.
+The document of one version. Needs `application.view`.
+
+**Operation ID:** `application_version`
 
 **Needs:** `application.view`.
 
@@ -1248,12 +1451,19 @@ The document of one version.
 | `name` | path | string | yes | Application name |
 | `revision` | path | integer | yes | Version number |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions/1" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions/1" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1266,7 +1476,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions/1" \
 
 ### `GET /api/v1/applications/{name}/volumes`
 
-The application's volumes, with what Incus says about each now.
+The application's volumes, with what Incus says about each now. Needs `application.view`.
+
+**Operation ID:** `application_volumes`
 
 **Needs:** `application.view`.
 
@@ -1274,12 +1486,19 @@ The application's volumes, with what Incus says about each now.
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1312,7 +1531,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes" \
 
 ### `PATCH /api/v1/applications/{name}/volumes/{volume}`
 
-Grows one of the application's volumes, also while its instance runs. Volumes only grow: a smaller size is refused.
+Grows one of the application's volumes, also while its instance runs. Volumes only grow: a smaller size is refused. Needs `application.deploy`; audited.
+
+**Operation ID:** `grow_application_volume`
 
 **Needs:** `application.deploy`; audited.
 
@@ -1321,7 +1542,7 @@ Grows one of the application's volumes, also while its instance runs. Volumes on
 | `name` | path | string | yes | Application name |
 | `volume` | path | string | yes | The volume's Incus name |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1333,20 +1554,26 @@ Grows one of the application's volumes, also while its instance runs. Volumes on
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PATCH "$APELORA_URL/api/v1/applications/shop/volumes/example" \
+curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/applications/shop/volumes/example" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"sizeMib":0}'
+  --data-raw '{"sizeMib":0}'
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `400`, `401`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}`
 
-Deletes one of the application's volumes and its snapshots, for good. The volume's Incus name must be typed again; refused while an instance uses it.
+Deletes one of the application's volumes and its snapshots, for good. The volume's Incus name must be typed again; refused while an instance uses it. Needs `application.delete` (and an approval where the policy asks for one); audited.
+
+**Operation ID:** `delete_application_volume`
 
 **Needs:** `application.delete` (and an approval where the policy asks for one); audited.
 
@@ -1355,7 +1582,7 @@ Deletes one of the application's volumes and its snapshots, for good. The volume
 | `name` | path | string | yes | Application name |
 | `volume` | path | string | yes | The volume's Incus name |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1367,20 +1594,26 @@ Deletes one of the application's volumes and its snapshots, for good. The volume
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/example" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/example" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"confirm":"example"}'
+  --data-raw '{"confirm":"example"}'
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `400`, `401`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/backups`
 
-The volume's backups, oldest first, whether each still exists, and its schedules.
+The volume's backups, oldest first, whether each still exists, and its schedules. Needs `application.view`.
+
+**Operation ID:** `volume_backups`
 
 **Needs:** `application.view`.
 
@@ -1389,12 +1622,19 @@ The volume's backups, oldest first, whether each still exists, and its schedules
 | `name` | path | string | yes | Application name |
 | `volume` | path | string | yes | The volume's Incus name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/backups" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/backups" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1436,7 +1676,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/backups" 
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/backups`
 
-Backs the volume up now: a copy, through a short-lived snapshot, into the backup pool on another member. Kept until someone deletes it (scheduled backups are pruned, these are not). Queues a `volume.backup` job.
+Backs the volume up now: a copy, through a short-lived snapshot, into the backup pool on another member. Kept until someone deletes it (`delete_backup`); scheduled backups are pruned to what the schedule keeps. Queues a `volume.backup` job. Needs `application.operate`; audited.
+
+**Operation ID:** `back_up_volume`
 
 **Needs:** `application.operate`; audited.
 
@@ -1446,13 +1688,24 @@ Backs the volume up now: a copy, through a short-lived snapshot, into the backup
 | `volume` | path | string | yes | The volume's Incus name |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/backups" \
+# Generate once per distinct change; keep this value when retrying.
+IDEMPOTENCY_KEY=$(uuidgen)
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/backups" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Idempotency-Key: $(uuidgen)"
+  -H "Accept: application/json" \
+  -H "Idempotency-Key: $IDEMPOTENCY_KEY"
 ```
 
-**Response `202`**:
+**Response `202`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1463,9 +1716,52 @@ curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/backups"
 
 **Errors:** `401`, `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
 
+### `DELETE /api/v1/applications/{name}/volumes/{volume}/backups/{backup}`
+
+Deletes one backup copy. The volume it was taken from is left as it is. The backup's Incus name must be typed again. A copy Incus no longer has is forgotten anyway, so a record of a missing copy can be cleared. Needs `application.delete` (and an approval where a policy asks for one); audited.
+
+**Operation ID:** `delete_volume_backup`
+
+**Needs:** `application.delete` (and an approval where a policy asks for one); audited.
+
+| Parameter | In | Type | Required | Meaning |
+|---|---|---|---|---|
+| `name` | path | string | yes | Application name. |
+| `volume` | path | string | yes | The volume's Incus name. |
+| `backup` | path | string | yes | The backup's Incus name. |
+
+**Request body** (JSON, illustrative values):
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `confirm` | string | yes | The backup's Incus name again, typed by the person deleting it. |
+
+```json
+{
+  "confirm": "example"
+}
+```
+
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
+```sh
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/example/backups/example" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Content-Type: application/json" \
+  --data-raw '{"confirm":"example"}'
+```
+
+**Response `204`** — Success, with no body.
+
+**Errors:** `400`, `401`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+
 ### `GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`
 
-Dry run of restoring the volume from one of its backups: what is replaced (data written since the backup, the volume's snapshots), which instances must be stopped, where the safety backup goes, and the steps. Changes nothing.
+Dry run of restoring the volume from one of its backups: what is replaced (data written since the backup, the volume's snapshots), which instances must be stopped, where the safety backup goes, and the steps. Changes nothing. Needs `application.operate`.
+
+**Operation ID:** `preview_volume_restore`
 
 **Needs:** `application.operate`.
 
@@ -1476,12 +1772,19 @@ Dry run of restoring the volume from one of its backups: what is replaced (data 
 | `backup` | path | string | yes | The backup's Incus name. |
 | `safetyBackup` | query | boolean | no | Take a safety backup of the current data first (default true). |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/backups/example/restore" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/backups/example/restore" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1522,7 +1825,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/backups/e
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`
 
-Restores the volume from one of its backups, after the dry run passes again and the volume's name is typed: a safety backup of the current data first (unless declined), then the backup is copied over the volume. Every instance using it must be stopped; they stay stopped. Queues a `volume.restore` job.
+Restores the volume from one of its backups, after the dry run passes again and the volume's name is typed: a safety backup of the current data first (unless declined), then the backup is copied over the volume. Every instance using it must be stopped; they stay stopped. Queues a `volume.restore` job. Needs `application.operate` (and an approval where a policy asks); audited with the job.
+
+**Operation ID:** `restore_volume_backup`
 
 **Needs:** `application.operate` (and an approval where a policy asks); audited with the job.
 
@@ -1533,7 +1838,7 @@ Restores the volume from one of its backups, after the dry run passes again and 
 | `backup` | path | string | yes | The backup's Incus name. |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1546,15 +1851,26 @@ Restores the volume from one of its backups, after the dry run passes again and 
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/backups/example/restore" \
+# Generate once per distinct change; keep this value when retrying.
+IDEMPOTENCY_KEY=$(uuidgen)
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/backups/example/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Idempotency-Key: $(uuidgen)" \
+  -H "Accept: application/json" \
+  -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"confirm":"example"}'
+  --data-raw '{"confirm":"example"}'
 ```
 
-**Response `202`**:
+**Response `202`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1567,7 +1883,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/backups/
 
 ### `PUT /api/v1/applications/{name}/volumes/{volume}/schedules`
 
-Sets or turns off the volume's snapshot and backup schedules. A new or changed schedule first runs at the worker's next pass (within a minute).
+Sets or turns off the volume's snapshot and backup schedules. A new or changed schedule first runs at the worker's next pass (within a minute). Needs `application.deploy`; audited.
+
+**Operation ID:** `set_volume_schedules`
 
 **Needs:** `application.deploy`; audited.
 
@@ -1576,7 +1894,7 @@ Sets or turns off the volume's snapshot and backup schedules. A new or changed s
 | `name` | path | string | yes | Application name |
 | `volume` | path | string | yes | The volume's Incus name |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1592,20 +1910,26 @@ Sets or turns off the volume's snapshot and backup schedules. A new or changed s
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PUT "$APELORA_URL/api/v1/applications/shop/volumes/example/schedules" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/applications/shop/volumes/example/schedules" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"backups":{"everyMinutes":0,"keep":0}}'
+  --data-raw '{"backups":{"everyMinutes":0,"keep":0}}'
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `400`, `401`, `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/snapshots`
 
-The volume's snapshots, oldest first.
+The volume's snapshots, oldest first. Needs `application.view`.
+
+**Operation ID:** `volume_snapshots`
 
 **Needs:** `application.view`.
 
@@ -1614,12 +1938,19 @@ The volume's snapshots, oldest first.
 | `name` | path | string | yes | Application name |
 | `volume` | path | string | yes | The volume's Incus name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1640,7 +1971,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/snapshots`
 
-Takes a snapshot of the volume, named after the time (`snap-YYYYMMDD-HHMMSS`). While an instance runs the snapshot is only crash-consistent; the response says which. Snapshots are not backups: they live in the same pool.
+Takes a snapshot of the volume, named after the time (`snap-YYYYMMDD-HHMMSS`). While an instance runs the snapshot is only crash-consistent; the response says which. Snapshots are not backups: they live in the same pool. Needs `application.operate`; audited.
+
+**Operation ID:** `take_volume_snapshot`
 
 **Needs:** `application.operate`; audited.
 
@@ -1649,12 +1982,21 @@ Takes a snapshot of the volume, named after the time (`snap-YYYYMMDD-HHMMSS`). W
 | `name` | path | string | yes | Application name |
 | `volume` | path | string | yes | The volume's Incus name |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1667,7 +2009,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshot
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}`
 
-Deletes one snapshot of the volume.
+Deletes one snapshot of the volume. Needs `application.delete`; audited.
+
+**Operation ID:** `delete_volume_snapshot`
 
 **Needs:** `application.delete`; audited.
 
@@ -1677,18 +2021,24 @@ Deletes one snapshot of the volume.
 | `volume` | path | string | yes | The volume's Incus name. |
 | `snapshot` | path | string | yes | Snapshot name. |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots/example" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots/example" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}/restore`
 
-Puts the volume back to a snapshot: everything written since is lost. The snapshot's name must be typed again, and every instance using the volume must be stopped.
+Puts the volume back to a snapshot: everything written since is lost. The snapshot's name must be typed again, and every instance using the volume must be stopped. Needs `application.operate` (and an approval where the policy asks for one); audited.
+
+**Operation ID:** `restore_volume_snapshot`
 
 **Needs:** `application.operate` (and an approval where the policy asks for one); audited.
 
@@ -1698,7 +2048,7 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 | `volume` | path | string | yes | The volume's Incus name. |
 | `snapshot` | path | string | yes | Snapshot name. |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1710,94 +2060,51 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots/example/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots/example/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"confirm":"example"}'
+  --data-raw '{"confirm":"example"}'
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `400`, `401`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/networks/applications`
 
-Each application the caller may view that has a recorded deployment: its network, the rules compiled from its design, its service and published addresses, and what Incus holds for each, with the differences. Read-only.
+Each application the caller may view that has a recorded deployment: its network, the rules compiled from its design, its service and published addresses, and what Incus holds for each, with the differences. Read-only. Needs `application.view` on each application.
+
+**Operation ID:** `application_networks`
 
 **Needs:** `application.view` on each application.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/networks/applications" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks/applications" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "application": "example",
-      "connections": [
-        {
-          "from": "example",
-          "to": "example",
-          "transport": "example",
-          "port": 0
-        }
-      ],
-      "drift": [
-        "example"
-      ],
-      "enforced": false,
-      "modules": [
-        {
-          "acl": "example",
-          "drift": [],
-          "egress": [],
-          "ingress": [],
-          "internet": "none",
-          "module": "example",
-          "aclPresent": false,
-          "addresses": []
-        }
-      ],
-      "network": "example",
-      "project": "apelora",
-      "published": [
-        {
-          "module": "example",
-          "port": 0,
-          "transport": "example"
-        }
-      ],
-      "revision": 1,
-      "services": [
-        {
-          "drift": [],
-          "module": "example",
-          "ports": [],
-          "published": false,
-          "address": "example",
-          "backends": []
-        }
-      ],
-      "networkObserved": {
-        "kind": "example",
-        "status": "example",
-        "ipv4Address": "example",
-        "routerAddress": "example"
-      },
-      "serviceRange": "example",
-      "uplink": "example"
-    }
-  ],
   "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
+    "provider": "mock",
+    "observedAt": "2026-10-23T22:12:58.318844Z"
   },
-  "incusError": "example"
+  "incusError": null,
+  "items": []
 }
 ```
 
@@ -1805,58 +2112,35 @@ curl -sS -X GET "$APELORA_URL/api/v1/networks/applications" \
 
 ### `GET /api/v1/storage/volumes`
 
-Every application volume the caller may see, with what Incus reports, its schedules and how many backups it has. Read-only.
+Every application volume the caller may see, with what Incus reports, its schedules and how many backups it has. Read-only. Needs `application.view` on each application.
+
+**Operation ID:** `storage_volumes`
 
 **Needs:** `application.view` on each application.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/storage/volumes" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/volumes" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "application": "example",
-      "backups": 1,
-      "class": "example",
-      "incusName": "example",
-      "instance": "example",
-      "member": "example",
-      "module": "example",
-      "name": "example",
-      "pool": "example",
-      "schedules": {
-        "backups": {
-          "everyMinutes": 1,
-          "keep": 1,
-          "error": "example",
-          "lastRunAt": "2026-01-01T09:00:00Z"
-        },
-        "snapshots": {
-          "everyMinutes": 1,
-          "keep": 1,
-          "error": "example",
-          "lastRunAt": "2026-01-01T09:00:00Z"
-        }
-      },
-      "sizeMib": 1,
-      "usedBy": [
-        "example"
-      ],
-      "lastBackupAt": "2026-01-01T09:00:00Z",
-      "state": "attached"
-    }
-  ],
   "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
+    "provider": "mock",
+    "observedAt": "2026-10-23T22:12:58.349853Z"
   },
-  "backupPool": "example",
-  "incusError": "example"
+  "backupPool": null,
+  "incusError": null,
+  "items": []
 }
 ```
 

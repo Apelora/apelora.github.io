@@ -7,7 +7,9 @@ label: Identity and access
 source: packages/api-client/openapi.json
 summary: People, groups, roles, scopes, approvals, tokens and sign-in.
 ---
-Identity and access: organisations, projects, people, groups, roles and assignments, approvals, service identities, tokens and sign-in methods. This page documents all 65 operations, each with a request you can copy. Set `APELORA_URL` and `APELORA_TOKEN` as described in [the API overview](/docs/api/overview/).
+Identity and access: organisations, projects, people, groups, roles and assignments, approvals, service identities, tokens and sign-in methods. This page lists 65 operations.
+
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
 
 ## Operations
 
@@ -83,32 +85,29 @@ Identity and access: organisations, projects, people, groups, roles and assignme
 
 ### `GET /api/v1/approvals`
 
-Requests and approvals: your own, plus every open one if you may approve.
+Requests and approvals: your own, plus every open one if you may approve. Needs `approval.request` or `approval.grant`.
+
+**Operation ID:** `approvals`
 
 **Needs:** `approval.request` or `approval.grant`.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/approvals" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/approvals" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "action": "example",
-      "createdAt": "2026-01-01T09:00:00Z",
-      "expiresAt": "2026-01-01T09:00:00Z",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "reason": "example",
-      "requester": "example",
-      "state": "example",
-      "target": "example",
-      "approver": "example"
-    }
-  ]
+  "items": []
 }
 ```
 
@@ -116,11 +115,13 @@ curl -sS -X GET "$APELORA_URL/api/v1/approvals" \
 
 ### `POST /api/v1/approvals`
 
-Asks for approval of one risky action on one target. You must be allowed to do the action yourself; someone else with `approval.grant` then decides.
+Asks for approval of one risky action on one target. You must be allowed to do the action yourself; someone else with `approval.grant` then decides. Needs `approval.request`.
+
+**Operation ID:** `request_approval`
 
 **Needs:** `approval.request`.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -135,14 +136,23 @@ Asks for approval of one risky action on one target. You must be allowed to do t
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/approvals" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"action":"example","target":"example"}'
+  --data-raw '{"action":"example","target":"example"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -162,7 +172,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/approvals" \
 
 ### `POST /api/v1/approvals/{id}/approve`
 
-Approves a request made by someone else. The approval is good for 30 minutes, once.
+Approves a request made by someone else. Needs `approval.grant`. The approval is good for 30 minutes, once.
+
+**Operation ID:** `approve_request`
 
 **Needs:** `approval.grant`.
 
@@ -170,12 +182,21 @@ Approves a request made by someone else. The approval is good for 30 minutes, on
 |---|---|---|---|---|
 | `id` | path | string | yes | Approval id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-000000000001/approve" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-000000000001/approve" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -195,7 +216,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-00000000
 
 ### `POST /api/v1/approvals/{id}/cancel`
 
-Withdraws your own pending request.
+Withdraws your own pending request. Needs `approval.request`.
+
+**Operation ID:** `cancel_request`
 
 **Needs:** `approval.request`.
 
@@ -203,12 +226,21 @@ Withdraws your own pending request.
 |---|---|---|---|---|
 | `id` | path | string | yes | Approval id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-000000000001/cancel" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-000000000001/cancel" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -228,7 +260,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-00000000
 
 ### `POST /api/v1/approvals/{id}/reject`
 
-Rejects a request.
+Rejects a request. Needs `approval.grant`.
+
+**Operation ID:** `reject_request`
 
 **Needs:** `approval.grant`.
 
@@ -236,12 +270,21 @@ Rejects a request.
 |---|---|---|---|---|
 | `id` | path | string | yes | Approval id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-000000000001/reject" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-000000000001/reject" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -261,7 +304,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4000-8000-00000000
 
 ### `GET /api/v1/identity/assignments`
 
-Role assignments in the caller's scopes.
+Role assignments in the caller's scopes. Needs `user.view`.
+
+**Operation ID:** `assignments`
 
 **Needs:** `user.view`.
 
@@ -271,44 +316,23 @@ Role assignments in the caller's scopes.
 | `principalId` | query | string | no | — |
 | `includeRevoked` | query | boolean | no | — |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/assignments" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/assignments" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "conditions": {
-        "environments": [
-          "production"
-        ],
-        "requireMfa": false
-      },
-      "createdAt": "2026-01-01T09:00:00Z",
-      "createdBy": "example",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "kind": "standard",
-      "principal": {
-        "id": "00000000-0000-4000-8000-000000000001",
-        "type": "user"
-      },
-      "role": {
-        "key": "example",
-        "type": "builtin"
-      },
-      "roleName": "example",
-      "scope": {
-        "type": "platform"
-      },
-      "expiresAt": "2026-01-01T09:00:00Z",
-      "reason": "example",
-      "revokedAt": "2026-01-01T09:00:00Z"
-    }
-  ]
+  "items": []
 }
 ```
 
@@ -316,11 +340,13 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/assignments" \
 
 ### `POST /api/v1/identity/assignments`
 
-Grants a role to a person, group or automation identity at a scope.
+Grants a role to a person, group or automation identity at a scope. Needs `role.assign` there and every permission the role holds (no escalation); audited.
+
+**Operation ID:** `create_assignment`
 
 **Needs:** `role.assign` there and every permission the role holds (no escalation); audited.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -347,14 +373,23 @@ Grants a role to a person, group or automation identity at a scope.
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/assignments" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/assignments" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"principal":{"id":"00000000-0000-4000-8000-000000000001","type":"user"},"role":{"key":"example","type":"builtin"},"scope":{"type":"platform"}}'
+  --data-raw '{"principal":{"id":"00000000-0000-4000-8000-000000000001","type":"user"},"role":{"key":"example","type":"builtin"},"scope":{"type":"platform"}}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -390,7 +425,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/assignments" \
 
 ### `DELETE /api/v1/identity/assignments/{assignment}`
 
-Revokes an assignment; the person loses it on their next request. Refused when it would leave no enabled platform super admin.
+Revokes an assignment; the person loses it on their next request. Needs `role.assign` in its scope and every permission the role confers there (you can only take away what you could grant). Refused when it would leave no enabled platform super admin.
+
+**Operation ID:** `revoke_assignment`
 
 **Needs:** `role.assign` in its scope and every permission the role confers there (you can only take away what you could grant).
 
@@ -398,22 +435,28 @@ Revokes an assignment; the person loses it on their next request. Refused when i
 |---|---|---|---|---|
 | `assignment` | path | string | yes | Assignment id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/identity/assignments/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/assignments/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `POST /api/v1/identity/assignments/preview`
 
-Shows what an assignment would give before it is saved: what the person can already do at the scope, what they could do afterwards, which permissions would be inert, and whether you may save it. Changes nothing.
+Shows what an assignment would give before it is saved: what the person can already do at the scope, what they could do afterwards, which permissions would be inert, and whether you may save it. Changes nothing. Needs `role.assign`.
+
+**Operation ID:** `preview_assignment`
 
 **Needs:** `role.assign`.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -440,14 +483,23 @@ Shows what an assignment would give before it is saved: what the person can alre
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/assignments/preview" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/assignments/preview" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"principal":{"id":"00000000-0000-4000-8000-000000000001","type":"user"},"role":{"key":"example","type":"builtin"},"scope":{"type":"platform"}}'
+  --data-raw '{"principal":{"id":"00000000-0000-4000-8000-000000000001","type":"user"},"role":{"key":"example","type":"builtin"},"scope":{"type":"platform"}}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -513,7 +565,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/assignments/preview" \
 
 ### `GET /api/v1/identity/audit`
 
-Audit history the caller may read: the same filters and paging as `GET /api/v1/audit`.
+Audit history the caller may read: the same filters and paging as `GET /api/v1/audit`. Needs `audit.read`.
+
+**Operation ID:** `identity_audit`
 
 **Needs:** `audit.read`.
 
@@ -528,27 +582,208 @@ Audit history the caller may read: the same filters and paging as `GET /api/v1/a
 | `before` | query | integer | no | Only events older than this id (paging: the id of the last event of the previous page). |
 | `limit` | query | integer | no | Events per page, 1 to 500 (default 100). Not used by the export. |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/audit" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/audit" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
   "items": [
     {
-      "action": "example",
-      "actor": "example",
-      "actorType": "example",
-      "at": "2026-01-01T09:00:00Z",
-      "detail": {},
+      "id": 9,
+      "at": "2026-10-23T22:12:58.15154Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "audit.exported",
+      "target": "audit",
+      "outcome": "success",
+      "scope": null,
+      "detail": {
+        "filters": {},
+        "format": "jsonl",
+        "name": "docs-verifier",
+        "requestId": "a3c46067-556b-431b-9e61-7b6f06c107ec",
+        "role": "fabric-admin"
+      }
+    },
+    {
+      "id": 8,
+      "at": "2026-10-23T22:12:58.144004Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "audit.exported",
+      "target": "audit",
+      "outcome": "success",
+      "scope": null,
+      "detail": {
+        "filters": {},
+        "format": "csv",
+        "name": "docs-verifier",
+        "requestId": "b8575702-952d-49a4-8a03-b1e1cbde287f",
+        "role": "fabric-admin"
+      }
+    },
+    {
+      "id": 7,
+      "at": "2026-10-23T22:12:58.096314Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "application.update",
+      "target": "shop",
+      "outcome": "success",
+      "scope": {
+        "application": "12c29329-0276-49bb-82ef-30d9b762e934",
+        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "project": "97016fb6-2ad8-4399-a986-73ddc9c88a1b"
+      },
+      "detail": {
+        "descriptionChanged": true,
+        "icon": null,
+        "name": "docs-verifier",
+        "requestId": "b506adbf-1f44-44f1-9fdd-f4a237fbc9fb",
+        "role": "fabric-admin"
+      }
+    },
+    {
+      "id": 6,
+      "at": "2026-10-23T22:12:58.07016Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "application.create",
+      "target": "shop",
+      "outcome": "success",
+      "scope": {
+        "application": "12c29329-0276-49bb-82ef-30d9b762e934",
+        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "project": "97016fb6-2ad8-4399-a986-73ddc9c88a1b"
+      },
+      "detail": {
+        "environment": "development",
+        "icon": "box",
+        "name": "docs-verifier",
+        "requestId": "ce7d29a7-7af8-4f3c-82d4-753d0f1e3b44",
+        "role": "fabric-admin"
+      }
+    },
+    {
+      "id": 5,
+      "at": "2026-10-23T22:12:58.053402Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "environment.incus_project.prepare",
+      "target": "docs-org-docs-project-development",
+      "outcome": "success",
+      "scope": {
+        "application": null,
+        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "project": "97016fb6-2ad8-4399-a986-73ddc9c88a1b"
+      },
+      "detail": {
+        "detail": "Incus project docs-org-docs-project-development created by Apelora with the baseline restrictions",
+        "environment": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+        "incusProject": "docs-org-docs-project-development",
+        "name": "docs-verifier",
+        "requestId": "63b88940-26ab-4746-9d93-6d16daa4185f",
+        "role": "fabric-admin",
+        "state": "created"
+      }
+    },
+    {
+      "id": 4,
+      "at": "2026-10-23T22:12:58.044297Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "environment.create",
+      "target": "development",
+      "outcome": "success",
+      "scope": {
+        "application": null,
+        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "project": "97016fb6-2ad8-4399-a986-73ddc9c88a1b"
+      },
+      "detail": {
+        "chosenByPlatformAdmin": false,
+        "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+        "incusProject": "docs-org-docs-project-development",
+        "kind": "development",
+        "name": "docs-verifier",
+        "requestId": "63b88940-26ab-4746-9d93-6d16daa4185f",
+        "role": "fabric-admin"
+      }
+    },
+    {
+      "id": 3,
+      "at": "2026-10-23T22:12:58.035041Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "project.create",
+      "target": "docs-project",
+      "outcome": "success",
+      "scope": {
+        "application": null,
+        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "project": "97016fb6-2ad8-4399-a986-73ddc9c88a1b"
+      },
+      "detail": {
+        "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+        "name": "docs-verifier",
+        "requestId": "dd830a57-2b2f-4cab-83d3-b0b388be41f7",
+        "role": "fabric-admin"
+      }
+    },
+    {
+      "id": 2,
+      "at": "2026-10-23T22:12:58.027752Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "organization.create",
+      "target": "docs-org",
+      "outcome": "success",
+      "scope": {
+        "application": null,
+        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "project": null
+      },
+      "detail": {
+        "id": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "name": "docs-verifier",
+        "requestId": "fc76307c-6b33-4283-9577-d955bde88747",
+        "role": "fabric-admin"
+      }
+    },
+    {
       "id": 1,
-      "outcome": "example",
-      "target": "example",
-      "actorName": "example",
-      "scope": {}
+      "at": "2026-10-23T22:12:57.869616Z",
+      "actor": "cli",
+      "actorType": "cli",
+      "actorName": null,
+      "action": "token.create",
+      "target": "docs-verifier",
+      "outcome": "success",
+      "scope": null,
+      "detail": {
+        "expiresInDays": 1,
+        "id": "6b690d3b-520d-475c-8bcb-d864a40731f5",
+        "role": "fabric-admin"
+      }
     }
   ]
 }
@@ -558,11 +793,13 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/audit" \
 
 ### `POST /api/v1/identity/emergency-access`
 
-Grants a person a platform role for a short time, with a recorded reason (break-glass). You cannot grant it to yourself; every request made with it is audited.
+Grants a person a platform role for a short time, with a recorded reason (break-glass). You cannot grant it to yourself; every request made with it is audited. Needs `platform.emergency_access`.
+
+**Operation ID:** `grant_emergency_access`
 
 **Needs:** `platform.emergency_access`.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -580,14 +817,23 @@ Grants a person a platform role for a short time, with a recorded reason (break-
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/emergency-access" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/emergency-access" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"userId":"00000000-0000-4000-8000-000000000001","role":"example","reason":"example","minutes":1}'
+  --data-raw '{"userId":"00000000-0000-4000-8000-000000000001","role":"example","reason":"example","minutes":1}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -623,7 +869,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/emergency-access" \
 
 ### `POST /api/v1/identity/environments/{id}/incus-project`
 
-Creates or adopts the environment's Incus project now (idempotent): the restricted project with its default profile, granted to the deploy identity, then the quotas mirrored.
+Creates or adopts the environment's Incus project now (idempotent): the restricted project with its default profile, granted to the deploy identity, then the quotas mirrored. Needs `environment.manage` on the environment's project; 503 without an admin identity.
+
+**Operation ID:** `prepare_incus_project`
 
 **Needs:** `environment.manage` on the environment's project; 503 without an admin identity.
 
@@ -631,12 +879,21 @@ Creates or adopts the environment's Incus project now (idempotent): the restrict
 |---|---|---|---|---|
 | `id` | path | string | yes | Environment id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/environments/00000000-0000-4000-8000-000000000001/incus-project" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/environments/00000000-0000-4000-8000-000000000001/incus-project" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -668,28 +925,29 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/environments/00000000-0000-4000-8
 
 ### `GET /api/v1/identity/groups`
 
-Groups the caller may see.
+Groups the caller may see. Needs `user.view`.
+
+**Operation ID:** `groups`
 
 **Needs:** `user.view`.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/groups" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/groups" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "description": "A description",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "name": "example",
-      "externalName": "example",
-      "organizationId": "00000000-0000-4000-8000-000000000001"
-    }
-  ]
+  "items": []
 }
 ```
 
@@ -699,9 +957,11 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/groups" \
 
 Creates a group: an organisation's (needs `group.manage` there) or a platform group (platform `group.manage`). Mapping a group to an identity-provider group name is platform-only.
 
-**Needs:** a signed-in caller; the server decides what that caller may see.
+**Operation ID:** `create_group`
 
-**Request body** (JSON):
+**Needs:** `group.manage` there) or a platform group (platform `group.manage`).
+
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -716,14 +976,23 @@ Creates a group: an organisation's (needs `group.manage` there) or a platform gr
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/groups" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/groups" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example"}'
+  --data-raw '{"name":"example"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -739,7 +1008,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/groups" \
 
 ### `GET /api/v1/identity/groups/{group}/members`
 
-Members of a group.
+Members of a group. Needs `user.view` or `group.manage` on the group's organisation.
+
+**Operation ID:** `group_members`
 
 **Needs:** `user.view` or `group.manage` on the group's organisation.
 
@@ -747,12 +1018,19 @@ Members of a group.
 |---|---|---|---|---|
 | `group` | path | string | yes | Group id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/groups/00000000-0000-4000-8000-000000000001/members" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/groups/00000000-0000-4000-8000-000000000001/members" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -775,7 +1053,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/groups/00000000-0000-4000-8000-000
 
 ### `PUT /api/v1/identity/groups/{group}/members/{user}`
 
-Adds a person to a group.
+Adds a person to a group. Needs `group.manage`.
+
+**Operation ID:** `add_group_member`
 
 **Needs:** `group.manage`.
 
@@ -784,18 +1064,24 @@ Adds a person to a group.
 | `group` | path | string | yes | Group id |
 | `user` | path | string | yes | User id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PUT "$APELORA_URL/api/v1/identity/groups/00000000-0000-4000-8000-000000000001/members/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/groups/00000000-0000-4000-8000-000000000001/members/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `DELETE /api/v1/identity/groups/{group}/members/{user}`
 
-Removes a person from a group; their access through it ends on their next request.
+Removes a person from a group; their access through it ends on their next request. Needs `group.manage`.
+
+**Operation ID:** `remove_group_member`
 
 **Needs:** `group.manage`.
 
@@ -804,22 +1090,28 @@ Removes a person from a group; their access through it ends on their next reques
 | `group` | path | string | yes | Group id |
 | `user` | path | string | yes | User id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/identity/groups/00000000-0000-4000-8000-000000000001/members/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/groups/00000000-0000-4000-8000-000000000001/members/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `POST /api/v1/identity/local-accounts`
 
-Creates a local account and returns its one-time setup link, valid for 24 hours. The person chooses their password with it; nobody else ever knows it.
+Creates a local account and returns its one-time setup link, valid for 24 hours. The person chooses their password with it; nobody else ever knows it. Needs `user.manage`.
+
+**Operation ID:** `create_local_account`
 
 **Needs:** `user.manage`.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -833,14 +1125,23 @@ Creates a local account and returns its one-time setup link, valid for 24 hours.
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"username":"example"}'
+  --data-raw '{"username":"example"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -863,7 +1164,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts" \
 
 ### `POST /api/v1/identity/local-accounts/{id}/reset`
 
-Takes a local account's password away, revokes every session of theirs and returns a new one-time setup link (24 hours). Not for your own account (use Change password).
+Takes a local account's password away, revokes every session of theirs and returns a new one-time setup link (24 hours). Not for your own account (use Change password). Needs `user.manage`.
+
+**Operation ID:** `reset_local_account`
 
 **Needs:** `user.manage`.
 
@@ -871,12 +1174,21 @@ Takes a local account's password away, revokes every session of theirs and retur
 |---|---|---|---|---|
 | `id` | path | string | yes | User id of the local account |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts/00000000-0000-4000-8000-000000000001/reset" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts/00000000-0000-4000-8000-000000000001/reset" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -889,26 +1201,42 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts/00000000-0000-4000
 
 ### `GET /api/v1/identity/organizations`
 
-Organisations the caller may see.
+Organisations the caller may see. Needs `organization.view` (or a grant below that reaches them).
+
+**Operation ID:** `organizations`
 
 **Needs:** `organization.view` (or a grant below that reaches them).
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/organizations" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/organizations" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
   "items": [
     {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "disabled": false,
-      "id": "00000000-0000-4000-8000-000000000001",
-      "name": "example",
-      "slug": "example"
+      "id": "00000000-0000-0000-0000-000000000001",
+      "slug": "default",
+      "name": "Default",
+      "createdAt": "2026-10-23T22:12:57.705921Z",
+      "disabled": false
+    },
+    {
+      "id": "a80a1413-41a1-498f-868b-c384cf72acc5",
+      "slug": "docs-org",
+      "name": "Documentation example",
+      "createdAt": "2026-10-23T22:12:58.027752Z",
+      "disabled": false
     }
   ]
 }
@@ -918,11 +1246,13 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/organizations" \
 
 ### `POST /api/v1/identity/organizations`
 
-Creates an organisation.
+Creates an organisation. Needs `organization.create` (platform).
+
+**Operation ID:** `create_organization`
 
 **Needs:** `organization.create` (platform).
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -931,27 +1261,36 @@ Creates an organisation.
 
 ```json
 {
-  "slug": "example",
-  "name": "example"
+  "slug": "docs-org",
+  "name": "Documentation example"
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/organizations" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/organizations" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"slug":"example","name":"example"}'
+  --data-raw '{"slug":"docs-org","name":"Documentation example"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "createdAt": "2026-01-01T09:00:00Z",
-  "disabled": false,
-  "id": "00000000-0000-4000-8000-000000000001",
-  "name": "example",
-  "slug": "example"
+  "id": "a80a1413-41a1-498f-868b-c384cf72acc5",
+  "slug": "docs-org",
+  "name": "Documentation example",
+  "createdAt": "2026-10-23T22:12:58.027752Z",
+  "disabled": false
 }
 ```
 
@@ -959,7 +1298,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/organizations" \
 
 ### `POST /api/v1/identity/organizations/{org}/projects`
 
-Creates a project in an organisation.
+Creates a project in an organisation. Needs `project.create` on the organisation.
+
+**Operation ID:** `create_project`
 
 **Needs:** `project.create` on the organisation.
 
@@ -967,7 +1308,7 @@ Creates a project in an organisation.
 |---|---|---|---|---|
 | `org` | path | string | yes | Organisation id |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -976,28 +1317,37 @@ Creates a project in an organisation.
 
 ```json
 {
-  "slug": "example",
-  "name": "example"
+  "slug": "docs-project",
+  "name": "Documentation project"
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/organizations/00000000-0000-4000-8000-000000000001/projects" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/organizations/a80a1413-41a1-498f-868b-c384cf72acc5/projects" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"slug":"example","name":"example"}'
+  --data-raw '{"slug":"docs-project","name":"Documentation project"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "createdAt": "2026-01-01T09:00:00Z",
-  "id": "00000000-0000-4000-8000-000000000001",
-  "name": "example",
-  "organizationId": "00000000-0000-4000-8000-000000000001",
-  "organizationSlug": "example",
-  "slug": "example"
+  "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+  "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+  "organizationSlug": "docs-org",
+  "slug": "docs-project",
+  "name": "Documentation project",
+  "createdAt": "2026-10-23T22:12:58.035041Z"
 }
 ```
 
@@ -1007,24 +1357,397 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/organizations/00000000-0000-4000-
 
 Every permission, its class and the narrowest scope at which a grant takes effect.
 
+**Operation ID:** `permissions`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/permissions" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/permissions" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
   "items": [
     {
+      "id": "organization.view",
       "class": "tenant",
-      "description": "A description",
+      "floor": "organization",
+      "needsApproval": false,
+      "description": "See an organisation and its projects"
+    },
+    {
+      "id": "organization.update",
+      "class": "tenant",
+      "floor": "organization",
+      "needsApproval": false,
+      "description": "Rename an organisation and change its settings"
+    },
+    {
+      "id": "project.view",
+      "class": "tenant",
+      "floor": "project",
+      "needsApproval": false,
+      "description": "See a project and its environments"
+    },
+    {
+      "id": "project.create",
+      "class": "tenant",
+      "floor": "organization",
+      "needsApproval": false,
+      "description": "Create projects in an organisation"
+    },
+    {
+      "id": "project.update",
+      "class": "tenant",
+      "floor": "project",
+      "needsApproval": false,
+      "description": "Change a project"
+    },
+    {
+      "id": "project.delete",
+      "class": "tenant",
+      "floor": "project",
+      "needsApproval": false,
+      "description": "Delete an empty project"
+    },
+    {
+      "id": "environment.manage",
+      "class": "tenant",
+      "floor": "project",
+      "needsApproval": false,
+      "description": "Create and change environments and their Incus project mapping requests"
+    },
+    {
+      "id": "application.view",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "See applications and their status"
+    },
+    {
+      "id": "application.create",
+      "class": "tenant",
+      "floor": "project",
+      "needsApproval": false,
+      "description": "Create an application"
+    },
+    {
+      "id": "application.design",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "Edit the application graph and preview a plan"
+    },
+    {
+      "id": "application.deploy",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "Deploy a design to its environment"
+    },
+    {
+      "id": "application.operate",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "Start, stop, restart and recover an application"
+    },
+    {
+      "id": "application.delete",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "Remove an application and its instances"
+    },
+    {
+      "id": "application.logs.read",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "Read application logs"
+    },
+    {
+      "id": "application.metrics.read",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "Read application metrics"
+    },
+    {
+      "id": "capacity.view",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "See how much CPU, memory and disk the cluster has free (totals and numbered servers, no names)"
+    },
+    {
+      "id": "instance.manage",
+      "class": "tenant",
+      "floor": "project",
+      "needsApproval": false,
+      "description": "Create, change and delete single instances in a project's environments"
+    },
+    {
+      "id": "instance.console",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "Open a terminal or PowerShell session in a running module of the application"
+    },
+    {
+      "id": "instance.desktop",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "Open a remote desktop (RDP) session to a running Windows module of the application"
+    },
+    {
+      "id": "user.view",
+      "class": "tenant",
+      "floor": "project",
+      "needsApproval": false,
+      "description": "See users with access in the scope"
+    },
+    {
+      "id": "group.manage",
+      "class": "tenant",
+      "floor": "organization",
+      "needsApproval": false,
+      "description": "Create groups and change their members"
+    },
+    {
+      "id": "role.assign",
+      "class": "tenant",
+      "floor": "project",
+      "needsApproval": false,
+      "description": "Grant and revoke roles in the scope (never more than you hold)"
+    },
+    {
+      "id": "audit.read",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "Read audit events of the scope"
+    },
+    {
+      "id": "approval.request",
+      "class": "tenant",
+      "floor": "application",
+      "needsApproval": false,
+      "description": "Ask for approval of a protected action"
+    },
+    {
+      "id": "approval.grant",
+      "class": "tenant",
+      "floor": "project",
+      "needsApproval": false,
+      "description": "Approve or reject another person's request"
+    },
+    {
+      "id": "cluster.view",
+      "class": "infrastructure",
       "floor": "platform",
-      "id": "example",
-      "needsApproval": false
+      "needsApproval": false,
+      "description": "See the Incus cluster, members, networks and storage pools"
+    },
+    {
+      "id": "cluster.manage",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Join tokens, enrolment holds and other cluster changes"
+    },
+    {
+      "id": "cluster.evacuate",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Evacuate a member when no workload would be left without service"
+    },
+    {
+      "id": "cluster.evacuate_unsafe",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": true,
+      "description": "Evacuate a member although some workload would lose service"
+    },
+    {
+      "id": "cluster.fence_confirm",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": true,
+      "description": "Confirm that a failed server is powered off, so its modules on shared storage restart on other servers"
+    },
+    {
+      "id": "cluster.sensitive_change",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": true,
+      "description": "Change cluster authentication, trust or other sensitive settings"
+    },
+    {
+      "id": "network.manage",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Manage networks, uplinks and address ranges"
+    },
+    {
+      "id": "storage.manage",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Manage storage pools and volume classes"
+    },
+    {
+      "id": "hardware.view",
+      "class": "infrastructure",
+      "floor": "pool",
+      "needsApproval": false,
+      "description": "See physical machines"
+    },
+    {
+      "id": "hardware.commission",
+      "class": "infrastructure",
+      "floor": "pool",
+      "needsApproval": false,
+      "description": "Commission and test physical machines"
+    },
+    {
+      "id": "hardware.deploy",
+      "class": "infrastructure",
+      "floor": "pool",
+      "needsApproval": false,
+      "description": "Install an operating system on a physical machine"
+    },
+    {
+      "id": "hardware.power",
+      "class": "infrastructure",
+      "floor": "pool",
+      "needsApproval": true,
+      "description": "Power a physical machine on, off or restart it"
+    },
+    {
+      "id": "hardware.delete",
+      "class": "infrastructure",
+      "floor": "pool",
+      "needsApproval": true,
+      "description": "Remove a physical machine from inventory or wipe it"
+    },
+    {
+      "id": "fabric.metrics.read",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Scrape the control plane's metrics (GET /metrics) and see how monitoring is set up"
+    },
+    {
+      "id": "support.bundle",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Download a support bundle: versions, settings without secrets, health, preflight, failed jobs and metrics"
+    },
+    {
+      "id": "machine.enrol",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Register machines and approve them to join the cluster"
+    },
+    {
+      "id": "alert.respond",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Acknowledge alerts and silence them for a time window"
+    },
+    {
+      "id": "alert.configure",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Change alert rules (on or off, thresholds, durations, severities) and notification channels (webhooks)"
+    },
+    {
+      "id": "quota.manage",
+      "class": "infrastructure",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Set resource quotas on organisations, projects and environments (mirrored to Incus project limits)"
+    },
+    {
+      "id": "organization.create",
+      "class": "security",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Create organisations"
+    },
+    {
+      "id": "role.manage",
+      "class": "security",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Define custom roles"
+    },
+    {
+      "id": "service_identity.manage",
+      "class": "security",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Register and disable service identities"
+    },
+    {
+      "id": "access_policy.manage",
+      "class": "security",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Change access policies (MFA and approval rules)"
+    },
+    {
+      "id": "token.manage",
+      "class": "security",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Create and revoke API tokens"
+    },
+    {
+      "id": "token.create_admin",
+      "class": "security",
+      "floor": "platform",
+      "needsApproval": true,
+      "description": "Create an API token with the fabric-admin role (needs another person's approval)"
+    },
+    {
+      "id": "platform.security.manage",
+      "class": "security",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Change identity provider settings and other platform security"
+    },
+    {
+      "id": "platform.emergency_access",
+      "class": "security",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Grant time-limited emergency access"
+    },
+    {
+      "id": "user.manage",
+      "class": "security",
+      "floor": "platform",
+      "needsApproval": false,
+      "description": "Create and reset local accounts, disable users and see every user"
     }
   ]
 }
@@ -1032,7 +1755,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/permissions" \
 
 ### `GET /api/v1/identity/personal-tokens`
 
-Everyone's personal tokens (or one person's), live ones and those that ended in the last 30 days.
+Everyone's personal tokens (or one person's), live ones and those that ended in the last 30 days. Needs `token.manage` on the platform.
+
+**Operation ID:** `personal_tokens`
 
 **Needs:** `token.manage` on the platform.
 
@@ -1040,33 +1765,24 @@ Everyone's personal tokens (or one person's), live ones and those that ended in 
 |---|---|---|---|---|
 | `user` | query | string | no | Only this person's. |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/personal-tokens" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/personal-tokens" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "current": false,
-      "expiresAt": "2026-01-01T09:00:00Z",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "name": "example",
-      "owner": "example",
-      "state": "example",
-      "userId": "00000000-0000-4000-8000-000000000001",
-      "lastUsedAt": "2026-01-01T09:00:00Z",
-      "revokedAt": "2026-01-01T09:00:00Z",
-      "revokedBy": "example",
-      "rotatedFrom": "00000000-0000-4000-8000-000000000001",
-      "successor": "00000000-0000-4000-8000-000000000001"
-    }
-  ],
-  "limit": 1
+  "items": [],
+  "limit": 20
 }
 ```
 
@@ -1074,7 +1790,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/personal-tokens" \
 
 ### `DELETE /api/v1/identity/personal-tokens/{id}`
 
-Revokes anyone's live personal token.
+Revokes anyone's live personal token. Needs `token.manage` on the platform.
+
+**Operation ID:** `revoke_personal_token`
 
 **Needs:** `token.manage` on the platform.
 
@@ -1082,41 +1800,44 @@ Revokes anyone's live personal token.
 |---|---|---|---|---|
 | `id` | path | string | yes | Token id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/identity/personal-tokens/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/personal-tokens/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `401`, `403`, `404`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/identity/policies`
 
-Access policies (MFA and approval rules).
+Access policies (MFA and approval rules). Needs `access_policy.manage` or `audit.read`.
+
+**Operation ID:** `policies`
 
 **Needs:** `access_policy.manage` or `audit.read`.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/policies" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/policies" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "enabled": false,
-      "id": "00000000-0000-4000-8000-000000000001",
-      "kind": "example",
-      "name": "example",
-      "parameters": {},
-      "updatedAt": "2026-01-01T09:00:00Z",
-      "updatedBy": "example"
-    }
-  ]
+  "items": []
 }
 ```
 
@@ -1124,11 +1845,13 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/policies" \
 
 ### `PUT /api/v1/identity/policies`
 
-Creates or updates a policy by name. `mfa`: `{"environments": ["production"], "infrastructure": true}`. `approval`: `{"actions": ["cluster.evacuate"]}` (extra actions that need approval where the API already asks for it).
+Creates or updates a policy by name. `mfa`: `{"environments": ["production"], "infrastructure": true}`. `approval`: `{"actions": ["cluster.evacuate"]}` (extra actions that need approval where the API already asks for it). Needs `access_policy.manage`.
+
+**Operation ID:** `save_policy`
 
 **Needs:** `access_policy.manage`.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1145,14 +1868,23 @@ Creates or updates a policy by name. `mfa`: `{"environments": ["production"], "i
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PUT "$APELORA_URL/api/v1/identity/policies" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/policies" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example","kind":"example","parameters":{}}'
+  --data-raw '{"name":"example","kind":"example","parameters":{}}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1170,7 +1902,9 @@ curl -sS -X PUT "$APELORA_URL/api/v1/identity/policies" \
 
 ### `DELETE /api/v1/identity/policies/{id}`
 
-Deletes a policy.
+Deletes a policy. Needs `access_policy.manage`.
+
+**Operation ID:** `delete_policy`
 
 **Needs:** `access_policy.manage`.
 
@@ -1178,18 +1912,24 @@ Deletes a policy.
 |---|---|---|---|---|
 | `id` | path | string | yes | Policy id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/identity/policies/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/policies/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/identity/projects`
 
-Projects the caller may see, optionally of one organisation.
+Projects the caller may see, optionally of one organisation. Needs `project.view`.
+
+**Operation ID:** `projects_list`
 
 **Needs:** `project.view`.
 
@@ -1197,23 +1937,38 @@ Projects the caller may see, optionally of one organisation.
 |---|---|---|---|---|
 | `organization` | query | string | no | — |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/projects" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
   "items": [
     {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "name": "example",
-      "organizationId": "00000000-0000-4000-8000-000000000001",
-      "organizationSlug": "example",
-      "slug": "example"
+      "id": "00000000-0000-0000-0000-000000000002",
+      "organizationId": "00000000-0000-0000-0000-000000000001",
+      "organizationSlug": "default",
+      "slug": "default",
+      "name": "Default",
+      "createdAt": "2026-10-23T22:12:57.705921Z"
+    },
+    {
+      "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+      "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+      "organizationSlug": "docs-org",
+      "slug": "docs-project",
+      "name": "Documentation project",
+      "createdAt": "2026-10-23T22:12:58.035041Z"
     }
   ]
 }
@@ -1223,7 +1978,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/projects" \
 
 ### `GET /api/v1/identity/projects/{project}/environments`
 
-Environments of a project.
+Environments of a project. Needs `project.view` on it.
+
+**Operation ID:** `environments`
 
 **Needs:** `project.view` on it.
 
@@ -1231,12 +1988,19 @@ Environments of a project.
 |---|---|---|---|---|
 | `project` | path | string | yes | Project id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/projects/apelora/environments" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects/apelora/environments" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1263,7 +2027,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/projects/apelora/environments" \
 
 ### `POST /api/v1/identity/projects/{project}/environments`
 
-Creates an environment. The Incus project it maps to is derived from the names (tenants cannot choose it); platform administrators may map an existing one.
+Creates an environment. The Incus project it maps to is derived from the names (tenants cannot choose it); platform administrators may map an existing one. Needs `environment.manage`.
+
+**Operation ID:** `create_environment`
 
 **Needs:** `environment.manage`.
 
@@ -1271,7 +2037,7 @@ Creates an environment. The Incus project it maps to is derived from the names (
 |---|---|---|---|---|
 | `project` | path | string | yes | Project id |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1282,35 +2048,68 @@ Creates an environment. The Incus project it maps to is derived from the names (
 
 ```json
 {
-  "slug": "example",
-  "name": "example",
-  "kind": "production"
+  "slug": "development",
+  "name": "Development",
+  "kind": "development"
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/projects/apelora/environments" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/projects/97016fb6-2ad8-4399-a986-73ddc9c88a1b/environments" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"slug":"example","name":"example","kind":"production"}'
+  --data-raw '{"slug":"development","name":"Development","kind":"development"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "id": "00000000-0000-4000-8000-000000000001",
-  "incusDetail": "example",
+  "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+  "projectId": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+  "slug": "development",
+  "name": "Development",
+  "kind": "development",
+  "incusProject": "docs-org-docs-project-development",
   "incusProjectConfig": {
-    "key": "example"
+    "features.images": "false",
+    "features.networks": "false",
+    "features.profiles": "true",
+    "features.storage.buckets": "true",
+    "features.storage.volumes": "true",
+    "restricted": "true",
+    "restricted.backups": "block",
+    "restricted.cluster.target": "allow",
+    "restricted.containers.interception": "block",
+    "restricted.containers.lowlevel": "block",
+    "restricted.containers.nesting": "block",
+    "restricted.containers.privilege": "unprivileged",
+    "restricted.devices.disk": "managed",
+    "restricted.devices.gpu": "block",
+    "restricted.devices.infiniband": "block",
+    "restricted.devices.nic": "managed",
+    "restricted.devices.pci": "block",
+    "restricted.devices.proxy": "block",
+    "restricted.devices.unix-block": "block",
+    "restricted.devices.unix-char": "block",
+    "restricted.devices.unix-hotplug": "block",
+    "restricted.devices.usb": "block",
+    "restricted.networks.zones": "block",
+    "restricted.snapshots": "allow",
+    "restricted.virtual-machines.lowlevel": "block"
   },
-  "incusProvisioned": false,
-  "incusState": "pending",
-  "kind": "production",
-  "name": "example",
-  "projectId": "00000000-0000-4000-8000-000000000001",
-  "slug": "example",
-  "incusProject": "apelora"
+  "incusProvisioned": true,
+  "incusState": "created",
+  "incusDetail": "Incus project docs-org-docs-project-development created by Apelora with the baseline restrictions"
 }
 ```
 
@@ -1318,7 +2117,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/projects/apelora/environments" \
 
 ### `GET /api/v1/identity/quotas/{scope}/{id}`
 
-A scope's quota and use.
+A scope's quota and use. Needs `organization.view` (organisation) or `project.view` (project, environment) on it, or `quota.manage`.
+
+**Operation ID:** `quota`
 
 **Needs:** `organization.view` (organisation) or `project.view` (project, environment) on it, or `quota.manage`.
 
@@ -1327,12 +2128,19 @@ A scope's quota and use.
 | `scope` | path | string | yes | organization, project or environment |
 | `id` | path | string | yes | Its id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/quotas/example/00000000-0000-4000-8000-000000000001" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/quotas/example/00000000-0000-4000-8000-000000000001" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1368,7 +2176,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/quotas/example/00000000-0000-4000-
 
 ### `PUT /api/v1/identity/quotas/{scope}/{id}`
 
-Sets a scope's quota (all limits empty removes it), then mirrors the tightest applicable quota onto every environment beneath it.
+Sets a scope's quota (all limits empty removes it), then mirrors the tightest applicable quota onto every environment beneath it. Needs `quota.manage`; or, below the organisation, `organization.update` on the organisation (projects, environments) or `project.update` on the project (environments), and then never more than a quota above allows.
+
+**Operation ID:** `set_quota`
 
 **Needs:** `quota.manage`; or, below the organisation, `organization.update` on the organisation (projects, environments) or `project.update` on the project (environments), and then never more than a quota above allows.
 
@@ -1377,7 +2187,7 @@ Sets a scope's quota (all limits empty removes it), then mirrors the tightest ap
 | `scope` | path | string | yes | organization, project or environment |
 | `id` | path | string | yes | Its id |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1392,14 +2202,23 @@ Sets a scope's quota (all limits empty removes it), then mirrors the tightest ap
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PUT "$APELORA_URL/api/v1/identity/quotas/example/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/quotas/example/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"cpu":1}'
+  --data-raw '{"cpu":1}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1430,30 +2249,366 @@ curl -sS -X PUT "$APELORA_URL/api/v1/identity/quotas/example/00000000-0000-4000-
 
 The predefined and custom roles with their permissions.
 
+**Operation ID:** `roles`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/roles" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/roles" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
   "items": [
     {
-      "builtin": false,
-      "description": "A description",
-      "id": "example",
-      "name": "example",
-      "permissions": [
-        "example"
-      ],
+      "id": "builtin:platform-super-admin",
       "reference": {
-        "key": "example",
-        "type": "builtin"
+        "type": "builtin",
+        "key": "platform-super-admin"
       },
+      "name": "Platform Super Admin",
+      "description": "Everything, including identity, security settings and emergency access. Keep to a few named people.",
+      "builtin": true,
+      "permissions": [
+        "access_policy.manage",
+        "alert.configure",
+        "alert.respond",
+        "application.create",
+        "application.delete",
+        "application.deploy",
+        "application.design",
+        "application.logs.read",
+        "application.metrics.read",
+        "application.operate",
+        "application.view",
+        "approval.grant",
+        "approval.request",
+        "audit.read",
+        "capacity.view",
+        "cluster.evacuate",
+        "cluster.evacuate_unsafe",
+        "cluster.fence_confirm",
+        "cluster.manage",
+        "cluster.sensitive_change",
+        "cluster.view",
+        "environment.manage",
+        "fabric.metrics.read",
+        "group.manage",
+        "hardware.commission",
+        "hardware.delete",
+        "hardware.deploy",
+        "hardware.power",
+        "hardware.view",
+        "instance.console",
+        "instance.desktop",
+        "instance.manage",
+        "machine.enrol",
+        "network.manage",
+        "organization.create",
+        "organization.update",
+        "organization.view",
+        "platform.emergency_access",
+        "platform.security.manage",
+        "project.create",
+        "project.delete",
+        "project.update",
+        "project.view",
+        "quota.manage",
+        "role.assign",
+        "role.manage",
+        "service_identity.manage",
+        "storage.manage",
+        "support.bundle",
+        "token.create_admin",
+        "token.manage",
+        "user.manage",
+        "user.view"
+      ],
+      "scopes": [
+        "platform"
+      ]
+    },
+    {
+      "id": "builtin:fabric-administrator",
+      "reference": {
+        "type": "builtin",
+        "key": "fabric-administrator"
+      },
+      "name": "Fabric Administrator",
+      "description": "Runs the cluster: members, networks, storage and enrolment. Does not manage people or hardware power.",
+      "builtin": true,
+      "permissions": [
+        "alert.configure",
+        "alert.respond",
+        "application.metrics.read",
+        "application.view",
+        "approval.grant",
+        "approval.request",
+        "audit.read",
+        "cluster.evacuate",
+        "cluster.evacuate_unsafe",
+        "cluster.fence_confirm",
+        "cluster.manage",
+        "cluster.sensitive_change",
+        "cluster.view",
+        "fabric.metrics.read",
+        "hardware.view",
+        "machine.enrol",
+        "network.manage",
+        "organization.view",
+        "project.view",
+        "quota.manage",
+        "storage.manage",
+        "support.bundle"
+      ],
+      "scopes": [
+        "platform"
+      ]
+    },
+    {
+      "id": "builtin:hardware-operator",
+      "reference": {
+        "type": "builtin",
+        "key": "hardware-operator"
+      },
+      "name": "Hardware Operator",
+      "description": "Commissions, installs and powers physical machines in assigned hardware pools. No Incus or application access.",
+      "builtin": true,
+      "permissions": [
+        "approval.request",
+        "hardware.commission",
+        "hardware.delete",
+        "hardware.deploy",
+        "hardware.power",
+        "hardware.view"
+      ],
+      "scopes": [
+        "platform",
+        "pool"
+      ]
+    },
+    {
+      "id": "builtin:organization-owner",
+      "reference": {
+        "type": "builtin",
+        "key": "organization-owner"
+      },
+      "name": "Organization Owner",
+      "description": "Runs one organisation: its projects, people and applications, within the limits the platform allocates. No infrastructure access.",
+      "builtin": true,
+      "permissions": [
+        "application.create",
+        "application.delete",
+        "application.deploy",
+        "application.design",
+        "application.logs.read",
+        "application.metrics.read",
+        "application.operate",
+        "application.view",
+        "approval.grant",
+        "approval.request",
+        "audit.read",
+        "capacity.view",
+        "environment.manage",
+        "group.manage",
+        "instance.console",
+        "instance.desktop",
+        "instance.manage",
+        "organization.update",
+        "organization.view",
+        "project.create",
+        "project.delete",
+        "project.update",
+        "project.view",
+        "role.assign",
+        "user.view"
+      ],
+      "scopes": [
+        "organization"
+      ]
+    },
+    {
+      "id": "builtin:project-administrator",
+      "reference": {
+        "type": "builtin",
+        "key": "project-administrator"
+      },
+      "name": "Project Administrator",
+      "description": "Runs one project: its members, environments and applications.",
+      "builtin": true,
+      "permissions": [
+        "application.create",
+        "application.delete",
+        "application.deploy",
+        "application.design",
+        "application.logs.read",
+        "application.metrics.read",
+        "application.operate",
+        "application.view",
+        "approval.grant",
+        "approval.request",
+        "audit.read",
+        "capacity.view",
+        "environment.manage",
+        "instance.console",
+        "instance.desktop",
+        "instance.manage",
+        "project.delete",
+        "project.update",
+        "project.view",
+        "role.assign",
+        "user.view"
+      ],
+      "scopes": [
+        "project"
+      ]
+    },
+    {
+      "id": "builtin:application-designer",
+      "reference": {
+        "type": "builtin",
+        "key": "application-designer"
+      },
+      "name": "Application Designer",
+      "description": "Creates and edits application graphs and previews plans. Cannot deploy.",
+      "builtin": true,
+      "permissions": [
+        "application.create",
+        "application.design",
+        "application.logs.read",
+        "application.metrics.read",
+        "application.view",
+        "capacity.view",
+        "project.view"
+      ],
+      "scopes": [
+        "project",
+        "application"
+      ]
+    },
+    {
+      "id": "builtin:application-operator",
+      "reference": {
+        "type": "builtin",
+        "key": "application-operator"
+      },
+      "name": "Application Operator",
+      "description": "Deploys approved designs and starts, stops and recovers applications.",
+      "builtin": true,
+      "permissions": [
+        "application.deploy",
+        "application.logs.read",
+        "application.metrics.read",
+        "application.operate",
+        "application.view",
+        "approval.request",
+        "capacity.view",
+        "project.view"
+      ],
+      "scopes": [
+        "project",
+        "application"
+      ]
+    },
+    {
+      "id": "builtin:instance-access",
+      "reference": {
+        "type": "builtin",
+        "key": "instance-access"
+      },
+      "name": "Instance Access",
+      "description": "Opens a terminal, PowerShell or remote desktop session on running modules, and reads the scope. Cannot change or operate anything else; production sessions need another person's approval.",
+      "builtin": true,
+      "permissions": [
+        "application.logs.read",
+        "application.metrics.read",
+        "application.view",
+        "approval.request",
+        "instance.console",
+        "instance.desktop",
+        "project.view"
+      ],
+      "scopes": [
+        "project",
+        "application"
+      ]
+    },
+    {
+      "id": "builtin:viewer",
+      "reference": {
+        "type": "builtin",
+        "key": "viewer"
+      },
+      "name": "Viewer",
+      "description": "Reads what the scope contains.",
+      "builtin": true,
+      "permissions": [
+        "application.metrics.read",
+        "application.view",
+        "capacity.view",
+        "cluster.view",
+        "fabric.metrics.read",
+        "hardware.view",
+        "organization.view",
+        "project.view"
+      ],
+      "scopes": [
+        "platform",
+        "organization",
+        "project",
+        "application"
+      ]
+    },
+    {
+      "id": "builtin:auditor",
+      "reference": {
+        "type": "builtin",
+        "key": "auditor"
+      },
+      "name": "Auditor",
+      "description": "Reads what the scope contains, plus its audit trail, changing nothing.",
+      "builtin": true,
+      "permissions": [
+        "application.logs.read",
+        "application.metrics.read",
+        "application.view",
+        "audit.read",
+        "cluster.view",
+        "fabric.metrics.read",
+        "hardware.view",
+        "organization.view",
+        "project.view",
+        "user.view"
+      ],
+      "scopes": [
+        "platform",
+        "organization",
+        "project",
+        "application"
+      ]
+    },
+    {
+      "id": "builtin:metrics-reader",
+      "reference": {
+        "type": "builtin",
+        "key": "metrics-reader"
+      },
+      "name": "Metrics Reader",
+      "description": "Scrapes the control plane's metrics and nothing else. Meant for the service identity of the installation's own metrics collector.",
+      "builtin": true,
+      "permissions": [
+        "fabric.metrics.read"
+      ],
       "scopes": [
         "platform"
       ]
@@ -1466,11 +2621,13 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/roles" \
 
 ### `POST /api/v1/identity/roles`
 
-Defines a custom role from explicit permissions.
+Defines a custom role from explicit permissions. Needs `role.manage` (platform), and you may only include permissions you hold yourself.
+
+**Operation ID:** `create_role`
 
 **Needs:** `role.manage` (platform), and you may only include permissions you hold yourself.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1487,14 +2644,23 @@ Defines a custom role from explicit permissions.
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/roles" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/roles" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example","permissions":["example"]}'
+  --data-raw '{"name":"example","permissions":["example"]}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1519,7 +2685,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/roles" \
 
 ### `DELETE /api/v1/identity/roles/{role}`
 
-Deletes a custom role that no assignment uses.
+Deletes a custom role that no assignment uses. Needs `role.manage`.
+
+**Operation ID:** `delete_role`
 
 **Needs:** `role.manage`.
 
@@ -1527,49 +2695,44 @@ Deletes a custom role that no assignment uses.
 |---|---|---|---|---|
 | `role` | path | string | yes | Custom role id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/identity/roles/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/roles/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/identity/service-identities`
 
-Registered service identities (the credentials Apelora uses for Incus and MAAS, and automation identities that call this API).
+Registered service identities (the credentials Apelora uses for Incus and MAAS, and automation identities that call this API). Needs `service_identity.manage`.
+
+**Operation ID:** `service_identities`
 
 **Needs:** `service_identity.manage`.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/service-identities" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/service-identities" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "apiAccess": false,
-      "backend": "example",
-      "createdAt": "2026-01-01T09:00:00Z",
-      "createdBy": "example",
-      "disabled": false,
-      "id": "00000000-0000-4000-8000-000000000001",
-      "kind": "workload",
-      "name": "example",
-      "operations": [
-        "example"
-      ],
-      "restrictions": {},
-      "credentialRef": "example",
-      "expiresAt": "2026-01-01T09:00:00Z",
-      "lastUsedAt": "2026-01-01T09:00:00Z"
-    }
-  ]
+  "items": []
 }
 ```
 
@@ -1577,11 +2740,13 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/service-identities" \
 
 ### `POST /api/v1/identity/service-identities`
 
-Registers a service identity. Outbound kinds (workload, network, storage, provisioning) record only the name of a credential held in the secret store; automation identities get an API token, shown once.
+Registers a service identity. Outbound kinds (workload, network, storage, provisioning) record only the name of a credential held in the secret store; automation identities get an API token, shown once. Needs `service_identity.manage`.
+
+**Operation ID:** `create_service_identity`
 
 **Needs:** `service_identity.manage`.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1598,14 +2763,23 @@ Registers a service identity. Outbound kinds (workload, network, storage, provis
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/service-identities" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/service-identities" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example","kind":"workload"}'
+  --data-raw '{"name":"example","kind":"workload"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1634,7 +2808,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/service-identities" \
 
 ### `POST /api/v1/identity/service-identities/{id}/disable`
 
-Disables a service identity at once.
+Disables a service identity at once. Needs `service_identity.manage`.
+
+**Operation ID:** `disable_service_identity`
 
 **Needs:** `service_identity.manage`.
 
@@ -1642,18 +2818,24 @@ Disables a service identity at once.
 |---|---|---|---|---|
 | `id` | path | string | yes | Service identity id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/service-identities/00000000-0000-4000-8000-000000000001/disable" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/service-identities/00000000-0000-4000-8000-000000000001/disable" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `POST /api/v1/identity/service-identities/{id}/enable`
 
-Re-enables a service identity.
+Re-enables a service identity. Needs `service_identity.manage`.
+
+**Operation ID:** `enable_service_identity`
 
 **Needs:** `service_identity.manage`.
 
@@ -1661,85 +2843,54 @@ Re-enables a service identity.
 |---|---|---|---|---|
 | `id` | path | string | yes | Service identity id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/service-identities/00000000-0000-4000-8000-000000000001/enable" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/service-identities/00000000-0000-4000-8000-000000000001/enable" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/identity/sign-in`
 
-Sign-in settings: identity providers (saved and from the environment), whether API tokens are accepted, and local accounts.
+Sign-in settings: identity providers (saved and from the environment), whether API tokens are accepted, and local accounts. Needs `platform.security.manage`.
+
+**Operation ID:** `sign_in_settings`
 
 **Needs:** `platform.security.manage`.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/sign-in" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/sign-in" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
+  "providers": [],
   "apiTokens": {
-    "enabled": false,
+    "enabled": true,
     "lockedByEnvironment": false
   },
-  "directories": [
-    {
-      "bindTemplate": "example",
-      "emailAttribute": "alex@example.org",
-      "enabled": false,
-      "groupNameAttribute": "example",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "idAttribute": "example",
-      "name": "example",
-      "nameAttribute": "example",
-      "reachable": false,
-      "startTls": false,
-      "updatedBy": "example",
-      "url": "https://example.org",
-      "usernameAttribute": "example",
-      "baseDn": "example"
-    }
-  ],
   "localAccounts": {
     "enabled": false,
-    "pending": 1,
-    "ready": 1
+    "ready": 0,
+    "pending": 0
   },
-  "providers": [
-    {
-      "audiences": [
-        "example"
-      ],
-      "authorizedParties": [
-        "example"
-      ],
-      "enabled": false,
-      "groupsClaim": "example",
-      "issuer": "example",
-      "mfaAcr": [
-        "example"
-      ],
-      "mfaAmr": [
-        "example"
-      ],
-      "name": "example",
-      "reachable": false,
-      "scopes": [
-        "example"
-      ],
-      "source": "console",
-      "usernameClaim": "example",
-      "clientId": "example",
-      "error": "example"
-    }
-  ]
+  "directories": []
 }
 ```
 
@@ -1747,11 +2898,13 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/sign-in" \
 
 ### `PUT /api/v1/identity/sign-in/api-tokens`
 
-Turns API tokens on or off. Turning them off is refused while no other way in remains (an identity provider that answers, or local accounts that are on with at least one account set up), and for someone signed in with an API token (they would lock themselves out).
+Turns API tokens on or off. Turning them off is refused while no other way in remains (an identity provider that answers, or local accounts that are on with at least one account set up), and for someone signed in with an API token (they would lock themselves out). Needs `platform.security.manage`; audited.
+
+**Operation ID:** `set_api_tokens`
 
 **Needs:** `platform.security.manage`; audited.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1763,14 +2916,23 @@ Turns API tokens on or off. Turning them off is refused while no other way in re
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/api-tokens" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/api-tokens" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"enabled":false}'
+  --data-raw '{"enabled":false}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1783,11 +2945,13 @@ curl -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/api-tokens" \
 
 ### `POST /api/v1/identity/sign-in/check`
 
-Reads a provider's discovery document and key set, without saving anything: what an administrator checks before saving.
+Reads a provider's discovery document and key set, without saving anything: what an administrator checks before saving. Needs `platform.security.manage`.
+
+**Operation ID:** `check_identity_provider`
 
 **Needs:** `platform.security.manage`.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1799,14 +2963,23 @@ Reads a provider's discovery document and key set, without saving anything: what
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/check" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/check" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"issuer":"example"}'
+  --data-raw '{"issuer":"example"}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1821,37 +2994,29 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/check" \
 
 ### `GET /api/v1/identity/sign-in/directories`
 
-The directories people sign in with, each checked with a TLS connection now.
+The directories people sign in with, each checked with a TLS connection now. Needs `platform.security.manage`.
+
+**Operation ID:** `list_directories`
 
 **Needs:** `platform.security.manage`.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/sign-in/directories" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/sign-in/directories" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "bindTemplate": "example",
-      "emailAttribute": "alex@example.org",
-      "enabled": false,
-      "groupNameAttribute": "example",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "idAttribute": "example",
-      "name": "example",
-      "nameAttribute": "example",
-      "reachable": false,
-      "startTls": false,
-      "updatedBy": "example",
-      "url": "https://example.org",
-      "usernameAttribute": "example",
-      "baseDn": "example"
-    }
-  ]
+  "items": []
 }
 ```
 
@@ -1859,11 +3024,13 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/sign-in/directories" \
 
 ### `POST /api/v1/identity/sign-in/directories`
 
-Adds a directory; it is offered on the sign-in page at once when enabled.
+Adds a directory; it is offered on the sign-in page at once when enabled. Needs `platform.security.manage` (and an approval where the policy asks for one); audited.
+
+**Operation ID:** `create_directory`
 
 **Needs:** `platform.security.manage` (and an approval where the policy asks for one); audited.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1892,14 +3059,23 @@ Adds a directory; it is offered on the sign-in page at once when enabled.
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/directories" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/directories" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example","url":"https://example.org","bindTemplate":"example"}'
+  --data-raw '{"name":"example","url":"https://example.org","bindTemplate":"example"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1916,7 +3092,14 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/directories" \
   "updatedBy": "example",
   "url": "https://example.org",
   "usernameAttribute": "example",
-  "baseDn": "example"
+  "baseDn": "example",
+  "caPem": "example",
+  "error": "example",
+  "groupAttribute": "example",
+  "groupBaseDn": "example",
+  "groupFilter": "example",
+  "problem": "unreachable",
+  "userFilter": "example"
 }
 ```
 
@@ -1924,7 +3107,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/directories" \
 
 ### `PUT /api/v1/identity/sign-in/directories/{id}`
 
-Changes a directory (including turning it off).
+Changes a directory (including turning it off). Needs `platform.security.manage`; audited.
+
+**Operation ID:** `update_directory`
 
 **Needs:** `platform.security.manage`; audited.
 
@@ -1932,7 +3117,7 @@ Changes a directory (including turning it off).
 |---|---|---|---|---|
 | `id` | path | string | yes | Directory id |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1961,14 +3146,23 @@ Changes a directory (including turning it off).
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/directories/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/directories/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example","url":"https://example.org","bindTemplate":"example"}'
+  --data-raw '{"name":"example","url":"https://example.org","bindTemplate":"example"}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -1985,7 +3179,14 @@ curl -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/directories/00000000-0000-
   "updatedBy": "example",
   "url": "https://example.org",
   "usernameAttribute": "example",
-  "baseDn": "example"
+  "baseDn": "example",
+  "caPem": "example",
+  "error": "example",
+  "groupAttribute": "example",
+  "groupBaseDn": "example",
+  "groupFilter": "example",
+  "problem": "unreachable",
+  "userFilter": "example"
 }
 ```
 
@@ -1993,7 +3194,9 @@ curl -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/directories/00000000-0000-
 
 ### `DELETE /api/v1/identity/sign-in/directories/{id}`
 
-Removes a directory: its people can no longer sign in with it; their accounts and roles in Apelora stay. Its name must be typed again.
+Removes a directory: its people can no longer sign in with it; their accounts and roles in Apelora stay. Its name must be typed again. Needs `platform.security.manage`; audited.
+
+**Operation ID:** `delete_directory`
 
 **Needs:** `platform.security.manage`; audited.
 
@@ -2001,7 +3204,7 @@ Removes a directory: its people can no longer sign in with it; their accounts an
 |---|---|---|---|---|
 | `id` | path | string | yes | Directory id |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2013,24 +3216,30 @@ Removes a directory: its people can no longer sign in with it; their accounts an
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-in/directories/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-in/directories/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"confirm":"example"}'
+  --data-raw '{"confirm":"example"}'
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `400`, `403`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `POST /api/v1/identity/sign-in/directories/check`
 
-Connects with TLS, binds as a test person and reads their entry and groups, without saving anything. Reports what it found or the precise reason it failed.
+Connects with TLS, binds as a test person and reads their entry and groups, without saving anything. Reports what it found or the precise reason it failed. Needs `platform.security.manage`.
+
+**Operation ID:** `check_directory`
 
 **Needs:** `platform.security.manage`.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2054,21 +3263,32 @@ Connects with TLS, binds as a test person and reads their entry and groups, with
     "groupNameAttribute": "example",
     "idAttribute": "example",
     "nameAttribute": "example",
-    "startTls": false
+    "startTls": false,
+    "userFilter": "example",
+    "usernameAttribute": "example"
   },
   "username": "example",
   "password": "<redacted>"
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/directories/check" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/directories/check" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"settings":{"bindTemplate":"example","name":"example","url":"https://example.org","baseDn":"example","caPem":"example","emailAttribute":"alex@example.org","enabled":false,"groupAttribute":"example","groupBaseDn":"example","groupFilter":"example","groupNameAttribute":"example","idAttribute":"example","nameAttribute":"example","startTls":false},"username":"example","password":"<redacted>"}'
+  --data-raw '{"settings":{"bindTemplate":"example","name":"example","url":"https://example.org","baseDn":"example","caPem":"example","emailAttribute":"alex@example.org","enabled":false,"groupAttribute":"example","groupBaseDn":"example","groupFilter":"example","groupNameAttribute":"example","idAttribute":"example","nameAttribute":"example","startTls":false,"userFilter":"example","usernameAttribute":"example"},"username":"example","password":"<redacted>"}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -2095,11 +3315,13 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/directories/check" \
 
 ### `PUT /api/v1/identity/sign-in/local-accounts`
 
-Turns sign-in with local accounts on or off. Turning it off is refused while nothing else would let people sign in, and for someone signed in with a local account. Turning it off also ends every password session.
+Turns sign-in with local accounts on or off. Turning it off is refused while nothing else would let people sign in, and for someone signed in with a local account. Turning it off also ends every password session. Needs `platform.security.manage`; audited.
+
+**Operation ID:** `set_local_accounts`
 
 **Needs:** `platform.security.manage`; audited.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2111,14 +3333,23 @@ Turns sign-in with local accounts on or off. Turning it off is refused while not
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/local-accounts" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/local-accounts" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"enabled":false}'
+  --data-raw '{"enabled":false}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -2132,11 +3363,13 @@ curl -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/local-accounts" \
 
 ### `POST /api/v1/identity/sign-in/providers`
 
-Adds an identity provider; it is checked and applied at once.
+Adds an identity provider; it is checked and applied at once. Needs `platform.security.manage` (and an approval where the policy asks for one); audited.
+
+**Operation ID:** `create_identity_provider`
 
 **Needs:** `platform.security.manage` (and an approval where the policy asks for one); audited.
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2162,14 +3395,23 @@ Adds an identity provider; it is checked and applied at once.
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/providers" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/providers" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example","issuer":"example","audiences":["example"]}'
+  --data-raw '{"name":"example","issuer":"example","audiences":["example"]}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -2196,7 +3438,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/providers" \
   "source": "console",
   "usernameClaim": "example",
   "clientId": "example",
-  "error": "example"
+  "error": "example",
+  "id": "00000000-0000-4000-8000-000000000001",
+  "updatedBy": "example"
 }
 ```
 
@@ -2204,7 +3448,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/providers" \
 
 ### `PUT /api/v1/identity/sign-in/providers/{id}`
 
-Changes a provider saved in the Console.
+Changes a provider saved in the Console. Needs `platform.security.manage`; audited.
+
+**Operation ID:** `update_identity_provider`
 
 **Needs:** `platform.security.manage`; audited.
 
@@ -2212,7 +3458,7 @@ Changes a provider saved in the Console.
 |---|---|---|---|---|
 | `id` | path | string | yes | Provider id |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2238,14 +3484,23 @@ Changes a provider saved in the Console.
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/providers/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/providers/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example","issuer":"example","audiences":["example"]}'
+  --data-raw '{"name":"example","issuer":"example","audiences":["example"]}'
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -2272,7 +3527,9 @@ curl -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/providers/00000000-0000-40
   "source": "console",
   "usernameClaim": "example",
   "clientId": "example",
-  "error": "example"
+  "error": "example",
+  "id": "00000000-0000-4000-8000-000000000001",
+  "updatedBy": "example"
 }
 ```
 
@@ -2280,7 +3537,9 @@ curl -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/providers/00000000-0000-40
 
 ### `DELETE /api/v1/identity/sign-in/providers/{id}`
 
-Removes a provider saved in the Console: people stop being able to sign in with it. Its name must be typed again.
+Removes a provider saved in the Console: people stop being able to sign in with it. Its name must be typed again. Needs `platform.security.manage`; audited.
+
+**Operation ID:** `delete_identity_provider`
 
 **Needs:** `platform.security.manage`; audited.
 
@@ -2288,7 +3547,7 @@ Removes a provider saved in the Console: people stop being able to sign in with 
 |---|---|---|---|---|
 | `id` | path | string | yes | Provider id |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2300,20 +3559,26 @@ Removes a provider saved in the Console: people stop being able to sign in with 
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-in/providers/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-in/providers/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"confirm":"example"}'
+  --data-raw '{"confirm":"example"}'
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `400`, `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/identity/sign-ins`
 
-Everyone's Apelora sessions open now (or one person's).
+Everyone's Apelora sessions open now (or one person's). Needs `user.manage` on the platform.
+
+**Operation ID:** `sign_ins`
 
 **Needs:** `user.manage` on the platform.
 
@@ -2321,31 +3586,26 @@ Everyone's Apelora sessions open now (or one person's).
 |---|---|---|---|---|
 | `user` | query | string | no | Only this person's. |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/sign-ins" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/sign-ins" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "absoluteSecs": 1,
-  "credential": "example",
-  "idleSecs": 1,
-  "items": [
-    {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "current": false,
-      "endsAt": "2026-01-01T09:00:00Z",
-      "expiresAt": "2026-01-01T09:00:00Z",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "lastUsedAt": "2026-01-01T09:00:00Z",
-      "method": "example",
-      "person": "example",
-      "userId": "00000000-0000-4000-8000-000000000001"
-    }
-  ]
+  "items": [],
+  "credential": "api-token",
+  "idleSecs": 3600,
+  "absoluteSecs": 28800
 }
 ```
 
@@ -2353,7 +3613,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/sign-ins" \
 
 ### `DELETE /api/v1/identity/sign-ins/{id}`
 
-Ends anyone's session.
+Ends anyone's session. Needs `user.manage` on the platform.
+
+**Operation ID:** `end_sign_in`
 
 **Needs:** `user.manage` on the platform.
 
@@ -2361,79 +3623,255 @@ Ends anyone's session.
 |---|---|---|---|---|
 | `id` | path | string | yes | Session id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-ins/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-ins/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `401`, `403`, `404`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/identity/tenancy`
 
-Organisations, projects and environments the caller can see, with quotas, use and each environment's Incus project as Incus reports it.
+Organisations, projects and environments the caller can see, with quotas, use and each environment's Incus project as Incus reports it. Needs `organization.view` or `project.view` somewhere (or `quota.manage`).
+
+**Operation ID:** `tenancy`
 
 **Needs:** `organization.view` or `project.view` somewhere (or `quota.manage`).
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/tenancy" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/tenancy" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "adminConfigured": false,
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-23T22:12:58.291889Z"
+  },
+  "adminConfigured": true,
   "baseline": {
-    "key": "example"
+    "features.images": "false",
+    "features.networks": "false",
+    "features.profiles": "true",
+    "features.storage.buckets": "true",
+    "features.storage.volumes": "true",
+    "restricted": "true",
+    "restricted.backups": "block",
+    "restricted.cluster.target": "allow",
+    "restricted.containers.interception": "block",
+    "restricted.containers.lowlevel": "block",
+    "restricted.containers.nesting": "block",
+    "restricted.containers.privilege": "unprivileged",
+    "restricted.devices.disk": "managed",
+    "restricted.devices.gpu": "block",
+    "restricted.devices.infiniband": "block",
+    "restricted.devices.nic": "managed",
+    "restricted.devices.pci": "block",
+    "restricted.devices.proxy": "block",
+    "restricted.devices.unix-block": "block",
+    "restricted.devices.unix-char": "block",
+    "restricted.devices.unix-hotplug": "block",
+    "restricted.devices.usb": "block",
+    "restricted.networks.zones": "block",
+    "restricted.snapshots": "allow",
+    "restricted.virtual-machines.lowlevel": "block"
   },
   "organizations": [
     {
-      "canSetQuota": false,
-      "id": "00000000-0000-4000-8000-000000000001",
-      "name": "example",
+      "id": "00000000-0000-0000-0000-000000000001",
+      "slug": "default",
+      "name": "Default",
+      "quota": null,
+      "usage": {
+        "instances": 0,
+        "cpu": 0,
+        "memoryBytes": 0,
+        "diskBytes": 0
+      },
+      "canSetQuota": true,
       "projects": [
         {
-          "canSetQuota": false,
-          "environments": [],
-          "id": "00000000-0000-4000-8000-000000000001",
-          "name": "example",
-          "slug": "example",
-          "quota": {
-            "cpu": 1,
-            "diskGib": 1,
-            "instances": 1,
-            "memoryGib": 1
-          },
+          "id": "00000000-0000-0000-0000-000000000002",
+          "slug": "default",
+          "name": "Default",
+          "quota": null,
           "usage": {
-            "cpu": 1,
-            "diskBytes": 1,
-            "instances": 1,
-            "memoryBytes": 1
-          }
+            "instances": 0,
+            "cpu": 0,
+            "memoryBytes": 0,
+            "diskBytes": 0
+          },
+          "canSetQuota": true,
+          "environments": [
+            {
+              "id": "00000000-0000-0000-0000-000000000003",
+              "slug": "default",
+              "name": "Default",
+              "kind": "other",
+              "incusProject": "apelora",
+              "incusState": "pending",
+              "incusDetail": "a platform deploy project (APELORA_DEPLOY_PROJECTS), set up by the operator; Prepare Incus project checks it and adopts it",
+              "checkedAt": null,
+              "quota": null,
+              "effective": {
+                "instances": null,
+                "cpu": null,
+                "memoryGib": null,
+                "diskGib": null
+              },
+              "apeloraLimits": {},
+              "incus": {
+                "restrictions": {
+                  "restricted": "true",
+                  "restricted.cluster.target": "allow",
+                  "restricted.snapshots": "allow"
+                },
+                "limits": {},
+                "usage": {
+                  "instances": {
+                    "used": 0,
+                    "limit": null
+                  },
+                  "cpu": {
+                    "used": 0,
+                    "limit": null
+                  },
+                  "memory": {
+                    "used": 0,
+                    "limit": null
+                  },
+                  "disk": {
+                    "used": 0,
+                    "limit": null
+                  }
+                }
+              },
+              "incusError": null,
+              "findings": [],
+              "canSetQuota": true,
+              "canPrepare": true
+            }
+          ]
         }
-      ],
-      "slug": "example",
-      "quota": {
-        "cpu": 1,
-        "diskGib": 1,
-        "instances": 1,
-        "memoryGib": 1
-      },
+      ]
+    },
+    {
+      "id": "a80a1413-41a1-498f-868b-c384cf72acc5",
+      "slug": "docs-org",
+      "name": "Documentation example",
+      "quota": null,
       "usage": {
-        "cpu": 1,
-        "diskBytes": 1,
-        "instances": 1,
-        "memoryBytes": 1
-      }
+        "instances": 0,
+        "cpu": 0,
+        "memoryBytes": 0,
+        "diskBytes": 0
+      },
+      "canSetQuota": true,
+      "projects": [
+        {
+          "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+          "slug": "docs-project",
+          "name": "Documentation project",
+          "quota": null,
+          "usage": {
+            "instances": 0,
+            "cpu": 0,
+            "memoryBytes": 0,
+            "diskBytes": 0
+          },
+          "canSetQuota": true,
+          "environments": [
+            {
+              "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+              "slug": "development",
+              "name": "Development",
+              "kind": "development",
+              "incusProject": "docs-org-docs-project-development",
+              "incusState": "created",
+              "incusDetail": "Incus project docs-org-docs-project-development created by Apelora with the baseline restrictions",
+              "checkedAt": "2026-10-23T22:12:58.053402Z",
+              "quota": null,
+              "effective": {
+                "instances": null,
+                "cpu": null,
+                "memoryGib": null,
+                "diskGib": null
+              },
+              "apeloraLimits": {},
+              "incus": {
+                "restrictions": {
+                  "features.images": "false",
+                  "features.networks": "false",
+                  "features.profiles": "true",
+                  "features.storage.buckets": "true",
+                  "features.storage.volumes": "true",
+                  "restricted": "true",
+                  "restricted.backups": "block",
+                  "restricted.cluster.target": "allow",
+                  "restricted.containers.interception": "block",
+                  "restricted.containers.lowlevel": "block",
+                  "restricted.containers.nesting": "block",
+                  "restricted.containers.privilege": "unprivileged",
+                  "restricted.devices.disk": "managed",
+                  "restricted.devices.gpu": "block",
+                  "restricted.devices.infiniband": "block",
+                  "restricted.devices.nic": "managed",
+                  "restricted.devices.pci": "block",
+                  "restricted.devices.proxy": "block",
+                  "restricted.devices.unix-block": "block",
+                  "restricted.devices.unix-char": "block",
+                  "restricted.devices.unix-hotplug": "block",
+                  "restricted.devices.usb": "block",
+                  "restricted.networks.zones": "block",
+                  "restricted.snapshots": "allow",
+                  "restricted.virtual-machines.lowlevel": "block"
+                },
+                "limits": {},
+                "usage": {
+                  "instances": {
+                    "used": 0,
+                    "limit": null
+                  },
+                  "cpu": {
+                    "used": 0,
+                    "limit": null
+                  },
+                  "memory": {
+                    "used": 0,
+                    "limit": null
+                  },
+                  "disk": {
+                    "used": 0,
+                    "limit": null
+                  }
+                }
+              },
+              "incusError": null,
+              "findings": [],
+              "canSetQuota": true,
+              "canPrepare": true
+            }
+          ]
+        }
+      ]
     }
-  ],
-  "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
-  }
+  ]
 }
 ```
 
@@ -2441,31 +3879,29 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/tenancy" \
 
 ### `GET /api/v1/identity/users`
 
-People who have signed in, as far as the caller may see them: everyone for a platform administrator, otherwise those with a role in the caller's scopes.
+People who have signed in, as far as the caller may see them: everyone for a platform administrator, otherwise those with a role in the caller's scopes. Needs `user.view`.
+
+**Operation ID:** `users`
 
 **Needs:** `user.view`.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/users" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/users" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "disabled": false,
-      "id": "00000000-0000-4000-8000-000000000001",
-      "issuer": "example",
-      "displayName": "example",
-      "email": "alex@example.org",
-      "lastSeenAt": "2026-01-01T09:00:00Z",
-      "username": "example"
-    }
-  ]
+  "items": []
 }
 ```
 
@@ -2473,7 +3909,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/users" \
 
 ### `POST /api/v1/identity/users/{user}/disable`
 
-Disables a person: their tokens and Apelora sessions stop working at once.
+Disables a person: their tokens and Apelora sessions stop working at once. Needs `user.manage`.
+
+**Operation ID:** `disable_user`
 
 **Needs:** `user.manage`.
 
@@ -2481,18 +3919,24 @@ Disables a person: their tokens and Apelora sessions stop working at once.
 |---|---|---|---|---|
 | `user` | path | string | yes | User id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/users/00000000-0000-4000-8000-000000000001/disable" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/users/00000000-0000-4000-8000-000000000001/disable" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `POST /api/v1/identity/users/{user}/enable`
 
-Re-enables a person.
+Re-enables a person. Needs `user.manage`.
+
+**Operation ID:** `enable_user`
 
 **Needs:** `user.manage`.
 
@@ -2500,18 +3944,24 @@ Re-enables a person.
 |---|---|---|---|---|
 | `user` | path | string | yes | User id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/identity/users/00000000-0000-4000-8000-000000000001/enable" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/users/00000000-0000-4000-8000-000000000001/enable" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `403`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `GET /api/v1/identity/users/lookup`
 
-Finds one person by exact user name or e-mail so a role can be given to them. Someone who has never signed in does not exist yet.
+Finds one person by exact user name or e-mail so a role can be given to them. Someone who has never signed in does not exist yet. Needs `role.assign` or `group.manage`.
+
+**Operation ID:** `lookup_user`
 
 **Needs:** `role.assign` or `group.manage`.
 
@@ -2519,12 +3969,19 @@ Finds one person by exact user name or e-mail so a role can be given to them. So
 |---|---|---|---|---|
 | `q` | query | string | yes | Exact user name or e-mail address. |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/identity/users/lookup?q=example" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/users/lookup?q=example" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -2549,14 +4006,23 @@ curl -sS -X GET "$APELORA_URL/api/v1/identity/users/lookup?q=example" \
 
 Your Apelora sessions open now (password and directory sign-ins), most recently used first. Sign-ins with an identity provider's token are not sessions and are not listed.
 
+**Operation ID:** `my_sign_ins`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/me/sign-ins" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/me/sign-ins" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -2585,18 +4051,24 @@ curl -sS -X GET "$APELORA_URL/api/v1/me/sign-ins" \
 
 Ends one of your sessions (signs that browser out). Another person's answers 404.
 
+**Operation ID:** `end_my_sign_in`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
 | Parameter | In | Type | Required | Meaning |
 |---|---|---|---|---|
 | `id` | path | string | yes | Session id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/me/sign-ins/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/me/sign-ins/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `401`, `403`, `404`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
 
@@ -2604,14 +4076,23 @@ curl -sS -X DELETE "$APELORA_URL/api/v1/me/sign-ins/00000000-0000-4000-8000-0000
 
 Your personal tokens (live ones, and those that ended in the last 30 days), newest first. Any signed-in person.
 
+**Operation ID:** `my_tokens`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/me/tokens" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/me/tokens" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -2640,11 +4121,13 @@ curl -sS -X GET "$APELORA_URL/api/v1/me/tokens" \
 
 ### `POST /api/v1/me/tokens`
 
-Creates a personal token, shown only in this response. It acts as you with whatever you hold when it is used, and never opens terminal sessions or makes other credentials.
+Creates a personal token, shown only in this response. It acts as you with whatever you hold when it is used, and never opens terminal sessions or makes other credentials. Needs a sign-in (not a personal token); 1–365 days, no default; at most 20 live tokens.
 
-**Needs:** a sign-in (not a personal token); 1–365 days, no default; at most 20 live tokens.
+**Operation ID:** `create_my_token`
 
-**Request body** (JSON):
+**Needs:** a signed-in caller; the server decides what that caller may see.
+
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2657,14 +4140,23 @@ Creates a personal token, shown only in this response. It acts as you with whate
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/me/tokens" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/me/tokens" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example"}'
+  --data-raw '{"name":"example"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -2693,18 +4185,24 @@ curl -sS -X POST "$APELORA_URL/api/v1/me/tokens" \
 
 Revokes one of your live tokens; it stops working at once. Another person's token answers 404.
 
+**Operation ID:** `revoke_my_token`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
 | Parameter | In | Type | Required | Meaning |
 |---|---|---|---|---|
 | `id` | path | string | yes | Token id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/me/tokens/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/me/tokens/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `401`, `403`, `404`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
 
@@ -2712,13 +4210,15 @@ curl -sS -X DELETE "$APELORA_URL/api/v1/me/tokens/00000000-0000-4000-8000-000000
 
 Rotates one of your live tokens: a successor with the same name (shown only in this response), and the old token keeps working for the overlap (0–1440 minutes, 60 by default), then expires. A token is rotated once; rotate its successor next time.
 
+**Operation ID:** `rotate_my_token`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
 | Parameter | In | Type | Required | Meaning |
 |---|---|---|---|---|
 | `id` | path | string | yes | Token id |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2731,14 +4231,23 @@ Rotates one of your live tokens: a successor with the same name (shown only in t
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/me/tokens/00000000-0000-4000-8000-000000000001/rotate" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/me/tokens/00000000-0000-4000-8000-000000000001/rotate" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"expiresInDays":1}'
+  --data-raw '{"expiresInDays":1}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {

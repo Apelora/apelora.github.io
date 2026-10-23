@@ -20,8 +20,7 @@ const INLINE_TAGS = /^<\/?(?:br|kbd|sub|sup|b|i|em|strong|code|abbr|mark|span)(?
 /**
  * Inline Markdown to HTML. `ctx.link(href)` may rewrite an address; `ctx.image(src)` likewise.
  */
-export function inline(src, ctx = {}) {
-  const stash = [];
+export function inline(src, ctx = {}, stash = []) {
   const keep = (html) => `\u0000${stash.push(html) - 1}\u0000`;
   let s = src;
   // code spans first, so nothing inside them is interpreted
@@ -34,7 +33,7 @@ export function inline(src, ctx = {}) {
   s = s.replace(/\[((?:[^\[\]]|\[[^\]]*\])*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g, (_, text, href, title) => {
     const to = ctx.link ? ctx.link(href) : href;
     const external = /^https?:\/\//.test(to);
-    return keep(`<a href="${esc(to)}"${title ? ` title="${esc(title)}"` : ""}${external ? ' rel="noopener"' : ""}>${inline(text, { ...ctx, nolink: true })}</a>`);
+    return keep(`<a href="${esc(to)}"${title ? ` title="${esc(title)}"` : ""}${external ? ' rel="noopener"' : ""}>${inline(text, { ...ctx, nolink: true }, stash)}</a>`);
   });
   s = s.replace(/<(https?:\/\/[^>\s]+)>/g, (_, u) => keep(`<a href="${esc(u)}" rel="noopener">${esc(u)}</a>`));
   // a few inline tags pass through
@@ -118,7 +117,7 @@ export function render(md, ctx = {}) {
         const m = l.match(/^ {0,3}(#{1,6})\s+(.*?)\s*#*\s*$/);
         const level = m[1].length;
         const html = inline(m[2], ctx);
-        const text = m[2].replace(/`/g, "").replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/[*_]/g, "");
+        const text = html.replace(/<[^>]*>/g, "").replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
         const id = headingId(text);
         if (level > 1) headings.push({ level, id, text });
         else headings.push({ level: 1, id, text });

@@ -7,7 +7,9 @@ label: Deployment
 source: packages/api-client/openapi.json
 summary: Instances, plans, deployments, moves and volumes.
 ---
-Creating, changing and moving single instances, and the plan and deployment of a design. This page documents all 10 operations, each with a request you can copy. Set `APELORA_URL` and `APELORA_TOKEN` as described in [the API overview](/docs/api/overview/).
+Creating, changing and moving single instances, and the plan and deployment of a design. This page lists 10 operations.
+
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
 
 ## Operations
 
@@ -28,7 +30,9 @@ Creating, changing and moving single instances, and the plan and deployment of a
 
 ### `POST /api/v1/instances`
 
-Queues creation of an instance. Apelora marks it as its own; only such instances can later be stopped or deleted through Apelora.
+Queues creation of an instance. Needs `deploy`. Apelora marks it as its own; only such instances can later be stopped or deleted through Apelora.
+
+**Operation ID:** `create_instance`
 
 **Needs:** `deploy`.
 
@@ -36,7 +40,7 @@ Queues creation of an instance. Apelora marks it as its own; only such instances
 |---|---|---|---|---|
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -67,15 +71,26 @@ Queues creation of an instance. Apelora marks it as its own; only such instances
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/instances" \
+# Generate once per distinct change; keep this value when retrying.
+IDEMPOTENCY_KEY=$(uuidgen)
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/instances" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Idempotency-Key: $(uuidgen)" \
+  -H "Accept: application/json" \
+  -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"project":"apelora","name":"example","kind":"container","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"}}'
+  --data-raw '{"project":"apelora","name":"example","kind":"container","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"}}'
 ```
 
-**Response `202`**:
+**Response `202`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -88,7 +103,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/instances" \
 
 ### `DELETE /api/v1/instances/{project}/{name}`
 
-Queues deletion of an Apelora instance (stopped first if running).
+Queues deletion of an Apelora instance (stopped first if running). Needs `deploy`.
+
+**Operation ID:** `delete_instance`
 
 **Needs:** `deploy`.
 
@@ -98,13 +115,24 @@ Queues deletion of an Apelora instance (stopped first if running).
 | `name` | path | string | yes | Instance name. |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/instances/apelora/shop" \
+# Generate once per distinct change; keep this value when retrying.
+IDEMPOTENCY_KEY=$(uuidgen)
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/instances/apelora/shop" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Idempotency-Key: $(uuidgen)"
+  -H "Accept: application/json" \
+  -H "Idempotency-Key: $IDEMPOTENCY_KEY"
 ```
 
-**Response `202`**:
+**Response `202`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -117,7 +145,9 @@ curl -sS -X DELETE "$APELORA_URL/api/v1/instances/apelora/shop" \
 
 ### `GET /api/v1/instances/{project}/{name}/move`
 
-Dry run of moving an instance to another member: whether it keeps running, what it copies, what blocks it. Changes nothing.
+Dry run of moving an instance to another member: whether it keeps running, what it copies, what blocks it. Changes nothing. Needs `deploy` (or `instance.manage`).
+
+**Operation ID:** `preview_instance_move`
 
 **Needs:** `deploy` (or `instance.manage`).
 
@@ -128,12 +158,19 @@ Dry run of moving an instance to another member: whether it keeps running, what 
 | `target` | query | string | yes | The member to move to. |
 | `allowStop` | query | boolean | no | Whether a short stop is acceptable when it cannot move while running. |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop/move?target=example" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop/move?target=example" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -165,7 +202,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop/move?target=example"
 
 ### `POST /api/v1/instances/{project}/{name}/move`
 
-Moves an Apelora instance to another member, after the check runs again and its name is typed: live when it can, otherwise only with `allowStop`, copying its volumes there. Queues an `instance.move` job.
+Moves an Apelora instance to another member, after the check runs again and its name is typed: live when it can, otherwise only with `allowStop`, copying its volumes there. Queues an `instance.move` job. Needs `deploy` (or `instance.manage`); audited.
+
+**Operation ID:** `move_instance`
 
 **Needs:** `deploy` (or `instance.manage`); audited.
 
@@ -175,7 +214,7 @@ Moves an Apelora instance to another member, after the check runs again and its 
 | `name` | path | string | yes | Instance name. |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -190,15 +229,26 @@ Moves an Apelora instance to another member, after the check runs again and its 
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/instances/apelora/shop/move" \
+# Generate once per distinct change; keep this value when retrying.
+IDEMPOTENCY_KEY=$(uuidgen)
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/instances/apelora/shop/move" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Idempotency-Key: $(uuidgen)" \
+  -H "Accept: application/json" \
+  -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"target":"example","confirm":"example"}'
+  --data-raw '{"target":"example","confirm":"example"}'
 ```
 
-**Response `202`**:
+**Response `202`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -211,7 +261,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/instances/apelora/shop/move" \
 
 ### `POST /api/v1/instances/{project}/{name}/state`
 
-Queues starting or stopping an Apelora instance.
+Queues starting or stopping an Apelora instance. Needs `deploy`.
+
+**Operation ID:** `change_state`
 
 **Needs:** `deploy`.
 
@@ -221,7 +273,7 @@ Queues starting or stopping an Apelora instance.
 | `name` | path | string | yes | Instance name. |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -233,15 +285,26 @@ Queues starting or stopping an Apelora instance.
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/instances/apelora/shop/state" \
+# Generate once per distinct change; keep this value when retrying.
+IDEMPOTENCY_KEY=$(uuidgen)
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/instances/apelora/shop/state" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Idempotency-Key: $(uuidgen)" \
+  -H "Accept: application/json" \
+  -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"action":"start"}'
+  --data-raw '{"action":"start"}'
 ```
 
-**Response `202`**:
+**Response `202`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -256,6 +319,8 @@ curl -sS -X POST "$APELORA_URL/api/v1/instances/apelora/shop/state" \
 
 Jobs newest first, filtered by status, kind and application and paged with `after`. Whole platform readers (`read-inventory`) see every job; anyone else the jobs of applications they may view.
 
+**Operation ID:** `jobs`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
 | Parameter | In | Type | Required | Meaning |
@@ -266,45 +331,24 @@ Jobs newest first, filtered by status, kind and application and paged with `afte
 | `after` | query | string | no | Paging: the `next` of the previous page. |
 | `limit` | query | integer | no | Jobs per page, 1 to 200 (default 100). |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/jobs" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
-  "items": [
-    {
-      "actions": {
-        "cancel": {
-          "allowed": false,
-          "reason": "example"
-        },
-        "retry": {
-          "allowed": false,
-          "reason": "example"
-        }
-      },
-      "attempts": 1,
-      "createdAt": "2026-01-01T09:00:00Z",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "incusOperations": [
-        "example"
-      ],
-      "kind": "example",
-      "maxAttempts": 1,
-      "request": {},
-      "status": "example",
-      "updatedAt": "2026-01-01T09:00:00Z",
-      "cancelRequestedAt": "2026-01-01T09:00:00Z",
-      "cancelRequestedBy": "example",
-      "incusOperation": "example",
-      "lastError": "example"
-    }
-  ],
-  "next": "example"
+  "items": [],
+  "next": null
 }
 ```
 
@@ -312,7 +356,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/jobs" \
 
 ### `GET /api/v1/jobs/{id}`
 
-A queued job and its progress.
+A queued job and its progress. Needs `read-inventory`.
+
+**Operation ID:** `job`
 
 **Needs:** `read-inventory`.
 
@@ -320,12 +366,19 @@ A queued job and its progress.
 |---|---|---|---|---|
 | `id` | path | string | yes | Job id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -353,7 +406,11 @@ curl -sS -X GET "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001" 
   "cancelRequestedAt": "2026-01-01T09:00:00Z",
   "cancelRequestedBy": "example",
   "incusOperation": "example",
-  "lastError": "example"
+  "lastError": "example",
+  "queuedBy": "example",
+  "requestId": "example",
+  "retriedBy": "00000000-0000-4000-8000-000000000001",
+  "retryOf": "00000000-0000-4000-8000-000000000001"
 }
 ```
 
@@ -361,20 +418,31 @@ curl -sS -X GET "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001" 
 
 ### `POST /api/v1/jobs/{id}/cancel`
 
-Cancels a job. A waiting job with nothing in flight is cancelled at once (`cancelled`); otherwise the request is recorded (`requested`) and the worker stops at the job kind's next safe point, never in the middle of an Incus change (see `safePoints` on the job's detail). Repeating the request changes nothing. Refused (409 `job_finished`) for a finished job.
+Cancels a job. A waiting job with nothing in flight is cancelled at once (`cancelled`); otherwise the request is recorded (`requested`) and the worker stops at the job kind's next safe point, never in the middle of an Incus change (see `safePoints` on the job's detail). Repeating the request changes nothing. Refused (409 `job_finished`) for a finished job. Needs the permission that queues that kind of job on its target; audited.
 
-**Needs:** the permission that queues that kind of job on its target; audited.
+**Operation ID:** `cancel_job`
+
+**Needs:** a signed-in caller; the server decides what that caller may see.
 
 | Parameter | In | Type | Required | Meaning |
 |---|---|---|---|---|
 | `id` | path | string | yes | Job id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/cancel" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/cancel" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -403,7 +471,11 @@ curl -sS -X POST "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/
     "cancelRequestedAt": "2026-01-01T09:00:00Z",
     "cancelRequestedBy": "example",
     "incusOperation": "example",
-    "lastError": "example"
+    "lastError": "example",
+    "queuedBy": "example",
+    "requestId": "example",
+    "retriedBy": "00000000-0000-4000-8000-000000000001",
+    "retryOf": "00000000-0000-4000-8000-000000000001"
   },
   "outcome": "example"
 }
@@ -415,18 +487,27 @@ curl -sS -X POST "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/
 
 A job with its attempts (worker, timings, outcome, error and the Incus operations each started), who queued it, its request id, and the jobs linked to it (retries, and other jobs the same request queued). Same visibility as `GET /api/v1/jobs/{id}`.
 
+**Operation ID:** `job_detail`
+
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
 | Parameter | In | Type | Required | Meaning |
 |---|---|---|---|---|
 | `id` | path | string | yes | Job id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/detail" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/detail" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -468,7 +549,11 @@ curl -sS -X GET "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/d
     "cancelRequestedAt": "2026-01-01T09:00:00Z",
     "cancelRequestedBy": "example",
     "incusOperation": "example",
-    "lastError": "example"
+    "lastError": "example",
+    "queuedBy": "example",
+    "requestId": "example",
+    "retriedBy": "00000000-0000-4000-8000-000000000001",
+    "retryOf": "00000000-0000-4000-8000-000000000001"
   },
   "linked": [
     {
@@ -492,22 +577,35 @@ curl -sS -X GET "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/d
 
 ### `POST /api/v1/jobs/{id}/retry`
 
-Queues a new job that repeats a failed one, linked to it (`retryOf`); the failed job is kept unchanged as evidence. Refused (409) when the job did not fail (`not_failed`), was retried already (`already_retried`), a newer job for the same target was queued since (`superseded`), or it is an application operation (`not_retryable`: start it again from the application). Audited.
+Queues a new job that repeats a failed one, linked to it (`retryOf`); the failed job is kept unchanged as evidence. Needs the permission that queues that kind of job on its target. Refused (409) when the job did not fail (`not_failed`), was retried already (`already_retried`), a newer job for the same target was queued since (`superseded`), or it is an application operation (`not_retryable`: start it again from the application). Audited.
 
-**Needs:** the permission that queues that kind of job on its target.
+**Operation ID:** `retry_job`
+
+**Needs:** a signed-in caller; the server decides what that caller may see.
 
 | Parameter | In | Type | Required | Meaning |
 |---|---|---|---|---|
 | `id` | path | string | yes | Job id |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/retry" \
+# Generate once per distinct change; keep this value when retrying.
+IDEMPOTENCY_KEY=$(uuidgen)
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8000-000000000001/retry" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Idempotency-Key: $(uuidgen)"
+  -H "Accept: application/json" \
+  -H "Idempotency-Key: $IDEMPOTENCY_KEY"
 ```
 
-**Response `202`**:
+**Response `202`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {

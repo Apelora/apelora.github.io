@@ -26,6 +26,38 @@ node build.mjs && node scripts/check.mjs
 
 The imported pages are copies: the repository is the source of truth, and each page says so and links to its source. Links between documents are rewritten to site routes, other repository paths to GitHub. Screenshots in the Get started pages come from `tests/e2e/screenshots*.spec.ts` in the product repository (sample data). Refresh both whenever the product's screens change.
 
+### API reference and working examples
+
+The API reference is generated from `../apelora-fabric/packages/api-client/openapi.json`, also published at `/assets/api/openapi.json`. Refresh the API alone without importing unrelated product-document edits:
+
+```sh
+node scripts/import-api.mjs ../apelora-fabric
+npm test
+npm run build
+npm run check
+```
+
+To verify and capture actual example output, first build the current product binary (`cargo build -p apelora-control-plane`) and start its development database (`docker compose -f infra/dev/compose.yaml up -d`). With [uv](https://docs.astral.sh/uv/) installed, run from this website checkout:
+
+```sh
+uv run scripts/test-api-verifier.py
+uv run scripts/verify-api-examples.py ../apelora-fabric --record
+npm test
+npm run build
+npm run check
+node scripts/browser-api-check.mjs ../apelora-fabric
+```
+
+The verifier uses a unique disposable database on `apelora-dev-db` and an authenticated API on a free loopback port, with an environment that excludes Incus credentials. It exercises reads and application metadata changes, validates statuses, media types and bodies against OpenAPI, checks all documented JSON examples, and executes the exact documented curl commands for successful reads. It stops its API and deletes only its database on exit. `content/api-examples.json` records the successful outputs, checks, product commit, date and OpenAPI hash. A changed contract requires recapturing examples. `--record` refreshes API pages; run the build afterwards. No deployment worker or real Incus operations run.
+
+Browser QA uses the product checkout's installed `playwright-core` and Chromium. It checks every operation label, code copying, anchors, the OpenAPI download and mobile navigation at 390, 1440 and 1728 pixels. Screenshots go to `/tmp/apelora-api-browser-qa` by default; pass another directory as the second argument. `SPACING_CAPTURE=/path/to/capture.js` additionally writes measured DOM states for Better Design review.
+
+Keep generated values labelled **Illustrative** and observed local results labelled **MOCK VERIFIED**. These checks prove the API contract and local behavior; they do not prove a real-machine deployment. Directory sign-in integration requires its separate development service. The API's control-plane test suite is `cargo test -p apelora-control-plane` in the product checkout.
+
+Regression notes: inline code inside Markdown links must share the renderer's placeholder table, and heading slugs must preserve underscores inside code spans. Otherwise operation names become `undefined` or their links miss their targets. Binary captures carry archive listings rather than JSON/text bodies; never render an absent body. The Node tests and site checker cover these failures.
+
+The `Website checks` workflow runs Node regressions, the build, the site checker and a generated-file drift check on pushes and pull requests. Local API and browser verification additionally require the product checkout and its development tools.
+
 ## Publish
 
 Repository `Apelora/apelora.github.io`, Settings → Pages → Deploy from a branch → `main` / root. `.nojekyll` turns off GitHub's own processing.

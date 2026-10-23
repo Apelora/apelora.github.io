@@ -7,7 +7,9 @@ label: Administration
 source: packages/api-client/openapi.json
 summary: Tokens and Apelora's own database.
 ---
-API tokens and Apelora's own database backups. This page documents all 3 operations, each with a request you can copy. Set `APELORA_URL` and `APELORA_TOKEN` as described in [the API overview](/docs/api/overview/).
+API tokens and Apelora's own database backups. This page lists 3 operations.
+
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
 
 ## Operations
 
@@ -21,28 +23,37 @@ API tokens and Apelora's own database backups. This page documents all 3 operati
 
 ### `GET /api/v1/tokens`
 
-API tokens, active and revoked (never the tokens themselves).
+API tokens, active and revoked (never the tokens themselves). Needs `manage-tokens`.
+
+**Operation ID:** `tokens`
 
 **Needs:** `manage-tokens`.
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
 ```sh
-curl -sS -X GET "$APELORA_URL/api/v1/tokens" \
-  -H "Authorization: Bearer $APELORA_TOKEN"
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/tokens" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
 ```
 
-**Response `200`**:
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
 
 ```json
 {
   "items": [
     {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "name": "example",
+      "id": "6b690d3b-520d-475c-8bcb-d864a40731f5",
+      "name": "docs-verifier",
       "role": "fabric-admin",
-      "expiresAt": "2026-01-01T09:00:00Z",
-      "lastUsedAt": "2026-01-01T09:00:00Z",
-      "revokedAt": "2026-01-01T09:00:00Z"
+      "createdAt": "2026-10-23T22:12:57.869616Z",
+      "expiresAt": "2026-10-24T22:12:57.837011Z",
+      "revokedAt": null,
+      "lastUsedAt": "2026-10-23T22:12:58.395433Z"
     }
   ]
 }
@@ -52,7 +63,9 @@ curl -sS -X GET "$APELORA_URL/api/v1/tokens" \
 
 ### `POST /api/v1/tokens`
 
-Creates an API token, shown only in this response. A `fabric-admin` token also needs another person's approval of `token.create_admin` on `token:fabric-admin`, sent as `Apelora-Approval`; an API token cannot present one, so it cannot create `fabric-admin` tokens.
+Creates an API token, shown only in this response. Needs `manage-tokens` and every permission the token's role carries (a token never does more than its creator). A `fabric-admin` token also needs another person's approval of `token.create_admin` on `token:fabric-admin`, sent as `Apelora-Approval`; an API token cannot present one, so it cannot create `fabric-admin` tokens.
+
+**Operation ID:** `create_token`
 
 **Needs:** `manage-tokens` and every permission the token's role carries (a token never does more than its creator).
 
@@ -60,7 +73,7 @@ Creates an API token, shown only in this response. A `fabric-admin` token also n
 |---|---|---|---|---|
 | `Apelora-Approval` | header | string | no | For a fabric-admin token: the approval another person granted for token.create_admin on token:fabric-admin |
 
-**Request body** (JSON):
+**Request body** (JSON, illustrative values):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -75,14 +88,23 @@ Creates an API token, shown only in this response. A `fabric-admin` token also n
 }
 ```
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X POST "$APELORA_URL/api/v1/tokens" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/tokens" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  -d '{"name":"example","role":"fabric-admin"}'
+  --data-raw '{"name":"example","role":"fabric-admin"}'
 ```
 
-**Response `201`**:
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
 
 ```json
 {
@@ -103,7 +125,9 @@ curl -sS -X POST "$APELORA_URL/api/v1/tokens" \
 
 ### `DELETE /api/v1/tokens/{id}`
 
-Revokes an API token; it stops working at once.
+Revokes an API token; it stops working at once. Needs `manage-tokens`.
+
+**Operation ID:** `revoke_token`
 
 **Needs:** `manage-tokens`.
 
@@ -111,12 +135,16 @@ Revokes an API token; it stops working at once.
 |---|---|---|---|---|
 | `id` | path | string | yes | Token id |
 
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
 ```sh
-curl -sS -X DELETE "$APELORA_URL/api/v1/tokens/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/tokens/00000000-0000-4000-8000-000000000001" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
-**Response `204`**, with no body.
+**Response `204`** — Success, with no body.
 
 **Errors:** `401`, `403`, `404`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
 
