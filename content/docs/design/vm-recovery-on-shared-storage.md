@@ -1,5 +1,5 @@
 ---
-title: Restarting VM modules after a server dies (planned; waits for the environment)
+title: Restarting VM modules after a server dies
 section: design
 slug: vm-recovery-on-shared-storage
 order: 6
@@ -7,8 +7,8 @@ label: VM recovery on shared storage (planned)
 source: docs/design/vm-recovery-on-shared-storage.md
 summary: Items marked assumption were not confirmed with the owner. Nothing here is claimed until it has been drilled; every result will be labelled MOCK VERIFIED, CONTRACT VERIFIED or REAL INCUS TESTED.
 ---
-Status: **planned, nothing built.** The work below is written down now and **not started until the
-environment can prove it** (see §6). Related: [ADR 0013](../adr/0013-fencing-before-restart.md),
+Status: **the same recovery plan as containers (unit test, 2026-10-22). The VM drill has not been
+run.** Related: [ADR 0013](../adr/0013-fencing-before-restart.md),
 [mobility and HA](mobility-and-ha.md), [lab shared storage](../development/TEST-CLUSTER.md),
 [implementation phases, 08](../development/IMPLEMENTATION-PHASES.md).
 
@@ -22,9 +22,9 @@ been drilled; every result will be labelled MOCK VERIFIED, CONTRACT VERIFIED or 
 | Live migration for planned moves (a VM moves running, 0.26 s longest pause; containers and data-local VMs stop, copy and start) | Built, REAL INCUS TESTED |
 | Stateless replicas replaced on other servers, failing replicas restarted | Built, REAL INCUS TESTED |
 | Restart of a failed server's stateful or single-instance **container** modules whose disks are all on the shared pool, after fencing (sanlock lease DEAD, or a person confirms the server is off) | Built; three drills, running again 144–155 s after the server stopped, data intact. REAL INCUS TESTED |
-| Same for **VM** modules on the shared pool | **Never drilled** |
+| Same for **VM** modules on the shared pool | The plan is Restart after fencing (unit test, MOCK VERIFIED). `HA_DRILL_VM=1` is in `ha-drill.sh`. **Not drilled** |
 | `data-replicated` chosen in the Studio | **Built (2026-10-21)**: one choice per module in Properties → Volumes (all its volumes on the shared pool or all on its server; mixing is refused by the schema and by the API), carried in the plan request and named in the deploy review. MOCK VERIFIED in the browser; whether the pool exists is the control plane's answer at plan time |
-| A BMC power-off as fencing evidence | Not built |
+| A BMC power-off as fencing evidence | Built (ADR 0014). The Console shows the audit history, not the mapping |
 | Partition drills (member cut off from the other servers but not from the SAN, and the reverse) | Not run |
 
 A dead server cannot hand over its memory, so this is restart-based recovery: the VM comes back
@@ -79,9 +79,9 @@ recovery was expected to land around 40–60 s. **Measured on the lab (2026-10-2
 - BMC credentials stay in the backend's secret store, never in the database, logs or the browser
   (non-negotiable 7).
 - The power-off is confirmed by reading the power state back; a "sent" reply is not enough.
-- Redfish first, IPMI later. The lab has no BMC, so build a Lima-VM provider that force-stops the
-  VM and exercises the same code path; the Redfish provider is CONTRACT VERIFIED until it runs on
-  real hardware.
+- Redfish first, IPMI later (built 2026-10-22, ADR 0014). The lab has no BMC, so build a Lima-VM
+  provider that force-stops the VM and exercises the same code path; the Redfish and IPMI
+  providers are CONTRACT VERIFIED until they run on real hardware.
 - The most dangerous code in the project: a wrong target powers off a healthy server. It needs the
   same mapping safeguards as the sanlock path: identity learned while Online, a typed or approved
   allowlist, and a refusal if the member is Online.

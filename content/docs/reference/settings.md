@@ -27,6 +27,7 @@ Every setting is an environment variable. The control plane reads its own at sta
 | `APELORA_MAAS_API_KEY` | none | MAAS API key (consumer:token:secret) of a dedicated MAAS user; read once at start, never shown |
 | `APELORA_MAAS_CA` | none | PEM file of the authority that signed MAAS's certificate; default the system roots |
 | `APELORA_MAAS_URL` | none | Address of the MAAS region API (https://host:5240/MAAS); empty: only manual machines. The control plane lists its machines; the worker can fence through it |
+| `APELORA_OTLP_ENDPOINT` | `off` | OTLP/HTTP traces for request and job spans (off, or an http(s) URL of a Tempo or collector inside the site) |
 | `APELORA_REGION` | `default` | Constant region label on metrics |
 | `APELORA_SECTOR` | `default` | Constant sector label on metrics |
 | `APELORA_SITE` | `default` | Constant site label on metrics |
@@ -72,7 +73,7 @@ Every setting is an environment variable. The control plane reads its own at sta
 | `APELORA_RATE_LIMIT_PUBLIC_PER_MIN` | `120` | Public requests per client address per minute |
 | `APELORA_RATE_LIMIT_WRITES_BURST` | `200` | Changes saved up per signed-in caller |
 | `APELORA_RATE_LIMIT_WRITES_PER_MIN` | `600` | Changes per signed-in caller per minute |
-| `APELORA_SERVICE_ADDRESSES` | none | Routed range for service addresses |
+| `APELORA_SERVICE_ADDRESSES` | none | Routed IPv4 (/16–/30) or IPv6 (/112–/126) range for service addresses |
 | `APELORA_SHARED_POOL` | none | Shared storage pool behind the data-replicated volume class (modules that restart on another server after fencing) |
 | `APELORA_TLS_CERT` | none | Certificate chain file for HTTPS served by the API itself (never shown) |
 | `APELORA_TLS_KEY` | none | Private key file for HTTPS served by the API itself (never shown) |
@@ -87,7 +88,8 @@ Every setting is an environment variable. The control plane reads its own at sta
 | `APELORA_BACKUP_POOL` | none | Pool scheduled backups are copied to |
 | `APELORA_BMC_ALLOW_LAB` | none | Allows the lab-only provider that stops a Lima VM (the disposable test cluster); never in production |
 | `APELORA_BMC_FENCE_AFTER_SECS` | `30` | A server Offline for this long (at least 20) is switched off through its BMC and fenced |
-| `APELORA_BMC_MAP` | none | File naming each server's BMC (ADR 0014): provider, address, user, the name of its password variable and its hardware UUID. No passwords in it; absent: no fencing through a BMC (never shown) |
+| `APELORA_BMC_MAP` | none | File naming each server's BMC (ADR 0014): provider (redfish, ipmi, maas), address, user, the name of its password variable and its hardware UUID (for IPMI the system GUID). No passwords in it; absent: no fencing through a BMC (never shown) |
+| `APELORA_DNS_BINARY` | none | Path of the Linux apelora-dns executable the worker copies into a resolver (default: apelora-dns next to the worker) |
 | `APELORA_FENCE_LOCKSPACE` | none | The shared volume group's lockspace the fence probe reads; default the only one joined |
 | `APELORA_FENCE_PROBE` | `off` | How the worker reads the shared storage's leases to fence a failed server (off or ssh) |
 | `APELORA_FENCE_PROBE_KEY` | none | Private key of the fence probe's forced SSH command (never shown) |
@@ -98,6 +100,7 @@ Every setting is an environment variable. The control plane reads its own at sta
 | `APELORA_HEALTH_RESTART_AFTER_SECS` | `60` | Unhealthy for this long: restarted |
 | `APELORA_OUTBOX_SINK` | `log` | Where audit messages are relayed |
 | `APELORA_PROBE_UID` | `65534` | User a module's readiness command runs as inside its instances (not root by default) |
+| `APELORA_REBALANCE` | none | 1: move a stateless replica that shares a server with another of its module (off when unset) |
 | `APELORA_RECOVER_AFTER_SECS` | `120` | Offline time before replicas are substituted |
 | `APELORA_RESTORE_DRILL_RECORD` | none | The restore drill's result file the restore-age alert reads |
 | `APELORA_SUPERVISE_SECS` | `30` | Seconds between replica supervisor passes |

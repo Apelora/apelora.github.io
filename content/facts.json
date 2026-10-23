@@ -1,8 +1,8 @@
 {
-  "modules": "83",
+  "modules": "84",
   "categories": "12",
-  "deployable": "3",
-  "deployableWord": "three",
+  "deployable": "4",
+  "deployableWord": "four",
   "alertRules": 16,
   "apiOperations": 187,
   "apiOperationsFloor": 180,

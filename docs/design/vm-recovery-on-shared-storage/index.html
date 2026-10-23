@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Restarting VM modules after a server dies (planned;… · Apelora</title>
+  <title>Restarting VM modules after a server dies · Design notes · Apelora</title>
   <meta name="description" content="Planned: restarting virtual machine modules after a server dies.">
   <link rel="canonical" href="https://apelora.github.io/docs/design/vm-recovery-on-shared-storage/">
   <meta name="theme-color" content="#ffffff">
@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Apelora">
-  <meta property="og:title" content="Restarting VM modules after a server dies (planned;… · Apelora">
+  <meta property="og:title" content="Restarting VM modules after a server dies · Design notes · Apelora">
   <meta property="og:description" content="Planned: restarting virtual machine modules after a server dies.">
   <meta property="og:url" content="https://apelora.github.io/docs/design/vm-recovery-on-shared-storage/">
   <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
@@ -70,16 +70,16 @@
     </nav>
       <article class="docs-body">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/design/">Design notes</a></nav>
-        <h1>Restarting VM modules after a server dies (planned; waits for the environment)</h1>
+        <h1>Restarting VM modules after a server dies</h1>
         <div class="prose">
-<p>Status: <strong>planned, nothing built.</strong> The work below is written down now and <strong>not started until the
-environment can prove it</strong> (see §6). Related: <a href="/docs/decisions/0013-fencing-before-restart/">ADR 0013</a>,
+<p>Status: <strong>the same recovery plan as containers (unit test, 2026-10-22). The VM drill has not been
+run.</strong> Related: <a href="/docs/decisions/0013-fencing-before-restart/">ADR 0013</a>,
 <a href="/docs/design/mobility-and-ha/">mobility and HA</a>, <a href="/docs/contribute/test-cluster/">lab shared storage</a>,
 <a href="/docs/contribute/implementation-phases/">implementation phases, 08</a>.</p>
 <p>Items marked <em>assumption</em> were not confirmed with the owner. Nothing here is claimed until it has
 been drilled; every result will be labelled MOCK VERIFIED, CONTRACT VERIFIED or REAL INCUS TESTED.</p>
 <h2 id="1-where-things-stand">1. Where things stand</h2>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col"></th><th scope="col">State</th></tr></thead><tbody><tr><td>Live migration for planned moves (a VM moves running, 0.26 s longest pause; containers and data-local VMs stop, copy and start)</td><td>Built, REAL INCUS TESTED</td></tr><tr><td>Stateless replicas replaced on other servers, failing replicas restarted</td><td>Built, REAL INCUS TESTED</td></tr><tr><td>Restart of a failed server's stateful or single-instance <strong>container</strong> modules whose disks are all on the shared pool, after fencing (sanlock lease DEAD, or a person confirms the server is off)</td><td>Built; three drills, running again 144–155 s after the server stopped, data intact. REAL INCUS TESTED</td></tr><tr><td>Same for <strong>VM</strong> modules on the shared pool</td><td><strong>Never drilled</strong></td></tr><tr><td><code>data-replicated</code> chosen in the Studio</td><td><strong>Built (2026-10-21)</strong>: one choice per module in Properties → Volumes (all its volumes on the shared pool or all on its server; mixing is refused by the schema and by the API), carried in the plan request and named in the deploy review. MOCK VERIFIED in the browser; whether the pool exists is the control plane's answer at plan time</td></tr><tr><td>A BMC power-off as fencing evidence</td><td>Not built</td></tr><tr><td>Partition drills (member cut off from the other servers but not from the SAN, and the reverse)</td><td>Not run</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col"></th><th scope="col">State</th></tr></thead><tbody><tr><td>Live migration for planned moves (a VM moves running, 0.26 s longest pause; containers and data-local VMs stop, copy and start)</td><td>Built, REAL INCUS TESTED</td></tr><tr><td>Stateless replicas replaced on other servers, failing replicas restarted</td><td>Built, REAL INCUS TESTED</td></tr><tr><td>Restart of a failed server's stateful or single-instance <strong>container</strong> modules whose disks are all on the shared pool, after fencing (sanlock lease DEAD, or a person confirms the server is off)</td><td>Built; three drills, running again 144–155 s after the server stopped, data intact. REAL INCUS TESTED</td></tr><tr><td>Same for <strong>VM</strong> modules on the shared pool</td><td>The plan is Restart after fencing (unit test, MOCK VERIFIED). <code>HA_DRILL_VM=1</code> is in <code>ha-drill.sh</code>. <strong>Not drilled</strong></td></tr><tr><td><code>data-replicated</code> chosen in the Studio</td><td><strong>Built (2026-10-21)</strong>: one choice per module in Properties → Volumes (all its volumes on the shared pool or all on its server; mixing is refused by the schema and by the API), carried in the plan request and named in the deploy review. MOCK VERIFIED in the browser; whether the pool exists is the control plane's answer at plan time</td></tr><tr><td>A BMC power-off as fencing evidence</td><td>Built (ADR 0014). The Console shows the audit history, not the mapping</td></tr><tr><td>Partition drills (member cut off from the other servers but not from the SAN, and the reverse)</td><td>Not run</td></tr></tbody></table></div>
 <p>A dead server cannot hand over its memory, so this is restart-based recovery: the VM comes back
 cold from shared storage, after about 2.5 minutes today. Live migration helps only for planned
 moves. As far as we know Xen's HA also restarts VMs after fencing, so parity is realistic
@@ -115,9 +115,9 @@ member Offline at 20 s, Apelora powers it off through its BMC, the evidence is &
 recovery was expected to land around 40–60 s. <strong>Measured on the lab (2026-10-21, <a href="/docs/decisions/0014-bmc-power-off-fencing/">ADR 0014</a>): fenced at 61 s, running again at 220 s</strong> — clustered LVM still waits for sanlock to expire the dead host's lease (about 140 s after its last renewal), so the BMC fence does not shorten recovery on this storage; it fences a server cut off from the cluster that still reaches the SAN, which the lease alone cannot.</p>
 <ul><li>A <code>FenceProvider</code> trait next to the SSH probe in <code>services/deployment-worker/src/fencing.rs</code>, a
 new <code>power-off</code> evidence kind in <code>apelora_domain::fencing::decide</code>, and an ADR 0014 amending 0013.</li><li>BMC credentials stay in the backend's secret store, never in the database, logs or the browser
-(non-negotiable 7).</li><li>The power-off is confirmed by reading the power state back; a &quot;sent&quot; reply is not enough.</li><li>Redfish first, IPMI later. The lab has no BMC, so build a Lima-VM provider that force-stops the
-VM and exercises the same code path; the Redfish provider is CONTRACT VERIFIED until it runs on
-real hardware.</li><li>The most dangerous code in the project: a wrong target powers off a healthy server. It needs the
+(non-negotiable 7).</li><li>The power-off is confirmed by reading the power state back; a &quot;sent&quot; reply is not enough.</li><li>Redfish first, IPMI later (built 2026-10-22, ADR 0014). The lab has no BMC, so build a Lima-VM
+provider that force-stops the VM and exercises the same code path; the Redfish and IPMI
+providers are CONTRACT VERIFIED until they run on real hardware.</li><li>The most dangerous code in the project: a wrong target powers off a healthy server. It needs the
 same mapping safeguards as the sanlock path: identity learned while Online, a typed or approved
 allowlist, and a refusal if the member is Online.
 <em>Needs:</em> the answers in §5, and ideally real servers with a BMC.</li></ul>

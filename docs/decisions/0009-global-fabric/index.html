@@ -72,7 +72,7 @@
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/decisions/">Decisions</a></nav>
         <h1>ADR 0009 — A global fabric: regions, sites and sectors, with a control plane per region</h1>
         <div class="prose">
-<p>Status: <strong>accepted; not built yet</strong> · Date: 2026-10-21 · Extends: <a href="/docs/decisions/0008-sectors/">ADR 0008 — sectors</a> · Details: <a href="/docs/concepts/global-fabric/">global fabric</a>, <a href="/docs/design/capacity-global-fabric/">capacity estimate</a></p>
+<p>Status: <strong>accepted. The decision that names another site's sector is implemented and refuses while one site is connected. A plane per region, cross-site moves and cross-site networks are not built</strong> · Date: 2026-10-21 · Extends: <a href="/docs/decisions/0008-sectors/">ADR 0008 — sectors</a> · Details: <a href="/docs/concepts/global-fabric/">global fabric</a>, <a href="/docs/design/capacity-global-fabric/">capacity estimate</a></p>
 <h2 id="context">Context</h2>
 <p>One Incus cluster is recommended to stay at about 50 servers (100–150 run, 250 has been tested) and needs its members within 10 ms of each other (ADR 0008). The owner wants installations of thousands to tens of thousands of servers spread across cities, countries and continents. That is hundreds to thousands of sectors.</p>
 <p>ADR 0008 links sectors to one control plane. That stops working at this scale and distance:</p>

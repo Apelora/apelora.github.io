@@ -73,7 +73,7 @@
         <h1>Install Incus and form the cluster</h1>
         <div class="prose">
 <p>Apelora Fabric runs your modules on <a href="https://linuxcontainers.org/incus/" rel="noopener">Incus</a>, the open-source system that runs containers and virtual machines on a cluster of Linux servers. It does not install or upgrade Incus for you: you install it on each server, form the cluster, and give Apelora a project to deploy into and a certificate to reach it. This page shows how.</p>
-<p class="ev"><strong>Evidence:</strong> these are the steps the four-server lab was built with (<code>scripts/test-cluster/</code>), written with variables where your values differ. REAL INCUS TESTED on that lab, on virtual machines with one network card each. Physical servers, a physical uplink, and a highly available OVN database have not been tried; those parts follow Incus's own documentation and say so. Read <a href="/docs/start/servers-and-network/">servers and network</a> first.</p>
+<p class="ev"><strong>Evidence:</strong> these are the steps the four-server lab was built with (<code>scripts/test-cluster/</code>), written with variables where your values differ. REAL INCUS TESTED on that lab, on virtual machines with one network card each. Physical servers and a physical uplink have not been tried; those parts follow Incus's own documentation and say so. A highly available OVN database with TLS was applied on that lab (<code>ovn-ha.sh APPLY=1</code>, 2026-10-22); failover of the database leader is REAL INCUS TESTED (existing ACLs and a live ping to the OVN router). Read <a href="/docs/start/servers-and-network/">servers and network</a> first.</p>
 <p>Commands run as root (or with <code>sudo</code>) on the server named in each step. Values you choose are written as variables, for example <code>$SERVER_IP</code>; set them in your shell first.</p>
 <h2 id="where-to-get-incus">Where to get Incus</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">What</th><th scope="col">Where</th></tr></thead><tbody><tr><td><strong>Incus installation guide</strong> (every supported distribution)</td><td><a href="https://linuxcontainers.org/incus/docs/main/installing/" rel="noopener">https://linuxcontainers.org/incus/docs/main/installing/</a></td></tr><tr><td><strong>Release downloads and notes</strong></td><td><a href="https://github.com/lxc/incus/releases" rel="noopener">https://github.com/lxc/incus/releases</a></td></tr><tr><td><strong>Packages for Debian and Ubuntu</strong> (the project's own repository, which carries the LTS series)</td><td><a href="https://github.com/zabbly/incus" rel="noopener">https://github.com/zabbly/incus</a>, repository at <a href="https://pkgs.zabbly.com/incus/" rel="noopener">https://pkgs.zabbly.com/incus/</a></td></tr><tr><td><strong>Forming a cluster</strong></td><td><a href="https://linuxcontainers.org/incus/docs/main/howto/cluster_form/" rel="noopener">https://linuxcontainers.org/incus/docs/main/howto/cluster_form/</a></td></tr><tr><td><strong>Setting up OVN</strong></td><td><a href="https://linuxcontainers.org/incus/docs/main/howto/network_ovn_setup/" rel="noopener">https://linuxcontainers.org/incus/docs/main/howto/network_ovn_setup/</a></td></tr><tr><td><strong>The series Apelora is tested with</strong></td><td><code>series</code> and <code>pinned_tag</code> in <a href="https://github.com/Apelora/apelora-fabric/blob/main/upstream.lock.yaml" rel="noopener"><code>upstream.lock.yaml</code></a></td></tr></tbody></table></div>
@@ -150,21 +150,30 @@ incus admin init --preseed &lt;join.yaml</code></pre>
 <p><code>incus cluster list</code> on any member should now show every server online, and three of them with the database role. Servers added <strong>later</strong> are better enrolled through Apelora, which registers, approves and holds a new server until it passes its checks: <a href="/docs/runbooks/member-join/">add a server to the cluster</a>.</p>
 <h2 id="4-networking-for-applications-ovn">4. Networking for applications (OVN)</h2>
 <p>Apelora gives every application its own OVN network and turns the cables you draw into access rules on it. This needs OVN on the servers and an <strong>uplink</strong>. Without them Apelora still deploys, but it cannot enforce the connections you drew (the deploy dialog says so). Skip this step to try deployment first, and add it before you rely on the connections.</p>
-<p>Follow Incus's own guide for OVN (<a href="https://linuxcontainers.org/incus/docs/main/howto/network_ovn_setup/" rel="noopener">setting up OVN</a>): it covers a highly available set of OVN databases on three servers, which is what a real installation should use. In outline:</p>
+<p>Follow Incus's own guide for OVN (<a href="https://linuxcontainers.org/incus/docs/main/howto/network_ovn_setup/" rel="noopener">setting up OVN</a>): it covers a highly available set of OVN databases on three servers, which is what a real installation should use. Put <strong>TLS on the database remotes</strong> as well: Incus's outline uses plaintext <code>tcp:</code> listeners (<code>--db-nb-create-insecure-remote=yes</code>); a real installation should not. In outline:</p>
 <pre data-lang="sh" tabindex="0"><code># every server
 apt-get install -y ovn-host
-# the servers that hold the OVN databases (three, per Incus's guide)
+# the servers that hold the OVN databases (three, an odd number)
 apt-get install -y ovn-central
 
-# every server: point the local OVN controller at the databases, and set the tunnel address
-OVN_DB=tcp:$DB_IP:6642          # a list of the database servers in a real installation
+# /etc/default/ovn-central on each database server: cluster local address, join the first
+# member on the other two, ssl: remotes, create-insecure-remote=no, and the PEM files for
+# the northbound and southbound databases and for northd. ovn-host gets the controller's
+# matching files. Ports 6641/6642 are the client remotes; 6643/6644 are the raft ports.
+
+# every server: point the local OVN controller at every database, and set the tunnel address
+OVN_DB=ssl:$DB1:6642,ssl:$DB2:6642,ssl:$DB3:6642
 ovs-vsctl set open_vswitch . \
   external_ids:ovn-remote=$OVN_DB \
   external_ids:ovn-encap-type=geneve \
   external_ids:ovn-encap-ip=$SERVER_IP
 
-# once, on any member
-incus config set network.ovn.northbound_connection=tcp:$DB_IP:6641</code></pre>
+# once, on any member: Incus talks to the northbound cluster with its own client certificate
+incus config set network.ovn.northbound_connection=ssl:$DB1:6641,ssl:$DB2:6641,ssl:$DB3:6641 \
+  network.ovn.ca_cert=&quot;$(cat ca.crt)&quot; \
+  network.ovn.client_cert=&quot;$(cat incus.crt)&quot; \
+  network.ovn.client_key=&quot;$(cat incus.key)&quot;</code></pre>
+<p>The lab's <code>scripts/test-cluster/ovn.sh</code> still starts one database without TLS (a shortcut so application-network tests can run). <code>scripts/test-cluster/ovn-ha.sh</code> converts that layout to three clustered databases with TLS (<code>APPLY=1</code>). REAL INCUS TESTED on the four-member lab, 2026-10-22, OVN 25.03: three raft members, TLS client remotes (<code>pssl:6641</code> / <code>pssl:6642</code>), Incus <code>network.ovn.northbound_connection</code> on <code>ssl:</code> with a client certificate. Stopping the leader's database processes elected another member; existing OVN ACLs were unchanged; Incus still listed the project's leftover module ACLs; a container on <code>apelora-default</code> kept pinging the OVN router (0% loss). Debian's <code>ovn-central.service</code> is a dummy oneshot — stop <code>ovn-ovsdb-server-nb</code> and <code>ovn-ovsdb-server-sb</code>.</p>
 <p>Then create the <strong>uplink</strong> network that application routers attach to. With a physical network, create it once per member with <code>--target</code>, then once for the cluster, as Incus's guide shows; the settings that matter to Apelora:</p>
 <pre data-lang="sh" tabindex="0"><code>UPLINK=...                       # the uplink's name
 GATEWAY=...                      # the uplink network's gateway
@@ -172,8 +181,10 @@ ROUTER_RANGE=...                 # free addresses inside the uplink's subnet, fo
 SERVICE_RANGE=...                # a range your network routes to the uplink, for service addresses
 
 incus network set &quot;$UPLINK&quot; ipv4.ovn.ranges=&quot;$ROUTER_RANGE&quot;
-incus network set &quot;$UPLINK&quot; ipv4.routes=&quot;$SERVICE_RANGE&quot;</code></pre>
-<p>What each range is, and how to choose it, is in <a href="/docs/start/servers-and-network/#ip-addresses">servers and network</a>. The lab does this on a managed NAT bridge for convenience: <code>scripts/test-cluster/ovn.sh</code> is the worked example (one OVN database only, with no TLS, as lab shortcuts).</p>
+incus network set &quot;$UPLINK&quot; ipv4.routes=&quot;$SERVICE_RANGE&quot;
+# Optional: an IPv6 service range (/112 to /126) also needs ipv6.routes on the uplink
+# and the same range in the project's restricted.networks.subnets.</code></pre>
+<p>What each range is, and how to choose it, is in <a href="/docs/start/servers-and-network/#ip-addresses">servers and network</a>. The lab does this on a managed NAT bridge for convenience: <code>scripts/test-cluster/ovn.sh</code> is the worked example for a single database; <code>ovn-ha.sh</code> is the highly available TLS variant (<code>APPLY=1</code> on the four-member lab, 2026-10-22).</p>
 <h2 id="5-a-project-for-apelora-and-two-identities">5. A project for Apelora, and two identities</h2>
 <p>Apelora deploys into a <strong>restricted Incus project</strong>, so that the identity it uses can see and change that project and nothing else (<a href="/docs/design/tenancy-isolation/">tenancy</a>).</p>
 <pre data-lang="sh" tabindex="0"><code>PROJECT=apelora                  # the project name; `APELORA_DEPLOY_PROJECTS` lists the ones Apelora may use

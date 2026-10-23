@@ -110,12 +110,18 @@ control plane and the worker) on another member where there is one. Needs
 <code>application.operate</code>; the job is <code>volume.backup</code>. Backups made this way are kept until
 someone deletes them; scheduled ones are pruned to what the schedule keeps.</li><li><em>Schedules…</em> sets snapshots and backups on a schedule (every 15 minutes to once a week, keep
 1–50). Needs <code>application.deploy</code>. A failed scheduled run shows on the Storage page with its
-reason and is retried within five minutes.</li></ol>
+reason and is retried within five minutes.</li><li>To delete one copy: <em>Delete…</em> on that row, then type the backup's name. The volume itself
+is unchanged, and the copy cannot be brought back. A copy taken just before a restore is
+the only way back to the data from before that restore; the dialog says so. A copy Incus
+no longer has can still be deleted, which clears Apelora's record of it. Needs
+<code>application.delete</code> (and an approval where a policy asks). Audited as
+<code>application.volume.backup.delete</code>. MOCK VERIFIED (API against PostgreSQL and the mock,
+and the dialog in a browser); not run on the lab.</li></ol>
 <h2 id="restore-a-volume-from-a-backup">Restore a volume from a backup</h2>
 <p class="ev"><strong>Evidence:</strong> MOCK VERIFIED (worker and API against a real PostgreSQL, browser with a stubbed
-control plane), 2026-10-21. The Incus <code>refresh</code> copy it relies on was tried on the test cluster
-earlier (it brings the data back and deletes the volume's snapshots); the job itself is NOT YET
-REAL INCUS TESTED.</p>
+control plane), 2026-10-21. The restore job is REAL INCUS TESTED on the lab (the backup's data
+was read back from inside the instance; the dry run, the typed name and the Console dialog were
+not part of that run).</p>
 <ol><li><strong>Stop the module</strong> that uses the volume (Applications or Instances → Stop). Apelora never
 overwrites a volume under a running instance.</li><li>Fabric Console → Storage → <em>Backups…</em> next to the volume → <em>Restore…</em> on the backup to go back
 to. Read what it shows: the time of the backup (everything written since is replaced), the

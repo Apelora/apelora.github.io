@@ -215,8 +215,9 @@ FROM job_attempts WHERE job_id = '…' ORDER BY attempt</code>; <code>SELECT id,
 retry_of = '…'</code>.</p>
 <h3 id="reading-an-instances-logs">Reading an instance's logs</h3>
 <p class="ev"><strong>Evidence:</strong> CONTRACT VERIFIED (adapter against spec-shaped replies) and MOCK VERIFIED (API and
-Console); against the real test cluster only the &quot;instance does not exist&quot; answer was checked
-(it had no instances), so real log content is NOT VERIFIED yet.</p>
+Console). REAL INCUS TESTED 2026-10-23 on a running Debian container on the four-member lab
+(<code>a_real_instance_has_a_detail_log_files_and_a_bounded_console_log</code>: <code>lxc.log</code> listed and tailed,
+console log 612 bytes, a path outside the listed files refused).</p>
 <p>Console → Instances → the instance → Logs, or the API:</p>
 <ul><li><code>GET /api/v1/instances/{project}/{name}/logs</code>: the log files Incus lists for it, by name only
 (typically <code>lxc.log</code> for containers, <code>qemu.log</code> for VMs; Incus's own paths are never shown);</li><li><code>GET …/logs/{file}?tailKib=64</code>: the end of one listed file;</li><li><code>GET …/console-log?tailKib=64</code>: the end of the console output (Incus <code>type=log</code>).</li></ul>

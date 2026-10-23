@@ -75,9 +75,12 @@
 <p class="ev"><strong>Evidence:</strong> the bundle part is tested locally (2026-10-21, macOS): <code>scripts/release/bundle.sh</code>
 built and signed a bundle with a throwaway key, and <code>scripts/release/verify.sh</code> accepted it,
 offline, and refused it after a file was changed, a file was added, the signature was removed,
-<code>SHA256SUMS</code> was edited, the signer was not allowed, or the archive held a link. The install,
-start and rollback steps are <strong>NOT YET VERIFIED</strong> on an installation: follow them with care and
-record the result here.</p>
+<code>SHA256SUMS</code> was edited, the signer was not allowed, or the archive held a link.
+<code>scripts/ops/upgrade.sh</code> prints the staged order (worker stopped before the control plane) and,
+with <code>APPLY=1</code>, copies <code>bin/</code> and <code>web/</code> into a prefix while keeping the previous copies for
+<code>ROLLBACK=1</code>. That copy and the file rollback are tested by <code>scripts/ops/test-upgrade.sh</code>.
+Stopping the units, starting them, and restoring PostgreSQL are <strong>NOT YET VERIFIED</strong> on an
+installation: follow them with care and record the result here.</p>
 <p>Decision: <a href="/docs/decisions/0010-disconnected-installations/">ADR 0010</a>. Checklist:
 <a href="/docs/concepts/disconnected/">running without internet access</a>.</p>
 <h2 id="what-you-need">What you need</h2>
@@ -103,8 +106,17 @@ by its generation, and resumes waiting on any Incus operation already started
 (<a href="/docs/runbooks/api-outage/">api-outage.md</a>). Then stop the control plane. Deployments asked for meanwhile are refused with
 &quot;API not reachable&quot;, not lost.</p>
 <h2 id="4-install">4. Install</h2>
-<ul><li>Replace the two binaries with the bundle's <code>bin/apelora-control-plane</code> and
-<code>bin/apelora-deployment-worker</code> (same paths, owner and permissions as before).</li><li>Replace the static web files with <code>web/console/</code> and <code>web/studio/</code>.</li><li>Keep the configuration (environment, certificates, <code>APELORA_IMAGE_MIRRORS</code>) as it is, unless the
+<p>See the order first, without copying anything:</p>
+<pre data-lang="sh" tabindex="0"><code>BUNDLE=/path/to/apelora-&lt;version&gt; PREFIX=/usr/local/share/apelora \
+  BACKUP=/srv/apelora-backups/apelora-db-&lt;ts&gt;.dump scripts/ops/upgrade.sh</code></pre>
+<p><code>APPLY=1</code> with the same variables, plus <code>APELORA_SIGNERS</code> pointing at the allowed signers file,
+runs <code>scripts/release/verify.sh</code> and copies nothing if that fails. When it passes, it copies
+<code>bin/</code> and <code>web/</code> into <code>PREFIX</code> and keeps what was there under <code>PREFIX/previous</code>. It refuses to
+run without a non-empty <code>BACKUP</code>, and it never stops systemd. Then copy those files on to the
+paths the units actually run
+(<code>/usr/local/bin/apelora-control-plane</code>, <code>/usr/local/bin/apelora-deployment-worker</code>, and the
+web roots), with the same owner and permissions as before.</p>
+<ul><li>Keep the configuration (environment, certificates, <code>APELORA_IMAGE_MIRRORS</code>) as it is, unless the
 release notes say a setting changed. Never copy configuration from the bundle; it has none.</li></ul>
 <h2 id="5-start-the-api-then-the-worker">5. Start the API, then the worker</h2>
 <p>Start the control plane first. It applies new migrations (the bundle's <code>migrations/</code> lists them)
@@ -116,7 +128,8 @@ shows every mirror answering.</li><li>A small deployment or a Restart of a test 
 <h2 id="7-roll-back-only-if-the-check-fails">7. Roll back (only if the check fails)</h2>
 <ol><li>Stop the worker, then the control plane.</li><li>Restore the database from step 2:
 <code>pg_restore --clean --if-exists --dbname=&quot;$DATABASE_URL&quot; apelora-before-&lt;version&gt;.dump</code>.
-Changes made after the backup (new deployments, audit entries) are lost; record what they were.</li><li>Put back the previous bundle's binaries and web files.</li><li>Start the control plane, then the worker, and run the checks above.</li></ol>
+Changes made after the backup (new deployments, audit entries) are lost; record what they were.</li><li>Put back the previous files: <code>APPLY=1 ROLLBACK=1 PREFIX=/usr/local/share/apelora scripts/ops/upgrade.sh</code>,
+then copy them back onto the unit paths.</li><li>Start the control plane, then the worker, and run the checks above.</li></ol>
 <p>An older control plane refuses to start on a database migrated by a newer one, which is why the
 database is restored before the old binaries start.</p>
         </div>

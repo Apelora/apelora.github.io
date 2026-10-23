@@ -7,7 +7,7 @@ label:
 source: docs/adr/0009-global-fabric.md
 summary: One Incus cluster is recommended to stay at about 50 servers (100–150 run, 250 has been tested) and needs its members within 10 ms of each other (ADR 0008). The owner wants installations of thousands…
 ---
-Status: **accepted; not built yet** · Date: 2026-10-21 · Extends: [ADR 0008 — sectors](0008-sectors.md) · Details: [global fabric](../architecture/GLOBAL-FABRIC.md), [capacity estimate](../design/capacity-global-fabric.md)
+Status: **accepted. The decision that names another site's sector is implemented and refuses while one site is connected. A plane per region, cross-site moves and cross-site networks are not built** · Date: 2026-10-21 · Extends: [ADR 0008 — sectors](0008-sectors.md) · Details: [global fabric](../architecture/GLOBAL-FABRIC.md), [capacity estimate](../design/capacity-global-fabric.md)
 
 ## Context
 

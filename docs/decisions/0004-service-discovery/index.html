@@ -100,7 +100,11 @@ environment keeps working alongside it.</li></ol>
 <ul><li>Consumers read one variable per connection; the Studio's connection is the only configuration.</li><li>An instance that already exists keeps the environment it was created with (the plan says kept
 instances keep their network settings); the value only changes if a service address is
 re-allocated, which Apelora does not do while the module remains in the design.</li><li>The variables carry addresses, not secrets; credentials are never put in the environment by
-this mechanism.</li></ul>
+this mechanism.</li><li>2026-10-23: step 4 is the catalog class <code>resolver</code>. The worker installs <code>apelora-dns</code> in that
+instance only, advertises it as the network's nameserver, and has it forward every name it
+does not hold. Applications that do not include it are unchanged. REAL INCUS TESTED the same
+day (<code>scripts/test-cluster/dns.sh</code>): a client resolved the service name to the service
+address, and the instance name still resolved.</li></ul>
 <h2 id="alternatives">Alternatives</h2>
 <ul><li><strong>A resolver module in every application now</strong> — adds an instance (and a failure point) to
 every application before anyone needs names; kept as the later, optional step (4).</li><li><strong>Records in OVN's DNS</strong> — not available through the Incus API; writing OVN directly would

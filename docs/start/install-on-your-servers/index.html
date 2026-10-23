@@ -73,7 +73,7 @@
         <h1>Install Apelora Fabric</h1>
         <div class="prose">
 <p>Install the control plane, the worker, PostgreSQL and the two screens on top of an Incus cluster. Do <a href="/docs/start/servers-and-network/">servers and network</a> and <a href="/docs/start/install-incus/">install Incus</a> first: this page needs the cluster's address, its certificate, the two client certificates and the project name they produce.</p>
-<p class="ev"><strong>Evidence:</strong> the services have run together against the four-server lab (REAL INCUS TESTED; see <a href="/docs/reference/current-state/">current state</a>). The release artefacts, the example service files and the example web-server configuration below have <strong>not</strong> been run on a production host. Treat a first installation as an evaluation, and say what you find.</p>
+<p class="ev"><strong>Evidence:</strong> the services have run together against the four-server lab (REAL INCUS TESTED; see <a href="/docs/reference/current-state/">current state</a>). The example systemd units and NGINX configuration are parsed in CI on ubuntu-24.04 (<code>scripts/ci/verify-install-examples.sh</code>). They have also been <strong>started</strong> on one lab member from the draft release <code>v0.1.0-alpha.1</code> (<code>scripts/test-cluster/install-units.sh</code>, 2026-10-23: <code>User=apelora</code>, <code>ProtectHome=true</code>, both units active, <code>/api/v1/health</code> connected to the cluster, Studio and Console 200 through the example proxy). That is not a published release and not a production host (issue #17). Treat a first installation as an evaluation, and say what you find.</p>
 <p>Values you choose are written as variables, for example <code>$DB_HOST</code>. Nothing here needs a fixed address, name or path.</p>
 <h2 id="what-runs-where">What runs where</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Part</th><th scope="col">What it is</th><th scope="col">Where it runs</th></tr></thead><tbody><tr><td><strong>Control plane</strong> (<code>apelora-control-plane</code>)</td><td>The API: plans, roles, audit</td><td>One process, near the database</td></tr><tr><td><strong>Worker</strong> (<code>apelora-deployment-worker</code>)</td><td>Carries out jobs, enforces the network, replaces lost replicas</td><td>One or more processes</td></tr><tr><td><strong>PostgreSQL</strong></td><td>Apelora's own records, not your applications' data</td><td>Anywhere both can reach</td></tr><tr><td><strong>Studio and Console</strong></td><td>Two sets of static files</td><td>Any web server, over HTTPS</td></tr></tbody></table></div>
@@ -129,25 +129,10 @@ APELORA_NETWORK_UPLINK=$UPLINK
 APELORA_SERVICE_ADDRESSES=$SERVICE_RANGE</code></pre>
 <p>The control plane refuses to listen on an address other than loopback without TLS of its own or a declared proxy, and without a database. Without <code>APELORA_NETWORK_UPLINK</code> it deploys but does not enforce the connections you draw. Optional features have their own settings: volumes and backups (<code>APELORA_VOLUME_POOL</code>, <code>APELORA_BACKUP_POOL</code>), alerts, fencing, sign-in; each is described on its page.</p>
 <h2 id="4-run-the-services">4. Run the services</h2>
-<p>Run both under a service manager so they restart. An example for systemd, <strong>not run on a production host</strong>, one file per service with the same environment file:</p>
-<pre data-lang="ini" tabindex="0"><code># /etc/systemd/system/apelora-control-plane.service
-[Unit]
-Description=Apelora control plane
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-EnvironmentFile=/etc/apelora/apelora.env
-ExecStart=/usr/local/bin/apelora-control-plane
-Restart=on-failure
-User=apelora            # a dedicated account that can read the certificates and keys named in the environment file
-NoNewPrivileges=yes
-
-[Install]
-WantedBy=multi-user.target</code></pre>
-<p>The worker's unit is the same with <code>apelora-deployment-worker</code> and its own description. Both write one line per event to standard output (<code>APELORA_LOG_FORMAT=json</code> for structured logs). Metrics and health endpoints: <a href="/docs/concepts/monitoring/">monitoring</a>. Several workers can run at once; they share the job queue safely.</p>
+<p>Run both under a service manager so they restart. Example systemd units live in <a href="https://github.com/Apelora/apelora-fabric/tree/main/infra/systemd/" rel="noopener"><code>infra/systemd/</code></a>: <code>apelora-control-plane.service</code> and <code>apelora-deployment-worker.service</code>, same environment file, a dedicated <code>apelora</code> account that can read <code>/etc/apelora/apelora.env</code> and the Incus certificates (put those under <code>/etc/apelora</code>, not a home directory — the units set <code>ProtectHome=true</code>). Copy them to <code>/etc/systemd/system/</code> and <code>systemctl enable --now</code> each. CI parses the units (<code>systemd-analyze verify</code>) on ubuntu-24.04. The units have been started on a lab member from the draft release (<code>install-units.sh</code>, 2026-10-23); they have <strong>not</strong> been run on a production host from a published release (issue #17).</p>
+<p>Both write one line per event to standard output (<code>APELORA_LOG_FORMAT=json</code> for structured logs). Metrics, logs, traces and an example collector (Prometheus, Loki, Tempo, Pyroscope, Grafana): <a href="/docs/concepts/monitoring/">monitoring</a>. Several workers can run at once; they share the job queue safely. Do not give the worker the administrator Incus identity.</p>
 <h2 id="5-serve-studio-and-console">5. Serve Studio and Console</h2>
-<p>Serve the two directories as static files over HTTPS, each on its own host name, and pass <code>/api/</code> to the control plane, so each browser talks to one origin only. The repository's example, <a href="https://github.com/Apelora/apelora-fabric/blob/main/infra/serve/apelora.conf" rel="noopener"><code>infra/serve/apelora.conf</code></a> (NGINX syntax, not run on a production host), also sets the security headers and the content security policy, which a browser test checks.</p>
+<p>Serve the two directories as static files over HTTPS, each on its own host name, and pass <code>/api/</code> to the control plane, so each browser talks to one origin only. The repository's example, <a href="https://github.com/Apelora/apelora-fabric/blob/main/infra/serve/apelora.conf" rel="noopener"><code>infra/serve/apelora.conf</code></a> (NGINX syntax), also sets the security headers and the content security policy, which a browser test checks. CI runs <code>nginx -t</code> on that file with dummy certificates. The same example has been serving Studio and Console on a lab member (200 over TLS, <code>/api/v1/health</code> through the proxy, 2026-10-23); it has <strong>not</strong> been run as a production proxy (issue #17).</p>
 <h2 id="6-create-the-first-administrator">6. Create the first administrator</h2>
 <pre data-lang="sh" tabindex="0"><code>DATABASE_URL=... apelora-control-plane token create --name &quot;$ADMIN_NAME&quot; --role fabric-admin</code></pre>
 <p>The token is shown once. Sign in to the Console with it (<a href="/docs/guides/signing-in/">signing in</a> covers your identity provider afterwards), then open <strong>Servers → Preflight</strong> and <strong>Health</strong>: they say what is not yet right (a project the deploy identity cannot see, a member that is unreachable).</p>

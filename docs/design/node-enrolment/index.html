@@ -81,7 +81,8 @@ that changes something, and every step audited.</p>
 system installed by hand); approval issuing a single-use join token; an enrolment script for
 the host; a new member held from placement until Apelora has validated it; admission making it
 eligible; Fabric Console views.</li><li><strong>Later slices:</strong> a MAAS adapter (discovery, commissioning, OS deployment with the enrolment
-cloud-init, power), removing a member from the cluster, a burn-in workload before admission.</li><li><strong>Non-goals:</strong> writing PXE, DHCP or BMC tooling; storing BMC credentials (they stay in the
+cloud-init, power), removing a member from the cluster, a burn-in before admission (built through MAAS: see
+<a href="/docs/design/provisioner-maas/">provisioner-maas.md</a>).</li><li><strong>Non-goals:</strong> writing PXE, DHCP or BMC tooling; storing BMC credentials (they stay in the
 provisioner); placing instances ourselves (Incus places, ADR 0001).</li><li><strong>Scale:</strong> tens of machines; one administrator acting at a time.</li></ul>
 <h2 id="2-design">2. Design</h2>
 <figure class="diagram"><a href="/assets/docs/diagrams/design-node-enrolment-0.svg"><img width="916" height="346" src="/assets/docs/diagrams/design-node-enrolment-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart LR
