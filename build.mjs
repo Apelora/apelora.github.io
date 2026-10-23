@@ -16,6 +16,7 @@ const partial = (name) => read(`src/partials/${name}.html`);
 const NAV = [
   ["product", "/product/", "Product"],
   ["services", "/services/", "Services"],
+  ["training", "/training/", "Training"],
   ["pricing", "/pricing/", "Pricing"],
   ["documentation", "/docs/", "Documentation"],
 ];

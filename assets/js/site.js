@@ -197,7 +197,7 @@
   var form = document.getElementById("contact-form");
   if (!form) return;
   var cfg = window.APELORA_CONTACT || {};
-  var TYPES = { demo: "Request a demo", deployment: "Deployment", support: "Support", custom: "Custom services", other: "Something else" };
+  var TYPES = { demo: "Request a demo", deployment: "Deployment", support: "Support", training: "Training and certificates", custom: "Custom services", other: "Something else" };
   var type = form.elements.type;
   var wanted = new URLSearchParams(window.location.search).get("type");
   if (wanted && TYPES[wanted]) type.value = wanted;
