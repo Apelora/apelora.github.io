@@ -65,16 +65,16 @@
 
 
   // Recovery illustration: two modules leave a failed server and restart on healthy ones.
-  // Plays once when it scrolls into view; Pause, Resume and Replay. Without scripting, or with
-  // reduced motion, it shows the finished picture.
+  // Repeats while it is on screen, until Pause. Resume continues the loop. Without scripting,
+  // or with reduced motion, it shows the finished picture and Replay runs it once.
   Array.prototype.forEach.call(document.querySelectorAll("[data-recovery]"), function (root) {
     var get = function (s) { return root.querySelector(s); };
     var all = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
     var scene = get(".ar-scene"), svg = get(".ar-links"), hosts = all(".ar-host"), states = all(".ar-server-state");
     var modules = all(".ar-module"), paths = [get(".ar-path-a"), get(".ar-path-b")], flows = [get(".ar-flow-a"), get(".ar-flow-b")];
     var gate = get(".ar-fence"), status = get(".ar-status-text"), dot = get(".ar-dot"), button = get(".ar-control"), steps = all(".ar-step");
-    var duration = 4800;
-    var elapsed = duration, paused = false, done = true, last = null, frame = null, phase = -1, points = [], started = false;
+    var duration = 4800, hold = 1200;
+    var elapsed = duration, paused = false, userStopped = false, last = null, frame = null, phase = -1, points = [], started = false;
     var clamp = function (t) { return Math.max(0, Math.min(1, t)); };
     var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
     var TEXT = ["Both modules are running.", "Server 1 failed.", "Confirmed stopped. Safe to restart.", "Restarting on healthy servers…", "Both modules are healthy again."];
@@ -138,26 +138,50 @@
       });
     }
 
+    function stopFrame() { if (frame !== null) { cancelAnimationFrame(frame); frame = null; } }
     function tick(now) {
-      if (last !== null && !paused && !done) elapsed = Math.min(duration, elapsed + Math.min(now - last, 80));
+      if (last !== null && !paused) {
+        elapsed += Math.min(now - last, 80);
+        if (!reduce && elapsed >= duration + hold) { elapsed = 0; phase = -1; }
+      }
       last = now; paint();
-      if (elapsed >= duration) { done = true; button.textContent = "Replay"; frame = null; return; }
+      if (reduce && elapsed >= duration) { paused = true; button.textContent = "Replay"; frame = null; return; }
       frame = paused ? null : requestAnimationFrame(tick);
     }
-    function run() { if (frame === null) { last = null; frame = requestAnimationFrame(tick); } }
-    function play() { elapsed = 0; done = false; paused = false; phase = -1; button.textContent = "Pause"; run(); }
+    function run() { if (frame === null && !paused) { last = null; frame = requestAnimationFrame(tick); } }
+    function play() { elapsed = 0; paused = false; phase = -1; button.textContent = "Pause"; run(); }
 
-    button.textContent = "Replay";
+    button.textContent = reduce ? "Replay" : "Pause";
     button.addEventListener("click", function () {
-      if (done) play();
-      else { paused = !paused; button.textContent = paused ? "Resume" : "Pause"; if (!paused) run(); }
+      if (reduce) { if (paused || elapsed >= duration) play(); else { paused = true; stopFrame(); button.textContent = "Replay"; } return; }
+      if (!started) {
+        userStopped = !userStopped; paused = userStopped; button.textContent = userStopped ? "Resume" : "Pause";
+        if (!userStopped) { started = true; elapsed = 0; phase = -1; run(); }
+        return;
+      }
+      if (!paused) {
+        paused = true; userStopped = true; button.textContent = "Resume"; stopFrame();
+      } else {
+        userStopped = false; paused = false;
+        if (elapsed >= duration + hold) { elapsed = 0; phase = -1; }
+        button.textContent = "Pause"; run();
+      }
     });
     if ("ResizeObserver" in window) new ResizeObserver(measure).observe(scene); else window.addEventListener("resize", measure);
     measure(); // the finished picture until it plays
     if (!reduce && "IntersectionObserver" in window) {
-      var seen = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting && !started) { started = true; seen.disconnect(); play(); } }); }, { threshold: 0.5 });
+      var seen = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) { if (!started) { started = true; play(); } else if (!userStopped) run(); }
+          else if (started && !userStopped) stopFrame();
+        });
+      }, { threshold: 0.45 });
       seen.observe(root);
     }
+    document.addEventListener("visibilitychange", function () {
+      if (reduce || !started || userStopped) return;
+      if (document.hidden) stopFrame(); else run();
+    });
   });
 
   // Copy buttons.
