@@ -6,6 +6,7 @@
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from "node:fs";
 import { join, dirname, posix } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 import { render, slugify } from "./scripts/lib/markdown.mjs";
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -50,6 +51,16 @@ const withSizes = (html) => html.replace(/<img\b[^>]*>/g, (tag) => {
   return size ? tag.replace(/<img\b/, `<img width="${size[0]}" height="${size[1]}"`) : tag;
 });
 
+const INLINE_JS = `document.documentElement.className += " js";`;
+const sha = (t) => `'sha256-${createHash("sha256").update(t).digest("base64")}'`;
+/** The browser is told to load only from this site (plus the contact endpoint, if one is set): a third-party script cannot slip in. */
+function csp() {
+  const cfg = existsSync(join(root, "assets/js/config.js")) ? readFileSync(join(root, "assets/js/config.js"), "utf8") : "";
+  const endpoint = (cfg.match(/endpoint:\s*"(https?:\/\/[^"]+)"/) ?? [])[1];
+  const origin = endpoint ? new URL(endpoint).origin : "";
+  return ["default-src 'none'", `script-src 'self' ${sha(INLINE_JS)}`, "style-src 'self' 'unsafe-inline'", "img-src 'self' data:", "font-src 'self'", `connect-src 'self' ${origin}`.trim(), `form-action 'self' ${origin}`.trim(), "base-uri 'none'", "manifest-src 'self'"].join("; ");
+}
+
 function head(p) {
   let title = p.home ? p.title : `${p.title} · Apelora`;
   if (title.length > 68) title = `${p.title.slice(0, 68 - " · Apelora".length - 1).replace(/\s+\S*$/, "")}… · Apelora`;
@@ -58,6 +69,8 @@ function head(p) {
   const image = `${ORIGIN}${p.image ?? "/assets/img/og.png"}`;
   return `<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="${csp()}">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>${title}</title>
   <meta name="description" content="${desc}">
   <link rel="canonical" href="${ORIGIN}${p.refresh ?? p.path}">
@@ -76,7 +89,7 @@ function head(p) {
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/site.css">
-  <script>document.documentElement.className += " js";</script>
+  <script>${INLINE_JS}</script>
   <script src="/assets/js/config.js" defer></script>
   <script src="/assets/js/site.js" defer></script>`;
 }

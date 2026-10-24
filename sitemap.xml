@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://apelora.github.io/</loc></url>
   <url><loc>https://apelora.github.io/contact/</loc></url>
+  <url><loc>https://apelora.github.io/cookies/</loc></url>
   <url><loc>https://apelora.github.io/docs/</loc></url>
   <url><loc>https://apelora.github.io/docs/api/</loc></url>
   <url><loc>https://apelora.github.io/docs/api/administration/</loc></url>
@@ -113,8 +114,11 @@
   <url><loc>https://apelora.github.io/docs/start/when-something-goes-wrong/</loc></url>
   <url><loc>https://apelora.github.io/legal/</loc></url>
   <url><loc>https://apelora.github.io/pricing/</loc></url>
+  <url><loc>https://apelora.github.io/privacy/</loc></url>
   <url><loc>https://apelora.github.io/product/</loc></url>
+  <url><loc>https://apelora.github.io/refunds/</loc></url>
   <url><loc>https://apelora.github.io/services/</loc></url>
+  <url><loc>https://apelora.github.io/terms/</loc></url>
   <url><loc>https://apelora.github.io/training/</loc></url>
   <url><loc>https://apelora.github.io/use-cases/</loc></url>
 </urlset>

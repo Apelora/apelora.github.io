@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-riitXBKGtl5y5ccA7GF6ccqJuwEVP5tm8j0ff/fbw9U='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'none'; manifest-src 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Contact · Apelora</title>
   <meta name="description" content="Request a demo of Apelora Fabric or a quote for deployment, support or custom services. A short form, and the public channels that work today.">
   <link rel="canonical" href="https://apelora.github.io/contact/">
@@ -98,6 +100,7 @@
               <p class="error" id="err-message" role="alert"></p>
             </div>
             <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+            <p class="opt" id="hint-privacy" style="margin-bottom:12px;font-size:0.9rem;color:var(--muted)">We use your name, email address and message only to reply to you and, if you ask for one, to prepare a quote. We keep no mailing list and share it with no one. <a href="/privacy/#form">What happens to it</a>.</p>
             <button class="btn btn-primary" type="submit"><span>Send message</span></button>
             <div class="status" id="form-status" role="status" aria-live="polite" tabindex="-1" hidden></div>
             <noscript><p class="notice">This form needs JavaScript. Use one of the channels beside it instead.</p></noscript>
@@ -156,7 +159,10 @@
           <h2>Legal</h2>
           <ul>
             <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
-            <li><a href="/legal/#privacy">Privacy</a></li>
+            <li><a href="/privacy/">Privacy policy</a></li>
+            <li><a href="/terms/">Terms of use</a></li>
+            <li><a href="/refunds/">Refunds and cancellation</a></li>
+            <li><a href="/cookies/">Cookie policy</a></li>
             <li><a href="/legal/#names">Names and logos</a></li>
           </ul>
         </div>
