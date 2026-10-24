@@ -7,7 +7,7 @@ label:
 source: docs/adr/0014-bmc-power-off-fencing.md
 summary: ADR 0013 lets a failed server's modules restart elsewhere only once the server is fenced, and offers two proofs: its storage lease is dead (sanlock, about 140 s after its last renewal) or a person…
 ---
-Status: **accepted; built (fence provider slice)** · Date: 2026-10-21 · Amends [ADR 0013](0013-fencing-before-restart.md) · Design: [VM recovery on shared storage](../design/vm-recovery-on-shared-storage.md) §3 package 4 · Testing: [without hardware](../guides/testing-without-hardware.md)
+Status: **accepted; built (fence provider slice)** · Date: 2026-10-21 · Amends [ADR 0013](0013-fencing-before-restart.md) · Design: [Restarting a virtual machine after its server stops](../design/vm-recovery-on-shared-storage.md) · Testing: [without hardware](../guides/testing-without-hardware.md)
 
 ## Context
 
