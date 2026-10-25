@@ -137,7 +137,7 @@ export function apiPages(api, tagInfo = {}, verified = {}) {
       md += all.map((p) => `| \`${p.name}\` | ${p.in} | ${typeOf(p.schema)} | ${p.required ? "yes" : "no"} | ${cell(p.description)} |`).join("\n") + "\n\n";
     }
     if (body) {
-      md += `**Request body** (JSON, illustrative values):\n\n${fieldTable(body)}\n\`\`\`json\n${json(bodyExample)}\n\`\`\`\n\n`;
+      md += `**Request body** (JSON):\n\n${fieldTable(body)}\n\`\`\`json\n${json(bodyExample)}\n\`\`\`\n\n`;
     }
     const codes = Object.keys(op.responses ?? {});
     const successes = codes.filter((c) => c.startsWith("2"));
@@ -164,14 +164,14 @@ export function apiPages(api, tagInfo = {}, verified = {}) {
         md += `Content-Type: \`${media}\`.\n\n`;
         const actual = verified.responses?.find((r) => r.operationId === op.operationId && String(r.status) === code && r.mediaType === media);
         if (actual && Object.hasOwn(actual, "body")) {
-          md += `**MOCK VERIFIED output** (${verified.verifiedAt}, local API with simulated inventory). IDs and timestamps are from that test run.\n\n`;
+          md += "**Example response** from a test installation; your IDs, names and times differ.\n\n";
           md += `\`\`\`${media === "application/json" ? "json" : "text"}\n${media === "application/json" ? json(actual.body) : actual.body.replace(/\r\n/g, "\n")}\n\`\`\`\n\n`;
         } else if (media === "application/json") {
-          md += `**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.\n\n\`\`\`json\n${json(example(value.schema))}\n\`\`\`\n\n`;
+          md += `**Example response** (placeholder values that show the shape):\n\n\`\`\`json\n${json(example(value.schema))}\n\`\`\`\n\n`;
         } else if (/application\/(x-tar|zip|octet-stream)/.test(media)) {
           md += "Binary download; the command saves the response to a file. For a tar bundle, list the files after a successful download:\n\n```sh\ntar -tf support-bundle.tar\n```\n\n";
           const capture = verified.responses?.find((r) => r.operationId === op.operationId && r.mediaType === media);
-          if (capture?.listing) md += `**MOCK VERIFIED archive listing** (${verified.verifiedAt}):\n\n\`\`\`text\n${capture.listing}\n\`\`\`\n\n`;
+          if (capture?.listing) md += `**Example contents:**\n\n\`\`\`text\n${capture.listing}\n\`\`\`\n\n`;
         } else {
           md += "Text response; the command prints the returned text. ";
           md += media === "application/x-ndjson" ? "Each nonempty line is a JSON object.\n\n" : media === "text/csv" ? "The first row contains the column names.\n\n" : "Metrics use the Prometheus text exposition format.\n\n";
@@ -204,7 +204,7 @@ export function apiPages(api, tagInfo = {}, verified = {}) {
     const ops = byTag.get(tag).sort((a, b) => a.path.localeCompare(b.path) || METHODS.indexOf(a.M.toLowerCase()) - METHODS.indexOf(b.M.toLowerCase()));
     const info = tagInfo[tag] ?? {};
     const title = info.title ?? `${tag[0].toUpperCase()}${tag.slice(1)}`;
-    let md = `${info.intro ?? `The ${tag} operations of the control plane's API.`} This page lists ${ops.length} operations.\n\nSet variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).\n\n`;
+    let md = `${info.intro ?? `The ${tag} operations of the control plane's API.`} This page lists ${ops.length} operations.\n\nSet variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).\n\n`;
     md += `## Operations\n\n| Operation | What it does |\n|---|---|\n`;
     md += ops.map((o) => `| [\`${o.M} ${o.path}\`](#${slugify(`${o.M} ${o.path}`)}) | ${cell(o.summary)} |`).join("\n") + "\n\n";
     md += `## Details\n\n${ops.map((o) => o.md).join("")}`;

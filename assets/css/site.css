@@ -461,6 +461,7 @@ td.no { color: var(--muted); }
 .dn-home { display: flex; align-items: center; min-height: 2.5rem; padding: 0 0.625rem; margin-bottom: 0.25rem; border-radius: 0.5rem; color: var(--ink); font-weight: 650; text-decoration: none; }
 @media (hover: hover) and (pointer: fine) { .dn-home:hover { background: var(--soft); } }
 .dn-group { border-top: 0.0625rem solid var(--line); }
+.dn-heading { margin: 1.5rem 0 0.25rem; padding: 0 0.625rem; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
 .dn-group summary { display: flex; align-items: center; justify-content: space-between; min-height: 2.75rem; padding: 0 0.625rem; cursor: pointer; list-style: none; color: var(--ink); font-weight: 700; font-size: 0.95rem; }
 .dn-group summary::-webkit-details-marker { display: none; }
 .dn-group summary svg { transition: transform 0.15s; color: var(--muted); }
@@ -560,7 +561,7 @@ td.no { color: var(--muted); }
 .docs-home h2:first-of-type { margin-top: 2rem; }
 .docs-home p + dl, .docs-home h2 + p { margin-top: 0; }
 .docs-home > p { margin-top: 1rem; }
-.journey { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.875rem; counter-reset: none; }
+.journey { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: 0.875rem; counter-reset: none; }
 .journey a { position: relative; display: block; height: 100%; padding: 1.125rem 1.25rem 1.25rem 3.75rem; border: 0.0625rem solid var(--line); border-radius: 0.875rem; text-decoration: none; color: var(--body); transition: border-color 0.15s, background-color 0.15s; }
 @media (hover: hover) and (pointer: fine) { .journey a:hover { border-color: var(--teal); background: var(--mint-50); } }
 .journey .n { position: absolute; left: 1.125rem; top: 1.125rem; display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--mint-100); color: var(--mint-ink); font: 800 0.85rem var(--font); }

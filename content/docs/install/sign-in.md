@@ -1,8 +1,8 @@
 ---
 title: Sign in
-section: start
+section: install
 slug: sign-in
-order: 5
+order: 4
 label: Sign in
 summary: Three ways in: an API token to begin with, your identity provider for people, local accounts where you have none.
 ---
@@ -32,4 +32,4 @@ An administrator adds the provider in the Console under **Identity & Access → 
 
 <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Fabric Console · Sign-in settings</span></div><img src="/assets/docs/img/24-console-sign-in-settings-1440x900.webp" width="1440" height="900" loading="lazy" alt="Fabric Console, Sign-in settings: identity providers with their status, a local accounts switch, a directory section and an API tokens section."><figcaption>Identity providers, local accounts, directories and tokens. Sample data.</figcaption></figure>
 
-Everything else, including messages you may see and how local accounts and directories work, is in the [signing-in guide](/docs/guides/signing-in/). Roles and what each may do: [access, roles and security](/docs/concepts/access-and-roles/).
+Everything else, including messages you may see and how local accounts and directories work, is in the [signing-in guide](/docs/install/signing-in/). Roles and what each may do: [access, roles and security](/docs/concepts/access-and-roles/).

@@ -9,7 +9,7 @@ summary: People, groups, roles, scopes, approvals, tokens and sign-in.
 ---
 Identity and access: organisations, projects, people, groups, roles and assignments, approvals, service identities, tokens and sign-in methods. This page lists 65 operations.
 
-Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
 ## Operations
 
@@ -103,7 +103,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/approvals" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -121,7 +121,7 @@ Asks for approval of one risky action on one target. You must be allowed to do t
 
 **Needs:** `approval.request`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -152,7 +152,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -196,7 +196,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -240,7 +240,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -284,7 +284,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/00000000-0000-4
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -328,7 +328,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/assignments" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -346,7 +346,7 @@ Grants a role to a person, group or automation identity at a scope. Needs `role.
 
 **Needs:** `role.assign` there and every permission the role holds (no escalation); audited.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -389,7 +389,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/assignments" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -456,7 +456,7 @@ Shows what an assignment would give before it is saved: what the person can alre
 
 **Needs:** `role.assign`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -499,7 +499,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/assignments/prev
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -594,14 +594,14 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/audit" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "items": [
     {
       "id": 9,
-      "at": "2026-10-23T22:12:58.15154Z",
+      "at": "2026-10-25T15:45:26.305016Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -613,13 +613,13 @@ Content-Type: `application/json`.
         "filters": {},
         "format": "jsonl",
         "name": "docs-verifier",
-        "requestId": "a3c46067-556b-431b-9e61-7b6f06c107ec",
+        "requestId": "c6731271-c099-4c26-a9c7-2cadbf4397e4",
         "role": "fabric-admin"
       }
     },
     {
       "id": 8,
-      "at": "2026-10-23T22:12:58.144004Z",
+      "at": "2026-10-25T15:45:26.301188Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -631,13 +631,13 @@ Content-Type: `application/json`.
         "filters": {},
         "format": "csv",
         "name": "docs-verifier",
-        "requestId": "b8575702-952d-49a4-8a03-b1e1cbde287f",
+        "requestId": "f40becf0-a989-46f6-9f13-205b79aadee9",
         "role": "fabric-admin"
       }
     },
     {
       "id": 7,
-      "at": "2026-10-23T22:12:58.096314Z",
+      "at": "2026-10-25T15:45:26.245229Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -645,21 +645,21 @@ Content-Type: `application/json`.
       "target": "shop",
       "outcome": "success",
       "scope": {
-        "application": "12c29329-0276-49bb-82ef-30d9b762e934",
-        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
-        "project": "97016fb6-2ad8-4399-a986-73ddc9c88a1b"
+        "application": "2b123d49-d55a-40f8-b166-11cdf5682888",
+        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
+        "project": "69c3851c-6d02-4784-9bdc-17f7c449d59d"
       },
       "detail": {
         "descriptionChanged": true,
         "icon": null,
         "name": "docs-verifier",
-        "requestId": "b506adbf-1f44-44f1-9fdd-f4a237fbc9fb",
+        "requestId": "43851f2a-79c5-4d4f-83b3-5135a8eec01f",
         "role": "fabric-admin"
       }
     },
     {
       "id": 6,
-      "at": "2026-10-23T22:12:58.07016Z",
+      "at": "2026-10-25T15:45:26.208646Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -667,21 +667,21 @@ Content-Type: `application/json`.
       "target": "shop",
       "outcome": "success",
       "scope": {
-        "application": "12c29329-0276-49bb-82ef-30d9b762e934",
-        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
-        "project": "97016fb6-2ad8-4399-a986-73ddc9c88a1b"
+        "application": "2b123d49-d55a-40f8-b166-11cdf5682888",
+        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
+        "project": "69c3851c-6d02-4784-9bdc-17f7c449d59d"
       },
       "detail": {
         "environment": "development",
         "icon": "box",
         "name": "docs-verifier",
-        "requestId": "ce7d29a7-7af8-4f3c-82d4-753d0f1e3b44",
+        "requestId": "7cb9b6bf-01ad-4cc7-81bf-8ddd65b03a44",
         "role": "fabric-admin"
       }
     },
     {
       "id": 5,
-      "at": "2026-10-23T22:12:58.053402Z",
+      "at": "2026-10-25T15:45:26.189916Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -690,22 +690,22 @@ Content-Type: `application/json`.
       "outcome": "success",
       "scope": {
         "application": null,
-        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
-        "project": "97016fb6-2ad8-4399-a986-73ddc9c88a1b"
+        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
+        "project": "69c3851c-6d02-4784-9bdc-17f7c449d59d"
       },
       "detail": {
         "detail": "Incus project docs-org-docs-project-development created by Apelora with the baseline restrictions",
-        "environment": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+        "environment": "dabff187-1aab-4289-8c16-d72e656f93b4",
         "incusProject": "docs-org-docs-project-development",
         "name": "docs-verifier",
-        "requestId": "63b88940-26ab-4746-9d93-6d16daa4185f",
+        "requestId": "f158561e-ff0e-48f2-b85c-d132ba167da5",
         "role": "fabric-admin",
         "state": "created"
       }
     },
     {
       "id": 4,
-      "at": "2026-10-23T22:12:58.044297Z",
+      "at": "2026-10-25T15:45:26.178648Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -714,22 +714,22 @@ Content-Type: `application/json`.
       "outcome": "success",
       "scope": {
         "application": null,
-        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
-        "project": "97016fb6-2ad8-4399-a986-73ddc9c88a1b"
+        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
+        "project": "69c3851c-6d02-4784-9bdc-17f7c449d59d"
       },
       "detail": {
         "chosenByPlatformAdmin": false,
-        "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+        "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
         "incusProject": "docs-org-docs-project-development",
         "kind": "development",
         "name": "docs-verifier",
-        "requestId": "63b88940-26ab-4746-9d93-6d16daa4185f",
+        "requestId": "f158561e-ff0e-48f2-b85c-d132ba167da5",
         "role": "fabric-admin"
       }
     },
     {
       "id": 3,
-      "at": "2026-10-23T22:12:58.035041Z",
+      "at": "2026-10-25T15:45:26.165897Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -738,19 +738,19 @@ Content-Type: `application/json`.
       "outcome": "success",
       "scope": {
         "application": null,
-        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
-        "project": "97016fb6-2ad8-4399-a986-73ddc9c88a1b"
+        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
+        "project": "69c3851c-6d02-4784-9bdc-17f7c449d59d"
       },
       "detail": {
-        "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+        "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
         "name": "docs-verifier",
-        "requestId": "dd830a57-2b2f-4cab-83d3-b0b388be41f7",
+        "requestId": "b11c8b7d-570a-421c-8ffd-f4af9085e4cd",
         "role": "fabric-admin"
       }
     },
     {
       "id": 2,
-      "at": "2026-10-23T22:12:58.027752Z",
+      "at": "2026-10-25T15:45:26.158353Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -759,19 +759,19 @@ Content-Type: `application/json`.
       "outcome": "success",
       "scope": {
         "application": null,
-        "organization": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
         "project": null
       },
       "detail": {
-        "id": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "id": "9542a736-cc45-4015-98a8-f3206b0451b9",
         "name": "docs-verifier",
-        "requestId": "fc76307c-6b33-4283-9577-d955bde88747",
+        "requestId": "385c9d8c-f6e8-4108-b830-b79c2ad0c9cb",
         "role": "fabric-admin"
       }
     },
     {
       "id": 1,
-      "at": "2026-10-23T22:12:57.869616Z",
+      "at": "2026-10-25T15:45:26.003476Z",
       "actor": "cli",
       "actorType": "cli",
       "actorName": null,
@@ -781,7 +781,7 @@ Content-Type: `application/json`.
       "scope": null,
       "detail": {
         "expiresInDays": 1,
-        "id": "6b690d3b-520d-475c-8bcb-d864a40731f5",
+        "id": "726a0075-6258-4585-8ce7-60c829d0b7fc",
         "role": "fabric-admin"
       }
     }
@@ -799,7 +799,7 @@ Grants a person a platform role for a short time, with a recorded reason (break-
 
 **Needs:** `platform.emergency_access`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -833,7 +833,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/emergency-access
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -893,7 +893,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/environments/000
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -943,7 +943,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/groups" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -961,7 +961,7 @@ Creates a group: an organisation's (needs `group.manage` there) or a platform gr
 
 **Needs:** `group.manage` there) or a platform group (platform `group.manage`).
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -992,7 +992,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/groups" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1030,7 +1030,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/groups/00000000-0
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1111,7 +1111,7 @@ Creates a local account and returns its one-time setup link, valid for 24 hours.
 
 **Needs:** `user.manage`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1141,7 +1141,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts" 
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1188,7 +1188,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts/0
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1219,7 +1219,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/organizations" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -1228,14 +1228,14 @@ Content-Type: `application/json`.
       "id": "00000000-0000-0000-0000-000000000001",
       "slug": "default",
       "name": "Default",
-      "createdAt": "2026-10-23T22:12:57.705921Z",
+      "createdAt": "2026-10-25T15:45:25.861711Z",
       "disabled": false
     },
     {
-      "id": "a80a1413-41a1-498f-868b-c384cf72acc5",
+      "id": "9542a736-cc45-4015-98a8-f3206b0451b9",
       "slug": "docs-org",
       "name": "Documentation example",
-      "createdAt": "2026-10-23T22:12:58.027752Z",
+      "createdAt": "2026-10-25T15:45:26.158353Z",
       "disabled": false
     }
   ]
@@ -1252,7 +1252,7 @@ Creates an organisation. Needs `organization.create` (platform).
 
 **Needs:** `organization.create` (platform).
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1282,14 +1282,14 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/organizations" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "id": "a80a1413-41a1-498f-868b-c384cf72acc5",
+  "id": "9542a736-cc45-4015-98a8-f3206b0451b9",
   "slug": "docs-org",
   "name": "Documentation example",
-  "createdAt": "2026-10-23T22:12:58.027752Z",
+  "createdAt": "2026-10-25T15:45:26.158353Z",
   "disabled": false
 }
 ```
@@ -1308,7 +1308,7 @@ Creates a project in an organisation. Needs `project.create` on the organisation
 |---|---|---|---|---|
 | `org` | path | string | yes | Organisation id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1327,7 +1327,7 @@ Creates a project in an organisation. Needs `project.create` on the organisation
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/organizations/a80a1413-41a1-498f-868b-c384cf72acc5/projects" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/organizations/9542a736-cc45-4015-98a8-f3206b0451b9/projects" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -1338,16 +1338,16 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/organizations/a8
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
-  "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+  "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
+  "organizationId": "9542a736-cc45-4015-98a8-f3206b0451b9",
   "organizationSlug": "docs-org",
   "slug": "docs-project",
   "name": "Documentation project",
-  "createdAt": "2026-10-23T22:12:58.035041Z"
+  "createdAt": "2026-10-25T15:45:26.165897Z"
 }
 ```
 
@@ -1373,7 +1373,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/permissions" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -1753,6 +1753,8 @@ Content-Type: `application/json`.
 }
 ```
 
+**Errors:** `401`. The body is `{ "error": { "code": …, "message": … } }`.
+
 ### `GET /api/v1/identity/personal-tokens`
 
 Everyone's personal tokens (or one person's), live ones and those that ended in the last 30 days. Needs `token.manage` on the platform.
@@ -1777,7 +1779,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/personal-tokens" 
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -1833,7 +1835,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/policies" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -1851,7 +1853,7 @@ Creates or updates a policy by name. `mfa`: `{"environments": ["production"], "i
 
 **Needs:** `access_policy.manage`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1884,7 +1886,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/policies" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1949,7 +1951,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -1960,15 +1962,15 @@ Content-Type: `application/json`.
       "organizationSlug": "default",
       "slug": "default",
       "name": "Default",
-      "createdAt": "2026-10-23T22:12:57.705921Z"
+      "createdAt": "2026-10-25T15:45:25.861711Z"
     },
     {
-      "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
-      "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+      "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
+      "organizationId": "9542a736-cc45-4015-98a8-f3206b0451b9",
       "organizationSlug": "docs-org",
       "slug": "docs-project",
       "name": "Documentation project",
-      "createdAt": "2026-10-23T22:12:58.035041Z"
+      "createdAt": "2026-10-25T15:45:26.165897Z"
     }
   ]
 }
@@ -2000,7 +2002,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects/apelora/
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -2037,7 +2039,7 @@ Creates an environment. The Incus project it maps to is derived from the names (
 |---|---|---|---|---|
 | `project` | path | string | yes | Project id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2059,7 +2061,7 @@ Creates an environment. The Incus project it maps to is derived from the names (
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/projects/97016fb6-2ad8-4399-a986-73ddc9c88a1b/environments" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/projects/69c3851c-6d02-4784-9bdc-17f7c449d59d/environments" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -2070,12 +2072,12 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/projects/97016fb
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
-  "projectId": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+  "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
+  "projectId": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
   "slug": "development",
   "name": "Development",
   "kind": "development",
@@ -2140,7 +2142,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/quotas/example/00
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -2187,7 +2189,7 @@ Sets a scope's quota (all limits empty removes it), then mirrors the tightest ap
 | `scope` | path | string | yes | organization, project or environment |
 | `id` | path | string | yes | Its id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2218,7 +2220,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/quotas/example/00
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -2265,7 +2267,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/roles" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -2627,7 +2629,7 @@ Defines a custom role from explicit permissions. Needs `role.manage` (platform),
 
 **Needs:** `role.manage` (platform), and you may only include permissions you hold yourself.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2660,7 +2662,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/roles" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -2728,7 +2730,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/service-identitie
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -2746,7 +2748,7 @@ Registers a service identity. Outbound kinds (workload, network, storage, provis
 
 **Needs:** `service_identity.manage`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2779,7 +2781,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/service-identiti
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -2876,7 +2878,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/sign-in" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -2904,7 +2906,7 @@ Turns API tokens on or off. Turning them off is refused while no other way in re
 
 **Needs:** `platform.security.manage`; audited.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2932,7 +2934,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/api-token
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -2951,7 +2953,7 @@ Reads a provider's discovery document and key set, without saving anything: what
 
 **Needs:** `platform.security.manage`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2979,7 +2981,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/check" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -3012,7 +3014,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/sign-in/directori
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -3030,7 +3032,7 @@ Adds a directory; it is offered on the sign-in page at once when enabled. Needs 
 
 **Needs:** `platform.security.manage` (and an approval where the policy asks for one); audited.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -3075,7 +3077,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/director
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -3117,7 +3119,7 @@ Changes a directory (including turning it off). Needs `platform.security.manage`
 |---|---|---|---|---|
 | `id` | path | string | yes | Directory id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -3162,7 +3164,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/directori
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -3204,7 +3206,7 @@ Removes a directory: its people can no longer sign in with it; their accounts an
 |---|---|---|---|---|
 | `id` | path | string | yes | Directory id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -3239,7 +3241,7 @@ Connects with TLS, binds as a test person and reads their entry and groups, with
 
 **Needs:** `platform.security.manage`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -3288,7 +3290,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/director
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -3321,7 +3323,7 @@ Turns sign-in with local accounts on or off. Turning it off is refused while not
 
 **Needs:** `platform.security.manage`; audited.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -3349,7 +3351,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/local-acc
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -3369,7 +3371,7 @@ Adds an identity provider; it is checked and applied at once. Needs `platform.se
 
 **Needs:** `platform.security.manage` (and an approval where the policy asks for one); audited.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -3411,7 +3413,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/sign-in/provider
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -3458,7 +3460,7 @@ Changes a provider saved in the Console. Needs `platform.security.manage`; audit
 |---|---|---|---|---|
 | `id` | path | string | yes | Provider id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -3500,7 +3502,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/providers
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -3547,7 +3549,7 @@ Removes a provider saved in the Console: people stop being able to sign in with 
 |---|---|---|---|---|
 | `id` | path | string | yes | Provider id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -3598,7 +3600,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/sign-ins" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -3656,13 +3658,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/tenancy" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.291889Z"
+    "observedAt": "2026-10-25T15:45:26.424726Z"
   },
   "adminConfigured": true,
   "baseline": {
@@ -3772,7 +3774,7 @@ Content-Type: `application/json`.
       ]
     },
     {
-      "id": "a80a1413-41a1-498f-868b-c384cf72acc5",
+      "id": "9542a736-cc45-4015-98a8-f3206b0451b9",
       "slug": "docs-org",
       "name": "Documentation example",
       "quota": null,
@@ -3785,7 +3787,7 @@ Content-Type: `application/json`.
       "canSetQuota": true,
       "projects": [
         {
-          "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+          "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
           "slug": "docs-project",
           "name": "Documentation project",
           "quota": null,
@@ -3798,14 +3800,14 @@ Content-Type: `application/json`.
           "canSetQuota": true,
           "environments": [
             {
-              "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+              "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
               "slug": "development",
               "name": "Development",
               "kind": "development",
               "incusProject": "docs-org-docs-project-development",
               "incusState": "created",
               "incusDetail": "Incus project docs-org-docs-project-development created by Apelora with the baseline restrictions",
-              "checkedAt": "2026-10-23T22:12:58.053402Z",
+              "checkedAt": "2026-10-25T15:45:26.189916Z",
               "quota": null,
               "effective": {
                 "instances": null,
@@ -3897,7 +3899,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/users" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -3981,7 +3983,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/users/lookup?q=ex
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -4022,7 +4024,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/me/sign-ins" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -4092,7 +4094,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/me/tokens" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -4127,7 +4129,7 @@ Creates a personal token, shown only in this response. It acts as you with whate
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -4156,7 +4158,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/me/tokens" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -4218,7 +4220,7 @@ Rotates one of your live tokens: a successor with the same name (shown only in t
 |---|---|---|---|---|
 | `id` | path | string | yes | Token id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -4247,7 +4249,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/me/tokens/00000000-0000-4
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {

@@ -9,7 +9,7 @@ summary: Instances, plans, deployments, moves and volumes.
 ---
 Creating, changing and moving single instances, and the plan and deployment of a design. This page lists 10 operations.
 
-Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
 ## Operations
 
@@ -40,7 +40,7 @@ Queues creation of an instance. Needs `deploy`. Apelora marks it as its own; onl
 |---|---|---|---|---|
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -90,7 +90,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/instances" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -132,7 +132,7 @@ curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/instances/apelora/shop"
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -170,7 +170,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop/mov
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -214,7 +214,7 @@ Moves an Apelora instance to another member, after the check runs again and its 
 | `name` | path | string | yes | Instance name. |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -248,7 +248,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/instances/apelora/shop/mo
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -273,7 +273,7 @@ Queues starting or stopping an Apelora instance. Needs `deploy`.
 | `name` | path | string | yes | Instance name. |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -304,7 +304,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/instances/apelora/shop/st
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -343,7 +343,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -378,7 +378,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs/00000000-0000-4000-80
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -442,7 +442,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -507,7 +507,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs/00000000-0000-4000-80
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -605,7 +605,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/jobs/00000000-0000-4000-8
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {

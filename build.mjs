@@ -220,12 +220,21 @@ function renderDoc(doc) {
 
 const chevron = '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4.25 2 8 6l-3.75 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+// Sections with `"group": "project"` (status, roadmap, design notes, decisions, contributing) come
+// after the reader's path, under their own heading, and stay off the home page's main cards.
+const isProject = (sec) => sec.group === "project";
+
 function sidebar(current) {
-  const groups = sections.map((sec) => {
+  const group = (sec) => {
     const open = current && current.section === sec.id;
     const items = sec.pages.map((d) => `<li><a href="${routeOf(d)}"${current && d === current ? ' aria-current="page"' : ""}>${escH(d.label)}</a></li>`).join("");
     return `<details class="dn-group"${open ? " open" : ""}><summary>${escH(sec.title)}${chevron}</summary><ul>${items}</ul></details>`;
-  }).join("\n      ");
+  };
+  const project = sections.filter(isProject);
+  const groups = [
+    ...sections.filter((s) => !isProject(s)).map(group),
+    ...(project.length ? [`<p class="dn-heading">Project and engineering</p>`, ...project.map(group)] : []),
+  ].join("\n      ");
   return `<nav class="docs-nav" id="docs-nav" aria-label="Documentation">
       <div class="docs-search" role="search">
         <label for="docs-q" class="sr-only">Search the documentation</label>
@@ -289,8 +298,10 @@ ${r.html}
 // the documentation home
 {
   const meta = { title: "Documentation", description: "Documentation for Apelora Fabric: get started, install, design, deploy and manage, with concepts, runbooks, reference and design decisions.", path: "/docs/", nav: "documentation" };
-  const cards = `<ul class="sec-cards">${sections.map((sec) => `<li><a href="/docs/${sec.id}/"><b>${escH(sec.title)}</b><span>${escH(sec.blurb)}</span><small>${sec.pages.length} pages</small></a></li>`).join("")}</ul>`;
-  emit(meta, docsPage(meta, withFacts(read("content/docs/_home.html"), "_home.html").replace("{{sections}}", cards), null));
+  const card = (sec) => `<li><a href="/docs/${sec.id}/"><b>${escH(sec.title)}</b><span>${escH(sec.blurb)}</span><small>${sec.pages.length} pages</small></a></li>`;
+  const cards = `<ul class="sec-cards">${sections.filter((s) => !isProject(s)).map(card).join("")}</ul>`;
+  const projectLinks = sections.filter(isProject).map((sec) => `<a href="/docs/${sec.id}/">${escH(sec.title)}</a>`).join(" · ");
+  emit(meta, docsPage(meta, withFacts(read("content/docs/_home.html"), "_home.html").replace("{{sections}}", cards).replace("{{project}}", projectLinks), null));
 }
 
 // a landing page for each section
@@ -304,6 +315,11 @@ for (const sec of sections) {
       </article>
       <div class="docs-toc"></div>`;
   emit(meta, docsPage(meta, inner, { section: sec.id }));
+}
+// Addresses that moved when the sections were regrouped: a page that sends the browser on.
+for (const [from, to] of Object.entries(docsConfig.moved ?? {})) {
+  const meta = { title: "This page has moved", description: `This page is now at ${to}.`, path: from, nav: "documentation", noindex: true, refresh: to };
+  emit(meta, `  <main id="main"><section class="page-head"><div class="wrap"><h1>This page has moved.</h1><p><a href="${to}">Go to its new address</a>.</p></div></section></main>`);
 }
 writeFileSync(join(root, "assets/docs-index.json"), JSON.stringify(searchIndex));
 if (problems.length) { console.error(problems.join("\n")); process.exitCode = 1; }

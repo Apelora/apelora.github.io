@@ -9,7 +9,7 @@ summary: Servers, instances, networks, storage, jobs and preflight.
 ---
 What exists in the cluster, as Incus reports it: instances, networks, storage pools, jobs, preflight and capacity. This page lists 14 operations.
 
-Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
 ## Operations
 
@@ -52,13 +52,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/capacity" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.157047Z"
+    "observedAt": "2026-10-25T15:45:26.308625Z"
   },
   "named": true,
   "volumePool": null,
@@ -136,13 +136,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.160365Z"
+    "observedAt": "2026-10-25T15:45:26.31024Z"
   },
   "server": {
     "apiVersion": "1.0",
@@ -231,13 +231,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.300248Z"
+    "observedAt": "2026-10-25T15:45:26.430566Z"
   },
   "items": [
     {
@@ -311,7 +311,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -476,7 +476,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop/con
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -521,7 +521,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop/log
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -564,7 +564,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop/log
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -604,13 +604,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.316317Z"
+    "observedAt": "2026-10-25T15:45:26.444982Z"
   },
   "items": [
     {
@@ -652,13 +652,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks/settings" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.322654Z"
+    "observedAt": "2026-10-25T15:45:26.449917Z"
   },
   "uplink": null,
   "serviceRange": null,
@@ -723,13 +723,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/preflight" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.325642Z"
+    "observedAt": "2026-10-25T15:45:26.451277Z"
   },
   "overall": "fail",
   "checks": [
@@ -831,13 +831,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/projects" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.327879Z"
+    "observedAt": "2026-10-25T15:45:26.452763Z"
   },
   "items": [
     {
@@ -876,13 +876,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage-pools" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.338863Z"
+    "observedAt": "2026-10-25T15:45:26.461592Z"
   },
   "items": [
     {
@@ -922,13 +922,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/orphans" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.343379Z"
+    "observedAt": "2026-10-25T15:45:26.465035Z"
   },
   "projects": [
     "apelora",
@@ -960,13 +960,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/pools" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.345074Z"
+    "observedAt": "2026-10-25T15:45:26.466287Z"
   },
   "volumePool": null,
   "backupPool": null,

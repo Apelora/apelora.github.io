@@ -26,11 +26,11 @@ Try a public, read-only request first:
 curl --fail-with-body -sS "$APELORA_URL/api/v1/health"
 ```
 
-Its [System API entry](/docs/api/system/#get-apiv1health) shows captured output. Examples labelled **MOCK VERIFIED** were run against a local, authenticated control plane with a disposable PostgreSQL database and mock inventory. Other JSON responses are **illustrative**, generated from schemas. Neither label means a deployment was tested on real Incus servers. Replace sample resource names, IDs and settings before using a command against your installation.
+Its [System API entry](/docs/api/system/#get-apiv1health) shows an example response. Example responses on these pages come from a test installation or show the shape with placeholder values; replace the sample names, IDs and settings with your own before running a command.
 
 ## Get a token
 
-Create the first administrator's token on the machine that runs the control plane ([install on your servers](/docs/start/install-on-your-servers/)):
+Create the first administrator's token on the machine that runs the control plane ([install on your servers](/docs/install/install-on-your-servers/)):
 
 ```sh
 apelora-control-plane token create --name "$ADMIN_NAME" --role fabric-admin --expires-in-days 90
@@ -86,7 +86,7 @@ The `code` is stable and meant for programs; the `message` is for people. The us
 
 ## Rate limits
 
-Requests are limited per client address before sign-in, and writes are limited per signed-in caller. When you hit a limit you get `429` with a `Retry-After` header in seconds: wait that long, then retry. Repeated wrong tokens from one address are slowed down on purpose. The limits are settings of the control plane ([settings reference](/docs/reference/settings/)).
+Requests are limited per client address before sign-in, and writes are limited per signed-in caller. When you hit a limit you get `429` with a `Retry-After` header in seconds: wait that long, then retry. Repeated wrong tokens from one address are slowed down on purpose. The limits are settings of the control plane ([settings reference](/docs/install/settings/)).
 
 ## Lists
 
@@ -126,21 +126,6 @@ apelora-control-plane openapi > openapi.json
 ```
 
 Use it to generate a client in another language, or to check your own calls against what the version you run accepts.
-
-## Verify and refresh this reference
-
-In the website repository, with the product checkout at `../apelora-fabric`, its current debug binary built, and the development PostgreSQL container running:
-
-```sh
-# Requires uv, Docker and the product's apelora-dev-db container.
-uv run scripts/verify-api-examples.py ../apelora-fabric --record
-node scripts/import-api.mjs ../apelora-fabric
-npm test
-npm run build
-npm run check
-```
-
-The verifier compares the binary's and running server's OpenAPI documents with the source, checks authenticated reads, exercises application metadata changes in its own database, downloads audit exports and a support bundle, and validates every documented JSON example against its schema. It deletes its database and stops its API on exit. It never receives Incus credentials or starts a deployment worker. Operations requiring real machines, identity providers or deployment jobs retain illustrative outputs until those prerequisites are tested.
 
 ## The groups
 

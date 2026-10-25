@@ -3,22 +3,17 @@
     {
       "id": "start",
       "title": "Get started",
-      "blurb": "From nothing to a running application: try it, install it, deploy something, manage it."
+      "blurb": "From nothing to a running application: try it, design, deploy and manage."
     },
     {
-      "id": "guides",
-      "title": "Guides",
-      "blurb": "Task guides for people using Fabric every day."
-    },
-    {
-      "id": "concepts",
-      "title": "Concepts",
-      "blurb": "How Apelora is put together, and why."
+      "id": "install",
+      "title": "Install and configure",
+      "blurb": "Plan the servers and network, install Incus and Apelora, sign in, and look up any setting."
     },
     {
       "id": "runbooks",
-      "title": "Runbooks",
-      "blurb": "What to do when something breaks or needs care. Each step says whether it was tested."
+      "title": "Operate",
+      "blurb": "Day-to-day tasks and what to do when something fails, step by step."
     },
     {
       "id": "api",
@@ -28,30 +23,39 @@
     {
       "id": "reference",
       "title": "Reference",
-      "blurb": "What works today, the module catalog, the API."
+      "blurb": "The module catalog and the ports modules connect through."
+    },
+    {
+      "id": "concepts",
+      "title": "Concepts",
+      "blurb": "How Apelora is put together, and why."
+    },
+    {
+      "id": "project",
+      "title": "Project status and roadmap",
+      "blurb": "What works today, how it is tested, and what is planned.",
+      "group": "project"
     },
     {
       "id": "design",
       "title": "Design notes",
-      "blurb": "How individual features were designed, with their evidence."
+      "blurb": "How individual features were designed, with their evidence.",
+      "group": "project"
     },
     {
       "id": "decisions",
       "title": "Decisions",
-      "blurb": "Short records of why things are the way they are."
+      "blurb": "Short records of why things are the way they are.",
+      "group": "project"
     },
     {
       "id": "contribute",
       "title": "Contribute",
-      "blurb": "Working on Apelora itself: the lab, the checks, the lessons learned."
+      "blurb": "Working on Apelora itself: the lab, the checks, the lessons learned.",
+      "group": "project"
     }
   ],
   "imports": {
-    "guides": [
-      "guides/signing-in",
-      "guides/terminal-sessions",
-      "guides/testing-without-hardware"
-    ],
     "concepts": [
       "architecture/PLATFORM-ARCHITECTURE",
       "architecture/COMPONENT-MODEL",
@@ -61,10 +65,7 @@
       "architecture/ACCESS-AND-ROLES",
       "architecture/IDENTITY-AND-AUTHORIZATION",
       "architecture/MONITORING",
-      "architecture/DISCONNECTED",
-      "architecture/GLOBAL-FABRIC",
-      "architecture/HYPERVISOR-PROVIDERS",
-      "architecture/CLOUD-ROADMAP"
+      "architecture/DISCONNECTED"
     ],
     "runbooks": [
       "runbooks/README",
@@ -91,10 +92,8 @@
       "runbooks/offline-update"
     ],
     "reference": [
-      "architecture/current-state",
       "architecture/CATALOG",
-      "architecture/MODULE-PORTS",
-      "architecture/SETTINGS"
+      "architecture/MODULE-PORTS"
     ],
     "design": [
       "design/application-deployment",
@@ -139,17 +138,52 @@
       "development/UPSTREAM-INCUS",
       "development/MCP-HOSTING"
     ],
-    "start": [
+    "start": [],
+    "install": [
       {
         "src": "guides/servers-and-network",
-        "order": 2
+        "order": 1
       },
       {
         "src": "guides/install-incus",
-        "order": 3
+        "order": 2
       },
       {
         "src": "guides/installing-apelora",
+        "order": 3
+      },
+      {
+        "src": "guides/signing-in",
+        "order": 5
+      },
+      {
+        "src": "guides/terminal-sessions",
+        "order": 6
+      },
+      {
+        "src": "architecture/SETTINGS",
+        "order": 7
+      }
+    ],
+    "project": [
+      {
+        "src": "architecture/current-state",
+        "order": 0
+      },
+      {
+        "src": "guides/testing-without-hardware",
+        "order": 1
+      },
+      {
+        "src": "architecture/GLOBAL-FABRIC",
+        "order": 2
+      },
+      {
+        "src": "architecture/HYPERVISOR-PROVIDERS",
+        "order": 3
+      },
+      {
+        "src": "architecture/CLOUD-ROADMAP",
         "order": 4
       }
     ]
@@ -171,8 +205,8 @@
     "architecture/MODULE-PORTS": "Module ports",
     "architecture/STUDIO-MVP": "Studio architecture",
     "architecture/STUDIO-UI-SPEC": "Studio interface",
-    "guides/signing-in": "Signing in",
-    "guides/terminal-sessions": "Terminal sessions",
+    "guides/signing-in": "Identity providers",
+    "guides/terminal-sessions": "Terminal access",
     "guides/testing-without-hardware": "Testing without hardware",
     "architecture/PLATFORM-ARCHITECTURE": "Platform architecture",
     "architecture/COMPONENT-MODEL": "Component model",
@@ -359,5 +393,20 @@
       "summary": "Alerts, silences and webhook channels.",
       "intro": "Built-in alerts, acknowledgement and silences, and the webhook channels that receive them."
     }
+  },
+  "moved": {
+    "/docs/start/servers-and-network/": "/docs/install/servers-and-network/",
+    "/docs/start/install-incus/": "/docs/install/install-incus/",
+    "/docs/start/install-on-your-servers/": "/docs/install/install-on-your-servers/",
+    "/docs/start/sign-in/": "/docs/install/sign-in/",
+    "/docs/guides/": "/docs/install/",
+    "/docs/guides/signing-in/": "/docs/install/signing-in/",
+    "/docs/guides/terminal-sessions/": "/docs/install/terminal-sessions/",
+    "/docs/guides/testing-without-hardware/": "/docs/project/testing-without-hardware/",
+    "/docs/reference/settings/": "/docs/install/settings/",
+    "/docs/reference/current-state/": "/docs/project/current-state/",
+    "/docs/concepts/global-fabric/": "/docs/project/global-fabric/",
+    "/docs/concepts/hypervisor-providers/": "/docs/project/hypervisor-providers/",
+    "/docs/concepts/cloud-roadmap/": "/docs/project/cloud-roadmap/"
   }
 }

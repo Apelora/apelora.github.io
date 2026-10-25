@@ -1,8 +1,8 @@
 ---
 title: The global fabric: from three servers to tens of thousands
-section: concepts
+section: project
 slug: global-fabric
-order: 9
+order: 2
 label: The global fabric
 source: docs/architecture/GLOBAL-FABRIC.md
 summary: Apelora starts on three servers and is meant to grow into a cloud spread over cities, countries and continents. This page explains how the same building blocks scale to that, and what has to be added…

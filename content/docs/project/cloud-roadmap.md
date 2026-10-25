@@ -1,8 +1,8 @@
 ---
 title: Roadmap: from a three-server fabric to a full cloud
-section: concepts
+section: project
 slug: cloud-roadmap
-order: 11
+order: 4
 label: Roadmap to a full cloud
 source: docs/architecture/CLOUD-ROADMAP.md
 summary: Apelora starts small (three servers, one sector) and aims to be a complete cloud and virtualisation platform: everything an organisation needs to run its applications on its own servers, anywhere,…

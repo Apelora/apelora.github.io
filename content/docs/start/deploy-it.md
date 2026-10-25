@@ -10,7 +10,7 @@ Deploying is a review, then a decision. Nothing changes on your servers until yo
 
 ## Before you deploy
 
-- The control plane and the worker are running, and the Studio is **connected**: choose the chip *This browser · not connected* in the header and [sign in](/docs/start/sign-in/). The chip then names the control plane.
+- The control plane and the worker are running, and the Studio is **connected**: choose the chip *This browser · not connected* in the header and [sign in](/docs/install/sign-in/). The chip then names the control plane.
 - You hold the **deploy** permission, and the project you want is on the allow-list (`APELORA_DEPLOY_PROJECTS`).
 - The design is **published**: in the application's designer choose **Publish version…**. A draft cannot be deployed, so the **Deploy…** button says so until a version exists.
 - The **capacity chip** reads *fits*. Choosing it shows what the design asks for next to what is free on each server:
@@ -55,7 +55,7 @@ A module shows *Running*, *Degraded* (some replicas down), *Unhealthy* (running 
 
 | You see | Likely cause | Where to look |
 |---|---|---|
-| **Deploy…** is greyed out | Not connected, nothing published yet, or the application is archived; its tooltip says which | [Sign in](/docs/start/sign-in/), then publish from the designer |
+| **Deploy…** is greyed out | Not connected, nothing published yet, or the application is archived; its tooltip says which | [Sign in](/docs/install/sign-in/), then publish from the designer |
 | *Design only* for every module | None of them has a runtime yet | [Module catalog](/docs/reference/module-catalog/) |
 | A conflict row | The name is taken by something Apelora did not create | Rename, or remove it in Incus |
 | The deploy dialog says the control plane is unreachable | The API is down | [The control plane or the worker is down](/docs/runbooks/api-outage/) |

@@ -9,7 +9,7 @@ summary: Applications, drafts, versions, operations and migration.
 ---
 Applications: drafts and published versions, deploying a version, start, shut down, stop, restart and migrate, volumes and status. This page lists 34 operations.
 
-Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
 ## Operations
 
@@ -76,7 +76,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -84,19 +84,19 @@ Content-Type: `application/json`.
     {
       "name": "shop",
       "latestRevision": null,
-      "createdAt": "2026-10-23T22:12:58.07016Z",
-      "updatedAt": "2026-10-23T22:12:58.096314Z",
+      "createdAt": "2026-10-25T15:45:26.208646Z",
+      "updatedAt": "2026-10-25T15:45:26.245229Z",
       "description": "Updated through the API",
       "icon": "box",
       "project": {
-        "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+        "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
         "slug": "docs-project",
         "name": "Documentation project",
-        "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+        "organizationId": "9542a736-cc45-4015-98a8-f3206b0451b9",
         "organizationSlug": "docs-org"
       },
       "environment": {
-        "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+        "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
         "slug": "development",
         "name": "Development",
         "kind": "development",
@@ -113,7 +113,7 @@ Content-Type: `application/json`.
       },
       "deployment": {
         "status": "not-deployed",
-        "observedAt": "2026-10-23T22:12:58.129707Z",
+        "observedAt": "2026-10-25T15:45:26.288273Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": null,
@@ -151,7 +151,7 @@ Content-Type: `application/json`.
       }
     }
   ],
-  "observedAt": "2026-10-23T22:12:58.129707Z",
+  "observedAt": "2026-10-25T15:45:26.288273Z",
   "stale": false
 }
 ```
@@ -166,7 +166,7 @@ Creates an application in an environment, optionally with its first draft. Needs
 
 **Needs:** `application.create` on the environment's project.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -179,7 +179,7 @@ Creates an application in an environment, optionally with its first draft. Needs
 ```json
 {
   "name": "shop",
-  "environmentId": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+  "environmentId": "dabff187-1aab-4289-8c16-d72e656f93b4",
   "description": "API documentation example"
 }
 ```
@@ -193,32 +193,32 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"shop","environmentId":"900a36cf-8241-4afe-8ad4-6a84215a0ca0","description":"API documentation example"}'
+  --data-raw '{"name":"shop","environmentId":"dabff187-1aab-4289-8c16-d72e656f93b4","description":"API documentation example"}'
 ```
 
 **Response `201`** — Success.
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-23T22:12:58.07016Z",
-  "updatedAt": "2026-10-23T22:12:58.07016Z",
+  "createdAt": "2026-10-25T15:45:26.208646Z",
+  "updatedAt": "2026-10-25T15:45:26.208646Z",
   "description": "API documentation example",
   "icon": "box",
   "project": {
-    "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+    "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
     "slug": "docs-project",
     "name": "Documentation project",
-    "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+    "organizationId": "9542a736-cc45-4015-98a8-f3206b0451b9",
     "organizationSlug": "docs-org"
   },
   "environment": {
-    "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+    "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
     "slug": "development",
     "name": "Development",
     "kind": "development",
@@ -235,7 +235,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-23T22:12:58.077795Z",
+    "observedAt": "2026-10-25T15:45:26.216988Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -300,26 +300,26 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "application": {
     "name": "shop",
     "latestRevision": null,
-    "createdAt": "2026-10-23T22:12:58.07016Z",
-    "updatedAt": "2026-10-23T22:12:58.07016Z",
+    "createdAt": "2026-10-25T15:45:26.208646Z",
+    "updatedAt": "2026-10-25T15:45:26.208646Z",
     "description": "API documentation example",
     "icon": "box",
     "project": {
-      "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+      "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
       "slug": "docs-project",
       "name": "Documentation project",
-      "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+      "organizationId": "9542a736-cc45-4015-98a8-f3206b0451b9",
       "organizationSlug": "docs-org"
     },
     "environment": {
-      "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+      "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
       "slug": "development",
       "name": "Development",
       "kind": "development",
@@ -336,7 +336,7 @@ Content-Type: `application/json`.
     },
     "deployment": {
       "status": "not-deployed",
-      "observedAt": "2026-10-23T22:12:58.084424Z",
+      "observedAt": "2026-10-25T15:45:26.226934Z",
       "stale": false,
       "source": "mock",
       "deployedVersion": null,
@@ -393,7 +393,7 @@ Changes an application's description or icon (its name cannot change). Needs `ap
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -422,25 +422,25 @@ curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/applications/shop" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-23T22:12:58.07016Z",
-  "updatedAt": "2026-10-23T22:12:58.096314Z",
+  "createdAt": "2026-10-25T15:45:26.208646Z",
+  "updatedAt": "2026-10-25T15:45:26.245229Z",
   "description": "Updated through the API",
   "icon": "box",
   "project": {
-    "id": "97016fb6-2ad8-4399-a986-73ddc9c88a1b",
+    "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
     "slug": "docs-project",
     "name": "Documentation project",
-    "organizationId": "a80a1413-41a1-498f-868b-c384cf72acc5",
+    "organizationId": "9542a736-cc45-4015-98a8-f3206b0451b9",
     "organizationSlug": "docs-org"
   },
   "environment": {
-    "id": "900a36cf-8241-4afe-8ad4-6a84215a0ca0",
+    "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
     "slug": "development",
     "name": "Development",
     "kind": "development",
@@ -457,7 +457,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-23T22:12:58.100469Z",
+    "observedAt": "2026-10-25T15:45:26.251103Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -536,7 +536,7 @@ Deploys the design: saves it as a new revision and queues the planned changes. R
 | `name` | path | string | yes | Application name |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -598,6 +598,7 @@ Deploys the design: saves it as a new revision and queues the planned changes. R
         ]
       },
       "availability": "stateless",
+      "dnsResolver": false,
       "guestOs": "linux",
       "internet": "none",
       "readiness": {
@@ -624,14 +625,14 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/deploym
   -H "Accept: application/json" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
-  --data-raw '{"project":"apelora","document":{},"modules":[{"module":"example","spec":{"kind":"container","name":"example","project":"apelora","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"},"architectures":["example"],"config":{"key":"example"},"network":{"acl":"example","network":"example","uplink":"example"},"owner":{"application":"example","module":"example","replica":0},"profiles":["example"],"rootPool":"example","start":false,"volumes":[{"name":"example","sizeMib":0,"class":"data-local","content":"filesystem","path":"example","pool":"example"}]},"availability":"stateless","guestOs":"linux","internet":"none","readiness":{"command":["example"],"timeoutSecs":0},"replicas":0}]}'
+  --data-raw '{"project":"apelora","document":{},"modules":[{"module":"example","spec":{"kind":"container","name":"example","project":"apelora","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"},"architectures":["example"],"config":{"key":"example"},"network":{"acl":"example","network":"example","uplink":"example"},"owner":{"application":"example","module":"example","replica":0},"profiles":["example"],"rootPool":"example","start":false,"volumes":[{"name":"example","sizeMib":0,"class":"data-local","content":"filesystem","path":"example","pool":"example"}]},"availability":"stateless","dnsResolver":false,"guestOs":"linux","internet":"none","readiness":{"command":["example"],"timeoutSecs":0},"replicas":0}]}'
 ```
 
 **Response `202`** — Success.
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -721,7 +722,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/draft" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -749,7 +750,7 @@ Saves the draft as the next version. Refused with 409 `draft_conflict` (and the 
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -778,7 +779,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/applications/shop/draft" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -818,7 +819,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/events" 
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -866,7 +867,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/migratio
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -925,7 +926,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operatio
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -975,7 +976,7 @@ Starts, shuts down (graceful), stops (immediate), restarts or migrates the appli
 | `name` | path | string | yes | Application name |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1008,7 +1009,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/operati
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1069,7 +1070,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operatio
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1114,7 +1115,7 @@ What deploying the design would change, without changing anything. Needs `deploy
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1172,6 +1173,7 @@ What deploying the design would change, without changing anything. Needs `deploy
         ]
       },
       "availability": "stateless",
+      "dnsResolver": false,
       "guestOs": "linux",
       "internet": "none",
       "readiness": {
@@ -1195,14 +1197,14 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/plan" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"project":"apelora","modules":[{"module":"example","spec":{"kind":"container","name":"example","project":"apelora","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"},"architectures":["example"],"config":{"key":"example"},"network":{"acl":"example","network":"example","uplink":"example"},"owner":{"application":"example","module":"example","replica":0},"profiles":["example"],"rootPool":"example","start":false,"volumes":[{"name":"example","sizeMib":0,"class":"data-local","content":"filesystem","path":"example","pool":"example"}]},"availability":"stateless","guestOs":"linux","internet":"none","readiness":{"command":["example"],"timeoutSecs":0},"replicas":0}]}'
+  --data-raw '{"project":"apelora","modules":[{"module":"example","spec":{"kind":"container","name":"example","project":"apelora","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"},"architectures":["example"],"config":{"key":"example"},"network":{"acl":"example","network":"example","uplink":"example"},"owner":{"application":"example","module":"example","replica":0},"profiles":["example"],"rootPool":"example","start":false,"volumes":[{"name":"example","sizeMib":0,"class":"data-local","content":"filesystem","path":"example","pool":"example"}]},"availability":"stateless","dnsResolver":false,"guestOs":"linux","internet":"none","readiness":{"command":["example"],"timeoutSecs":0},"replicas":0}]}'
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1305,7 +1307,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/status" 
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1364,7 +1366,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1395,7 +1397,7 @@ Releases the current draft as the next immutable published version. Refused whil
 |---|---|---|---|---|
 | `name` | path | string | yes | Application name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1423,7 +1425,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/version
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1463,7 +1465,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1498,7 +1500,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes"
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1542,7 +1544,7 @@ Grows one of the application's volumes, also while its instance runs. Volumes on
 | `name` | path | string | yes | Application name |
 | `volume` | path | string | yes | The volume's Incus name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1582,7 +1584,7 @@ Deletes one of the application's volumes and its snapshots, for good. The volume
 | `name` | path | string | yes | Application name |
 | `volume` | path | string | yes | The volume's Incus name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1634,7 +1636,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1705,7 +1707,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1730,7 +1732,7 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 | `volume` | path | string | yes | The volume's Incus name. |
 | `backup` | path | string | yes | The backup's Incus name. |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1784,7 +1786,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1838,7 +1840,7 @@ Restores the volume from one of its backups, after the dry run passes again and 
 | `backup` | path | string | yes | The backup's Incus name. |
 | `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1870,7 +1872,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1894,7 +1896,7 @@ Sets or turns off the volume's snapshot and backup schedules. A new or changed s
 | `name` | path | string | yes | Application name |
 | `volume` | path | string | yes | The volume's Incus name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1950,7 +1952,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1996,7 +1998,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -2048,7 +2050,7 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 | `volume` | path | string | yes | The volume's Incus name. |
 | `snapshot` | path | string | yes | Snapshot name. |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -2095,13 +2097,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks/applications" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.318844Z"
+    "observedAt": "2026-10-25T15:45:26.446997Z"
   },
   "incusError": null,
   "items": []
@@ -2130,13 +2132,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/volumes" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.349853Z"
+    "observedAt": "2026-10-25T15:45:26.470047Z"
   },
   "backupPool": null,
   "incusError": null,

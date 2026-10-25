@@ -9,7 +9,7 @@ summary: Terminal sessions into modules.
 ---
 Terminal sessions into running modules. This page lists 4 operations.
 
-Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
 ## Operations
 
@@ -46,7 +46,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/access" 
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -88,7 +88,7 @@ Opens a session: checks the caller, the instance and the approval rule, and answ
 | `name` | path | string | yes | Application name |
 | `instance` | path | string | yes | Instance name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -118,7 +118,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/instanc
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -157,13 +157,15 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/sessions" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "items": []
 }
 ```
+
+**Errors:** `401`. The body is `{ "error": { "code": …, "message": … } }`.
 
 ### `DELETE /api/v1/sessions/{id}`
 

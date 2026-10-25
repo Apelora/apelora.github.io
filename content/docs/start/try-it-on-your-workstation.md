@@ -19,13 +19,13 @@ npm run dev          # Studio at http://127.0.0.1:5173
 
 Open the address. You get Apelora Studio with the sample application on the canvas. Everything runs in the browser against mock data. Nothing is sent anywhere and nothing is deployed: the header says **Mock · Design only**. Good for learning the canvas.
 
-## 2. The whole stack, against a lab cluster
+## 2. The whole stack, against a test cluster
 
 This starts PostgreSQL, a disposable {{fact:labServersWord}}-server Incus cluster (virtual machines standing in for physical servers), the control plane, the worker and both screens.
 
 ```sh
 docker compose -f infra/dev/compose.yaml up -d       # PostgreSQL on 127.0.0.1:15432
-bash scripts/test-cluster/up.sh                      # the lab cluster (needs Lima: brew install lima)
+bash scripts/test-cluster/up.sh                      # the test cluster (needs Lima: brew install lima)
 source ~/.config/apelora/test-cluster/env            # its address and client certificates
 cargo run -p apelora-control-plane                   # API at http://127.0.0.1:8080
 cargo run -p apelora-deployment-worker               # carries out the jobs (second terminal)
@@ -41,12 +41,12 @@ Create your first API token (shown once):
 cargo run -p apelora-control-plane -- token create --name me --role fabric-admin
 ```
 
-Paste it into the Console's sign-in page. Details in [sign in](/docs/start/sign-in/).
+Paste it into the Console's sign-in page. Details in [sign in](/docs/install/sign-in/).
 
 > **No database, no sign-in.** `DATABASE_URL= cargo run -p apelora-control-plane` starts the API with mock data and no authentication. It only listens on the loopback address. Use it for a quick look, never on a shared machine.
 
-## What the lab proves
+## What a test cluster can show you
 
-It proves the software against a real Incus cluster: deployments, networking, volumes, recovery of a server that dies. It cannot prove anything that depends on hardware: disk and network speed, a management controller (BMC), network boot. [Testing without hardware](/docs/guides/testing-without-hardware/) says exactly where the line is, and [the test cluster](/docs/contribute/test-cluster/) describes how the lab is built.
+Everything Apelora does with Incus: deployments, networking, volumes, and recovery when a server dies. It cannot show what depends on real hardware: disk and network speed, a management controller (BMC), or network boot. Try those on your own servers.
 
-When you are done: `bash scripts/test-cluster/down.sh` removes the lab.
+When you are done: `bash scripts/test-cluster/down.sh` removes the test cluster.

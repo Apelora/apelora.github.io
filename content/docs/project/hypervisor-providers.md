@@ -1,8 +1,8 @@
 ---
 title: Runtime providers
-section: concepts
+section: project
 slug: hypervisor-providers
-order: 10
+order: 3
 label: Runtime providers
 source: docs/architecture/HYPERVISOR-PROVIDERS.md
 summary: Modules run on Incus (ADR 0001). Other runtimes, such as VMware, are possible later, so the designer stays provider-neutral: an assembly describes what runs and how it is wired; how a particular…

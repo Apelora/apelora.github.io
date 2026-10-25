@@ -9,7 +9,7 @@ summary: Alerts, silences and webhook channels.
 ---
 Built-in alerts, acknowledgement and silences, and the webhook channels that receive them. This page lists 12 operations.
 
-Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
 ## Operations
 
@@ -50,7 +50,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -97,7 +97,7 @@ Acknowledges a firing alert: who, when and an optional note. It keeps firing unt
 |---|---|---|---|---|
 | `id` | path | integer | yes | Alert id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -125,7 +125,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/00000000-0000-4000
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -181,7 +181,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/channels" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -210,7 +210,7 @@ Adds a webhook channel. HTTPS only; the signing secret is named, never sent. Nee
 
 **Needs:** `alert.configure`; audited as `alert.channel.create` (host only, not the URL).
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -244,7 +244,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -282,7 +282,7 @@ Changes a webhook channel. Needs `alert.configure`; audited as `alert.channel.up
 |---|---|---|---|---|
 | `id` | path | string | yes | Channel id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -316,7 +316,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/00000000-0
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -393,7 +393,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/00000000-
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -428,7 +428,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/history" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -458,7 +458,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/rules" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -939,7 +939,7 @@ Changes a rule's parameters (on or off, threshold within the rule's bounds, dura
 |---|---|---|---|---|
 | `rule` | path | string | yes | Rule id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -973,7 +973,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/rules/example" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1016,7 +1016,7 @@ Silences a rule (every subject, or one) for `minutes` from now: no notification 
 
 **Needs:** `alert.respond`; audited as `alert.silence.create`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1048,7 +1048,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/silences" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {

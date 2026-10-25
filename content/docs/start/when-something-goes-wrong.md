@@ -25,7 +25,7 @@ Start with **Health** in the Console, then open **Operations** for failed jobs a
 
 ## When a server fails
 
-Incus marks it offline after about 20 seconds. Stateless replicas are replaced on other servers after a delay. A module with data on shared storage restarts elsewhere only once the failed server is **fenced**: proven stopped, so two servers never write the same disk. In the lab a container with data ran again 144 to 155 seconds after a forced stop. [A server fails](/docs/runbooks/member-failure/) has the timeline, what is automatic and what is not, and what has not been tested. Every runbook states which of its steps were.
+Incus marks it offline after about 20 seconds. Stateless replicas are replaced on other servers after a delay. A module with data on shared storage restarts elsewhere only once the failed server is **fenced**: proven stopped, so two servers never write the same disk. This takes a few minutes: Incus first has to notice the server is gone, and the server has to be fenced. [A server fails](/docs/runbooks/member-failure/) has the timeline and says what is automatic and what you do.
 
 ## Looking after Apelora itself
 

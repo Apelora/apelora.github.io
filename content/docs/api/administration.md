@@ -9,7 +9,7 @@ summary: Tokens and Apelora's own database.
 ---
 API tokens and Apelora's own database backups. This page lists 3 operations.
 
-Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
 ## Operations
 
@@ -41,19 +41,19 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/tokens" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "items": [
     {
-      "id": "6b690d3b-520d-475c-8bcb-d864a40731f5",
+      "id": "726a0075-6258-4585-8ce7-60c829d0b7fc",
       "name": "docs-verifier",
       "role": "fabric-admin",
-      "createdAt": "2026-10-23T22:12:57.869616Z",
-      "expiresAt": "2026-10-24T22:12:57.837011Z",
+      "createdAt": "2026-10-25T15:45:26.003476Z",
+      "expiresAt": "2026-10-26T15:45:25.975378Z",
       "revokedAt": null,
-      "lastUsedAt": "2026-10-23T22:12:58.395433Z"
+      "lastUsedAt": "2026-10-25T15:45:26.50639Z"
     }
   ]
 }
@@ -73,7 +73,7 @@ Creates an API token, shown only in this response. Needs `manage-tokens` and eve
 |---|---|---|---|---|
 | `Apelora-Approval` | header | string | no | For a fabric-admin token: the approval another person granted for token.create_admin on token:fabric-admin |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -104,7 +104,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/tokens" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {

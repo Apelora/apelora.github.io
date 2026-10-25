@@ -2,7 +2,7 @@
 title: Module port placement
 section: reference
 slug: module-ports
-order: 2
+order: 1
 label: Module ports
 source: docs/architecture/MODULE-PORTS.md
 summary: How terminals are arranged on every module, so a diagram reads the same way regardless of which modules are in it. The full list of modules and their ports is generated in CATALOG.md; the geometry…

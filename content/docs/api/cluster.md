@@ -9,7 +9,7 @@ summary: Members, machines, join tokens, settings and recovery.
 ---
 The cluster's servers: members, maintenance, machines and join tokens, cluster settings, groups, certificates and recovery. This page lists 27 operations.
 
-Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
 ## Operations
 
@@ -65,13 +65,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/groups" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.163324Z"
+    "observedAt": "2026-10-25T15:45:26.311592Z"
   },
   "items": [
     {
@@ -109,13 +109,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/join-tokens" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.166283Z"
+    "observedAt": "2026-10-25T15:45:26.313387Z"
   },
   "items": []
 }
@@ -131,7 +131,7 @@ Approves a new cluster member: asks Incus for a single-use join token. Needs `ma
 
 **Needs:** `manage-infrastructure`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -159,7 +159,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/join-tokens" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -219,13 +219,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.174263Z"
+    "observedAt": "2026-10-25T15:45:26.317396Z"
   },
   "clustered": true,
   "members": [
@@ -332,6 +332,15 @@ Content-Type: `application/json`.
     ],
     "notes": []
   },
+  "sites": {
+    "region": "default",
+    "site": "default",
+    "sector": "default",
+    "members": 3,
+    "connectedSites": 1,
+    "planned": false,
+    "survival": "Connected to site default, sector default (3 members), in region default. Surviving a site means deploying the application again in another site's sector. No other site is connected, so that deployment is not planned."
+  },
   "upgrade": {
     "running": false,
     "order": [
@@ -359,7 +368,7 @@ Evacuates a cluster member through Incus after re-running the dry run: refused w
 |---|---|---|---|---|
 | `member` | path | string | yes | Cluster member name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -388,7 +397,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/node-1/ev
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -423,7 +432,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members/node-1/eva
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -472,7 +481,7 @@ Confirms that a failed server is powered off (or cut off from the shared storage
 |---|---|---|---|---|
 | `member` | path | string | yes | Cluster member name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -502,7 +511,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/node-1/fe
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -584,7 +593,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members/node-1/rem
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -625,7 +634,7 @@ Removes an evacuated, empty member from the cluster for good, after the check ru
 |---|---|---|---|---|
 | `member` | path | string | yes | Cluster member name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -665,7 +674,7 @@ Restores an evacuated member: Incus moves its instances back and starts them. Ne
 |---|---|---|---|---|
 | `member` | path | string | yes | Cluster member name |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -694,7 +703,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/node-1/re
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -725,13 +734,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/recovery" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.17745Z"
+    "observedAt": "2026-10-25T15:45:26.319819Z"
   },
   "items": []
 }
@@ -759,13 +768,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/settings" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.180011Z"
+    "observedAt": "2026-10-25T15:45:26.321391Z"
   },
   "identity": "admin",
   "items": [
@@ -855,7 +864,7 @@ Changes cluster settings through Incus with the admin identity. Every key must b
 
 **Needs:** `cluster.sensitive_change` and another person's approval of `cluster-settings:<keys joined by />` (`Apelora-Approval`), spent before the change, and is audited with the old and new values.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -886,7 +895,7 @@ curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/cluster/settings" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -916,7 +925,7 @@ One step of the rolling upgrade. Apelora evacuates and restores. It does not ins
 
 **Needs:** `cluster.evacuate`.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -947,7 +956,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/upgrade" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -965,7 +974,7 @@ Content-Type: `application/json`.
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1001,13 +1010,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/machines" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.307258Z"
+    "observedAt": "2026-10-25T15:45:26.437327Z"
   },
   "items": []
 }
@@ -1023,7 +1032,7 @@ Registers a machine. A name that is already an eligible member is adopted as adm
 
 **Needs:** `manage-infrastructure`; audited.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1054,7 +1063,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1135,7 +1144,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/machines/shop/admission" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1184,7 +1193,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines/shop/admit" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1258,7 +1267,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines/shop/approve" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1294,13 +1303,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/provisioners/maas/machines
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.329317Z"
+    "observedAt": "2026-10-25T15:45:26.453915Z"
   },
   "configured": false,
   "items": []
@@ -1321,7 +1330,7 @@ Starts commissioning. Needs `hardware.commission` and the hostname typed again. 
 |---|---|---|---|---|
 | `system_id` | path | string | yes | MAAS system id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1349,7 +1358,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1373,7 +1382,7 @@ Installs an operating system. Needs `hardware.deploy` and the hostname typed aga
 |---|---|---|---|---|
 | `system_id` | path | string | yes | MAAS system id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1405,7 +1414,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1429,7 +1438,7 @@ Returns the machine to MAAS's pool. Needs `hardware.deploy` and the hostname typ
 |---|---|---|---|---|
 | `system_id` | path | string | yes | MAAS system id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1458,7 +1467,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1482,7 +1491,7 @@ Starts a hardware test run (burn-in) through MAAS. Needs `hardware.commission` a
 |---|---|---|---|---|
 | `system_id` | path | string | yes | MAAS system id |
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1511,7 +1520,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {

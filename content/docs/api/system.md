@@ -9,7 +9,7 @@ summary: Health, version, sign-in, settings, who am I.
 ---
 Health, versions, sign-in, settings, support bundles and caller identity. This page lists 16 operations.
 
-Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json). Examples: **MOCK VERIFIED** (tested with simulated inventory); **Illustrative** (schema values).
+Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
 ## Operations
 
@@ -54,7 +54,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/database-backups" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -88,7 +88,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/health" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -101,7 +101,7 @@ Content-Type: `application/json`.
   "incus": {
     "connected": false
   },
-  "checkedAt": "2026-10-23T22:12:57.992311Z"
+  "checkedAt": "2026-10-25T15:45:26.127392Z"
 }
 ```
 
@@ -127,17 +127,17 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/health/components" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "checkedAt": "2026-10-23T22:12:58.22869Z",
+  "checkedAt": "2026-10-25T15:45:26.358937Z",
   "overall": "down",
   "controlPlane": {
     "state": "healthy",
     "version": "0.0.0",
     "apiVersion": "v1",
-    "startedAt": "2026-10-23T22:12:57.929042Z",
+    "startedAt": "2026-10-25T15:45:26.054042Z",
     "uptimeSecs": 0,
     "auth": "tokens",
     "provider": "mock",
@@ -146,7 +146,7 @@ Content-Type: `application/json`.
   },
   "database": {
     "state": "healthy",
-    "roundTripMs": 1.8,
+    "roundTripMs": 0.8,
     "schemaVersion": 31,
     "expectedSchemaVersion": 31,
     "reason": null,
@@ -234,13 +234,13 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/health/servers" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-23T22:12:58.231327Z"
+    "observedAt": "2026-10-25T15:45:26.361978Z"
   },
   "clustered": true,
   "items": [
@@ -407,7 +407,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/image-mirrors" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -443,6 +443,12 @@ Content-Type: `application/json`.
         {
           "class": "linux-base",
           "displayName": "Linux base",
+          "setting": null,
+          "alias": "debian/13"
+        },
+        {
+          "class": "resolver",
+          "displayName": "Resolver",
           "setting": null,
           "alias": "debian/13"
         },
@@ -483,7 +489,7 @@ Changes the caller's own password (local accounts only). Every other session of 
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -532,7 +538,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/monitoring" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -587,7 +593,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/settings" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -622,7 +628,7 @@ Content-Type: `application/json`.
     },
     {
       "name": "APELORA_API_ADDR",
-      "value": "127.0.0.1:50679",
+      "value": "127.0.0.1:58102",
       "set": true,
       "isDefault": false,
       "default": "127.0.0.1:8080",
@@ -843,6 +849,20 @@ Content-Type: `application/json`.
         "worker"
       ],
       "description": "Incus projects Apelora may change",
+      "known": true
+    },
+    {
+      "name": "APELORA_DNS_BINARY",
+      "value": null,
+      "set": false,
+      "isDefault": true,
+      "default": null,
+      "source": "not set",
+      "hidden": null,
+      "readBy": [
+        "worker"
+      ],
+      "description": "Path of the Linux apelora-dns executable the worker copies into a resolver (default: apelora-dns next to the worker)",
       "known": true
     },
     {
@@ -1763,7 +1783,7 @@ Content-Type: `application/json`.
     }
   ],
   "workers": [],
-  "readAt": "2026-10-23T22:12:57.929042Z"
+  "readAt": "2026-10-25T15:45:26.054042Z"
 }
 ```
 
@@ -1788,7 +1808,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/sign-in" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -1807,7 +1827,7 @@ Public. Signs a person in with a username and password and returns an Apelora se
 
 **Sign-in:** none; this operation is public.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1837,7 +1857,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/sign-in/password" \
 
 Content-Type: `application/json`.
 
-**Illustrative response** — generated from the OpenAPI schema; these values are not an observed result.
+**Example response** (placeholder values that show the shape):
 
 ```json
 {
@@ -1857,7 +1877,7 @@ Public. Sets a local account's password with its one-time setup link (24 hours, 
 
 **Sign-in:** none; this operation is public.
 
-**Request body** (JSON, illustrative values):
+**Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
@@ -1933,18 +1953,18 @@ Binary download; the command saves the response to a file. For a tar bundle, lis
 tar -tf support-bundle.tar
 ```
 
-**MOCK VERIFIED archive listing** (2026-10-23T22:12:58+00:00):
+**Example contents:**
 
 ```text
-apelora-support-20261023-221258/manifest.json
-apelora-support-20261023-221258/versions.json
-apelora-support-20261023-221258/settings.json
-apelora-support-20261023-221258/health.json
-apelora-support-20261023-221258/preflight.json
-apelora-support-20261023-221258/jobs-failed.json
-apelora-support-20261023-221258/metrics.txt
-apelora-support-20261023-221258/logs/README.txt
-apelora-support-20261023-221258/README.txt
+apelora-support-20261025-154526/manifest.json
+apelora-support-20261025-154526/versions.json
+apelora-support-20261025-154526/settings.json
+apelora-support-20261025-154526/health.json
+apelora-support-20261025-154526/preflight.json
+apelora-support-20261025-154526/jobs-failed.json
+apelora-support-20261025-154526/metrics.txt
+apelora-support-20261025-154526/logs/README.txt
+apelora-support-20261025-154526/README.txt
 ```
 
 **Errors:** `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
@@ -1969,7 +1989,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/system" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -2010,7 +2030,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/whoami" \
 
 Content-Type: `application/json`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
@@ -2163,7 +2183,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/metrics" \
 
 Content-Type: `text/plain`.
 
-**MOCK VERIFIED output** (2026-10-23T22:12:58+00:00, local API with simulated inventory). IDs and timestamps are from that test run.
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```text
 # HELP apelora_build_info Always 1: which component, version and commit is running.
@@ -2243,7 +2263,7 @@ apelora_http_requests_total{region="default",site="default",sector="default",rou
 # HELP apelora_http_request_duration_seconds Time to answer an API request, by route template and method.
 # TYPE apelora_http_request_duration_seconds histogram
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",le="0.005"} 0
-apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",le="0.01"} 1
+apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",le="0.01"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",le="0.025"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",le="0.05"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",le="0.1"} 1
@@ -2254,9 +2274,9 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET"} 0.00671925
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET"} 0.011871417
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET"} 1
-apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",le="0.005"} 1
+apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",le="0.01"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",le="0.025"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",le="0.05"} 1
@@ -2268,7 +2288,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET"} 0.004342417
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET"} 0.00659175
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/history",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/history",method="GET",le="0.01"} 1
@@ -2282,7 +2302,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/history",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/history",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/history",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/alerts/history",method="GET"} 0.002911375
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/alerts/history",method="GET"} 0.002686084
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/alerts/history",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/rules",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/rules",method="GET",le="0.01"} 1
@@ -2296,7 +2316,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/rules",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/rules",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/alerts/rules",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/alerts/rules",method="GET"} 0.004159666
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/alerts/rules",method="GET"} 0.004471708
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/alerts/rules",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications",method="GET",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications",method="GET",le="0.01"} 1
@@ -2310,7 +2330,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/applications",method="GET"} 0.007632167
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/applications",method="GET"} 0.007373084
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/applications",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications",method="POST",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications",method="POST",le="0.01"} 0
@@ -2324,7 +2344,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications",method="POST",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications",method="POST",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications",method="POST",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/applications",method="POST"} 0.011411125
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/applications",method="POST"} 0.0140315
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/applications",method="POST"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="GET",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="GET",le="0.01"} 0
@@ -2338,10 +2358,10 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="GET"} 0.011496416
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="GET"} 0.019229708
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH",le="0.005"} 0
-apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH",le="0.01"} 1
+apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH",le="0.01"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH",le="0.025"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH",le="0.05"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH",le="0.1"} 1
@@ -2352,7 +2372,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH"} 0.00931675
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH"} 0.013170791
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/applications/{name}",method="PATCH"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/approvals",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/approvals",method="GET",le="0.01"} 1
@@ -2366,7 +2386,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/approvals",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/approvals",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/approvals",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/approvals",method="GET"} 0.002592208
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/approvals",method="GET"} 0.0026755
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/approvals",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/audit",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/audit",method="GET",le="0.01"} 1
@@ -2380,7 +2400,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/audit",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/audit",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/audit",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/audit",method="GET"} 0.002943542
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/audit",method="GET"} 0.002940792
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/audit",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/audit/export",method="GET",le="0.005"} 2
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/audit/export",method="GET",le="0.01"} 2
@@ -2394,7 +2414,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/audit/export",method="GET",le="5"} 2
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/audit/export",method="GET",le="10"} 2
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/audit/export",method="GET",le="+Inf"} 2
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/audit/export",method="GET"} 0.007261584
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/audit/export",method="GET"} 0.003985708
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/audit/export",method="GET"} 2
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/capacity",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/capacity",method="GET",le="0.01"} 1
@@ -2408,7 +2428,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/capacity",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/capacity",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/capacity",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/capacity",method="GET"} 0.001775542
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/capacity",method="GET"} 0.001011083
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/capacity",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster",method="GET",le="0.01"} 1
@@ -2422,7 +2442,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster",method="GET"} 0.002214083
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster",method="GET"} 0.000875583
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/cluster",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/groups",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/groups",method="GET",le="0.01"} 1
@@ -2436,7 +2456,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/groups",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/groups",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/groups",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster/groups",method="GET"} 0.001519667
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster/groups",method="GET"} 0.0007395
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/cluster/groups",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/join-tokens",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/join-tokens",method="GET",le="0.01"} 1
@@ -2450,9 +2470,9 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/join-tokens",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/join-tokens",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/join-tokens",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster/join-tokens",method="GET"} 0.002253
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster/join-tokens",method="GET"} 0.001340417
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/cluster/join-tokens",method="GET"} 1
-apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET",le="0.005"} 0
+apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET",le="0.01"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET",le="0.025"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET",le="0.05"} 1
@@ -2464,7 +2484,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET"} 0.007178666
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET"} 0.003655458
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/cluster/members",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/recovery",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/recovery",method="GET",le="0.01"} 1
@@ -2478,7 +2498,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/recovery",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/recovery",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/recovery",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster/recovery",method="GET"} 0.001904666
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster/recovery",method="GET"} 0.00128625
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/cluster/recovery",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/settings",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/settings",method="GET",le="0.01"} 1
@@ -2492,7 +2512,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/settings",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/settings",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/cluster/settings",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster/settings",method="GET"} 0.001837667
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/cluster/settings",method="GET"} 0.000937792
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/cluster/settings",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/database-backups",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/database-backups",method="GET",le="0.01"} 1
@@ -2506,7 +2526,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/database-backups",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/database-backups",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/database-backups",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/database-backups",method="GET"} 0.002180416
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/database-backups",method="GET"} 0.000764541
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/database-backups",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health",method="GET",le="0.01"} 1
@@ -2520,7 +2540,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/health",method="GET"} 0.000158334
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/health",method="GET"} 0.000447458
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/health",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health/components",method="GET",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health/components",method="GET",le="0.01"} 0
@@ -2534,7 +2554,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health/components",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health/components",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health/components",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/health/components",method="GET"} 0.044800541
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/health/components",method="GET"} 0.035715083
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/health/components",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health/servers",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health/servers",method="GET",le="0.01"} 1
@@ -2548,7 +2568,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health/servers",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health/servers",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/health/servers",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/health/servers",method="GET"} 0.001400166
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/health/servers",method="GET"} 0.001944375
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/health/servers",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/assignments",method="GET",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/assignments",method="GET",le="0.01"} 1
@@ -2562,7 +2582,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/assignments",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/assignments",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/assignments",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/assignments",method="GET"} 0.005735542
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/assignments",method="GET"} 0.005471333
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/assignments",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/audit",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/audit",method="GET",le="0.01"} 1
@@ -2576,7 +2596,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/audit",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/audit",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/audit",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/audit",method="GET"} 0.003599083
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/audit",method="GET"} 0.004172166
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/audit",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/groups",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/groups",method="GET",le="0.01"} 1
@@ -2590,7 +2610,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/groups",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/groups",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/groups",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/groups",method="GET"} 0.002794792
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/groups",method="GET"} 0.003402541
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/groups",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="GET",le="0.01"} 1
@@ -2604,7 +2624,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="GET"} 0.002949083
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="GET"} 0.004197084
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="POST",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="POST",le="0.01"} 1
@@ -2618,7 +2638,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="POST",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="POST",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="POST",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="POST"} 0.006826416
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="POST"} 0.006874083
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/organizations",method="POST"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations/{org}/projects",method="POST",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations/{org}/projects",method="POST",le="0.01"} 1
@@ -2632,7 +2652,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations/{org}/projects",method="POST",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations/{org}/projects",method="POST",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/organizations/{org}/projects",method="POST",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/organizations/{org}/projects",method="POST"} 0.007256583
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/organizations/{org}/projects",method="POST"} 0.008145667
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/organizations/{org}/projects",method="POST"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/permissions",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/permissions",method="GET",le="0.01"} 1
@@ -2646,7 +2666,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/permissions",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/permissions",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/permissions",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/permissions",method="GET"} 0.001302792
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/permissions",method="GET"} 0.001677709
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/permissions",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/personal-tokens",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/personal-tokens",method="GET",le="0.01"} 1
@@ -2660,7 +2680,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/personal-tokens",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/personal-tokens",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/personal-tokens",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/personal-tokens",method="GET"} 0.003247166
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/personal-tokens",method="GET"} 0.004660416
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/personal-tokens",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/policies",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/policies",method="GET",le="0.01"} 1
@@ -2674,7 +2694,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/policies",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/policies",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/policies",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/policies",method="GET"} 0.002322417
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/policies",method="GET"} 0.002827292
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/policies",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/projects",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/projects",method="GET",le="0.01"} 1
@@ -2688,7 +2708,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/projects",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/projects",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/projects",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/projects",method="GET"} 0.002296458
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/projects",method="GET"} 0.003247625
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/projects",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/projects/{project}/environments",method="POST",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/projects/{project}/environments",method="POST",le="0.01"} 0
@@ -2702,7 +2722,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/projects/{project}/environments",method="POST",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/projects/{project}/environments",method="POST",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/projects/{project}/environments",method="POST",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/projects/{project}/environments",method="POST"} 0.025587167
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/projects/{project}/environments",method="POST"} 0.031936375
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/projects/{project}/environments",method="POST"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/roles",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/roles",method="GET",le="0.01"} 1
@@ -2716,7 +2736,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/roles",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/roles",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/roles",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/roles",method="GET"} 0.002657041
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/roles",method="GET"} 0.003651625
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/roles",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/service-identities",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/service-identities",method="GET",le="0.01"} 1
@@ -2730,7 +2750,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/service-identities",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/service-identities",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/service-identities",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/service-identities",method="GET"} 0.002328708
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/service-identities",method="GET"} 0.003300959
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/service-identities",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-in",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-in",method="GET",le="0.01"} 1
@@ -2744,7 +2764,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-in",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-in",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-in",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/sign-in",method="GET"} 0.004604084
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/sign-in",method="GET"} 0.003645459
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/sign-in",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-in/directories",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-in/directories",method="GET",le="0.01"} 1
@@ -2758,7 +2778,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-in/directories",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-in/directories",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-in/directories",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/sign-in/directories",method="GET"} 0.002818375
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/sign-in/directories",method="GET"} 0.002048458
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/sign-in/directories",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-ins",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-ins",method="GET",le="0.01"} 1
@@ -2772,7 +2792,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-ins",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-ins",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/sign-ins",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/sign-ins",method="GET"} 0.002548834
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/sign-ins",method="GET"} 0.002059958
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/sign-ins",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/tenancy",method="GET",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/tenancy",method="GET",le="0.01"} 1
@@ -2786,7 +2806,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/tenancy",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/tenancy",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/tenancy",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/tenancy",method="GET"} 0.008746417
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/tenancy",method="GET"} 0.007088709
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/tenancy",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/users",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/users",method="GET",le="0.01"} 1
@@ -2800,7 +2820,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/users",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/users",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/identity/users",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/users",method="GET"} 0.002457083
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/identity/users",method="GET"} 0.00187025
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/identity/users",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/image-mirrors",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/image-mirrors",method="GET",le="0.01"} 1
@@ -2814,7 +2834,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/image-mirrors",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/image-mirrors",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/image-mirrors",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/image-mirrors",method="GET"} 0.0010805
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/image-mirrors",method="GET"} 0.000923458
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/image-mirrors",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/instances",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/instances",method="GET",le="0.01"} 1
@@ -2828,7 +2848,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/instances",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/instances",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/instances",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/instances",method="GET"} 0.001365917
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/instances",method="GET"} 0.000741875
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/instances",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/jobs",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/jobs",method="GET",le="0.01"} 1
@@ -2842,7 +2862,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/jobs",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/jobs",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/jobs",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/jobs",method="GET"} 0.003428458
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/jobs",method="GET"} 0.0023605
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/jobs",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/machines",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/machines",method="GET",le="0.01"} 1
@@ -2856,7 +2876,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/machines",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/machines",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/machines",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/machines",method="GET"} 0.002176083
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/machines",method="GET"} 0.0034795
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/machines",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/me/sign-ins",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/me/sign-ins",method="GET",le="0.01"} 1
@@ -2870,7 +2890,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/me/sign-ins",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/me/sign-ins",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/me/sign-ins",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/me/sign-ins",method="GET"} 0.002052208
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/me/sign-ins",method="GET"} 0.001921792
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/me/sign-ins",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/me/tokens",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/me/tokens",method="GET",le="0.01"} 1
@@ -2884,7 +2904,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/me/tokens",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/me/tokens",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/me/tokens",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/me/tokens",method="GET"} 0.002893625
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/me/tokens",method="GET"} 0.002320167
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/me/tokens",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/monitoring",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/monitoring",method="GET",le="0.01"} 1
@@ -2898,7 +2918,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/monitoring",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/monitoring",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/monitoring",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/monitoring",method="GET"} 0.000898083
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/monitoring",method="GET"} 0.000784666
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/monitoring",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks",method="GET",le="0.01"} 1
@@ -2912,7 +2932,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/networks",method="GET"} 0.000945125
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/networks",method="GET"} 0.000697292
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/networks",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks/applications",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks/applications",method="GET",le="0.01"} 1
@@ -2926,7 +2946,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks/applications",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks/applications",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks/applications",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/networks/applications",method="GET"} 0.002022459
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/networks/applications",method="GET"} 0.001613792
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/networks/applications",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks/settings",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks/settings",method="GET",le="0.01"} 1
@@ -2940,11 +2960,11 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks/settings",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks/settings",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/networks/settings",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/networks/settings",method="GET"} 0.003282
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/networks/settings",method="GET"} 0.002517542
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/networks/settings",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET",le="0.01"} 0
-apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET",le="0.025"} 0
+apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET",le="0.025"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET",le="0.05"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET",le="0.1"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET",le="0.25"} 1
@@ -2954,7 +2974,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET"} 0.025574042
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET"} 0.022460625
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/openapi.json",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/preflight",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/preflight",method="GET",le="0.01"} 1
@@ -2968,7 +2988,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/preflight",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/preflight",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/preflight",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/preflight",method="GET"} 0.002322125
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/preflight",method="GET"} 0.0008765
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/preflight",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/projects",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/projects",method="GET",le="0.01"} 1
@@ -2982,7 +3002,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/projects",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/projects",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/projects",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/projects",method="GET"} 0.001039292
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/projects",method="GET"} 0.00080025
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/projects",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/provisioners/maas/machines",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/provisioners/maas/machines",method="GET",le="0.01"} 1
@@ -2996,7 +3016,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/provisioners/maas/machines",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/provisioners/maas/machines",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/provisioners/maas/machines",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/provisioners/maas/machines",method="GET"} 0.000869208
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/provisioners/maas/machines",method="GET"} 0.000681917
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/provisioners/maas/machines",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/sessions",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/sessions",method="GET",le="0.01"} 1
@@ -3010,7 +3030,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/sessions",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/sessions",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/sessions",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/sessions",method="GET"} 0.001074333
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/sessions",method="GET"} 0.000789834
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/sessions",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/settings",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/settings",method="GET",le="0.01"} 1
@@ -3024,7 +3044,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/settings",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/settings",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/settings",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/settings",method="GET"} 0.00306425
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/settings",method="GET"} 0.002639042
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/settings",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/sign-in",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/sign-in",method="GET",le="0.01"} 1
@@ -3038,7 +3058,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/sign-in",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/sign-in",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/sign-in",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/sign-in",method="GET"} 0.0031325
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/sign-in",method="GET"} 0.00267725
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/sign-in",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage-pools",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage-pools",method="GET",le="0.01"} 1
@@ -3052,7 +3072,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage-pools",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage-pools",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage-pools",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/storage-pools",method="GET"} 0.001042
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/storage-pools",method="GET"} 0.000808791
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/storage-pools",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/orphans",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/orphans",method="GET",le="0.01"} 1
@@ -3066,7 +3086,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/orphans",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/orphans",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/orphans",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/storage/orphans",method="GET"} 0.003979208
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/storage/orphans",method="GET"} 0.003032708
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/storage/orphans",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/pools",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/pools",method="GET",le="0.01"} 1
@@ -3080,7 +3100,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/pools",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/pools",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/pools",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/storage/pools",method="GET"} 0.001040541
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/storage/pools",method="GET"} 0.00081075
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/storage/pools",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/volumes",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/volumes",method="GET",le="0.01"} 1
@@ -3094,7 +3114,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/volumes",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/volumes",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/storage/volumes",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/storage/volumes",method="GET"} 0.00414875
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/storage/volumes",method="GET"} 0.003256709
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/storage/volumes",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/support-bundle",method="GET",le="0.005"} 0
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/support-bundle",method="GET",le="0.01"} 0
@@ -3108,7 +3128,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/support-bundle",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/support-bundle",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/support-bundle",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/support-bundle",method="GET"} 0.039825542
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/support-bundle",method="GET"} 0.032129959
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/support-bundle",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/system",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/system",method="GET",le="0.01"} 1
@@ -3122,7 +3142,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/system",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/system",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/system",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/system",method="GET"} 0.001946333
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/system",method="GET"} 0.001174709
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/system",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/tokens",method="GET",le="0.005"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/tokens",method="GET",le="0.01"} 1
@@ -3136,7 +3156,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/tokens",method="GET",le="5"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/tokens",method="GET",le="10"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/tokens",method="GET",le="+Inf"} 1
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/tokens",method="GET"} 0.004336709
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/tokens",method="GET"} 0.002039583
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/tokens",method="GET"} 1
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/whoami",method="GET",le="0.005"} 2
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/whoami",method="GET",le="0.01"} 2
@@ -3150,7 +3170,7 @@ apelora_http_request_duration_seconds_bucket{region="default",site="default",sec
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/whoami",method="GET",le="5"} 2
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/whoami",method="GET",le="10"} 2
 apelora_http_request_duration_seconds_bucket{region="default",site="default",sector="default",route="/api/v1/whoami",method="GET",le="+Inf"} 2
-apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/whoami",method="GET"} 0.001959374
+apelora_http_request_duration_seconds_sum{region="default",site="default",sector="default",route="/api/v1/whoami",method="GET"} 0.001040541
 apelora_http_request_duration_seconds_count{region="default",site="default",sector="default",route="/api/v1/whoami",method="GET"} 2
 # HELP apelora_http_requests_in_flight API requests being handled now.
 # TYPE apelora_http_requests_in_flight gauge
@@ -3240,7 +3260,7 @@ apelora_db_pool_acquire_seconds_bucket{region="default",site="default",sector="d
 apelora_db_pool_acquire_seconds_bucket{region="default",site="default",sector="default",le="2.5"} 1
 apelora_db_pool_acquire_seconds_bucket{region="default",site="default",sector="default",le="5"} 1
 apelora_db_pool_acquire_seconds_bucket{region="default",site="default",sector="default",le="+Inf"} 1
-apelora_db_pool_acquire_seconds_sum{region="default",site="default",sector="default"} 0.000404417
+apelora_db_pool_acquire_seconds_sum{region="default",site="default",sector="default"} 0.000276417
 apelora_db_pool_acquire_seconds_count{region="default",site="default",sector="default"} 1
 # HELP apelora_db_up 1 when the last scrape could get a database connection within 2 seconds, 0 otherwise.
 # TYPE apelora_db_up gauge
@@ -3259,12 +3279,12 @@ apelora_applications{region="default",site="default",sector="default",status="no
 # TYPE apelora_certificate_expiry_timestamp_seconds gauge
 # HELP apelora_inventory_last_read_timestamp_seconds When members, instances and applications were last read successfully for these metrics (Unix seconds).
 # TYPE apelora_inventory_last_read_timestamp_seconds gauge
-apelora_inventory_last_read_timestamp_seconds{region="default",site="default",sector="default"} 1792793578.370356
+apelora_inventory_last_read_timestamp_seconds{region="default",site="default",sector="default"} 1792943126.486491
 # HELP apelora_identity_key_fetches_total Reads of an identity provider's discovery document or signing keys, by source (discovery, key_set) and result (ok, error).
 # TYPE apelora_identity_key_fetches_total counter
 # HELP process_start_time_seconds Start time of the process since the Unix epoch in seconds.
 # TYPE process_start_time_seconds gauge
-process_start_time_seconds{region="default",site="default",sector="default"} 1792793577.928904
+process_start_time_seconds{region="default",site="default",sector="default"} 1792943126.053786
 
 ```
 
