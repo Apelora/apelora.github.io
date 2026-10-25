@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-riitXBKGtl5y5ccA7GF6ccqJuwEVP5tm8j0ff/fbw9U='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'none'; manifest-src 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>API overview · API · Apelora</title>
-  <meta name="description" content="How to call the API: the address, signing in, errors, safe retries, and the TypeScript client.">
+  <meta name="description" content="How to call the API: the address, signing in, options and paging, errors and their codes, safe retries, and the TypeScript client.">
   <link rel="canonical" href="https://apelora.github.io/docs/api/overview/">
   <meta name="theme-color" content="#ffffff">
   
@@ -17,7 +17,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Apelora">
   <meta property="og:title" content="API overview · API · Apelora">
-  <meta property="og:description" content="How to call the API: the address, signing in, errors, safe retries, and the TypeScript client.">
+  <meta property="og:description" content="How to call the API: the address, signing in, options and paging, errors and their codes, safe retries, and the TypeScript client.">
   <meta property="og:url" content="https://apelora.github.io/docs/api/overview/">
   <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -89,17 +89,21 @@ export APELORA_TOKEN</code></pre>
 <p>Most paths start with <code>/api/v1</code>; the metrics endpoint is <code>/metrics</code>. Request bodies are JSON (<code>Content-Type: application/json</code>). Responses are JSON except metrics (<code>text/plain</code>), support bundles (<code>application/x-tar</code>), and audit exports (<code>text/csv</code> or <code>application/x-ndjson</code>). A <code>204</code> response has no body. The examples use Bash and curl 7.76 or later for <code>--fail-with-body</code>.</p>
 <p>Try a public, read-only request first:</p>
 <pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS &quot;$APELORA_URL/api/v1/health&quot;</code></pre>
-<p>Its <a href="/docs/api/system/#get-apiv1health">System API entry</a> shows an example response. Example responses on these pages come from a test installation or show the shape with placeholder values; replace the sample names, IDs and settings with your own before running a command.</p>
+<p>Its <a href="/docs/api/system/#get-apiv1health">System API entry</a> shows an example response. Replace the sample names, IDs and settings on these pages with your own before running a command.</p>
 <h2 id="get-a-token">Get a token</h2>
 <p>Create the first administrator's token on the machine that runs the control plane (<a href="/docs/install/install-on-your-servers/">install on your servers</a>):</p>
 <pre data-lang="sh" tabindex="0"><code>apelora-control-plane token create --name &quot;$ADMIN_NAME&quot; --role fabric-admin --expires-in-days 90</code></pre>
 <p>The token is shown once. Which roles exist and what each may do is in <a href="/docs/concepts/access-and-roles/">roles and access</a>. An administrator can also create tokens for people and automation from the Console, and a signed-in person can ask for a personal token. The token kinds are:</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Prefix</th><th scope="col">What it is</th></tr></thead><tbody><tr><td><code>apt_</code></td><td>A personal token, acting as the person who made it</td></tr><tr><td><code>aps_</code></td><td>A service token for automation, with its own role</td></tr><tr><td><code>apu_</code></td><td>A session after a password sign-in</td></tr><tr><td><code>apl_</code></td><td>A legacy API token from <code>token create</code></td></tr><tr><td>(none)</td><td>An access token from your identity provider</td></tr></tbody></table></div>
-<p>Send it as a bearer token on authenticated requests. Health, sign-in options, password sign-in, setup-link completion and the OpenAPI download are public. Check your token with <code>whoami</code>, which shows the roles and permissions in force:</p>
+<p>A local account's setup link carries a one-time <code>apw_</code> value: it sets the account's password with <code>POST /api/v1/sign-in/setup</code> and cannot call anything else. Pages never show a real credential; where a response contains one, the example shows a placeholder such as <code>&lt;token, shown once&gt;</code>.</p>
+<p>Send the token as a bearer token on authenticated requests. Health, sign-in options, password sign-in, setup-link completion and the OpenAPI download are public. Check your token with <code>whoami</code>, which shows the roles and permissions in force:</p>
 <pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS &quot;$APELORA_URL/api/v1/whoami&quot; -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
-<p>Each operation page gives the HTTP method, path, generated client operation ID, permissions documented by the handler, parameters, request and response. A missing permission returns <code>403</code>; collection results may also be filtered to the caller's scope. Personal-token and personal-session endpoints require a person credential; a legacy CLI token receives <code>403 people_only</code> even when its role is fabric-admin.</p>
+<p>A missing permission returns <code>403</code>; collection results may also be filtered to the caller's scope. Personal-token and personal-session endpoints (<code>/api/v1/me/…</code>) require a person credential: a session from a password sign-in or a personal token. A legacy CLI token receives <code>403 people_only</code> there even when its role is fabric-admin.</p>
+<h2 id="how-an-operation-is-described">How an operation is described</h2>
+<p>Each operation on the group pages has:</p>
+<ul><li>the method and path, the operation ID the generated client uses, and the permission the handler checks;</li><li>a parameter table: where each parameter goes (path, query or header), its type, whether it is required, its default and its allowed values;</li><li>for a request body, a table of every field, with nested fields written <code>parent.child</code> (<code>items[].port</code> for a list of objects) and, where a field takes different shapes, which <code>type</code> needs it;</li><li>a curl command, and a second one <strong>with options</strong> when the operation takes optional query parameters or headers;</li><li>the same call with the TypeScript client;</li><li>the response: an example response from a test installation (your IDs, names and times differ), or placeholder values that show the shape where no example could be recorded. Long lists in examples are cut to their first items;</li><li>the error statuses and the error codes the operation returns.</li></ul>
 <h2 id="changing-things-safely">Changing things safely</h2>
-<ul><li><strong>Idempotency-Key.</strong> Use this header where it appears in the operation's parameter table. Generate a key once per distinct change and retain it for retries. Repeating the same request with the same key returns the first result. Other writes do not automatically gain retry protection.</li><li><strong>Jobs and operations.</strong> Instance writes return a <code>jobId</code>; poll <code>GET /api/v1/jobs/{id}</code> until <code>status</code> is <code>succeeded</code>, <code>failed</code> or <code>cancelled</code>. Application actions return an <code>operation</code> object; poll <code>GET /api/v1/applications/{name}/operations/{id}</code> using <code>operation.id</code>. Deployment responses include their jobs. Use the response shape on each operation's page; the worker retries jobs with backoff.</li><li><strong>Approvals.</strong> Some protected actions need a second person to approve first; the request then names the approval in an <code>Apelora-Approval</code> header.</li><li><strong>Versions.</strong> Applications keep numbered, immutable versions; a deployment saves the design as a new revision and queues the changes.</li></ul>
+<ul><li><strong>Idempotency-Key.</strong> Use this header where it appears in the operation's parameter table. Generate a key once per distinct change and retain it for retries. Repeating the same request with the same key returns the first result. Other writes do not automatically gain retry protection.</li><li><strong>Jobs and operations.</strong> Instance writes return a <code>jobId</code>; poll <code>GET /api/v1/jobs/{id}</code> until <code>status</code> is <code>succeeded</code>, <code>failed</code> or <code>cancelled</code>. Application actions return an <code>operation</code> object; poll <code>GET /api/v1/applications/{name}/operations/{id}</code> using <code>operation.id</code>. Deployment responses include their jobs. Use the response shape on each operation's page; the worker retries jobs with backoff.</li><li><strong>Approvals.</strong> Some protected actions need a second person to approve first: request it with <code>POST /api/v1/approvals</code>, another person approves it, and the request names the approval in an <code>Apelora-Approval</code> header.</li><li><strong>Confirmations.</strong> Destructive requests carry a <code>confirm</code> field: type the name of what is being changed again (the member, volume, backup or snapshot). A mismatch returns <code>400 confirmation_mismatch</code>.</li><li><strong>Versions.</strong> Applications keep numbered, immutable versions; a deployment saves the design as a new revision and queues the changes.</li></ul>
 <pre data-lang="sh" tabindex="0"><code># Requires an existing shop application, deploy permission, and any required approval.
 # Generate once; reuse this value and the same body when retrying this change.
 IDEMPOTENCY_KEY=$(uuidgen)
@@ -110,26 +114,43 @@ curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/applications/shop/op
   -d '{&quot;action&quot;:&quot;start&quot;}'</code></pre>
 <p>The request body of each operation is on its page of this section; this one starts the application <code>shop</code>.</p>
 <h2 id="errors">Errors</h2>
-<p>API handler errors use a status code and the following JSON envelope. Transport failures, proxies and malformed HTTP requests can return a different format:</p>
-<pre data-lang="json" tabindex="0"><code>{ &quot;error&quot;: { &quot;code&quot;: &quot;not_found&quot;, &quot;message&quot;: &quot;No application called shop.&quot; } }</code></pre>
-<p>The <code>code</code> is stable and meant for programs; the <code>message</code> is for people. The usual statuses are <code>400</code> for a request that does not make sense, <code>401</code> for a missing or expired token, <code>403</code> for a token that lacks the permission, <code>404</code> for something that is not there or not visible to you, <code>409</code> for a conflict with the current state, and <code>429</code> for too many requests.</p>
+<p>API handler errors use a status code and the following JSON envelope. Transport failures, proxies and malformed HTTP requests can return a different format. For example, asking for an application that does not exist:</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS &quot;$APELORA_URL/api/v1/applications/storefront&quot; -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p>Example response from a test installation (status <code>404</code>):</p>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;not_found&quot;,
+    &quot;message&quot;: &quot;not found: application storefront&quot;
+  }
+}</code></pre>
+<p>The <code>code</code> is stable and meant for programs; the <code>message</code> is for people and may change. The usual statuses are <code>400</code> for a request that does not make sense, <code>401</code> for a missing or expired token, <code>403</code> for a token that lacks the permission, <code>404</code> for something that is not there or not visible to you, <code>409</code> for a conflict with the current state, <code>422</code> for a draft that cannot be published, <code>429</code> for too many requests, <code>502</code> when Incus could not answer and <code>503</code> when something the request needs is not set up or not reachable. Saving a draft over a newer one answers <code>409 draft_conflict</code> with the newer version number in <code>currentVersion</code>.</p>
+<h3 id="error-codes">Error codes</h3>
+<p>Each operation's page lists the codes it returns. These codes are shared by every operation that documents the status:</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td><td>No token, an unknown token or an ended session (<code>unauthenticated</code>); an identity provider's access token that fails verification (<code>invalid_token</code>)</td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code>, <code>account_disabled</code></td><td>The caller lacks the permission, signed in without multi-factor authentication where a policy needs it, or is disabled</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td><td>Too many requests; wait for <code>Retry-After</code> seconds</td></tr><tr><td><code>500</code></td><td><code>store_error</code>, <code>internal</code></td><td>The database refused the request; the server log has the details under the request id</td></tr><tr><td><code>502</code></td><td><code>incus_unreachable</code>, <code>incus_authentication</code>, <code>incus_not_found</code>, <code>incus_api_error</code>, <code>incus_bad_response</code>, <code>incus_unsupported_capability</code></td><td>Incus could not be reached, refused Apelora's certificate, or answered with an error</td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code>, <code>store_unavailable</code>, <code>incus_not_configured</code>, <code>incus_invalid_config</code></td><td>The control plane runs without a database, cannot reach it, or has no (or an invalid) Incus connection</td></tr></tbody></table></div>
 <h2 id="rate-limits">Rate limits</h2>
 <p>Requests are limited per client address before sign-in, and writes are limited per signed-in caller. When you hit a limit you get <code>429</code> with a <code>Retry-After</code> header in seconds: wait that long, then retry. Repeated wrong tokens from one address are slowed down on purpose. The limits are settings of the control plane (<a href="/docs/install/settings/">settings reference</a>).</p>
-<h2 id="lists">Lists</h2>
-<p>List operations that can be long take a <code>limit</code> and, where the page says so, a position to continue from; they return the newest first unless the page says otherwise. Filters are query parameters, each listed in the operation's parameter table.</p>
+<h2 id="options-filters-and-paging">Options, filters and paging</h2>
+<p>Optional query parameters filter or shape a list; each operation's parameter table gives their types, defaults and allowed values, and its second example request uses them. Lists return the newest first unless the page says otherwise. Two lists page differently.</p>
+<p><strong>Audit events and alert history</strong> take <code>limit</code> and <code>before</code>. To fetch the next page, repeat the request with <code>before</code> set to the <code>id</code> of the last item; a page shorter than <code>limit</code> is the last one:</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS &quot;$APELORA_URL/api/v1/audit?action=application.&amp;limit=50&amp;before=1200&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>Jobs</strong> take <code>limit</code> and <code>after</code>. The response has a <code>next</code> value while more jobs follow; repeat the request with <code>after</code> set to it. The last page has no <code>next</code>:</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS &quot;$APELORA_URL/api/v1/jobs?status=failed&amp;limit=50&amp;after=$NEXT&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p>The audit export takes the same filters as the audit list and returns every matching event, without paging.</p>
 <h2 id="from-typescript">From TypeScript</h2>
-<p>The typed client the screens use is the package <code>packages/api-client</code> in the repository, generated from the OpenAPI document. Every operation is called by name, with its path parameters and body type-checked:</p>
+<p>The typed client the screens use is the package <code>packages/api-client</code> in the repository, generated from the OpenAPI document. Every operation is called by name, with its path parameters, query and body type-checked; each operation's page shows its call in one line:</p>
 <pre data-lang="ts" tabindex="0"><code>import { createClient, followJob, newIdempotencyKey } from &quot;@apelora/api-client&quot;;
 
 const client = createClient({ baseUrl: process.env.APELORA_URL, token: () =&gt; process.env.APELORA_TOKEN ?? null });
 
 const me = await client.get(&quot;whoami&quot;);
-const apps = await client.get(&quot;applications&quot;);
+const failed = await client.request(&quot;jobs&quot;, { query: { status: &quot;failed&quot;, limit: 50 } });
 
-// a job: follow it until it is final
-const job = await client.request(&quot;job&quot;, { params: { id: &quot;00000000-0000-4000-8000-000000000001&quot; } });
-await followJob(client, job.id, (j) =&gt; console.log(j.status));</code></pre>
-<p>For operations that document <code>Idempotency-Key</code>, pass <code>idempotencyKey: newIdempotencyKey()</code> and retain that key for retries. Errors are thrown as <code>ApiRequestError</code> with the HTTP <code>status</code> and the API's <code>code</code>.</p>
+// a change that queues work: keep the key for retries, then follow the job until it is final
+const accepted = await client.request(&quot;retry_job&quot;, { params: { id: failed.items[0].id }, idempotencyKey: newIdempotencyKey() });
+await followJob(client, accepted.jobId, (j) =&gt; console.log(j.status));</code></pre>
+<p><code>client.get(name)</code> is a shorthand for operations without parameters or a body. For operations that document <code>Idempotency-Key</code>, pass <code>idempotencyKey: newIdempotencyKey()</code> and retain that key for retries; for an approved action, pass <code>approvalId</code>. Text answers (metrics, audit exports) come back as a string and the support bundle as a <code>Blob</code>. Errors are thrown as <code>ApiRequestError</code> with the HTTP <code>status</code> and the API's <code>code</code>.</p>
 <h2 id="the-openapi-document">The OpenAPI document</h2>
 <p>Download the <a href="/assets/api/openapi.json">complete OpenAPI document</a> used to build this reference. It defines all operations, request and response schemas, authentication requirements and documented status codes. The repository source is <code>packages/api-client/openapi.json</code>. Fetch the contract of the running API without a token:</p>
 <pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS &quot;$APELORA_URL/api/v1/openapi.json&quot; --output openapi.json</code></pre>
@@ -137,12 +158,12 @@ await followJob(client, job.id, (j) =&gt; console.log(j.status));</code></pre>
 <pre data-lang="sh" tabindex="0"><code>apelora-control-plane openapi &gt; openapi.json</code></pre>
 <p>Use it to generate a client in another language, or to check your own calls against what the version you run accepts.</p>
 <h2 id="the-groups">The groups</h2>
-<p>The next pages list every operation, each with what it needs, its parameters, a request you can copy and the shape of its answer.</p>
+<p>The next pages list every operation, each with what it needs, its parameters and options, a request you can copy, the TypeScript call, an example of its answer and its error codes.</p>
         </div>
         
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/runbooks/offline-update/"><span>Previous</span>Update Apelora without internet access</a><a class="next" href="/docs/api/system/"><span>Next</span>System</a></nav>
       </article>
-      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#set-up-your-shell">Set up your shell</a></li><li class="l2"><a href="#get-a-token">Get a token</a></li><li class="l2"><a href="#changing-things-safely">Changing things safely</a></li><li class="l2"><a href="#errors">Errors</a></li><li class="l2"><a href="#rate-limits">Rate limits</a></li><li class="l2"><a href="#lists">Lists</a></li><li class="l2"><a href="#from-typescript">From TypeScript</a></li><li class="l2"><a href="#the-openapi-document">The OpenAPI document</a></li><li class="l2"><a href="#the-groups">The groups</a></li></ul></nav>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#set-up-your-shell">Set up your shell</a></li><li class="l2"><a href="#get-a-token">Get a token</a></li><li class="l2"><a href="#how-an-operation-is-described">How an operation is described</a></li><li class="l2"><a href="#changing-things-safely">Changing things safely</a></li><li class="l2"><a href="#errors">Errors</a></li><li class="l3"><a href="#error-codes">Error codes</a></li><li class="l2"><a href="#rate-limits">Rate limits</a></li><li class="l2"><a href="#options-filters-and-paging">Options, filters and paging</a></li><li class="l2"><a href="#from-typescript">From TypeScript</a></li><li class="l2"><a href="#the-openapi-document">The OpenAPI document</a></li><li class="l2"><a href="#the-groups">The groups</a></li></ul></nav>
     </div>
   </main>
   <footer class="site-footer">

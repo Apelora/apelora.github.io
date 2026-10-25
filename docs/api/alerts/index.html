@@ -93,25 +93,49 @@
 <pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/alerts&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;alerts&quot;, {});</code></pre>
 <p><strong>Response <code>200</code></strong> — Success.</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;alerts&quot;: [],
+  &quot;alerts&quot;: [
+    {
+      &quot;id&quot;: 2,
+      &quot;rule&quot;: &quot;job-failures&quot;,
+      &quot;title&quot;: &quot;Jobs are failing&quot;,
+      &quot;subject&quot;: &quot;instance.restart&quot;,
+      &quot;severity&quot;: &quot;warning&quot;,
+      &quot;state&quot;: &quot;firing&quot;,
+      &quot;summary&quot;: &quot;2 instance.restart jobs failed in the last 15 minutes; the latest: instance default/mock-web-01 exists but was not created by Apelora; it is left untouched&quot;,
+      &quot;value&quot;: 2,
+      &quot;threshold&quot;: 1,
+      &quot;comparison&quot;: &quot;at-least&quot;,
+      &quot;unit&quot;: &quot;failed jobs in 15 minutes&quot;,
+      &quot;startedAt&quot;: &quot;2026-10-25T16:33:04.999248Z&quot;,
+      &quot;firedAt&quot;: &quot;2026-10-25T16:33:04.999248Z&quot;,
+      &quot;lastSeenAt&quot;: &quot;2026-10-25T16:33:04.999248Z&quot;,
+      &quot;resolvedAt&quot;: null,
+      &quot;clearingSince&quot;: null,
+      &quot;acknowledged&quot;: null,
+      &quot;silencedBy&quot;: null,
+      &quot;runbook&quot;: &quot;alerts.md#jobs-are-failing&quot;
+    }
+  ],
   &quot;silences&quot;: [],
   &quot;counts&quot;: {
     &quot;critical&quot;: 0,
-    &quot;warning&quot;: 0,
+    &quot;warning&quot;: 1,
     &quot;info&quot;: 0,
-    &quot;needsAttention&quot;: 0
+    &quot;needsAttention&quot;: 1
   },
   &quot;evaluator&quot;: {
-    &quot;lastPassAt&quot;: null,
-    &quot;everySecs&quot;: null,
-    &quot;worker&quot;: null,
-    &quot;durationSecs&quot;: null,
-    &quot;stale&quot;: true,
-    &quot;message&quot;: &quot;Alerts have not been evaluated yet: no deployment worker has run the alert evaluator (APELORA_ALERT_EVALUATE_SECS, on by default).&quot;
+    &quot;lastPassAt&quot;: &quot;2026-10-25T16:33:04.999248Z&quot;,
+    &quot;everySecs&quot;: 5,
+    &quot;worker&quot;: &quot;docs-worker&quot;,
+    &quot;durationSecs&quot;: 0.036299541,
+    &quot;stale&quot;: false,
+    &quot;message&quot;: &quot;Evaluated every 5 s by docs-worker.&quot;
   },
   &quot;actions&quot;: {
     &quot;respond&quot;: {
@@ -124,57 +148,58 @@
     }
   }
 }</code></pre>
-<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1alertsidacknowledge"><code>POST /api/v1/alerts/{id}/acknowledge</code></h3>
 <p>Acknowledges a firing alert: who, when and an optional note. It keeps firing until its condition clears; acknowledging tells others someone is on it. Refused (409) when it is not firing (<code>not_firing</code>) or was acknowledged already (<code>already_acknowledged</code>). Needs <code>alert.respond</code>; audited as <code>alert.acknowledge</code>.</p>
 <p><strong>Operation ID:</strong> <code>acknowledge_alert</code></p>
 <p><strong>Needs:</strong> <code>alert.respond</code>; audited as <code>alert.acknowledge</code>.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>integer</td><td>yes</td><td>Alert id</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>integer</td><td>yes</td><td>—</td><td>Alert id</td></tr></tbody></table></div>
 <p><strong>Request body</strong> (JSON):</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>note</code></td><td>string</td><td>no</td><td>What is being done about it (at most 500 characters).</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>note</code></td><td>string or null</td><td>no</td><td>What is being done about it (at most 500 characters).</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;note&quot;: &quot;example&quot;
+  &quot;note&quot;: &quot;Looking into the failed job&quot;
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/alerts/00000000-0000-4000-8000-000000000001/acknowledge&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/alerts/2/acknowledge&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;note&quot;:&quot;example&quot;}'</code></pre>
+  --data-raw '{&quot;note&quot;:&quot;Looking into the failed job&quot;}'</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;acknowledge_alert&quot;, { params: { id: &quot;2&quot; }, body: { note: &quot;Looking into the failed job&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Success.</p>
 <p>Content-Type: <code>application/json</code>.</p>
-<p><strong>Example response</strong> (placeholder values that show the shape):</p>
+<p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;comparison&quot;: &quot;at-least&quot;,
-  &quot;id&quot;: 1,
-  &quot;lastSeenAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;rule&quot;: &quot;example&quot;,
-  &quot;runbook&quot;: &quot;example&quot;,
-  &quot;severity&quot;: &quot;info&quot;,
-  &quot;startedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;state&quot;: &quot;example&quot;,
-  &quot;subject&quot;: &quot;example&quot;,
-  &quot;summary&quot;: &quot;example&quot;,
+  &quot;id&quot;: 2,
+  &quot;rule&quot;: &quot;job-failures&quot;,
+  &quot;title&quot;: &quot;Jobs are failing&quot;,
+  &quot;subject&quot;: &quot;instance.restart&quot;,
+  &quot;severity&quot;: &quot;warning&quot;,
+  &quot;state&quot;: &quot;firing&quot;,
+  &quot;summary&quot;: &quot;2 instance.restart jobs failed in the last 15 minutes; the latest: instance default/mock-web-01 exists but was not created by Apelora; it is left untouched&quot;,
+  &quot;value&quot;: 2,
   &quot;threshold&quot;: 1,
-  &quot;title&quot;: &quot;example&quot;,
-  &quot;unit&quot;: &quot;example&quot;,
-  &quot;value&quot;: 1,
+  &quot;comparison&quot;: &quot;at-least&quot;,
+  &quot;unit&quot;: &quot;failed jobs in 15 minutes&quot;,
+  &quot;startedAt&quot;: &quot;2026-10-25T16:33:04.999248Z&quot;,
+  &quot;firedAt&quot;: &quot;2026-10-25T16:33:04.999248Z&quot;,
+  &quot;lastSeenAt&quot;: &quot;2026-10-25T16:33:04.999248Z&quot;,
+  &quot;resolvedAt&quot;: null,
+  &quot;clearingSince&quot;: null,
   &quot;acknowledged&quot;: {
-    &quot;at&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-    &quot;by&quot;: &quot;example&quot;,
-    &quot;byName&quot;: &quot;example&quot;,
-    &quot;note&quot;: &quot;example&quot;
+    &quot;by&quot;: &quot;token:docs-verifier&quot;,
+    &quot;byName&quot;: &quot;docs-verifier&quot;,
+    &quot;at&quot;: &quot;2026-10-25T16:33:05.24455Z&quot;,
+    &quot;note&quot;: &quot;Looking into the failed job&quot;
   },
-  &quot;clearingSince&quot;: &quot;example&quot;,
-  &quot;firedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;resolvedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;silencedBy&quot;: {
-    &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
-    &quot;until&quot;: &quot;example&quot;
-  }
+  &quot;silencedBy&quot;: null,
+  &quot;runbook&quot;: &quot;alerts.md#jobs-are-failing&quot;
 }</code></pre>
-<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>already_acknowledged</code>, <code>not_firing</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1alertschannels"><code>GET /api/v1/alerts/channels</code></h3>
 <p>Webhook channels with their delivery state. The full URL only for callers who may configure channels. Needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>alert_channels</code></p>
@@ -183,11 +208,33 @@
 <pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/alerts/channels&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;alert_channels&quot;, {});</code></pre>
 <p><strong>Response <code>200</code></strong> — Success.</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;channels&quot;: [],
+  &quot;channels&quot;: [
+    {
+      &quot;id&quot;: &quot;455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot;,
+      &quot;name&quot;: &quot;On-call webhook&quot;,
+      &quot;kind&quot;: &quot;webhook&quot;,
+      &quot;host&quot;: &quot;hooks.example.invalid&quot;,
+      &quot;url&quot;: &quot;https://hooks.example.invalid/apelora&quot;,
+      &quot;secretRef&quot;: &quot;APELORA_ALERT_SECRET_ONCALL&quot;,
+      &quot;enabled&quot;: true,
+      &quot;minSeverity&quot;: &quot;critical&quot;,
+      &quot;delivery&quot;: {
+        &quot;pending&quot;: 1,
+        &quot;failing&quot;: 0,
+        &quot;lastError&quot;: null,
+        &quot;lastDeliveredAt&quot;: null
+      },
+      &quot;createdAt&quot;: &quot;2026-10-25T16:32:59.835242Z&quot;,
+      &quot;createdBy&quot;: &quot;token:docs-verifier&quot;,
+      &quot;updatedAt&quot;: &quot;2026-10-25T16:32:59.838791Z&quot;
+    }
+  ],
   &quot;secretPrefix&quot;: &quot;APELORA_ALERT_SECRET_&quot;,
   &quot;actions&quot;: {
     &quot;respond&quot;: {
@@ -200,17 +247,20 @@
     }
   }
 }</code></pre>
-<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1alertschannels"><code>POST /api/v1/alerts/channels</code></h3>
 <p>Adds a webhook channel. HTTPS only; the signing secret is named, never sent. Needs <code>alert.configure</code>; audited as <code>alert.channel.create</code> (host only, not the URL).</p>
 <p><strong>Operation ID:</strong> <code>create_alert_channel</code></p>
 <p><strong>Needs:</strong> <code>alert.configure</code>; audited as <code>alert.channel.create</code> (host only, not the URL).</p>
 <p><strong>Request body</strong> (JSON):</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>minSeverity</code></td><td>one of several</td><td>no</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>1 to 80 characters, unique.</td></tr><tr><td><code>secretRef</code></td><td>string</td><td>yes</td><td>The name of the environment variable on the worker holding the signing secret, e.g. <code>APELORA_ALERT_SECRET_OPS</code>. Never the secret itself.</td></tr><tr><td><code>url</code></td><td>string</td><td>yes</td><td><code>https://…</code> only, without a user name or password.</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>minSeverity</code></td><td>one of <code>info</code>, <code>warning</code>, <code>critical</code> or null</td><td>no</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>1 to 80 characters, unique.</td></tr><tr><td><code>secretRef</code></td><td>string</td><td>yes</td><td>The name of the environment variable on the worker holding the signing secret, e.g. <code>APELORA_ALERT_SECRET_OPS</code>. Never the secret itself.</td></tr><tr><td><code>url</code></td><td>string</td><td>yes</td><td><code>https://…</code> only, without a user name or password.</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;name&quot;: &quot;example&quot;,
-  &quot;url&quot;: &quot;https://example.org&quot;,
-  &quot;secretRef&quot;: &quot;&lt;redacted&gt;&quot;
+  &quot;name&quot;: &quot;On-call webhook&quot;,
+  &quot;url&quot;: &quot;https://hooks.example.invalid/apelora&quot;,
+  &quot;secretRef&quot;: &quot;APELORA_ALERT_SECRET_ONCALL&quot;,
+  &quot;minSeverity&quot;: &quot;warning&quot;,
+  &quot;enabled&quot;: true
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
@@ -218,116 +268,138 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;name&quot;:&quot;example&quot;,&quot;url&quot;:&quot;https://example.org&quot;,&quot;secretRef&quot;:&quot;&lt;redacted&gt;&quot;}'</code></pre>
+  --data-raw '{&quot;name&quot;:&quot;On-call webhook&quot;,&quot;url&quot;:&quot;https://hooks.example.invalid/apelora&quot;,&quot;secretRef&quot;:&quot;APELORA_ALERT_SECRET_ONCALL&quot;,&quot;minSeverity&quot;:&quot;warning&quot;,&quot;enabled&quot;:true}'</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;create_alert_channel&quot;, { body /* the request body above */ });</code></pre>
 <p><strong>Response <code>201</code></strong> — Success.</p>
 <p>Content-Type: <code>application/json</code>.</p>
-<p><strong>Example response</strong> (placeholder values that show the shape):</p>
+<p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;createdBy&quot;: &quot;example&quot;,
+  &quot;id&quot;: &quot;455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot;,
+  &quot;name&quot;: &quot;On-call webhook&quot;,
+  &quot;kind&quot;: &quot;webhook&quot;,
+  &quot;host&quot;: &quot;hooks.example.invalid&quot;,
+  &quot;url&quot;: &quot;https://hooks.example.invalid/apelora&quot;,
+  &quot;secretRef&quot;: &quot;APELORA_ALERT_SECRET_ONCALL&quot;,
+  &quot;enabled&quot;: true,
+  &quot;minSeverity&quot;: &quot;warning&quot;,
   &quot;delivery&quot;: {
-    &quot;failing&quot;: 1,
-    &quot;pending&quot;: 1,
-    &quot;lastDeliveredAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-    &quot;lastError&quot;: &quot;example&quot;
+    &quot;pending&quot;: 0,
+    &quot;failing&quot;: 0,
+    &quot;lastError&quot;: null,
+    &quot;lastDeliveredAt&quot;: null
   },
-  &quot;enabled&quot;: false,
-  &quot;host&quot;: &quot;example&quot;,
-  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
-  &quot;kind&quot;: &quot;example&quot;,
-  &quot;minSeverity&quot;: &quot;info&quot;,
-  &quot;name&quot;: &quot;example&quot;,
-  &quot;secretRef&quot;: &quot;&lt;redacted&gt;&quot;,
-  &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;url&quot;: &quot;https://example.org&quot;
+  &quot;createdAt&quot;: &quot;2026-10-25T16:32:59.835242Z&quot;,
+  &quot;createdBy&quot;: &quot;token:docs-verifier&quot;,
+  &quot;updatedAt&quot;: &quot;2026-10-25T16:32:59.835242Z&quot;
 }</code></pre>
-<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>409</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td><code>name_taken</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="put-apiv1alertschannelsid"><code>PUT /api/v1/alerts/channels/{id}</code></h3>
 <p>Changes a webhook channel. Needs <code>alert.configure</code>; audited as <code>alert.channel.update</code>.</p>
 <p><strong>Operation ID:</strong> <code>update_alert_channel</code></p>
 <p><strong>Needs:</strong> <code>alert.configure</code>; audited as <code>alert.channel.update</code>.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Channel id</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Channel id</td></tr></tbody></table></div>
 <p><strong>Request body</strong> (JSON):</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>minSeverity</code></td><td>one of several</td><td>no</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>1 to 80 characters, unique.</td></tr><tr><td><code>secretRef</code></td><td>string</td><td>yes</td><td>The name of the environment variable on the worker holding the signing secret, e.g. <code>APELORA_ALERT_SECRET_OPS</code>. Never the secret itself.</td></tr><tr><td><code>url</code></td><td>string</td><td>yes</td><td><code>https://…</code> only, without a user name or password.</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>no</td><td>—</td></tr><tr><td><code>minSeverity</code></td><td>one of <code>info</code>, <code>warning</code>, <code>critical</code> or null</td><td>no</td><td>—</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>1 to 80 characters, unique.</td></tr><tr><td><code>secretRef</code></td><td>string</td><td>yes</td><td>The name of the environment variable on the worker holding the signing secret, e.g. <code>APELORA_ALERT_SECRET_OPS</code>. Never the secret itself.</td></tr><tr><td><code>url</code></td><td>string</td><td>yes</td><td><code>https://…</code> only, without a user name or password.</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;name&quot;: &quot;example&quot;,
-  &quot;url&quot;: &quot;https://example.org&quot;,
-  &quot;secretRef&quot;: &quot;&lt;redacted&gt;&quot;
+  &quot;name&quot;: &quot;On-call webhook&quot;,
+  &quot;url&quot;: &quot;https://hooks.example.invalid/apelora&quot;,
+  &quot;secretRef&quot;: &quot;APELORA_ALERT_SECRET_ONCALL&quot;,
+  &quot;minSeverity&quot;: &quot;critical&quot;,
+  &quot;enabled&quot;: true
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/alerts/channels/00000000-0000-4000-8000-000000000001&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/alerts/channels/455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;name&quot;:&quot;example&quot;,&quot;url&quot;:&quot;https://example.org&quot;,&quot;secretRef&quot;:&quot;&lt;redacted&gt;&quot;}'</code></pre>
+  --data-raw '{&quot;name&quot;:&quot;On-call webhook&quot;,&quot;url&quot;:&quot;https://hooks.example.invalid/apelora&quot;,&quot;secretRef&quot;:&quot;APELORA_ALERT_SECRET_ONCALL&quot;,&quot;minSeverity&quot;:&quot;critical&quot;,&quot;enabled&quot;:true}'</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;update_alert_channel&quot;, { params: { id: &quot;455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot; }, body /* the request body above */ });</code></pre>
 <p><strong>Response <code>200</code></strong> — Success.</p>
 <p>Content-Type: <code>application/json</code>.</p>
-<p><strong>Example response</strong> (placeholder values that show the shape):</p>
+<p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;createdAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;createdBy&quot;: &quot;example&quot;,
+  &quot;id&quot;: &quot;455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot;,
+  &quot;name&quot;: &quot;On-call webhook&quot;,
+  &quot;kind&quot;: &quot;webhook&quot;,
+  &quot;host&quot;: &quot;hooks.example.invalid&quot;,
+  &quot;url&quot;: &quot;https://hooks.example.invalid/apelora&quot;,
+  &quot;secretRef&quot;: &quot;APELORA_ALERT_SECRET_ONCALL&quot;,
+  &quot;enabled&quot;: true,
+  &quot;minSeverity&quot;: &quot;critical&quot;,
   &quot;delivery&quot;: {
-    &quot;failing&quot;: 1,
-    &quot;pending&quot;: 1,
-    &quot;lastDeliveredAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-    &quot;lastError&quot;: &quot;example&quot;
+    &quot;pending&quot;: 0,
+    &quot;failing&quot;: 0,
+    &quot;lastError&quot;: null,
+    &quot;lastDeliveredAt&quot;: null
   },
-  &quot;enabled&quot;: false,
-  &quot;host&quot;: &quot;example&quot;,
-  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
-  &quot;kind&quot;: &quot;example&quot;,
-  &quot;minSeverity&quot;: &quot;info&quot;,
-  &quot;name&quot;: &quot;example&quot;,
-  &quot;secretRef&quot;: &quot;&lt;redacted&gt;&quot;,
-  &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;url&quot;: &quot;https://example.org&quot;
+  &quot;createdAt&quot;: &quot;2026-10-25T16:32:59.835242Z&quot;,
+  &quot;createdBy&quot;: &quot;token:docs-verifier&quot;,
+  &quot;updatedAt&quot;: &quot;2026-10-25T16:32:59.838791Z&quot;
 }</code></pre>
-<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>name_taken</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="delete-apiv1alertschannelsid"><code>DELETE /api/v1/alerts/channels/{id}</code></h3>
 <p>Deletes a webhook channel; messages still waiting for it are dropped by the relay. Needs <code>alert.configure</code>; audited as <code>alert.channel.delete</code>.</p>
 <p><strong>Operation ID:</strong> <code>delete_alert_channel</code></p>
 <p><strong>Needs:</strong> <code>alert.configure</code>; audited as <code>alert.channel.delete</code>.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Channel id</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Channel id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/alerts/channels/00000000-0000-4000-8000-000000000001&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/alerts/channels/455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;delete_alert_channel&quot;, { params: { id: &quot;455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Success, with no body.</p>
-<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1alertschannelsidtest"><code>POST /api/v1/alerts/channels/{id}/test</code></h3>
 <p>Queues a test notification for one channel through the same outbox path as real alerts; the channel's delivery state shows the outcome within seconds. Needs <code>alert.configure</code>; audited as <code>alert.channel.test</code> in the same transaction as the message.</p>
 <p><strong>Operation ID:</strong> <code>test_alert_channel</code></p>
 <p><strong>Needs:</strong> <code>alert.configure</code>; audited as <code>alert.channel.test</code> in the same transaction as the message.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Channel id</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Channel id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/alerts/channels/00000000-0000-4000-8000-000000000001/test&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/alerts/channels/455aa2df-8831-497c-a671-f2fa2fcbb2d9/test&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;test_alert_channel&quot;, { params: { id: &quot;455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot; } });</code></pre>
 <p><strong>Response <code>202</code></strong> — Success.</p>
 <p>Content-Type: <code>application/json</code>.</p>
-<p><strong>Example response</strong> (placeholder values that show the shape):</p>
+<p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;messageId&quot;: 1
+  &quot;messageId&quot;: 96
 }</code></pre>
-<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>409</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>channel_disabled</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1alertshistory"><code>GET /api/v1/alerts/history</code></h3>
 <p>Resolved alerts, newest first, paged by <code>before</code>. Kept 90 days. Needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>alert_history</code></p>
 <p><strong>Needs:</strong> <code>cluster.view</code>.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>before</code></td><td>query</td><td>integer</td><td>no</td><td>Only alerts with a smaller id (the last one of the previous page).</td></tr><tr><td><code>limit</code></td><td>query</td><td>integer</td><td>no</td><td>1 to 200 (default 50).</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>before</code></td><td>query</td><td>integer</td><td>no</td><td>—</td><td>Only alerts with a smaller id (the last one of the previous page).</td></tr><tr><td><code>limit</code></td><td>query</td><td>integer</td><td>no</td><td><code>50</code></td><td>1 to 200 (default 50).</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/alerts/history&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>With options</strong> (<code>before</code>, <code>limit</code>):</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/alerts/history?before=1&amp;limit=1&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>Next page:</strong> repeat the request with <code>before</code> set to the <code>id</code> of the last item. A page shorter than <code>limit</code> is the last one.</p>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;alert_history&quot;, { query: { before: 1, limit: 1 } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Success.</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: []
 }</code></pre>
-<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1alertsrules"><code>GET /api/v1/alerts/rules</code></h3>
 <p>The built-in rules with their parameters in force, their defaults and what the evaluator's last pass said about each source. Needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>alert_rules</code></p>
@@ -336,9 +408,11 @@
 <pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/alerts/rules&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;alert_rules&quot;, {});</code></pre>
 <p><strong>Response <code>200</code></strong> — Success.</p>
 <p>Content-Type: <code>application/json</code>.</p>
-<p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
+<p><strong>Example response</strong> from a test installation; your IDs, names and times differ. Long lists are cut to their first items.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;rules&quot;: [
     {
@@ -363,11 +437,11 @@
         &quot;severity&quot;: &quot;warning&quot;
       },
       &quot;source&quot;: &quot;Job queue&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
+      &quot;sourceState&quot;: &quot;ok&quot;,
+      &quot;firing&quot;: 1,
       &quot;runbook&quot;: &quot;alerts.md#jobs-are-failing&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
+      &quot;updatedAt&quot;: &quot;2026-10-25T16:32:59.851327Z&quot;,
+      &quot;updatedBy&quot;: &quot;token:docs-verifier&quot;
     },
     {
       &quot;id&quot;: &quot;job-queue-wait&quot;,
@@ -391,401 +465,9 @@
         &quot;severity&quot;: &quot;warning&quot;
       },
       &quot;source&quot;: &quot;Job queue&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
+      &quot;sourceState&quot;: &quot;ok&quot;,
       &quot;firing&quot;: 0,
       &quot;runbook&quot;: &quot;alerts.md#jobs-are-waiting-too-long&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;job-leases-expired&quot;,
-      &quot;title&quot;: &quot;Running jobs lost their worker&quot;,
-      &quot;description&quot;: &quot;Running jobs whose worker stopped renewing the lease. Another worker takes them over; if none does, they stay stuck.&quot;,
-      &quot;unit&quot;: &quot;jobs&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: true,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 1000,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 120,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 120,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;source&quot;: &quot;Job queue&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#running-jobs-lost-their-worker&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;worker-silent&quot;,
-      &quot;title&quot;: &quot;A worker stopped reporting&quot;,
-      &quot;description&quot;: &quot;A deployment worker that did not stop cleanly and has not written its heartbeat for this long (workers write one every 15 seconds).&quot;,
-      &quot;unit&quot;: &quot;seconds since its heartbeat&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: true,
-      &quot;thresholdMin&quot;: 30,
-      &quot;thresholdMax&quot;: 86400,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 60,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;critical&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 60,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;critical&quot;
-      },
-      &quot;source&quot;: &quot;Worker heartbeats&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#a-worker-stopped-reporting&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;leader-missing&quot;,
-      &quot;title&quot;: &quot;Nobody holds a leader role&quot;,
-      &quot;description&quot;: &quot;A role only one worker plays (replica supervisor, outbox relay, alert evaluator) has had no holder for this long.&quot;,
-      &quot;unit&quot;: &quot;seconds without a holder&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: true,
-      &quot;thresholdMin&quot;: 30,
-      &quot;thresholdMax&quot;: 86400,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 90,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 90,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;source&quot;: &quot;Leader leases&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#nobody-holds-a-leader-role&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;supervisor-actions&quot;,
-      &quot;title&quot;: &quot;The supervisor is acting often&quot;,
-      &quot;description&quot;: &quot;Replica actions (recreate, restart, substitute, retire) the supervisor took in the last hour. Many in a row usually mean one cause that keeps coming back.&quot;,
-      &quot;unit&quot;: &quot;actions in an hour&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: true,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 1000,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 4,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 4,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;source&quot;: &quot;Supervisor audit rows&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#the-supervisor-is-acting-often&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;replica-unhealthy&quot;,
-      &quot;title&quot;: &quot;A replica is unhealthy&quot;,
-      &quot;description&quot;: &quot;An instance the supervisor rates unhealthy (its port check keeps failing).&quot;,
-      &quot;unit&quot;: &quot;while it lasts&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: false,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 1,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 300,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 300,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;source&quot;: &quot;Instance health&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#a-replica-is-unhealthy&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;application-status&quot;,
-      &quot;title&quot;: &quot;An application is failed or degraded&quot;,
-      &quot;description&quot;: &quot;An application whose derived status is failed (its last start, stop or restart failed) or degraded (fewer instances run than it should have).&quot;,
-      &quot;unit&quot;: &quot;while it lasts&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: false,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 1,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 600,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 600,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;source&quot;: &quot;Applications&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#an-application-is-failed-or-degraded&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;incus-unreachable&quot;,
-      &quot;title&quot;: &quot;Incus cannot be reached&quot;,
-      &quot;description&quot;: &quot;The worker cannot read the member or instance list from Incus. Deployments, moves and recovery wait until it can.&quot;,
-      &quot;unit&quot;: &quot;while it lasts&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: false,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 1,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 60,
-        &quot;severity&quot;: &quot;critical&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 60,
-        &quot;severity&quot;: &quot;critical&quot;
-      },
-      &quot;source&quot;: &quot;Incus&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#incus-cannot-be-reached&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;member-offline&quot;,
-      &quot;title&quot;: &quot;A cluster member is not online&quot;,
-      &quot;description&quot;: &quot;An Incus cluster member whose status is not Online. Two of three offline puts the cluster's quorum at risk.&quot;,
-      &quot;unit&quot;: &quot;while it lasts&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: false,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 1,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 120,
-        &quot;severity&quot;: &quot;critical&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 120,
-        &quot;severity&quot;: &quot;critical&quot;
-      },
-      &quot;source&quot;: &quot;Incus members&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#a-cluster-member-is-not-online&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;member-unfenced&quot;,
-      &quot;title&quot;: &quot;A failed server is waiting for fencing&quot;,
-      &quot;description&quot;: &quot;A server Incus reports Offline holds modules on shared storage that restart on another server only once it is fenced: its storage lease expired, or a person confirmed it is off. Normally about 140 s after it stopped.&quot;,
-      &quot;unit&quot;: &quot;while it lasts&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: false,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 1,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 300,
-        &quot;severity&quot;: &quot;critical&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 300,
-        &quot;severity&quot;: &quot;critical&quot;
-      },
-      &quot;source&quot;: &quot;Failed servers&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#a-failed-server-is-waiting-for-fencing&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;certificate-expiry&quot;,
-      &quot;title&quot;: &quot;A certificate expires soon&quot;,
-      &quot;description&quot;: &quot;Days left before the certificate the worker uses to reach Incus, or the Incus server certificate it trusts, expires.&quot;,
-      &quot;unit&quot;: &quot;days left&quot;,
-      &quot;comparison&quot;: &quot;at-most&quot;,
-      &quot;thresholdEditable&quot;: true,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 365,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 30,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 30,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;source&quot;: &quot;Worker's Incus configuration&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#a-certificate-expires-soon&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;backup-failed&quot;,
-      &quot;title&quot;: &quot;A scheduled snapshot or backup failed&quot;,
-      &quot;description&quot;: &quot;The last scheduled snapshot or backup of a volume failed (or no backup pool is configured).&quot;,
-      &quot;unit&quot;: &quot;while it lasts&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: false,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 1,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 1,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;source&quot;: &quot;Volume schedules&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#a-scheduled-snapshot-or-backup-failed&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;backup-age&quot;,
-      &quot;title&quot;: &quot;A backup is overdue&quot;,
-      &quot;description&quot;: &quot;Age of a scheduled volume's newest backup, in schedule periods (2 means two backups were missed in a row).&quot;,
-      &quot;unit&quot;: &quot;schedule periods&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: true,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 100,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 2,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 2,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;source&quot;: &quot;Volume schedules&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#a-backup-is-overdue&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;outbox-stuck&quot;,
-      &quot;title&quot;: &quot;Messages are not being delivered&quot;,
-      &quot;description&quot;: &quot;How long the oldest undelivered outbox message (audit copies, alert notifications) has waited.&quot;,
-      &quot;unit&quot;: &quot;seconds&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: true,
-      &quot;thresholdMin&quot;: 60,
-      &quot;thresholdMax&quot;: 86400,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 600,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 600,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;source&quot;: &quot;Outbox&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#messages-are-not-being-delivered&quot;,
-      &quot;updatedAt&quot;: null,
-      &quot;updatedBy&quot;: null
-    },
-    {
-      &quot;id&quot;: &quot;restore-drill-age&quot;,
-      &quot;title&quot;: &quot;Apelora's database restore is not proven&quot;,
-      &quot;description&quot;: &quot;Days since a restore of Apelora's own database was last verified by the drill. Read from the drill's record where the worker can see it (APELORA_RESTORE_DRILL_RECORD).&quot;,
-      &quot;unit&quot;: &quot;days&quot;,
-      &quot;comparison&quot;: &quot;at-least&quot;,
-      &quot;thresholdEditable&quot;: true,
-      &quot;thresholdMin&quot;: 1,
-      &quot;thresholdMax&quot;: 365,
-      &quot;params&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 35,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;defaults&quot;: {
-        &quot;enabled&quot;: true,
-        &quot;threshold&quot;: 35,
-        &quot;forSecs&quot;: 0,
-        &quot;severity&quot;: &quot;warning&quot;
-      },
-      &quot;source&quot;: &quot;Restore drill record&quot;,
-      &quot;sourceState&quot;: &quot;unknown&quot;,
-      &quot;firing&quot;: 0,
-      &quot;runbook&quot;: &quot;alerts.md#apeloras-database-restore-is-not-proven&quot;,
       &quot;updatedAt&quot;: null,
       &quot;updatedBy&quot;: null
     }
@@ -801,68 +483,73 @@
     }
   }
 }</code></pre>
-<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="put-apiv1alertsrulesrule"><code>PUT /api/v1/alerts/rules/{rule}</code></h3>
 <p>Changes a rule's parameters (on or off, threshold within the rule's bounds, duration up to a day, severity). Takes effect on the evaluator's next pass. Needs <code>alert.configure</code>; audited as <code>alert.rule.update</code> with the parameters before and after.</p>
 <p><strong>Operation ID:</strong> <code>update_alert_rule</code></p>
 <p><strong>Needs:</strong> <code>alert.configure</code>; audited as <code>alert.rule.update</code> with the parameters before and after.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>rule</code></td><td>path</td><td>string</td><td>yes</td><td>Rule id</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>rule</code></td><td>path</td><td>string</td><td>yes</td><td>—</td><td>Rule id</td></tr></tbody></table></div>
 <p><strong>Request body</strong> (JSON):</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>yes</td><td>—</td></tr><tr><td><code>forSecs</code></td><td>integer</td><td>yes</td><td>Seconds the condition must hold before firing, and stay clear before resolving.</td></tr><tr><td><code>severity</code></td><td><code>info</code>, <code>warning</code>, <code>critical</code></td><td>yes</td><td>—</td></tr><tr><td><code>threshold</code></td><td>number</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>enabled</code></td><td>boolean</td><td>yes</td><td>—</td></tr><tr><td><code>forSecs</code></td><td>integer</td><td>yes</td><td>Seconds the condition must hold before firing, and stay clear before resolving.</td></tr><tr><td><code>severity</code></td><td>one of <code>info</code>, <code>warning</code>, <code>critical</code></td><td>yes</td><td>—</td></tr><tr><td><code>threshold</code></td><td>number</td><td>yes</td><td>—</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;enabled&quot;: false,
+  &quot;enabled&quot;: true,
   &quot;threshold&quot;: 1,
   &quot;forSecs&quot;: 0,
-  &quot;severity&quot;: &quot;info&quot;
+  &quot;severity&quot;: &quot;warning&quot;
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/alerts/rules/example&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/alerts/rules/job-failures&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;enabled&quot;:false,&quot;threshold&quot;:1,&quot;forSecs&quot;:0,&quot;severity&quot;:&quot;info&quot;}'</code></pre>
+  --data-raw '{&quot;enabled&quot;:true,&quot;threshold&quot;:1,&quot;forSecs&quot;:0,&quot;severity&quot;:&quot;warning&quot;}'</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;update_alert_rule&quot;, { params: { rule: &quot;job-failures&quot; }, body: { enabled: true, threshold: 1, forSecs: 0, severity: &quot;warning&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Success.</p>
 <p>Content-Type: <code>application/json</code>.</p>
-<p><strong>Example response</strong> (placeholder values that show the shape):</p>
+<p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
+  &quot;id&quot;: &quot;job-failures&quot;,
+  &quot;title&quot;: &quot;Jobs are failing&quot;,
+  &quot;description&quot;: &quot;Jobs of one kind that ended failed in the last 15 minutes. A failed job did not reach its goal after its retries.&quot;,
+  &quot;unit&quot;: &quot;failed jobs in 15 minutes&quot;,
   &quot;comparison&quot;: &quot;at-least&quot;,
-  &quot;defaults&quot;: {
-    &quot;enabled&quot;: false,
-    &quot;forSecs&quot;: 0,
-    &quot;severity&quot;: &quot;info&quot;,
-    &quot;threshold&quot;: 1
-  },
-  &quot;description&quot;: &quot;A description&quot;,
-  &quot;firing&quot;: 0,
-  &quot;id&quot;: &quot;example&quot;,
-  &quot;params&quot;: {
-    &quot;enabled&quot;: false,
-    &quot;forSecs&quot;: 0,
-    &quot;severity&quot;: &quot;info&quot;,
-    &quot;threshold&quot;: 1
-  },
-  &quot;runbook&quot;: &quot;example&quot;,
-  &quot;source&quot;: &quot;example&quot;,
-  &quot;sourceState&quot;: &quot;example&quot;,
-  &quot;thresholdEditable&quot;: false,
-  &quot;thresholdMax&quot;: 1,
+  &quot;thresholdEditable&quot;: true,
   &quot;thresholdMin&quot;: 1,
-  &quot;title&quot;: &quot;example&quot;,
-  &quot;unit&quot;: &quot;example&quot;,
-  &quot;updatedAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;updatedBy&quot;: &quot;example&quot;
+  &quot;thresholdMax&quot;: 1000,
+  &quot;params&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;threshold&quot;: 1,
+    &quot;forSecs&quot;: 0,
+    &quot;severity&quot;: &quot;warning&quot;
+  },
+  &quot;defaults&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;threshold&quot;: 1,
+    &quot;forSecs&quot;: 0,
+    &quot;severity&quot;: &quot;warning&quot;
+  },
+  &quot;source&quot;: &quot;Job queue&quot;,
+  &quot;sourceState&quot;: &quot;unknown&quot;,
+  &quot;firing&quot;: 0,
+  &quot;runbook&quot;: &quot;alerts.md#jobs-are-failing&quot;,
+  &quot;updatedAt&quot;: &quot;2026-10-25T16:32:59.851327Z&quot;,
+  &quot;updatedBy&quot;: &quot;token:docs-verifier&quot;
 }</code></pre>
-<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>404</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1alertssilences"><code>POST /api/v1/alerts/silences</code></h3>
 <p>Silences a rule (every subject, or one) for <code>minutes</code> from now: no notification is sent for its alerts that fire or resolve meanwhile. Evaluation and history go on. Needs <code>alert.respond</code>; audited as <code>alert.silence.create</code>.</p>
 <p><strong>Operation ID:</strong> <code>create_alert_silence</code></p>
 <p><strong>Needs:</strong> <code>alert.respond</code>; audited as <code>alert.silence.create</code>.</p>
 <p><strong>Request body</strong> (JSON):</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>minutes</code></td><td>integer</td><td>yes</td><td>1 to 10080 (a week).</td></tr><tr><td><code>note</code></td><td>string</td><td>no</td><td>—</td></tr><tr><td><code>rule</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>subject</code></td><td>string</td><td>no</td><td>One subject; absent: every subject of the rule.</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>minutes</code></td><td>integer</td><td>yes</td><td>1 to 10080 (a week).</td></tr><tr><td><code>note</code></td><td>string or null</td><td>no</td><td>—</td></tr><tr><td><code>rule</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>subject</code></td><td>string or null</td><td>no</td><td>One subject; absent: every subject of the rule.</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;rule&quot;: &quot;example&quot;,
-  &quot;minutes&quot;: 0
+  &quot;rule&quot;: &quot;backup-age&quot;,
+  &quot;minutes&quot;: 120,
+  &quot;note&quot;: &quot;Backup pool maintenance tonight&quot;
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
@@ -870,33 +557,39 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;rule&quot;:&quot;example&quot;,&quot;minutes&quot;:0}'</code></pre>
+  --data-raw '{&quot;rule&quot;:&quot;backup-age&quot;,&quot;minutes&quot;:120,&quot;note&quot;:&quot;Backup pool maintenance tonight&quot;}'</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;create_alert_silence&quot;, { body: { rule: &quot;backup-age&quot;, minutes: 120, note: &quot;Backup pool maintenance tonight&quot; } });</code></pre>
 <p><strong>Response <code>201</code></strong> — Success.</p>
 <p>Content-Type: <code>application/json</code>.</p>
-<p><strong>Example response</strong> (placeholder values that show the shape):</p>
+<p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;createdBy&quot;: &quot;example&quot;,
-  &quot;endsAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;id&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
-  &quot;note&quot;: &quot;example&quot;,
-  &quot;rule&quot;: &quot;example&quot;,
-  &quot;ruleTitle&quot;: &quot;example&quot;,
-  &quot;startsAt&quot;: &quot;2026-01-01T09:00:00Z&quot;,
-  &quot;createdByName&quot;: &quot;example&quot;,
-  &quot;subject&quot;: &quot;example&quot;
+  &quot;id&quot;: &quot;4c106c89-6e2e-476c-9dec-3ca4e039e7d5&quot;,
+  &quot;rule&quot;: &quot;backup-age&quot;,
+  &quot;ruleTitle&quot;: &quot;A backup is overdue&quot;,
+  &quot;subject&quot;: null,
+  &quot;startsAt&quot;: &quot;2026-10-25T16:32:59.857852Z&quot;,
+  &quot;endsAt&quot;: &quot;2026-10-25T18:32:59.857852Z&quot;,
+  &quot;note&quot;: &quot;Backup pool maintenance tonight&quot;,
+  &quot;createdBy&quot;: &quot;token:docs-verifier&quot;,
+  &quot;createdByName&quot;: &quot;docs-verifier&quot;
 }</code></pre>
-<p><strong>Errors:</strong> <code>400</code>, <code>401</code>, <code>403</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="delete-apiv1alertssilencesid"><code>DELETE /api/v1/alerts/silences/{id}</code></h3>
 <p>Ends a silence now. Needs <code>alert.respond</code>; audited as <code>alert.silence.end</code>. 404 when it is not in force (ended or run out).</p>
 <p><strong>Operation ID:</strong> <code>end_alert_silence</code></p>
 <p><strong>Needs:</strong> <code>alert.respond</code>; audited as <code>alert.silence.end</code>.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string</td><td>yes</td><td>Silence id</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Silence id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/alerts/silences/00000000-0000-4000-8000-000000000001&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/alerts/silences/4c106c89-6e2e-476c-9dec-3ca4e039e7d5&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;end_alert_silence&quot;, { params: { id: &quot;4c106c89-6e2e-476c-9dec-3ca4e039e7d5&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Success, with no body.</p>
-<p><strong>Errors:</strong> <code>401</code>, <code>403</code>, <code>404</code>, <code>503</code>. The body is <code>{ &quot;error&quot;: { &quot;code&quot;: …, &quot;message&quot;: … } }</code>.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
         </div>
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/sessions/"><span>Previous</span>Sessions</a><a class="next" href="/docs/reference/module-catalog/"><span>Next</span>Module catalog</a></nav>

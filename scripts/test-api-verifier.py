@@ -34,5 +34,27 @@ class ResponseContractTests(unittest.TestCase):
             verifier.validate_response(self.operation, 204, "text/plain", b"unexpected")
 
 
+class CredentialTests(unittest.TestCase):
+    def setUp(self):
+        verifier.SECRETS.clear()
+        verifier.LOCAL.clear()
+
+    def test_credentials_are_replaced_by_name_and_wherever_they_reappear(self):
+        token = "apu_" + "a" * 64
+        verifier.remember_secrets({"token": token, "expiresAt": "2026-10-26T00:00:00Z"})
+        self.assertEqual(verifier.scrub({"token": token})["token"], "<token, shown once>")
+        self.assertEqual(verifier.scrub({"enrolCommand": f"enrol --token {token}"})["enrolCommand"], "enrol --token <token>")
+        self.assertEqual(verifier.scrub({"note": "apw_" + "b" * 64}), {"note": "<token>"})
+
+    def test_a_body_written_for_the_page_keeps_its_own_placeholders(self):
+        shown = {"token": "<setup token from the setup link>", "password": "<new password>"}
+        self.assertEqual(verifier.scrub(shown, by_name=False), shown)
+
+    def test_local_paths_and_the_internal_test_record_are_replaced(self):
+        verifier.LOCAL["/var/folders/x/T/apelora-docs-db-backups-1"] = "/var/backups/apelora"
+        self.assertEqual(verifier.scrub({"directory": "/var/folders/x/T/apelora-docs-db-backups-1"}), {"directory": "/var/backups/apelora"})
+        self.assertNotIn("TESTED", verifier.scrub({"incusTestedWith": "REAL INCUS TESTED 2026-10-23"})["incusTestedWith"])
+
+
 if __name__ == "__main__":
     unittest.main()

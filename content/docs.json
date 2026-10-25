@@ -345,33 +345,33 @@
   "apiTags": {
     "system": {
       "title": "System",
-      "summary": "Health, version, sign-in, settings, who am I.",
-      "intro": "Health, versions, sign-in, settings, support bundles and caller identity."
+      "summary": "Health, versions, sign-in, settings, metrics, who am I.",
+      "intro": "Health and versions, signing in and out, passwords, settings, metrics and monitoring, image mirrors, database backups, support bundles and caller identity."
     },
     "inventory": {
       "title": "Inventory",
-      "summary": "Servers, instances, networks, storage, jobs and preflight.",
-      "intro": "What exists in the cluster, as Incus reports it: instances, networks, storage pools, jobs, preflight and capacity."
+      "summary": "Servers, instances and logs, networks, storage, capacity and preflight.",
+      "intro": "What exists in the cluster, as Incus reports it: servers and capacity, instances and their logs, Incus projects, networks, storage pools and volumes nobody owns, and preflight checks."
     },
     "deployment": {
       "title": "Deployment",
-      "summary": "Instances, plans, deployments, moves and volumes.",
-      "intro": "Creating, changing and moving single instances, and the plan and deployment of a design."
+      "summary": "Single instances, moves and the job queue.",
+      "intro": "Creating, changing, moving and deleting single instances, and the jobs that carry out those changes and deployments: list, follow, cancel and retry."
     },
     "applications": {
       "title": "Applications",
-      "summary": "Applications, drafts, versions, operations and migration.",
-      "intro": "Applications: drafts and published versions, deploying a version, start, shut down, stop, restart and migrate, volumes and status."
+      "summary": "Applications, drafts, versions, plans, deployments, operations and volumes.",
+      "intro": "Applications: drafts and published versions, planning and deploying a version, start, shut down, stop, restart and migrate, status and events, networks, and volumes with their snapshots, backups and schedules."
     },
     "cluster": {
       "title": "Cluster",
       "summary": "Members, machines, join tokens, settings and recovery.",
-      "intro": "The cluster's servers: members, maintenance, machines and join tokens, cluster settings, groups, certificates and recovery."
+      "intro": "The cluster's servers: members and their maintenance (evacuate, restore, remove, fencing), rolling upgrades, cluster settings and groups, recovery, machines and join tokens, and MAAS provisioning."
     },
     "administration": {
       "title": "Administration",
-      "summary": "Tokens and Apelora's own database.",
-      "intro": "API tokens and Apelora's own database backups."
+      "summary": "API tokens for scripts and automation: list, create and revoke.",
+      "intro": "API tokens for scripts and automation: list, create and revoke them."
     },
     "audit": {
       "title": "Audit",
@@ -392,6 +392,30 @@
       "title": "Alerts",
       "summary": "Alerts, silences and webhook channels.",
       "intro": "Built-in alerts, acknowledgement and silences, and the webhook channels that receive them."
+    }
+  },
+  "apiParamNotes": {
+    "applications.includeArchived": {
+      "description": "Also list archived applications.",
+      "default": false
+    },
+    "assignments.principalType": {
+      "description": "Only the assignments of one principal: its kind. Give it together with `principalId`.",
+      "values": [
+        "user",
+        "group",
+        "service"
+      ]
+    },
+    "assignments.principalId": {
+      "description": "Only the assignments of one principal: its id. Give it together with `principalType`."
+    },
+    "assignments.includeRevoked": {
+      "description": "Also list revoked assignments.",
+      "default": false
+    },
+    "projects_list.organization": {
+      "description": "Only the projects of this organisation (its id)."
     }
   },
   "moved": {

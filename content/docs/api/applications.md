@@ -5,9 +5,9 @@ slug: applications
 order: 4
 label: Applications
 source: packages/api-client/openapi.json
-summary: Applications, drafts, versions, operations and migration.
+summary: Applications, drafts, versions, plans, deployments, operations and volumes.
 ---
-Applications: drafts and published versions, deploying a version, start, shut down, stop, restart and migrate, volumes and status. This page lists 34 operations.
+Applications: drafts and published versions, planning and deploying a version, start, shut down, stop, restart and migrate, status and events, networks, and volumes with their snapshots, backups and schedules. This page lists 34 operations.
 
 Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
@@ -60,9 +60,9 @@ Applications the caller may see, each with design status, derived runtime status
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `includeArchived` | query | boolean | no | — |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `includeArchived` | query | boolean | no | `false` | Also list archived applications. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -70,6 +70,20 @@ Applications the caller may see, each with design status, derived runtime status
 curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**With options** (`includeArchived`):
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications?includeArchived=true" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("applications", { query: { includeArchived: true } });
 ```
 
 **Response `200`** — Success.
@@ -82,25 +96,25 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "name": "shop",
+      "name": "blog",
       "latestRevision": null,
-      "createdAt": "2026-10-25T15:45:26.208646Z",
-      "updatedAt": "2026-10-25T15:45:26.245229Z",
-      "description": "Updated through the API",
+      "createdAt": "2026-10-25T16:32:59.638001Z",
+      "updatedAt": "2026-10-25T16:32:59.638001Z",
+      "description": "Company blog",
       "icon": "box",
       "project": {
-        "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
-        "slug": "docs-project",
-        "name": "Documentation project",
-        "organizationId": "9542a736-cc45-4015-98a8-f3206b0451b9",
-        "organizationSlug": "docs-org"
+        "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+        "slug": "shop",
+        "name": "Online shop",
+        "organizationId": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+        "organizationSlug": "acme"
       },
       "environment": {
-        "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
-        "slug": "development",
-        "name": "Development",
-        "kind": "development",
-        "incusProject": "docs-org-docs-project-development"
+        "id": "5a2bed50-145e-4a9e-9df5-974de12cc193",
+        "slug": "staging",
+        "name": "Staging",
+        "kind": "staging",
+        "incusProject": "acme-shop-staging"
       },
       "archived": false,
       "design": {
@@ -113,7 +127,7 @@ Content-Type: `application/json`.
       },
       "deployment": {
         "status": "not-deployed",
-        "observedAt": "2026-10-25T15:45:26.288273Z",
+        "observedAt": "2026-10-25T16:32:59.68908Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": null,
@@ -149,14 +163,89 @@ Content-Type: `application/json`.
           "reason": "deploy a published version first"
         }
       }
+    },
+    {
+      "name": "shop",
+      "latestRevision": 1,
+      "createdAt": "2026-10-25T16:32:59.630853Z",
+      "updatedAt": "2026-10-25T16:32:59.651895Z",
+      "description": "Storefront, API and order database",
+      "icon": "cart",
+      "project": {
+        "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+        "slug": "shop",
+        "name": "Online shop",
+        "organizationId": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+        "organizationSlug": "acme"
+      },
+      "environment": {
+        "id": "0b7fa228-4c47-4af8-9a53-28df2612fd4e",
+        "slug": "production",
+        "name": "Production",
+        "kind": "production",
+        "incusProject": "shop-prod"
+      },
+      "archived": false,
+      "design": {
+        "status": "published",
+        "draftVersion": 1,
+        "validationErrors": 0,
+        "publishedVersion": 1,
+        "hasUnpublishedChanges": false,
+        "updatedAt": "2026-10-25T16:32:59.651895Z"
+      },
+      "deployment": {
+        "status": "degraded",
+        "observedAt": "2026-10-25T16:32:59.68908Z",
+        "stale": false,
+        "source": "mock",
+        "deployedVersion": 1,
+        "modules": 3,
+        "replicas": {
+          "desired": 3,
+          "running": 0,
+          "healthy": 0,
+          "unhealthy": 0
+        },
+        "lastActivityAt": "2026-10-25T16:32:59.680965Z",
+        "operation": null
+      },
+      "actions": {
+        "start": {
+          "allowed": true,
+          "reason": null
+        },
+        "stop": {
+          "allowed": false,
+          "reason": "nothing is running"
+        },
+        "shutdown": {
+          "allowed": false,
+          "reason": "nothing is running"
+        },
+        "restart": {
+          "allowed": false,
+          "reason": "nothing is running"
+        },
+        "migrate": {
+          "allowed": true,
+          "reason": null
+        }
+      }
     }
   ],
-  "observedAt": "2026-10-25T15:45:26.288273Z",
+  "observedAt": "2026-10-25T16:32:59.68908Z",
   "stale": false
 }
 ```
 
-**Errors:** `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications`
 
@@ -171,16 +260,17 @@ Creates an application in an environment, optionally with its first draft. Needs
 | Field | Type | Required | Meaning |
 |---|---|---|---|
 | `description` | string | no | — |
-| `document` | object | no | The first draft (a Studio document), if any. |
-| `environmentId` | string | yes | The environment (and so the project) the application lives in. |
-| `icon` | string | no | Icon key; `box` when omitted. |
+| `document` | object or null | no | The first draft (a Studio document), if any. |
+| `environmentId` | string (uuid) | yes | The environment (and so the project) the application lives in. |
+| `icon` | string or null | no | Icon key; `box` when omitted. |
 | `name` | string | yes | Lowercase letters, digits and hyphens, starting with a letter; at most 40 characters. Fixed for the life of the application (instances are named after it). |
 
 ```json
 {
   "name": "shop",
-  "environmentId": "dabff187-1aab-4289-8c16-d72e656f93b4",
-  "description": "API documentation example"
+  "environmentId": "0b7fa228-4c47-4af8-9a53-28df2612fd4e",
+  "description": "Storefront and order database",
+  "icon": "cart"
 }
 ```
 
@@ -193,7 +283,13 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"shop","environmentId":"dabff187-1aab-4289-8c16-d72e656f93b4","description":"API documentation example"}'
+  --data-raw '{"name":"shop","environmentId":"0b7fa228-4c47-4af8-9a53-28df2612fd4e","description":"Storefront and order database","icon":"cart"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("create_application", { body /* the request body above */ });
 ```
 
 **Response `201`** — Success.
@@ -206,23 +302,23 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-25T15:45:26.208646Z",
-  "updatedAt": "2026-10-25T15:45:26.208646Z",
-  "description": "API documentation example",
-  "icon": "box",
+  "createdAt": "2026-10-25T16:32:59.630853Z",
+  "updatedAt": "2026-10-25T16:32:59.630853Z",
+  "description": "Storefront and order database",
+  "icon": "cart",
   "project": {
-    "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
-    "slug": "docs-project",
-    "name": "Documentation project",
-    "organizationId": "9542a736-cc45-4015-98a8-f3206b0451b9",
-    "organizationSlug": "docs-org"
+    "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+    "slug": "shop",
+    "name": "Online shop",
+    "organizationId": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+    "organizationSlug": "acme"
   },
   "environment": {
-    "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
-    "slug": "development",
-    "name": "Development",
-    "kind": "development",
-    "incusProject": "docs-org-docs-project-development"
+    "id": "0b7fa228-4c47-4af8-9a53-28df2612fd4e",
+    "slug": "production",
+    "name": "Production",
+    "kind": "production",
+    "incusProject": "shop-prod"
   },
   "archived": false,
   "design": {
@@ -235,7 +331,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-25T15:45:26.216988Z",
+    "observedAt": "2026-10-25T16:32:59.634856Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -274,7 +370,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `403`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `403` | `forbidden`, `mfa_required` |
+| `409` | `draft_conflict` |
 
 ### `GET /api/v1/applications/{name}`
 
@@ -284,9 +386,9 @@ One application with its modules (desired and observed), versions and recent ope
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -296,90 +398,123 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("application", { params: { name: "shop" } });
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "application": {
     "name": "shop",
-    "latestRevision": null,
-    "createdAt": "2026-10-25T15:45:26.208646Z",
-    "updatedAt": "2026-10-25T15:45:26.208646Z",
-    "description": "API documentation example",
-    "icon": "box",
+    "latestRevision": 1,
+    "createdAt": "2026-10-25T16:32:59.630853Z",
+    "updatedAt": "2026-10-25T16:32:59.651895Z",
+    "description": "Storefront, API and order database",
+    "icon": "cart",
     "project": {
-      "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
-      "slug": "docs-project",
-      "name": "Documentation project",
-      "organizationId": "9542a736-cc45-4015-98a8-f3206b0451b9",
-      "organizationSlug": "docs-org"
+      "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+      "slug": "shop",
+      "name": "Online shop",
+      "organizationId": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+      "organizationSlug": "acme"
     },
     "environment": {
-      "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
-      "slug": "development",
-      "name": "Development",
-      "kind": "development",
-      "incusProject": "docs-org-docs-project-development"
+      "id": "0b7fa228-4c47-4af8-9a53-28df2612fd4e",
+      "slug": "production",
+      "name": "Production",
+      "kind": "production",
+      "incusProject": "shop-prod"
     },
     "archived": false,
     "design": {
-      "status": "draft",
-      "draftVersion": null,
+      "status": "published",
+      "draftVersion": 1,
       "validationErrors": 0,
-      "publishedVersion": null,
+      "publishedVersion": 1,
       "hasUnpublishedChanges": false,
-      "updatedAt": null
+      "updatedAt": "2026-10-25T16:32:59.651895Z"
     },
     "deployment": {
-      "status": "not-deployed",
-      "observedAt": "2026-10-25T15:45:26.226934Z",
+      "status": "degraded",
+      "observedAt": "2026-10-25T16:32:59.702511Z",
       "stale": false,
       "source": "mock",
-      "deployedVersion": null,
-      "modules": 0,
+      "deployedVersion": 1,
+      "modules": 3,
       "replicas": {
-        "desired": 0,
+        "desired": 3,
         "running": 0,
         "healthy": 0,
         "unhealthy": 0
       },
-      "lastActivityAt": null,
+      "lastActivityAt": "2026-10-25T16:32:59.680965Z",
       "operation": null
     },
     "actions": {
       "start": {
-        "allowed": false,
-        "reason": "deploy a published version first"
+        "allowed": true,
+        "reason": null
       },
       "stop": {
         "allowed": false,
-        "reason": "deploy a published version first"
+        "reason": "nothing is running"
       },
       "shutdown": {
         "allowed": false,
-        "reason": "deploy a published version first"
+        "reason": "nothing is running"
       },
       "restart": {
         "allowed": false,
-        "reason": "deploy a published version first"
+        "reason": "nothing is running"
       },
       "migrate": {
-        "allowed": false,
-        "reason": "deploy a published version first"
+        "allowed": true,
+        "reason": null
       }
     }
   },
-  "modules": [],
-  "versions": [],
+  "modules": [
+    {
+      "module": "web-01",
+      "replicas": 1,
+      "availability": "stateless",
+      "instances": []
+    },
+    {
+      "module": "db-01",
+      "replicas": 1,
+      "availability": "stateful",
+      "instances": []
+    }
+  ],
+  "versions": [
+    {
+      "revision": 1,
+      "published": true,
+      "label": "First release",
+      "draftVersion": 1,
+      "createdBy": "token:docs-verifier",
+      "createdAt": "2026-10-25T16:32:59.66018Z"
+    }
+  ],
   "operations": []
 }
 ```
 
-**Errors:** `401`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `404` | `not_found` |
 
 ### `PATCH /api/v1/applications/{name}`
 
@@ -389,20 +524,20 @@ Changes an application's description or icon (its name cannot change). Needs `ap
 
 **Needs:** `application.design`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `description` | string | no | — |
-| `icon` | string | no | — |
+| `description` | string or null | no | — |
+| `icon` | string or null | no | — |
 
 ```json
 {
-  "description": "Updated through the API"
+  "description": "Storefront, API and order database"
 }
 ```
 
@@ -415,7 +550,13 @@ curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/applications/shop" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"description":"Updated through the API"}'
+  --data-raw '{"description":"Storefront, API and order database"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("update_application", { params: { name: "shop" }, body: { description: "Storefront, API and order database" } });
 ```
 
 **Response `200`** — Success.
@@ -428,23 +569,23 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-25T15:45:26.208646Z",
-  "updatedAt": "2026-10-25T15:45:26.245229Z",
-  "description": "Updated through the API",
-  "icon": "box",
+  "createdAt": "2026-10-25T16:32:59.630853Z",
+  "updatedAt": "2026-10-25T16:32:59.644663Z",
+  "description": "Storefront, API and order database",
+  "icon": "cart",
   "project": {
-    "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
-    "slug": "docs-project",
-    "name": "Documentation project",
-    "organizationId": "9542a736-cc45-4015-98a8-f3206b0451b9",
-    "organizationSlug": "docs-org"
+    "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+    "slug": "shop",
+    "name": "Online shop",
+    "organizationId": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+    "organizationSlug": "acme"
   },
   "environment": {
-    "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
-    "slug": "development",
-    "name": "Development",
-    "kind": "development",
-    "incusProject": "docs-org-docs-project-development"
+    "id": "0b7fa228-4c47-4af8-9a53-28df2612fd4e",
+    "slug": "production",
+    "name": "Production",
+    "kind": "production",
+    "incusProject": "shop-prod"
   },
   "archived": false,
   "design": {
@@ -457,7 +598,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-25T15:45:26.251103Z",
+    "observedAt": "2026-10-25T16:32:59.647088Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -496,7 +637,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `403`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
 
 ### `POST /api/v1/applications/{name}/archive`
 
@@ -506,22 +653,34 @@ Archives an application that is not running; it leaves the default list and keep
 
 **Needs:** `application.delete`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/archive" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/blog/archive" \
   -H "Authorization: Bearer $APELORA_TOKEN"
+```
+
+**TypeScript:**
+
+```ts
+await client.request("archive_application", { params: { name: "blog" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `still_running` |
 
 ### `POST /api/v1/applications/{name}/deployments`
 
@@ -531,85 +690,164 @@ Deploys the design: saves it as a new revision and queues the planned changes. R
 
 **Needs:** `deploy`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `Idempotency-Key` | header | string | no | — | Makes the request safe to repeat |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `connections` | list of object | no | The design's connections; enforced when the control plane has a network uplink. |
+| `connections` | list of object or null | no | The design's connections; enforced when the control plane has a network uplink. |
+| `connections[].from` | string | yes | — |
+| `connections[].port` | integer or null | no | `None`: any port of the transport (the protocol has no well-known port). |
+| `connections[].to` | string | yes | — |
+| `connections[].transport` | string | yes | `tcp` or `udp`. |
 | `document` | object | yes | The Studio document, saved as an immutable revision. Ignored when `version` is given. |
 | `modules` | list of object | yes | — |
+| `modules[].availability` | one of `stateless`, `singleton`, `stateful` | no | How a module may be run and recovered (from its catalog class). |
+| `modules[].dnsResolver` | boolean | no | This module answers service names for the application (ADR 0004 step 4). Absent means it does not: a resolver is never added unless the design asks for one. |
+| `modules[].guestOs` | one of `linux`, `windows` | no | The operating system inside (from the class): decides which sessions it offers. |
+| `modules[].internet` | one of `none`, `web`, `any` | no | What it may reach outside the application (enforced with the connections). |
+| `modules[].module` | string | yes | The module's stable id in the design (e.g. `nginx-01`). |
+| `modules[].readiness` | object or null | no | — |
+| `modules[].replicas` | integer | no | How many instances (1–9); more than one only for stateless modules. |
+| `modules[].spec` | object | yes | Image, kind and settings; the control plane sets the name, project and owner. |
 | `project` | string | yes | — |
 | `published` | list of object | no | Ports reachable from outside the application (needs connections to be enforced). |
+| `published[].module` | string | yes | — |
+| `published[].port` | integer | yes | — |
+| `published[].transport` | string | yes | `tcp` or `udp`. |
 | `removeMissing` | boolean | no | Also delete the application's instances that are no longer in the design. |
-| `version` | integer | no | Deploy this published version (its stored document) instead of saving `document` as a new revision. Drafts can never be deployed. |
+| `version` | integer or null | no | Deploy this published version (its stored document) instead of saving `document` as a new revision. Drafts can never be deployed. |
 
 ```json
 {
-  "project": "apelora",
-  "document": {},
+  "project": "shop-prod",
+  "document": {
+    "apiVersion": "fabric.apelora/v1alpha1",
+    "kind": "ApplicationAssembly",
+    "metadata": {
+      "name": "shop",
+      "uid": "assembly-shop"
+    },
+    "spec": {
+      "modules": [],
+      "connections": []
+    }
+  },
   "modules": [
     {
-      "module": "example",
+      "module": "web-01",
+      "replicas": 1,
+      "availability": "stateless",
       "spec": {
+        "project": "shop-prod",
+        "name": "shop-web-01",
         "kind": "container",
-        "name": "example",
-        "project": "apelora",
+        "start": true,
         "source": {
-          "alias": "example",
-          "protocol": "simplestreams",
-          "server": "example",
-          "fingerprint": "example"
+          "protocol": "oci",
+          "server": "https://docker.io",
+          "alias": "library/nginx@sha256:eb1c896deef834f4e056829fd6dadac8305501f16cc71ba65fb252c8d0aa168e"
         },
         "architectures": [
-          "example"
+          "x86_64",
+          "aarch64"
         ],
         "config": {
-          "key": "example"
+          "limits.cpu": "1",
+          "limits.memory": "512MiB"
+        }
+      }
+    },
+    {
+      "module": "db-01",
+      "replicas": 1,
+      "availability": "stateful",
+      "spec": {
+        "project": "shop-prod",
+        "name": "shop-db-01",
+        "kind": "container",
+        "start": true,
+        "source": {
+          "protocol": "simplestreams",
+          "server": "https://images.linuxcontainers.org",
+          "alias": "debian/13"
         },
-        "network": {
-          "acl": "example",
-          "network": "example",
-          "uplink": "example"
-        },
-        "owner": {
-          "application": "example",
-          "module": "example",
-          "replica": 0
-        },
-        "profiles": [
-          "example"
+        "architectures": [
+          "x86_64",
+          "aarch64"
         ],
-        "rootPool": "example",
-        "start": false,
+        "config": {
+          "limits.cpu": "2",
+          "limits.memory": "2GiB"
+        },
         "volumes": [
           {
-            "name": "example",
-            "sizeMib": 0,
-            "class": "data-local",
-            "content": "filesystem",
-            "path": "example",
-            "pool": "example"
+            "name": "data",
+            "sizeMib": 10240,
+            "path": "/var/lib/data"
           }
         ]
-      },
-      "availability": "stateless",
-      "dnsResolver": false,
-      "guestOs": "linux",
-      "internet": "none",
-      "readiness": {
-        "command": [
-          "example"
+      }
+    },
+    {
+      "module": "cache-01",
+      "replicas": 1,
+      "availability": "stateful",
+      "spec": {
+        "project": "shop-prod",
+        "name": "shop-cache-01",
+        "kind": "container",
+        "start": true,
+        "source": {
+          "protocol": "simplestreams",
+          "server": "https://images.linuxcontainers.org",
+          "alias": "debian/13"
+        },
+        "architectures": [
+          "x86_64",
+          "aarch64"
         ],
-        "timeoutSecs": 0
-      },
-      "replicas": 0
+        "config": {
+          "limits.cpu": "1",
+          "limits.memory": "1GiB"
+        },
+        "volumes": [
+          {
+            "name": "cache",
+            "sizeMib": 2048,
+            "path": "/var/cache/shop"
+          }
+        ]
+      }
     }
-  ]
+  ],
+  "connections": [
+    {
+      "from": "web-01",
+      "to": "db-01",
+      "transport": "tcp",
+      "port": 5432
+    },
+    {
+      "from": "web-01",
+      "to": "cache-01",
+      "transport": "tcp",
+      "port": 6379
+    }
+  ],
+  "published": [
+    {
+      "module": "web-01",
+      "transport": "tcp",
+      "port": 80
+    }
+  ],
+  "removeMissing": false,
+  "version": 1
 }
 ```
 
@@ -625,78 +863,108 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/deploym
   -H "Accept: application/json" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
-  --data-raw '{"project":"apelora","document":{},"modules":[{"module":"example","spec":{"kind":"container","name":"example","project":"apelora","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"},"architectures":["example"],"config":{"key":"example"},"network":{"acl":"example","network":"example","uplink":"example"},"owner":{"application":"example","module":"example","replica":0},"profiles":["example"],"rootPool":"example","start":false,"volumes":[{"name":"example","sizeMib":0,"class":"data-local","content":"filesystem","path":"example","pool":"example"}]},"availability":"stateless","dnsResolver":false,"guestOs":"linux","internet":"none","readiness":{"command":["example"],"timeoutSecs":0},"replicas":0}]}'
+  --data-raw '{"project":"shop-prod","document":{"apiVersion":"fabric.apelora/v1alpha1","kind":"ApplicationAssembly","metadata":{"name":"shop","uid":"assembly-shop"},"spec":{"modules":[],"connections":[]}},"modules":[{"module":"web-01","replicas":1,"availability":"stateless","spec":{"project":"shop-prod","name":"shop-web-01","kind":"container","start":true,"source":{"protocol":"oci","server":"https://docker.io","alias":"library/nginx@sha256:eb1c896deef834f4e056829fd6dadac8305501f16cc71ba65fb252c8d0aa168e"},"architectures":["x86_64","aarch64"],"config":{"limits.cpu":"1","limits.memory":"512MiB"}}},{"module":"db-01","replicas":1,"availability":"stateful","spec":{"project":"shop-prod","name":"shop-db-01","kind":"container","start":true,"source":{"protocol":"simplestreams","server":"https://images.linuxcontainers.org","alias":"debian/13"},"architectures":["x86_64","aarch64"],"config":{"limits.cpu":"2","limits.memory":"2GiB"},"volumes":[{"name":"data","sizeMib":10240,"path":"/var/lib/data"}]}},{"module":"cache-01","replicas":1,"availability":"stateful","spec":{"project":"shop-prod","name":"shop-cache-01","kind":"container","start":true,"source":{"protocol":"simplestreams","server":"https://images.linuxcontainers.org","alias":"debian/13"},"architectures":["x86_64","aarch64"],"config":{"limits.cpu":"1","limits.memory":"1GiB"},"volumes":[{"name":"cache","sizeMib":2048,"path":"/var/cache/shop"}]}}],"connections":[{"from":"web-01","to":"db-01","transport":"tcp","port":5432},{"from":"web-01","to":"cache-01","transport":"tcp","port":6379}],"published":[{"module":"web-01","transport":"tcp","port":80}],"removeMissing":false,"version":1}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("deploy_application", { params: { name: "shop" }, body /* the request body above */, idempotencyKey: newIdempotencyKey() });
 ```
 
 **Response `202`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
-  "application": "example",
-  "jobs": [
-    {
-      "action": "create",
-      "instance": "example",
-      "jobId": "00000000-0000-4000-8000-000000000001",
-      "module": "example"
-    }
-  ],
+  "application": "shop",
+  "revision": 1,
   "plan": {
     "items": [
       {
+        "module": "web-01",
+        "replica": 1,
+        "instance": "shop-web-01",
         "action": "create",
-        "instance": "example",
-        "module": "example",
-        "reason": "example",
-        "replica": 0,
-        "changes": [
-          {
-            "key": "example",
-            "from": "example",
-            "to": "example"
-          }
-        ]
+        "reason": "not deployed yet"
+      },
+      {
+        "module": "db-01",
+        "replica": 1,
+        "instance": "shop-db-01",
+        "action": "create",
+        "reason": "not deployed yet"
       }
     ],
     "warnings": [
-      "example"
+      "single points of failure: cache-01, db-01, web-01 run as one instance",
+      "not published: web-01 (publishing needs enforced connections and APELORA_SERVICE_ADDRESSES)",
+      "connections are not enforced: the control plane has no network uplink (APELORA_NETWORK_UPLINK); instances share the project's network"
     ],
     "quota": {
+      "allowed": true,
       "adding": {
-        "cpu": 1,
-        "diskBytes": 1,
-        "instances": 1,
-        "memoryBytes": 1
+        "instances": 3,
+        "cpu": 4,
+        "memoryBytes": 3758096384,
+        "diskBytes": 45097156608
       },
-      "allowed": false,
       "scopes": [
         {
+          "kind": "project",
+          "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+          "name": "Online shop",
           "dimensions": [
             {
-              "adding": 1,
               "dimension": "instances",
-              "exceeded": false,
-              "limit": 1,
-              "used": 1
+              "used": 0,
+              "adding": 3,
+              "limit": 20,
+              "exceeded": false
+            },
+            {
+              "dimension": "cpu",
+              "used": 0,
+              "adding": 4,
+              "limit": 16,
+              "exceeded": false
             }
-          ],
-          "id": "example",
-          "kind": "organization",
-          "name": "example"
+          ]
         }
       ]
     }
   },
-  "revision": 1,
-  "networkJob": "00000000-0000-4000-8000-000000000001"
+  "jobs": [
+    {
+      "module": "web-01",
+      "instance": "shop-web-01",
+      "action": "create",
+      "jobId": "ec8b46f2-fd31-419f-a2e9-3615a931d307"
+    },
+    {
+      "module": "db-01",
+      "instance": "shop-db-01",
+      "action": "create",
+      "jobId": "3835973f-32f6-4006-a676-8ea82f284454"
+    }
+  ],
+  "networkJob": null
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
+| `409` | `not_published`, `plan_conflict`, `project_mismatch`, `quota_exceeded`, `service_range_exhausted` |
+| `502` | an `incus_…` code |
+| `503` | `incus_project_not_ready`, `quota_unverifiable`, `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/draft`
 
@@ -706,9 +974,9 @@ The application's working document. 404 when it has none yet. Needs `application
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -718,25 +986,44 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/draft" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("application_draft", { params: { name: "shop" } });
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "document": {},
-  "updatedAt": "2026-01-01T09:00:00Z",
-  "updatedBy": "example",
-  "validationErrors": [
-    "example"
-  ],
-  "version": 1
+  "version": 1,
+  "document": {
+    "apiVersion": "fabric.apelora/v1alpha1",
+    "kind": "ApplicationAssembly",
+    "metadata": {
+      "name": "shop",
+      "uid": "assembly-shop"
+    },
+    "spec": {
+      "connections": [],
+      "modules": []
+    }
+  },
+  "validationErrors": [],
+  "updatedBy": "token:docs-verifier",
+  "updatedAt": "2026-10-25T16:32:59.651895Z"
 }
 ```
 
-**Errors:** `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `404` | `no_draft`, `not_found` |
 
 ### `PUT /api/v1/applications/{name}/draft`
 
@@ -746,20 +1033,31 @@ Saves the draft as the next version. Refused with 409 `draft_conflict` (and the 
 
 **Needs:** `application.design`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `baseVersion` | integer | no | The draft version this edit started from; omit only for the first save. |
+| `baseVersion` | integer or null | no | The draft version this edit started from; omit only for the first save. |
 | `document` | object | yes | — |
 
 ```json
 {
-  "document": {}
+  "document": {
+    "apiVersion": "fabric.apelora/v1alpha1",
+    "kind": "ApplicationAssembly",
+    "metadata": {
+      "name": "shop",
+      "uid": "assembly-shop"
+    },
+    "spec": {
+      "modules": [],
+      "connections": []
+    }
+  }
 }
 ```
 
@@ -772,28 +1070,49 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/applications/shop/draft" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"document":{}}'
+  --data-raw '{"document":{"apiVersion":"fabric.apelora/v1alpha1","kind":"ApplicationAssembly","metadata":{"name":"shop","uid":"assembly-shop"},"spec":{"modules":[],"connections":[]}}}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("save_application_draft", { params: { name: "shop" }, body /* the request body above */ });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "document": {},
-  "updatedAt": "2026-01-01T09:00:00Z",
-  "updatedBy": "example",
-  "validationErrors": [
-    "example"
-  ],
-  "version": 1
+  "version": 1,
+  "document": {
+    "apiVersion": "fabric.apelora/v1alpha1",
+    "kind": "ApplicationAssembly",
+    "metadata": {
+      "name": "shop",
+      "uid": "assembly-shop"
+    },
+    "spec": {
+      "connections": [],
+      "modules": []
+    }
+  },
+  "validationErrors": [],
+  "updatedBy": "token:docs-verifier",
+  "updatedAt": "2026-10-25T16:32:59.651895Z"
 }
 ```
 
-**Errors:** `400`, `403`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `403` | `forbidden`, `mfa_required` |
+| `409` | `draft_conflict` |
 
 ### `GET /api/v1/applications/{name}/events`
 
@@ -803,9 +1122,9 @@ What happened to the application: creation, saves, versions, deployments, operat
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -815,32 +1134,77 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/events" 
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("application_events", { params: { name: "shop" } });
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "items": [
     {
-      "action": "example",
-      "actor": "example",
-      "actorType": "example",
-      "at": "2026-01-01T09:00:00Z",
-      "detail": {},
-      "id": 1,
-      "outcome": "example",
-      "target": "example",
-      "actorName": "example",
-      "scope": {}
+      "id": 74,
+      "at": "2026-10-25T16:32:59.680965Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "application.deploy.requested",
+      "target": "shop-prod/shop",
+      "outcome": "success",
+      "scope": {
+        "application": "05132f0f-8350-430e-ae8e-8df0bf170dd3",
+        "organization": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+        "project": "96dd378f-883d-443e-b4b0-5e929f0f7dea"
+      },
+      "detail": {
+        "create": 3,
+        "keep": 0,
+        "name": "docs-verifier",
+        "remove": 0,
+        "requestId": "0ad7aa02-2de8-4cf8-b589-7946f58f391d",
+        "resize": 0,
+        "revision": 1,
+        "role": "fabric-admin"
+      }
+    },
+    {
+      "id": 73,
+      "at": "2026-10-25T16:32:59.66018Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "application.version.publish",
+      "target": "shop",
+      "outcome": "success",
+      "scope": {
+        "application": "05132f0f-8350-430e-ae8e-8df0bf170dd3",
+        "organization": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+        "project": "96dd378f-883d-443e-b4b0-5e929f0f7dea"
+      },
+      "detail": {
+        "draftVersion": 1,
+        "name": "docs-verifier",
+        "requestId": "03b9db65-15d0-4a5b-8d2b-2ae6efe8d42f",
+        "revision": 1,
+        "role": "fabric-admin"
+      }
     }
   ]
 }
 ```
 
-**Errors:** `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `404` | `not_found` |
 
 ### `GET /api/v1/applications/{name}/migration`
 
@@ -850,57 +1214,53 @@ Dry run of migrating the application to another server: for each instance whethe
 
 **Needs:** `application.operate`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `target` | query | string | yes | The server to move the application to. |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `target` | query | string | yes | — | The server to move the application to. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/migration?target=example" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/migration?target=mock-member-02" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("preview_application_migration", { params: { name: "shop" }, query: { target: "mock-member-02" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "items": [
-    {
-      "alreadyThere": false,
-      "blocked": [
-        "example"
-      ],
-      "copyMib": 0,
-      "from": "example",
-      "instance": "example",
-      "live": false,
-      "module": "example",
-      "notes": [
-        "example"
-      ],
-      "stops": false
-    }
-  ],
-  "possible": false,
   "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:33:00.933977Z"
   },
-  "stops": [
-    "example"
-  ],
-  "target": "example"
+  "target": "mock-member-02",
+  "items": [],
+  "possible": false,
+  "stops": []
 }
 ```
 
-**Errors:** `400`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `not_deployed` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/applications/{name}/operations`
 
@@ -910,9 +1270,9 @@ Recent operations of the application, newest first. Needs `application.view`.
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -922,46 +1282,29 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operatio
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("application_operations", { params: { name: "shop" } });
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "items": [
-    {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "kind": "start",
-      "phases": [
-        {
-          "action": "example",
-          "state": "example",
-          "steps": [
-            {
-              "instance": "example",
-              "module": "example",
-              "state": "example",
-              "error": "example"
-            }
-          ]
-        }
-      ],
-      "requestedBy": "example",
-      "state": "pending",
-      "stepsDone": 0,
-      "stepsTotal": 0,
-      "error": "example",
-      "finishedAt": "2026-01-01T09:00:00Z",
-      "startedAt": "2026-01-01T09:00:00Z"
-    }
-  ]
+  "items": []
 }
 ```
 
-**Errors:** `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `404` | `not_found` |
 
 ### `POST /api/v1/applications/{name}/operations`
 
@@ -971,18 +1314,18 @@ Starts, shuts down (graceful), stops (immediate), restarts or migrates the appli
 
 **Needs:** `application.operate` on the application.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `Idempotency-Key` | header | string | no | — | Makes the request safe to repeat |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `action` | `start`, `stop`, `shutdown`, `restart`, `migrate` | yes | — |
+| `action` | one of `start`, `stop`, `shutdown`, `restart`, `migrate` | yes | — |
 | `confirmDisruption` | boolean | no | Required to stop or restart an application that has single-instance or stateful modules: it acknowledges that their clients lose service meanwhile. |
-| `target` | string | no | The server to move the application to. Needed for `migrate`, ignored otherwise. |
+| `target` | string or null | no | The server to move the application to. Needed for `migrate`, ignored otherwise. |
 
 ```json
 {
@@ -1003,6 +1346,12 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/operati
   -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
   --data-raw '{"action":"start"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("operate_application", { params: { name: "shop" }, body: { action: "start" }, idempotencyKey: newIdempotencyKey() });
 ```
 
 **Response `202`** — Success.
@@ -1043,7 +1392,15 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `403`, `404`, `409`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `action_not_available`, `already_running`, `already_stopped`, `confirmation_required`, `member_unreachable`, `migration_blocked`, `not_deployed`, `nothing_deployed`, `nothing_to_do`, `operation_in_progress` |
+| `503` | `incus_unreachable`, `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/operations/{id}`
 
@@ -1053,17 +1410,23 @@ One operation with the progress of each phase and instance. Needs `application.v
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `id` | path | string | yes | Operation id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `id` | path | string (uuid) | yes | — | Operation id |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/ba37ab04-984c-4a70-a6af-e1d3c91823f0" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("application_operation", { params: { name: "shop", id: "ba37ab04-984c-4a70-a6af-e1d3c91823f0" } });
 ```
 
 **Response `200`** — Success.
@@ -1101,7 +1464,11 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `404` | `not_found` |
 
 ### `POST /api/v1/applications/{name}/plan`
 
@@ -1111,78 +1478,144 @@ What deploying the design would change, without changing anything. Needs `deploy
 
 **Needs:** `deploy`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `connections` | list of object | no | The design's connections; enforced when the control plane has a network uplink. |
+| `connections` | list of object or null | no | The design's connections; enforced when the control plane has a network uplink. |
+| `connections[].from` | string | yes | — |
+| `connections[].port` | integer or null | no | `None`: any port of the transport (the protocol has no well-known port). |
+| `connections[].to` | string | yes | — |
+| `connections[].transport` | string | yes | `tcp` or `udp`. |
 | `modules` | list of object | yes | — |
+| `modules[].availability` | one of `stateless`, `singleton`, `stateful` | no | How a module may be run and recovered (from its catalog class). |
+| `modules[].dnsResolver` | boolean | no | This module answers service names for the application (ADR 0004 step 4). Absent means it does not: a resolver is never added unless the design asks for one. |
+| `modules[].guestOs` | one of `linux`, `windows` | no | The operating system inside (from the class): decides which sessions it offers. |
+| `modules[].internet` | one of `none`, `web`, `any` | no | What it may reach outside the application (enforced with the connections). |
+| `modules[].module` | string | yes | The module's stable id in the design (e.g. `nginx-01`). |
+| `modules[].readiness` | object or null | no | — |
+| `modules[].replicas` | integer | no | How many instances (1–9); more than one only for stateless modules. |
+| `modules[].spec` | object | yes | Image, kind and settings; the control plane sets the name, project and owner. |
 | `project` | string | yes | — |
 | `published` | list of object | no | Ports reachable from outside the application (needs connections to be enforced). |
+| `published[].module` | string | yes | — |
+| `published[].port` | integer | yes | — |
+| `published[].transport` | string | yes | `tcp` or `udp`. |
 
 ```json
 {
-  "project": "apelora",
+  "project": "shop-prod",
   "modules": [
     {
-      "module": "example",
+      "module": "web-01",
+      "replicas": 1,
+      "availability": "stateless",
       "spec": {
+        "project": "shop-prod",
+        "name": "shop-web-01",
         "kind": "container",
-        "name": "example",
-        "project": "apelora",
+        "start": true,
         "source": {
-          "alias": "example",
-          "protocol": "simplestreams",
-          "server": "example",
-          "fingerprint": "example"
+          "protocol": "oci",
+          "server": "https://docker.io",
+          "alias": "library/nginx@sha256:eb1c896deef834f4e056829fd6dadac8305501f16cc71ba65fb252c8d0aa168e"
         },
         "architectures": [
-          "example"
+          "x86_64",
+          "aarch64"
         ],
         "config": {
-          "key": "example"
+          "limits.cpu": "1",
+          "limits.memory": "512MiB"
+        }
+      }
+    },
+    {
+      "module": "db-01",
+      "replicas": 1,
+      "availability": "stateful",
+      "spec": {
+        "project": "shop-prod",
+        "name": "shop-db-01",
+        "kind": "container",
+        "start": true,
+        "source": {
+          "protocol": "simplestreams",
+          "server": "https://images.linuxcontainers.org",
+          "alias": "debian/13"
         },
-        "network": {
-          "acl": "example",
-          "network": "example",
-          "uplink": "example"
-        },
-        "owner": {
-          "application": "example",
-          "module": "example",
-          "replica": 0
-        },
-        "profiles": [
-          "example"
+        "architectures": [
+          "x86_64",
+          "aarch64"
         ],
-        "rootPool": "example",
-        "start": false,
+        "config": {
+          "limits.cpu": "2",
+          "limits.memory": "2GiB"
+        },
         "volumes": [
           {
-            "name": "example",
-            "sizeMib": 0,
-            "class": "data-local",
-            "content": "filesystem",
-            "path": "example",
-            "pool": "example"
+            "name": "data",
+            "sizeMib": 10240,
+            "path": "/var/lib/data"
           }
         ]
-      },
-      "availability": "stateless",
-      "dnsResolver": false,
-      "guestOs": "linux",
-      "internet": "none",
-      "readiness": {
-        "command": [
-          "example"
+      }
+    },
+    {
+      "module": "cache-01",
+      "replicas": 1,
+      "availability": "stateful",
+      "spec": {
+        "project": "shop-prod",
+        "name": "shop-cache-01",
+        "kind": "container",
+        "start": true,
+        "source": {
+          "protocol": "simplestreams",
+          "server": "https://images.linuxcontainers.org",
+          "alias": "debian/13"
+        },
+        "architectures": [
+          "x86_64",
+          "aarch64"
         ],
-        "timeoutSecs": 0
-      },
-      "replicas": 0
+        "config": {
+          "limits.cpu": "1",
+          "limits.memory": "1GiB"
+        },
+        "volumes": [
+          {
+            "name": "cache",
+            "sizeMib": 2048,
+            "path": "/var/cache/shop"
+          }
+        ]
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from": "web-01",
+      "to": "db-01",
+      "transport": "tcp",
+      "port": 5432
+    },
+    {
+      "from": "web-01",
+      "to": "cache-01",
+      "transport": "tcp",
+      "port": 6379
+    }
+  ],
+  "published": [
+    {
+      "module": "web-01",
+      "transport": "tcp",
+      "port": 80
     }
   ]
 }
@@ -1197,65 +1630,87 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/plan" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"project":"apelora","modules":[{"module":"example","spec":{"kind":"container","name":"example","project":"apelora","source":{"alias":"example","protocol":"simplestreams","server":"example","fingerprint":"example"},"architectures":["example"],"config":{"key":"example"},"network":{"acl":"example","network":"example","uplink":"example"},"owner":{"application":"example","module":"example","replica":0},"profiles":["example"],"rootPool":"example","start":false,"volumes":[{"name":"example","sizeMib":0,"class":"data-local","content":"filesystem","path":"example","pool":"example"}]},"availability":"stateless","dnsResolver":false,"guestOs":"linux","internet":"none","readiness":{"command":["example"],"timeoutSecs":0},"replicas":0}]}'
+  --data-raw '{"project":"shop-prod","modules":[{"module":"web-01","replicas":1,"availability":"stateless","spec":{"project":"shop-prod","name":"shop-web-01","kind":"container","start":true,"source":{"protocol":"oci","server":"https://docker.io","alias":"library/nginx@sha256:eb1c896deef834f4e056829fd6dadac8305501f16cc71ba65fb252c8d0aa168e"},"architectures":["x86_64","aarch64"],"config":{"limits.cpu":"1","limits.memory":"512MiB"}}},{"module":"db-01","replicas":1,"availability":"stateful","spec":{"project":"shop-prod","name":"shop-db-01","kind":"container","start":true,"source":{"protocol":"simplestreams","server":"https://images.linuxcontainers.org","alias":"debian/13"},"architectures":["x86_64","aarch64"],"config":{"limits.cpu":"2","limits.memory":"2GiB"},"volumes":[{"name":"data","sizeMib":10240,"path":"/var/lib/data"}]}},{"module":"cache-01","replicas":1,"availability":"stateful","spec":{"project":"shop-prod","name":"shop-cache-01","kind":"container","start":true,"source":{"protocol":"simplestreams","server":"https://images.linuxcontainers.org","alias":"debian/13"},"architectures":["x86_64","aarch64"],"config":{"limits.cpu":"1","limits.memory":"1GiB"},"volumes":[{"name":"cache","sizeMib":2048,"path":"/var/cache/shop"}]}}],"connections":[{"from":"web-01","to":"db-01","transport":"tcp","port":5432},{"from":"web-01","to":"cache-01","transport":"tcp","port":6379}],"published":[{"module":"web-01","transport":"tcp","port":80}]}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("plan_application", { params: { name: "shop" }, body /* the request body above */ });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "items": [
     {
+      "module": "web-01",
+      "replica": 1,
+      "instance": "shop-web-01",
       "action": "create",
-      "instance": "example",
-      "module": "example",
-      "reason": "example",
-      "replica": 0,
-      "changes": [
-        {
-          "key": "example",
-          "from": "example",
-          "to": "example"
-        }
-      ]
+      "reason": "not deployed yet"
+    },
+    {
+      "module": "db-01",
+      "replica": 1,
+      "instance": "shop-db-01",
+      "action": "create",
+      "reason": "not deployed yet"
     }
   ],
   "warnings": [
-    "example"
+    "single points of failure: cache-01, db-01, web-01 run as one instance",
+    "not published: web-01 (publishing needs enforced connections and APELORA_SERVICE_ADDRESSES)",
+    "connections are not enforced: the control plane has no network uplink (APELORA_NETWORK_UPLINK); instances share the project's network"
   ],
   "quota": {
+    "allowed": true,
     "adding": {
-      "cpu": 1,
-      "diskBytes": 1,
-      "instances": 1,
-      "memoryBytes": 1
+      "instances": 3,
+      "cpu": 4,
+      "memoryBytes": 3758096384,
+      "diskBytes": 45097156608
     },
-    "allowed": false,
     "scopes": [
       {
+        "kind": "project",
+        "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+        "name": "Online shop",
         "dimensions": [
           {
-            "adding": 1,
             "dimension": "instances",
-            "exceeded": false,
-            "limit": 1,
-            "used": 1
+            "used": 0,
+            "adding": 3,
+            "limit": 20,
+            "exceeded": false
+          },
+          {
+            "dimension": "cpu",
+            "used": 0,
+            "adding": 4,
+            "limit": 16,
+            "exceeded": false
           }
-        ],
-        "id": "example",
-        "kind": "organization",
-        "name": "example"
+        ]
       }
     ]
   }
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `POST /api/v1/applications/{name}/restore`
 
@@ -1265,22 +1720,33 @@ Brings an archived application back. Needs `application.delete`.
 
 **Needs:** `application.delete`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/blog/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN"
+```
+
+**TypeScript:**
+
+```ts
+await client.request("restore_application", { params: { name: "blog" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `403`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
 
 ### `GET /api/v1/applications/{name}/status`
 
@@ -1290,10 +1756,10 @@ The application's instances as Incus reports them, by module. Needs `read-invent
 
 **Needs:** `read-inventory`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `project` | query | string | no | Only this Incus project. |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `project` | query | string | no | — | Only this Incus project. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -1303,44 +1769,45 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/status" 
   -H "Accept: application/json"
 ```
 
+**With options** (`project`):
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/status?project=shop-prod" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("application_status", { params: { name: "shop" }, query: { project: "shop-prod" } });
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "items": [
-    {
-      "instance": "example",
-      "location": "example",
-      "module": "example",
-      "project": "apelora",
-      "status": "example",
-      "health": {
-        "detail": "example",
-        "health": "unknown",
-        "since": "example",
-        "restartedAt": "2026-01-01T09:00:00Z"
-      }
-    }
-  ],
-  "services": [
-    {
-      "address": "example",
-      "module": "example",
-      "project": "apelora"
-    }
-  ],
   "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
-  }
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:33:00.941421Z"
+  },
+  "items": [],
+  "services": []
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/applications/{name}/versions`
 
@@ -1350,9 +1817,9 @@ Versions of the application, newest first. Needs `application.view`.
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -1362,28 +1829,38 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("application_versions", { params: { name: "shop" } });
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "items": [
     {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "createdBy": "example",
-      "published": false,
       "revision": 1,
+      "published": true,
+      "label": "First release",
       "draftVersion": 1,
-      "label": "example"
+      "createdBy": "token:docs-verifier",
+      "createdAt": "2026-10-25T16:32:59.66018Z"
     }
   ]
 }
 ```
 
-**Errors:** `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `404` | `not_found` |
 
 ### `POST /api/v1/applications/{name}/versions`
 
@@ -1393,19 +1870,19 @@ Releases the current draft as the next immutable published version. Refused whil
 
 **Needs:** `application.design`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `label` | string | no | A short name for the version, e.g. `after load test`. |
+| `label` | string or null | no | A short name for the version, e.g. `after load test`. |
 
 ```json
 {
-  "label": "example"
+  "label": "First release"
 }
 ```
 
@@ -1418,27 +1895,40 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/version
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"label":"example"}'
+  --data-raw '{"label":"First release"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("publish_application", { params: { name: "shop" }, body: { label: "First release" } });
 ```
 
 **Response `201`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "createdAt": "2026-01-01T09:00:00Z",
-  "createdBy": "example",
-  "published": false,
   "revision": 1,
+  "published": true,
+  "label": "First release",
   "draftVersion": 1,
-  "label": "example"
+  "createdBy": "token:docs-verifier",
+  "createdAt": "2026-10-25T16:32:59.66018Z"
 }
 ```
 
-**Errors:** `403`, `404`, `409`, `422`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `no_draft`, `not_found` |
+| `409` | `already_published` |
+| `422` | `draft_invalid` |
 
 ### `GET /api/v1/applications/{name}/versions/{revision}`
 
@@ -1448,10 +1938,10 @@ The document of one version. Needs `application.view`.
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `revision` | path | integer | yes | Version number |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `revision` | path | integer | yes | — | Version number |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -1461,20 +1951,41 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("application_version", { params: { name: "shop", revision: "1" } });
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "document": {},
-  "published": false
+  "document": {
+    "apiVersion": "fabric.apelora/v1alpha1",
+    "kind": "ApplicationAssembly",
+    "metadata": {
+      "name": "shop",
+      "uid": "assembly-shop"
+    },
+    "spec": {
+      "connections": [],
+      "modules": []
+    }
+  },
+  "published": true
 }
 ```
 
-**Errors:** `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `404` | `not_found` |
 
 ### `GET /api/v1/applications/{name}/volumes`
 
@@ -1484,9 +1995,9 @@ The application's volumes, with what Incus says about each now. Needs `applicati
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -1496,40 +2007,65 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes"
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("application_volumes", { params: { name: "shop" } });
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:33:00.947872Z"
+  },
   "items": [
     {
-      "class": "example",
-      "content": "example",
-      "createdAt": "2026-01-01T09:00:00Z",
-      "incusName": "example",
-      "instance": "example",
-      "member": "example",
-      "module": "example",
-      "name": "example",
-      "pool": "example",
-      "sizeMib": 1,
-      "state": "attached",
-      "usedBy": [
-        "example"
-      ]
+      "module": "cache-01",
+      "instance": "shop-cache-01",
+      "name": "cache",
+      "incusName": "shop-cache-01-cache",
+      "pool": "mock-local",
+      "member": "mock-member-01",
+      "sizeMib": 2048,
+      "content": "filesystem",
+      "class": "data-local",
+      "state": "missing",
+      "usedBy": [],
+      "createdAt": "2026-10-25T16:33:00.0107Z"
+    },
+    {
+      "module": "db-01",
+      "instance": "shop-db-01",
+      "name": "data",
+      "incusName": "shop-db-01-data",
+      "pool": "mock-local",
+      "member": "mock-member-01",
+      "sizeMib": 10240,
+      "content": "filesystem",
+      "class": "data-local",
+      "state": "missing",
+      "usedBy": [],
+      "createdAt": "2026-10-25T16:33:00.002772Z"
     }
-  ],
-  "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
-  }
+  ]
 }
 ```
 
-**Errors:** `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | an `incus_…` code |
 
 ### `PATCH /api/v1/applications/{name}/volumes/{volume}`
 
@@ -1539,10 +2075,10 @@ Grows one of the application's volumes, also while its instance runs. Volumes on
 
 **Needs:** `application.deploy`; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `volume` | path | string | yes | The volume's Incus name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `volume` | path | string | yes | — | The volume's Incus name |
 
 **Request body** (JSON):
 
@@ -1552,7 +2088,7 @@ Grows one of the application's volumes, also while its instance runs. Volumes on
 
 ```json
 {
-  "sizeMib": 0
+  "sizeMib": 20480
 }
 ```
 
@@ -1561,15 +2097,30 @@ Grows one of the application's volumes, also while its instance runs. Volumes on
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/applications/shop/volumes/example" \
+curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"sizeMib":0}'
+  --data-raw '{"sizeMib":20480}'
+```
+
+**TypeScript:**
+
+```ts
+await client.request("grow_application_volume", { params: { name: "shop", volume: "shop-db-01-data" }, body: { sizeMib: 20480 } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | — |
+| `502` | `incus_not_found` |
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}`
 
@@ -1579,10 +2130,10 @@ Deletes one of the application's volumes and its snapshots, for good. The volume
 
 **Needs:** `application.delete` (and an approval where the policy asks for one); audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `volume` | path | string | yes | The volume's Incus name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `volume` | path | string | yes | — | The volume's Incus name |
 
 **Request body** (JSON):
 
@@ -1592,7 +2143,7 @@ Deletes one of the application's volumes and its snapshots, for good. The volume
 
 ```json
 {
-  "confirm": "example"
+  "confirm": "shop-cache-01-cache"
 }
 ```
 
@@ -1601,15 +2152,30 @@ Deletes one of the application's volumes and its snapshots, for good. The volume
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/example" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-cache-01-cache" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example"}'
+  --data-raw '{"confirm":"shop-cache-01-cache"}'
+```
+
+**TypeScript:**
+
+```ts
+await client.request("delete_application_volume", { params: { name: "shop", volume: "shop-cache-01-cache" }, body: { confirm: "shop-cache-01-cache" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `approval_invalid`, `approval_required`, `volume_in_use` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/backups`
 
@@ -1619,62 +2185,84 @@ The volume's backups, oldest first, whether each still exists, and its schedules
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `volume` | path | string | yes | The volume's Incus name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `volume` | path | string | yes | — | The volume's Incus name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/backups" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("volume_backups", { params: { name: "shop", volume: "shop-db-01-data" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:33:02.109613Z"
+  },
+  "backupPool": "mock-local",
+  "schedules": {
+    "snapshots": {
+      "everyMinutes": 60,
+      "keep": 24,
+      "lastRunAt": null,
+      "error": null
+    },
+    "backups": {
+      "everyMinutes": 1440,
+      "keep": 7,
+      "lastRunAt": null,
+      "error": null
+    }
+  },
   "items": [
     {
-      "member": "example",
-      "name": "example",
-      "pool": "example",
+      "name": "shop-db-01-data-bk-20261025163300",
+      "pool": "mock-local",
+      "member": "mock-member-02",
+      "sizeMib": 10240,
+      "takenAt": "2026-10-25T16:33:00.974824Z",
       "scheduled": false,
-      "sizeMib": 1,
-      "takenAt": "2026-01-01T09:00:00Z",
-      "beforeRestore": "00000000-0000-4000-8000-000000000001",
+      "beforeRestore": null,
+      "present": false
+    },
+    {
+      "name": "shop-db-01-data-bk-20261025163302",
+      "pool": "mock-local",
+      "member": "mock-member-02",
+      "sizeMib": 10240,
+      "takenAt": "2026-10-25T16:33:02.096298Z",
+      "scheduled": false,
+      "beforeRestore": null,
       "present": false
     }
-  ],
-  "schedules": {
-    "backups": {
-      "everyMinutes": 1,
-      "keep": 1,
-      "error": "example",
-      "lastRunAt": "2026-01-01T09:00:00Z"
-    },
-    "snapshots": {
-      "everyMinutes": 1,
-      "keep": 1,
-      "error": "example",
-      "lastRunAt": "2026-01-01T09:00:00Z"
-    }
-  },
-  "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
-  },
-  "backupPool": "example"
+  ]
 }
 ```
 
-**Errors:** `401`, `403`, `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/backups`
 
@@ -1684,11 +2272,11 @@ Backs the volume up now: a copy, through a short-lived snapshot, into the backup
 
 **Needs:** `application.operate`; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `volume` | path | string | yes | The volume's Incus name |
-| `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `volume` | path | string | yes | — | The volume's Incus name |
+| `Idempotency-Key` | header | string | no | — | Makes the request safe to repeat |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -1697,26 +2285,39 @@ This request can change state. Check permissions, prerequisites and any required
 ```sh
 # Generate once per distinct change; keep this value when retrying.
 IDEMPOTENCY_KEY=$(uuidgen)
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/backups" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("back_up_volume", { params: { name: "shop", volume: "shop-db-01-data" }, idempotencyKey: newIdempotencyKey() });
 ```
 
 **Response `202`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "created": false,
-  "jobId": "00000000-0000-4000-8000-000000000001"
+  "jobId": "eefb3aa8-b626-40d9-9e6e-f4a3fab60436",
+  "created": true
 }
 ```
 
-**Errors:** `401`, `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `backup_pool_missing` |
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}/backups/{backup}`
 
@@ -1726,11 +2327,11 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 
 **Needs:** `application.delete` (and an approval where a policy asks for one); audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name. |
-| `volume` | path | string | yes | The volume's Incus name. |
-| `backup` | path | string | yes | The backup's Incus name. |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name. |
+| `volume` | path | string | yes | — | The volume's Incus name. |
+| `backup` | path | string | yes | — | The backup's Incus name. |
 
 **Request body** (JSON):
 
@@ -1740,7 +2341,7 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 
 ```json
 {
-  "confirm": "example"
+  "confirm": "shop-db-01-data-bk-20261025163302"
 }
 ```
 
@@ -1749,15 +2350,30 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/example/backups/example" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025163302" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example"}'
+  --data-raw '{"confirm":"shop-db-01-data-bk-20261025163302"}'
+```
+
+**TypeScript:**
+
+```ts
+await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025163302" }, body: { confirm: "shop-db-01-data-bk-20261025163302" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `approval_invalid`, `approval_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`
 
@@ -1767,63 +2383,80 @@ Dry run of restoring the volume from one of its backups: what is replaced (data 
 
 **Needs:** `application.operate`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name. |
-| `volume` | path | string | yes | The volume's Incus name. |
-| `backup` | path | string | yes | The backup's Incus name. |
-| `safetyBackup` | query | boolean | no | Take a safety backup of the current data first (default true). |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name. |
+| `volume` | path | string | yes | — | The volume's Incus name. |
+| `backup` | path | string | yes | — | The backup's Incus name. |
+| `safetyBackup` | query | boolean | no | `true` | Take a safety backup of the current data first (default true). |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/backups/example/restore" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025163300/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**With options** (`safetyBackup`):
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025163300/restore?safetyBackup=false" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025163300" }, query: { safetyBackup: false } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:33:02.114291Z"
+  },
   "plan": {
-    "backup": "example",
-    "backupMember": "example",
-    "backupPool": "example",
-    "backupTakenAt": "2026-01-01T09:00:00Z",
+    "volume": "shop-db-01-data",
+    "pool": "mock-local",
+    "member": "mock-member-01",
+    "sizeMib": 10240,
+    "backup": "shop-db-01-data-bk-20261025163300",
+    "backupPool": "mock-local",
+    "backupMember": "mock-member-02",
+    "backupTakenAt": "2026-10-25T16:33:00.974824Z",
+    "snapshotsDeleted": [],
+    "usedBy": [],
+    "running": [],
+    "safetyBackupPool": "mock-local",
     "blocked": [
-      "example"
-    ],
-    "member": "example",
-    "pool": "example",
-    "running": [
-      "example"
-    ],
-    "sizeMib": 0,
-    "snapshotsDeleted": [
-      "example"
+      "volume shop-db-01-data is not in Incus (its member may be unreachable); nothing can be restored into it",
+      "backup shop-db-01-data-bk-20261025163300 is not in Incus"
     ],
     "steps": [
-      "example"
-    ],
-    "usedBy": [
-      "example"
-    ],
-    "volume": "example",
-    "safetyBackupPool": "example"
-  },
-  "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
+      "Copy the volume as it is now into pool mock-local (a safety backup, listed with the others)",
+      "Copy backup shop-db-01-data-bk-20261025163300 over volume shop-db-01-data on mock-member-01"
+    ]
   }
 }
 ```
 
-**Errors:** `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | an `incus_…` code |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`
 
@@ -1833,12 +2466,12 @@ Restores the volume from one of its backups, after the dry run passes again and 
 
 **Needs:** `application.operate` (and an approval where a policy asks); audited with the job.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name. |
-| `volume` | path | string | yes | The volume's Incus name. |
-| `backup` | path | string | yes | The backup's Incus name. |
-| `Idempotency-Key` | header | string | no | Makes the request safe to repeat |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name. |
+| `volume` | path | string | yes | — | The volume's Incus name. |
+| `backup` | path | string | yes | — | The backup's Incus name. |
+| `Idempotency-Key` | header | string | no | — | Makes the request safe to repeat |
 
 **Request body** (JSON):
 
@@ -1849,7 +2482,8 @@ Restores the volume from one of its backups, after the dry run passes again and 
 
 ```json
 {
-  "confirm": "example"
+  "confirm": "shop-db-01-data",
+  "safetyBackup": true
 }
 ```
 
@@ -1860,12 +2494,18 @@ This request can change state. Check permissions, prerequisites and any required
 ```sh
 # Generate once per distinct change; keep this value when retrying.
 IDEMPOTENCY_KEY=$(uuidgen)
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/backups/example/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025163300/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example"}'
+  --data-raw '{"confirm":"shop-db-01-data","safetyBackup":true}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025163300" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
 ```
 
 **Response `202`** — Success.
@@ -1881,7 +2521,16 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `approval_invalid`, `approval_required`, `restore_blocked` |
+| `502` | an `incus_…` code |
 
 ### `PUT /api/v1/applications/{name}/volumes/{volume}/schedules`
 
@@ -1891,23 +2540,31 @@ Sets or turns off the volume's snapshot and backup schedules. A new or changed s
 
 **Needs:** `application.deploy`; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `volume` | path | string | yes | The volume's Incus name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `volume` | path | string | yes | — | The volume's Incus name |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `backups` | one of several | no | — |
-| `snapshots` | one of several | no | — |
+| `backups` | object or null | no | — |
+| `backups.everyMinutes` | integer | yes | Minutes between two runs: 15 minutes to one week. |
+| `backups.keep` | integer | yes | How many of the scheduled results are kept: 1 to 50. |
+| `snapshots` | object or null | no | — |
+| `snapshots.everyMinutes` | integer | yes | Minutes between two runs: 15 minutes to one week. |
+| `snapshots.keep` | integer | yes | How many of the scheduled results are kept: 1 to 50. |
 
 ```json
 {
+  "snapshots": {
+    "everyMinutes": 60,
+    "keep": 24
+  },
   "backups": {
-    "everyMinutes": 0,
-    "keep": 0
+    "everyMinutes": 1440,
+    "keep": 7
   }
 }
 ```
@@ -1917,15 +2574,29 @@ Sets or turns off the volume's snapshot and backup schedules. A new or changed s
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/applications/shop/volumes/example/schedules" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/schedules" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"backups":{"everyMinutes":0,"keep":0}}'
+  --data-raw '{"snapshots":{"everyMinutes":60,"keep":24},"backups":{"everyMinutes":1440,"keep":7}}'
+```
+
+**TypeScript:**
+
+```ts
+await client.request("set_volume_schedules", { params: { name: "shop", volume: "shop-db-01-data" }, body: { snapshots: { everyMinutes: 60, keep: 24 }, backups: { everyMinutes: 1440, keep: 7 } } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `400`, `401`, `403`, `404`, `409`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `backup_pool_missing` |
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/snapshots`
 
@@ -1935,41 +2606,49 @@ The volume's snapshots, oldest first. Needs `application.view`.
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `volume` | path | string | yes | The volume's Incus name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `volume` | path | string | yes | — | The volume's Incus name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("volume_snapshots", { params: { name: "shop", volume: "shop-db-01-data" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "items": [
-    {
-      "createdAt": "2026-01-01T09:00:00Z",
-      "name": "example"
-    }
-  ],
   "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
-  }
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:33:00.956727Z"
+  },
+  "items": []
 }
 ```
 
-**Errors:** `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | an `incus_…` code |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/snapshots`
 
@@ -1979,19 +2658,25 @@ Takes a snapshot of the volume, named after the time (`snap-YYYYMMDD-HHMMSS`). W
 
 **Needs:** `application.operate`; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `volume` | path | string | yes | The volume's Incus name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `volume` | path | string | yes | — | The volume's Incus name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("take_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data" } });
 ```
 
 **Response `201`** — Success.
@@ -2007,7 +2692,15 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `snapshots_not_allowed`, `volume_missing` |
+| `502` | an `incus_…` code |
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}`
 
@@ -2017,24 +2710,37 @@ Deletes one snapshot of the volume. Needs `application.delete`; audited.
 
 **Needs:** `application.delete`; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name. |
-| `volume` | path | string | yes | The volume's Incus name. |
-| `snapshot` | path | string | yes | Snapshot name. |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name. |
+| `volume` | path | string | yes | — | The volume's Incus name. |
+| `snapshot` | path | string | yes | — | Snapshot name. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots/example" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261025-120000" \
   -H "Authorization: Bearer $APELORA_TOKEN"
+```
+
+**TypeScript:**
+
+```ts
+await client.request("delete_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261025-120000" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | `incus_not_found` |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}/restore`
 
@@ -2044,11 +2750,11 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 
 **Needs:** `application.operate` (and an approval where the policy asks for one); audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name. |
-| `volume` | path | string | yes | The volume's Incus name. |
-| `snapshot` | path | string | yes | Snapshot name. |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name. |
+| `volume` | path | string | yes | — | The volume's Incus name. |
+| `snapshot` | path | string | yes | — | Snapshot name. |
 
 **Request body** (JSON):
 
@@ -2058,7 +2764,7 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 
 ```json
 {
-  "confirm": "example"
+  "confirm": "snap-20261025-120000"
 }
 ```
 
@@ -2067,15 +2773,30 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/example/snapshots/example/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261025-120000/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example"}'
+  --data-raw '{"confirm":"snap-20261025-120000"}'
+```
+
+**TypeScript:**
+
+```ts
+await client.request("restore_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261025-120000" }, body: { confirm: "snap-20261025-120000" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `approval_invalid`, `approval_required`, `volume_in_use`, `volume_missing` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/networks/applications`
 
@@ -2093,6 +2814,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks/applications" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("application_networks", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -2103,14 +2830,48 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.446997Z"
+    "observedAt": "2026-10-25T16:33:05.983168Z"
   },
   "incusError": null,
-  "items": []
+  "items": [
+    {
+      "application": "shop",
+      "project": "shop-prod",
+      "revision": 1,
+      "enforced": false,
+      "network": "shop",
+      "uplink": null,
+      "serviceRange": null,
+      "networkObserved": null,
+      "connections": [
+        {
+          "from": "web-01",
+          "to": "db-01",
+          "transport": "tcp",
+          "port": 5432
+        },
+        {
+          "from": "web-01",
+          "to": "cache-01",
+          "transport": "tcp",
+          "port": 6379
+        }
+      ],
+      "published": [],
+      "modules": [],
+      "services": [],
+      "drift": []
+    }
+  ]
 }
 ```
 
-**Errors:** `401`, `403`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 
 ### `GET /api/v1/storage/volumes`
 
@@ -2128,6 +2889,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/volumes" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("storage_volumes", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -2138,13 +2905,57 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.470047Z"
+    "observedAt": "2026-10-25T16:33:00.952816Z"
   },
-  "backupPool": null,
+  "backupPool": "mock-local",
   "incusError": null,
-  "items": []
+  "items": [
+    {
+      "application": "shop",
+      "module": "cache-01",
+      "instance": "shop-cache-01",
+      "name": "cache",
+      "incusName": "shop-cache-01-cache",
+      "pool": "mock-local",
+      "member": "mock-member-01",
+      "sizeMib": 2048,
+      "class": "data-local",
+      "state": "missing",
+      "usedBy": [],
+      "schedules": {
+        "snapshots": null,
+        "backups": null
+      },
+      "backups": 0,
+      "lastBackupAt": null
+    },
+    {
+      "application": "shop",
+      "module": "db-01",
+      "instance": "shop-db-01",
+      "name": "data",
+      "incusName": "shop-db-01-data",
+      "pool": "mock-local",
+      "member": "mock-member-01",
+      "sizeMib": 10240,
+      "class": "data-local",
+      "state": "missing",
+      "usedBy": [],
+      "schedules": {
+        "snapshots": null,
+        "backups": null
+      },
+      "backups": 0,
+      "lastBackupAt": null
+    }
+  ]
 }
 ```
 
-**Errors:** `401`, `403`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 

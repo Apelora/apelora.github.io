@@ -30,9 +30,9 @@ What the caller may open on each instance of the application now, with the reaso
 
 **Needs:** `application.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -42,38 +42,33 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/access" 
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("application_access", { params: { name: "shop" } });
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "idleSecs": 0,
-  "items": [
-    {
-      "guestOs": "linux",
-      "instance": "example",
-      "kinds": [
-        {
-          "allowed": false,
-          "approvalRequired": false,
-          "kind": "terminal",
-          "reason": "example"
-        }
-      ],
-      "module": "example",
-      "status": "example"
-    }
-  ],
-  "maxSecs": 0,
-  "observed": false,
-  "provider": "mock"
+  "items": [],
+  "observed": true,
+  "provider": "mock",
+  "idleSecs": 900,
+  "maxSecs": 3600
 }
 ```
 
-**Errors:** `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `404` | `not_found` |
 
 ### `POST /api/v1/applications/{name}/instances/{instance}/sessions`
 
@@ -83,22 +78,24 @@ Opens a session: checks the caller, the instance and the approval rule, and answ
 
 **Needs:** `instance.console` (terminal, PowerShell) or `instance.desktop` (RDP) on the application; in production also an approval (`Apelora-Approval: <id>`) of `instance.console` on `instance:<application>/<instance>`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Application name |
-| `instance` | path | string | yes | Instance name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Application name |
+| `instance` | path | string | yes | — | Instance name |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
 | `cols` | integer | no | — |
-| `kind` | `terminal`, `powershell`, `rdp` | yes | What a person can open on a module. |
+| `kind` | one of `terminal`, `powershell`, `rdp` | yes | What a person can open on a module. |
 | `rows` | integer | no | — |
 
 ```json
 {
-  "kind": "terminal"
+  "kind": "terminal",
+  "cols": 120,
+  "rows": 32
 }
 ```
 
@@ -107,11 +104,17 @@ Opens a session: checks the caller, the instance and the approval rule, and answ
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/instances/web-01/sessions" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/instances/shop-web-01/sessions" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"kind":"terminal"}'
+  --data-raw '{"kind":"terminal","cols":120,"rows":32}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("open_session", { params: { name: "shop", instance: "shop-web-01" }, body: { kind: "terminal", cols: 120, rows: 32 } });
 ```
 
 **Response `201`** — Success.
@@ -135,7 +138,15 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `403`, `404`, `409`, `429`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `approval_invalid`, `approval_required`, `instance_state_unknown`, `session_unavailable` |
+| `429` | `too_many_sessions`, `rate_limited` |
 
 ### `GET /api/v1/sessions`
 
@@ -153,6 +164,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/sessions" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("sessions", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -165,7 +182,11 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 
 ### `DELETE /api/v1/sessions/{id}`
 
@@ -175,20 +196,30 @@ Ends a session now. Allowed for the person who has it and for whoever may operat
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `id` | path | string | yes | Session id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `id` | path | string (uuid) | yes | — | Session id |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/34ebd16d-4a35-4bae-b104-8c1604479445" \
   -H "Authorization: Bearer $APELORA_TOKEN"
+```
+
+**TypeScript:**
+
+```ts
+await client.request("terminate_session", { params: { id: "34ebd16d-4a35-4bae-b104-8c1604479445" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `404`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `404` | `not_found` |
 

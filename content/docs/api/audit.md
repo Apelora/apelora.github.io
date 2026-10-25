@@ -28,16 +28,16 @@ Audit events the caller may read, newest first, filtered by actor, target, actio
 
 **Needs:** `audit.read` (platform-wide, or limited to the events of the caller's organisations, projects and applications) and a database.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `actor` | query | string | no | Who acted: their stable id (`user:<uuid>`, `service:<uuid>`, `token:<name>`) or, ignoring case, the name they had when they acted. |
-| `target` | query | string | no | What was acted on, exactly as recorded (e.g. `local-account:ada` or a group's name). |
-| `action` | query | string | no | Only actions starting with this, e.g. `role.` or `emergency_access.`. |
-| `outcome` | query | string | no | `success`, `denied` or `failed`. |
-| `from` | query | string | no | RFC 3339: events at or after this time. |
-| `to` | query | string | no | RFC 3339: events before this time. |
-| `before` | query | integer | no | Only events older than this id (paging: the id of the last event of the previous page). |
-| `limit` | query | integer | no | Events per page, 1 to 500 (default 100). Not used by the export. |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `actor` | query | string | no | — | Who acted: their stable id (`user:<uuid>`, `service:<uuid>`, `token:<name>`) or, ignoring case, the name they had when they acted. |
+| `target` | query | string | no | — | What was acted on, exactly as recorded (e.g. `local-account:ada` or a group's name). |
+| `action` | query | string | no | — | Only actions starting with this, e.g. `role.` or `emergency_access.`. |
+| `outcome` | query | string | no | — | `success`, `denied` or `failed`. |
+| `from` | query | string | no | — | RFC 3339: events at or after this time. |
+| `to` | query | string | no | — | RFC 3339: events before this time. |
+| `before` | query | integer | no | — | Only events older than this id (paging: the id of the last event of the previous page). |
+| `limit` | query | integer | no | `100` | Events per page, 1 to 500 (default 100). Not used by the export. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -47,170 +47,84 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit" \
   -H "Accept: application/json"
 ```
 
+**With options** (`action`, `outcome`, `limit`):
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit?action=application.&outcome=success&limit=5" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**Next page:** repeat the request with `before` set to the `id` of the last item. A page shorter than `limit` is the last one.
+
+**TypeScript:**
+
+```ts
+const result = await client.request("audit", { query: { action: "application.", outcome: "success", limit: 5 } });
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "items": [
     {
-      "id": 7,
-      "at": "2026-10-25T15:45:26.245229Z",
+      "id": 109,
+      "at": "2026-10-25T16:33:05.254393Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
-      "action": "application.update",
-      "target": "shop",
-      "outcome": "success",
-      "scope": {
-        "application": "2b123d49-d55a-40f8-b166-11cdf5682888",
-        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
-        "project": "69c3851c-6d02-4784-9bdc-17f7c449d59d"
-      },
-      "detail": {
-        "descriptionChanged": true,
-        "icon": null,
-        "name": "docs-verifier",
-        "requestId": "43851f2a-79c5-4d4f-83b3-5135a8eec01f",
-        "role": "fabric-admin"
-      }
-    },
-    {
-      "id": 6,
-      "at": "2026-10-25T15:45:26.208646Z",
-      "actor": "token:docs-verifier",
-      "actorType": "token",
-      "actorName": "docs-verifier",
-      "action": "application.create",
-      "target": "shop",
-      "outcome": "success",
-      "scope": {
-        "application": "2b123d49-d55a-40f8-b166-11cdf5682888",
-        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
-        "project": "69c3851c-6d02-4784-9bdc-17f7c449d59d"
-      },
-      "detail": {
-        "environment": "development",
-        "icon": "box",
-        "name": "docs-verifier",
-        "requestId": "7cb9b6bf-01ad-4cc7-81bf-8ddd65b03a44",
-        "role": "fabric-admin"
-      }
-    },
-    {
-      "id": 5,
-      "at": "2026-10-25T15:45:26.189916Z",
-      "actor": "token:docs-verifier",
-      "actorType": "token",
-      "actorName": "docs-verifier",
-      "action": "environment.incus_project.prepare",
-      "target": "docs-org-docs-project-development",
-      "outcome": "success",
-      "scope": {
-        "application": null,
-        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
-        "project": "69c3851c-6d02-4784-9bdc-17f7c449d59d"
-      },
-      "detail": {
-        "detail": "Incus project docs-org-docs-project-development created by Apelora with the baseline restrictions",
-        "environment": "dabff187-1aab-4289-8c16-d72e656f93b4",
-        "incusProject": "docs-org-docs-project-development",
-        "name": "docs-verifier",
-        "requestId": "f158561e-ff0e-48f2-b85c-d132ba167da5",
-        "role": "fabric-admin",
-        "state": "created"
-      }
-    },
-    {
-      "id": 4,
-      "at": "2026-10-25T15:45:26.178648Z",
-      "actor": "token:docs-verifier",
-      "actorType": "token",
-      "actorName": "docs-verifier",
-      "action": "environment.create",
-      "target": "development",
-      "outcome": "success",
-      "scope": {
-        "application": null,
-        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
-        "project": "69c3851c-6d02-4784-9bdc-17f7c449d59d"
-      },
-      "detail": {
-        "chosenByPlatformAdmin": false,
-        "id": "dabff187-1aab-4289-8c16-d72e656f93b4",
-        "incusProject": "docs-org-docs-project-development",
-        "kind": "development",
-        "name": "docs-verifier",
-        "requestId": "f158561e-ff0e-48f2-b85c-d132ba167da5",
-        "role": "fabric-admin"
-      }
-    },
-    {
-      "id": 3,
-      "at": "2026-10-25T15:45:26.165897Z",
-      "actor": "token:docs-verifier",
-      "actorType": "token",
-      "actorName": "docs-verifier",
-      "action": "project.create",
-      "target": "docs-project",
-      "outcome": "success",
-      "scope": {
-        "application": null,
-        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
-        "project": "69c3851c-6d02-4784-9bdc-17f7c449d59d"
-      },
-      "detail": {
-        "id": "69c3851c-6d02-4784-9bdc-17f7c449d59d",
-        "name": "docs-verifier",
-        "requestId": "b11c8b7d-570a-421c-8ffd-f4af9085e4cd",
-        "role": "fabric-admin"
-      }
-    },
-    {
-      "id": 2,
-      "at": "2026-10-25T15:45:26.158353Z",
-      "actor": "token:docs-verifier",
-      "actorType": "token",
-      "actorName": "docs-verifier",
-      "action": "organization.create",
-      "target": "docs-org",
-      "outcome": "success",
-      "scope": {
-        "application": null,
-        "organization": "9542a736-cc45-4015-98a8-f3206b0451b9",
-        "project": null
-      },
-      "detail": {
-        "id": "9542a736-cc45-4015-98a8-f3206b0451b9",
-        "name": "docs-verifier",
-        "requestId": "385c9d8c-f6e8-4108-b830-b79c2ad0c9cb",
-        "role": "fabric-admin"
-      }
-    },
-    {
-      "id": 1,
-      "at": "2026-10-25T15:45:26.003476Z",
-      "actor": "cli",
-      "actorType": "cli",
-      "actorName": null,
-      "action": "token.create",
-      "target": "docs-verifier",
+      "action": "alert.channel.delete",
+      "target": "alert-channel:On-call webhook",
       "outcome": "success",
       "scope": null,
       "detail": {
-        "expiresInDays": 1,
-        "id": "726a0075-6258-4585-8ce7-60c829d0b7fc",
-        "role": "fabric-admin"
+        "enabled": true,
+        "host": "hooks.example.invalid",
+        "id": "455aa2df-8831-497c-a671-f2fa2fcbb2d9",
+        "minSeverity": "critical",
+        "name": "docs-verifier",
+        "requestId": "79e836e2-148b-4072-947b-19c5cb7d31e6",
+        "role": "fabric-admin",
+        "secretRef": "APELORA_ALERT_SECRET_ONCALL"
+      }
+    },
+    {
+      "id": 108,
+      "at": "2026-10-25T16:33:05.24455Z",
+      "actor": "token:docs-verifier",
+      "actorType": "token",
+      "actorName": "docs-verifier",
+      "action": "alert.acknowledge",
+      "target": "alert:2",
+      "outcome": "success",
+      "scope": null,
+      "detail": {
+        "name": "docs-verifier",
+        "note": "Looking into the failed job",
+        "requestId": "52e3a17e-f174-4251-95e7-ac613ee9ae7b",
+        "role": "fabric-admin",
+        "rule": "job-failures",
+        "severity": "warning",
+        "subject": "instance.restart"
       }
     }
   ]
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/audit/export`
 
@@ -220,17 +134,17 @@ Exports the audit events the caller may read, with the same filters as the list 
 
 **Needs:** `audit.read`; the export itself is audited as `audit.exported` with its filters.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `actor` | query | string | no | Who acted: their stable id (`user:<uuid>`, `service:<uuid>`, `token:<name>`) or, ignoring case, the name they had when they acted. |
-| `target` | query | string | no | What was acted on, exactly as recorded (e.g. `local-account:ada` or a group's name). |
-| `action` | query | string | no | Only actions starting with this, e.g. `role.` or `emergency_access.`. |
-| `outcome` | query | string | no | `success`, `denied` or `failed`. |
-| `from` | query | string | no | RFC 3339: events at or after this time. |
-| `to` | query | string | no | RFC 3339: events before this time. |
-| `before` | query | integer | no | Only events older than this id (paging: the id of the last event of the previous page). |
-| `limit` | query | integer | no | Events per page, 1 to 500 (default 100). Not used by the export. |
-| `format` | query | string | no | `csv` or `jsonl` (one JSON object per line, as the list returns them). Default `jsonl`. |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `actor` | query | string | no | — | Who acted: their stable id (`user:<uuid>`, `service:<uuid>`, `token:<name>`) or, ignoring case, the name they had when they acted. |
+| `target` | query | string | no | — | What was acted on, exactly as recorded (e.g. `local-account:ada` or a group's name). |
+| `action` | query | string | no | — | Only actions starting with this, e.g. `role.` or `emergency_access.`. |
+| `outcome` | query | string | no | — | `success`, `denied` or `failed`. |
+| `from` | query | string | no | — | RFC 3339: events at or after this time. |
+| `to` | query | string | no | — | RFC 3339: events before this time. |
+| `before` | query | integer | no | — | Only events older than this id (paging: the id of the last event of the previous page). |
+| `limit` | query | integer | no | `100` | Events per page, 1 to 500 (default 100). Not used by the export. |
+| `format` | query | string | no | `jsonl` | `csv` or `jsonl` (one JSON object per line, as the list returns them). Default `jsonl`. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -250,41 +164,49 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=jsonl"
   -H "Accept: application/x-ndjson"
 ```
 
+**With options** (`action`, `from`):
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-24T16%3A33%3A05Z" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: text/csv"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("audit_export", { query: { format: "csv" } });
+```
+
 **Response `200`** — The events: CSV with a header row, or one JSON object per line.
 
 Content-Type: `text/csv`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. The first 4 of 111 lines.
 
 ```text
 id,at,actor,actorName,actorType,action,target,outcome,requestId,scope,detail
-8,2026-10-25T15:45:26.301188Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,f40becf0-a989-46f6-9f13-205b79aadee9,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""f40becf0-a989-46f6-9f13-205b79aadee9"",""role"":""fabric-admin""}"
-7,2026-10-25T15:45:26.245229Z,token:docs-verifier,docs-verifier,token,application.update,shop,success,43851f2a-79c5-4d4f-83b3-5135a8eec01f,"{""application"":""2b123d49-d55a-40f8-b166-11cdf5682888"",""organization"":""9542a736-cc45-4015-98a8-f3206b0451b9"",""project"":""69c3851c-6d02-4784-9bdc-17f7c449d59d""}","{""descriptionChanged"":true,""icon"":null,""name"":""docs-verifier"",""requestId"":""43851f2a-79c5-4d4f-83b3-5135a8eec01f"",""role"":""fabric-admin""}"
-6,2026-10-25T15:45:26.208646Z,token:docs-verifier,docs-verifier,token,application.create,shop,success,7cb9b6bf-01ad-4cc7-81bf-8ddd65b03a44,"{""application"":""2b123d49-d55a-40f8-b166-11cdf5682888"",""organization"":""9542a736-cc45-4015-98a8-f3206b0451b9"",""project"":""69c3851c-6d02-4784-9bdc-17f7c449d59d""}","{""environment"":""development"",""icon"":""box"",""name"":""docs-verifier"",""requestId"":""7cb9b6bf-01ad-4cc7-81bf-8ddd65b03a44"",""role"":""fabric-admin""}"
-5,2026-10-25T15:45:26.189916Z,token:docs-verifier,docs-verifier,token,environment.incus_project.prepare,docs-org-docs-project-development,success,f158561e-ff0e-48f2-b85c-d132ba167da5,"{""application"":null,""organization"":""9542a736-cc45-4015-98a8-f3206b0451b9"",""project"":""69c3851c-6d02-4784-9bdc-17f7c449d59d""}","{""detail"":""Incus project docs-org-docs-project-development created by Apelora with the baseline restrictions"",""environment"":""dabff187-1aab-4289-8c16-d72e656f93b4"",""incusProject"":""docs-org-docs-project-development"",""name"":""docs-verifier"",""requestId"":""f158561e-ff0e-48f2-b85c-d132ba167da5"",""role"":""fabric-admin"",""state"":""created""}"
-4,2026-10-25T15:45:26.178648Z,token:docs-verifier,docs-verifier,token,environment.create,development,success,f158561e-ff0e-48f2-b85c-d132ba167da5,"{""application"":null,""organization"":""9542a736-cc45-4015-98a8-f3206b0451b9"",""project"":""69c3851c-6d02-4784-9bdc-17f7c449d59d""}","{""chosenByPlatformAdmin"":false,""id"":""dabff187-1aab-4289-8c16-d72e656f93b4"",""incusProject"":""docs-org-docs-project-development"",""kind"":""development"",""name"":""docs-verifier"",""requestId"":""f158561e-ff0e-48f2-b85c-d132ba167da5"",""role"":""fabric-admin""}"
-3,2026-10-25T15:45:26.165897Z,token:docs-verifier,docs-verifier,token,project.create,docs-project,success,b11c8b7d-570a-421c-8ffd-f4af9085e4cd,"{""application"":null,""organization"":""9542a736-cc45-4015-98a8-f3206b0451b9"",""project"":""69c3851c-6d02-4784-9bdc-17f7c449d59d""}","{""id"":""69c3851c-6d02-4784-9bdc-17f7c449d59d"",""name"":""docs-verifier"",""requestId"":""b11c8b7d-570a-421c-8ffd-f4af9085e4cd"",""role"":""fabric-admin""}"
-2,2026-10-25T15:45:26.158353Z,token:docs-verifier,docs-verifier,token,organization.create,docs-org,success,385c9d8c-f6e8-4108-b830-b79c2ad0c9cb,"{""application"":null,""organization"":""9542a736-cc45-4015-98a8-f3206b0451b9"",""project"":null}","{""id"":""9542a736-cc45-4015-98a8-f3206b0451b9"",""name"":""docs-verifier"",""requestId"":""385c9d8c-f6e8-4108-b830-b79c2ad0c9cb"",""role"":""fabric-admin""}"
-1,2026-10-25T15:45:26.003476Z,cli,,cli,token.create,docs-verifier,success,,,"{""expiresInDays"":1,""id"":""726a0075-6258-4585-8ce7-60c829d0b7fc"",""role"":""fabric-admin""}"
-
+110,2026-10-25T16:33:05.326264Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,03bf1921-ea24-4023-bf20-205eaf620565,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""03bf1921-ea24-4023-bf20-205eaf620565"",""role"":""fabric-admin""}"
+109,2026-10-25T16:33:05.254393Z,token:docs-verifier,docs-verifier,token,alert.channel.delete,alert-channel:On-call webhook,success,79e836e2-148b-4072-947b-19c5cb7d31e6,,"{""enabled"":true,""host"":""hooks.example.invalid"",""id"":""455aa2df-8831-497c-a671-f2fa2fcbb2d9"",""minSeverity"":""critical"",""name"":""docs-verifier"",""requestId"":""79e836e2-148b-4072-947b-19c5cb7d31e6"",""role"":""fabric-admin"",""secretRef"":""APELORA_ALERT_SECRET_ONCALL""}"
+108,2026-10-25T16:33:05.24455Z,token:docs-verifier,docs-verifier,token,alert.acknowledge,alert:2,success,52e3a17e-f174-4251-95e7-ac613ee9ae7b,,"{""name"":""docs-verifier"",""note"":""Looking into the failed job"",""requestId"":""52e3a17e-f174-4251-95e7-ac613ee9ae7b"",""role"":""fabric-admin"",""rule"":""job-failures"",""severity"":""warning"",""subject"":""instance.restart""}"
 ```
 
 Content-Type: `application/x-ndjson`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. The first 3 of 111 lines.
 
 ```text
-{"id":9,"at":"2026-10-25T15:45:26.305016Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"c6731271-c099-4c26-a9c7-2cadbf4397e4","role":"fabric-admin"}}
-{"id":8,"at":"2026-10-25T15:45:26.301188Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"f40becf0-a989-46f6-9f13-205b79aadee9","role":"fabric-admin"}}
-{"id":7,"at":"2026-10-25T15:45:26.245229Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"application.update","target":"shop","outcome":"success","scope":{"application":"2b123d49-d55a-40f8-b166-11cdf5682888","organization":"9542a736-cc45-4015-98a8-f3206b0451b9","project":"69c3851c-6d02-4784-9bdc-17f7c449d59d"},"detail":{"descriptionChanged":true,"icon":null,"name":"docs-verifier","requestId":"43851f2a-79c5-4d4f-83b3-5135a8eec01f","role":"fabric-admin"}}
-{"id":6,"at":"2026-10-25T15:45:26.208646Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"application.create","target":"shop","outcome":"success","scope":{"application":"2b123d49-d55a-40f8-b166-11cdf5682888","organization":"9542a736-cc45-4015-98a8-f3206b0451b9","project":"69c3851c-6d02-4784-9bdc-17f7c449d59d"},"detail":{"environment":"development","icon":"box","name":"docs-verifier","requestId":"7cb9b6bf-01ad-4cc7-81bf-8ddd65b03a44","role":"fabric-admin"}}
-{"id":5,"at":"2026-10-25T15:45:26.189916Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"environment.incus_project.prepare","target":"docs-org-docs-project-development","outcome":"success","scope":{"application":null,"organization":"9542a736-cc45-4015-98a8-f3206b0451b9","project":"69c3851c-6d02-4784-9bdc-17f7c449d59d"},"detail":{"detail":"Incus project docs-org-docs-project-development created by Apelora with the baseline restrictions","environment":"dabff187-1aab-4289-8c16-d72e656f93b4","incusProject":"docs-org-docs-project-development","name":"docs-verifier","requestId":"f158561e-ff0e-48f2-b85c-d132ba167da5","role":"fabric-admin","state":"created"}}
-{"id":4,"at":"2026-10-25T15:45:26.178648Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"environment.create","target":"development","outcome":"success","scope":{"application":null,"organization":"9542a736-cc45-4015-98a8-f3206b0451b9","project":"69c3851c-6d02-4784-9bdc-17f7c449d59d"},"detail":{"chosenByPlatformAdmin":false,"id":"dabff187-1aab-4289-8c16-d72e656f93b4","incusProject":"docs-org-docs-project-development","kind":"development","name":"docs-verifier","requestId":"f158561e-ff0e-48f2-b85c-d132ba167da5","role":"fabric-admin"}}
-{"id":3,"at":"2026-10-25T15:45:26.165897Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"project.create","target":"docs-project","outcome":"success","scope":{"application":null,"organization":"9542a736-cc45-4015-98a8-f3206b0451b9","project":"69c3851c-6d02-4784-9bdc-17f7c449d59d"},"detail":{"id":"69c3851c-6d02-4784-9bdc-17f7c449d59d","name":"docs-verifier","requestId":"b11c8b7d-570a-421c-8ffd-f4af9085e4cd","role":"fabric-admin"}}
-{"id":2,"at":"2026-10-25T15:45:26.158353Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"organization.create","target":"docs-org","outcome":"success","scope":{"application":null,"organization":"9542a736-cc45-4015-98a8-f3206b0451b9","project":null},"detail":{"id":"9542a736-cc45-4015-98a8-f3206b0451b9","name":"docs-verifier","requestId":"385c9d8c-f6e8-4108-b830-b79c2ad0c9cb","role":"fabric-admin"}}
-{"id":1,"at":"2026-10-25T15:45:26.003476Z","actor":"cli","actorType":"cli","actorName":null,"action":"token.create","target":"docs-verifier","outcome":"success","scope":null,"detail":{"expiresInDays":1,"id":"726a0075-6258-4585-8ce7-60c829d0b7fc","role":"fabric-admin"}}
-
+{"id":111,"at":"2026-10-25T16:33:05.336593Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"9941a717-2b1b-466e-85d2-08814c15f99e","role":"fabric-admin"}}
+{"id":110,"at":"2026-10-25T16:33:05.326264Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"03bf1921-ea24-4023-bf20-205eaf620565","role":"fabric-admin"}}
+{"id":109,"at":"2026-10-25T16:33:05.254393Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"alert.channel.delete","target":"alert-channel:On-call webhook","outcome":"success","scope":null,"detail":{"enabled":true,"host":"hooks.example.invalid","id":"455aa2df-8831-497c-a671-f2fa2fcbb2d9","minSeverity":"critical","name":"docs-verifier","requestId":"79e836e2-148b-4072-947b-19c5cb7d31e6","role":"fabric-admin","secretRef":"APELORA_ALERT_SECRET_ONCALL"}}
 ```
 
-**Errors:** `400`, `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden` |
+| `503` | `database_not_configured` |
 

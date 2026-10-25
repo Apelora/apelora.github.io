@@ -46,6 +46,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("alerts", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -54,21 +60,43 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "alerts": [],
+  "alerts": [
+    {
+      "id": 2,
+      "rule": "job-failures",
+      "title": "Jobs are failing",
+      "subject": "instance.restart",
+      "severity": "warning",
+      "state": "firing",
+      "summary": "2 instance.restart jobs failed in the last 15 minutes; the latest: instance default/mock-web-01 exists but was not created by Apelora; it is left untouched",
+      "value": 2,
+      "threshold": 1,
+      "comparison": "at-least",
+      "unit": "failed jobs in 15 minutes",
+      "startedAt": "2026-10-25T16:33:04.999248Z",
+      "firedAt": "2026-10-25T16:33:04.999248Z",
+      "lastSeenAt": "2026-10-25T16:33:04.999248Z",
+      "resolvedAt": null,
+      "clearingSince": null,
+      "acknowledged": null,
+      "silencedBy": null,
+      "runbook": "alerts.md#jobs-are-failing"
+    }
+  ],
   "silences": [],
   "counts": {
     "critical": 0,
-    "warning": 0,
+    "warning": 1,
     "info": 0,
-    "needsAttention": 0
+    "needsAttention": 1
   },
   "evaluator": {
-    "lastPassAt": null,
-    "everySecs": null,
-    "worker": null,
-    "durationSecs": null,
-    "stale": true,
-    "message": "Alerts have not been evaluated yet: no deployment worker has run the alert evaluator (APELORA_ALERT_EVALUATE_SECS, on by default)."
+    "lastPassAt": "2026-10-25T16:33:04.999248Z",
+    "everySecs": 5,
+    "worker": "docs-worker",
+    "durationSecs": 0.036299541,
+    "stale": false,
+    "message": "Evaluated every 5 s by docs-worker."
   },
   "actions": {
     "respond": {
@@ -83,7 +111,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/alerts/{id}/acknowledge`
 
@@ -93,19 +127,19 @@ Acknowledges a firing alert: who, when and an optional note. It keeps firing unt
 
 **Needs:** `alert.respond`; audited as `alert.acknowledge`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `id` | path | integer | yes | Alert id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `id` | path | integer | yes | — | Alert id |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `note` | string | no | What is being done about it (at most 500 characters). |
+| `note` | string or null | no | What is being done about it (at most 500 characters). |
 
 ```json
 {
-  "note": "example"
+  "note": "Looking into the failed job"
 }
 ```
 
@@ -114,52 +148,64 @@ Acknowledges a firing alert: who, when and an optional note. It keeps firing unt
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/00000000-0000-4000-8000-000000000001/acknowledge" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/2/acknowledge" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"note":"example"}'
+  --data-raw '{"note":"Looking into the failed job"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("acknowledge_alert", { params: { id: "2" }, body: { note: "Looking into the failed job" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "comparison": "at-least",
-  "id": 1,
-  "lastSeenAt": "2026-01-01T09:00:00Z",
-  "rule": "example",
-  "runbook": "example",
-  "severity": "info",
-  "startedAt": "2026-01-01T09:00:00Z",
-  "state": "example",
-  "subject": "example",
-  "summary": "example",
+  "id": 2,
+  "rule": "job-failures",
+  "title": "Jobs are failing",
+  "subject": "instance.restart",
+  "severity": "warning",
+  "state": "firing",
+  "summary": "2 instance.restart jobs failed in the last 15 minutes; the latest: instance default/mock-web-01 exists but was not created by Apelora; it is left untouched",
+  "value": 2,
   "threshold": 1,
-  "title": "example",
-  "unit": "example",
-  "value": 1,
+  "comparison": "at-least",
+  "unit": "failed jobs in 15 minutes",
+  "startedAt": "2026-10-25T16:33:04.999248Z",
+  "firedAt": "2026-10-25T16:33:04.999248Z",
+  "lastSeenAt": "2026-10-25T16:33:04.999248Z",
+  "resolvedAt": null,
+  "clearingSince": null,
   "acknowledged": {
-    "at": "2026-01-01T09:00:00Z",
-    "by": "example",
-    "byName": "example",
-    "note": "example"
+    "by": "token:docs-verifier",
+    "byName": "docs-verifier",
+    "at": "2026-10-25T16:33:05.24455Z",
+    "note": "Looking into the failed job"
   },
-  "clearingSince": "example",
-  "firedAt": "2026-01-01T09:00:00Z",
-  "resolvedAt": "2026-01-01T09:00:00Z",
-  "silencedBy": {
-    "id": "00000000-0000-4000-8000-000000000001",
-    "until": "example"
-  }
+  "silencedBy": null,
+  "runbook": "alerts.md#jobs-are-failing"
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `already_acknowledged`, `not_firing` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/alerts/channels`
 
@@ -177,6 +223,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/channels" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("alert_channels", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -185,7 +237,27 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "channels": [],
+  "channels": [
+    {
+      "id": "455aa2df-8831-497c-a671-f2fa2fcbb2d9",
+      "name": "On-call webhook",
+      "kind": "webhook",
+      "host": "hooks.example.invalid",
+      "url": "https://hooks.example.invalid/apelora",
+      "secretRef": "APELORA_ALERT_SECRET_ONCALL",
+      "enabled": true,
+      "minSeverity": "critical",
+      "delivery": {
+        "pending": 1,
+        "failing": 0,
+        "lastError": null,
+        "lastDeliveredAt": null
+      },
+      "createdAt": "2026-10-25T16:32:59.835242Z",
+      "createdBy": "token:docs-verifier",
+      "updatedAt": "2026-10-25T16:32:59.838791Z"
+    }
+  ],
   "secretPrefix": "APELORA_ALERT_SECRET_",
   "actions": {
     "respond": {
@@ -200,7 +272,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/alerts/channels`
 
@@ -215,16 +293,18 @@ Adds a webhook channel. HTTPS only; the signing secret is named, never sent. Nee
 | Field | Type | Required | Meaning |
 |---|---|---|---|
 | `enabled` | boolean | no | — |
-| `minSeverity` | one of several | no | — |
+| `minSeverity` | one of `info`, `warning`, `critical` or null | no | — |
 | `name` | string | yes | 1 to 80 characters, unique. |
 | `secretRef` | string | yes | The name of the environment variable on the worker holding the signing secret, e.g. `APELORA_ALERT_SECRET_OPS`. Never the secret itself. |
 | `url` | string | yes | `https://…` only, without a user name or password. |
 
 ```json
 {
-  "name": "example",
-  "url": "https://example.org",
-  "secretRef": "<redacted>"
+  "name": "On-call webhook",
+  "url": "https://hooks.example.invalid/apelora",
+  "secretRef": "APELORA_ALERT_SECRET_ONCALL",
+  "minSeverity": "warning",
+  "enabled": true
 }
 ```
 
@@ -237,38 +317,52 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"example","url":"https://example.org","secretRef":"<redacted>"}'
+  --data-raw '{"name":"On-call webhook","url":"https://hooks.example.invalid/apelora","secretRef":"APELORA_ALERT_SECRET_ONCALL","minSeverity":"warning","enabled":true}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("create_alert_channel", { body /* the request body above */ });
 ```
 
 **Response `201`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "createdAt": "2026-01-01T09:00:00Z",
-  "createdBy": "example",
+  "id": "455aa2df-8831-497c-a671-f2fa2fcbb2d9",
+  "name": "On-call webhook",
+  "kind": "webhook",
+  "host": "hooks.example.invalid",
+  "url": "https://hooks.example.invalid/apelora",
+  "secretRef": "APELORA_ALERT_SECRET_ONCALL",
+  "enabled": true,
+  "minSeverity": "warning",
   "delivery": {
-    "failing": 1,
-    "pending": 1,
-    "lastDeliveredAt": "2026-01-01T09:00:00Z",
-    "lastError": "example"
+    "pending": 0,
+    "failing": 0,
+    "lastError": null,
+    "lastDeliveredAt": null
   },
-  "enabled": false,
-  "host": "example",
-  "id": "00000000-0000-4000-8000-000000000001",
-  "kind": "example",
-  "minSeverity": "info",
-  "name": "example",
-  "secretRef": "<redacted>",
-  "updatedAt": "2026-01-01T09:00:00Z",
-  "url": "https://example.org"
+  "createdAt": "2026-10-25T16:32:59.835242Z",
+  "createdBy": "token:docs-verifier",
+  "updatedAt": "2026-10-25T16:32:59.835242Z"
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `409`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `409` | `name_taken` |
+| `503` | `database_not_configured` |
 
 ### `PUT /api/v1/alerts/channels/{id}`
 
@@ -278,25 +372,27 @@ Changes a webhook channel. Needs `alert.configure`; audited as `alert.channel.up
 
 **Needs:** `alert.configure`; audited as `alert.channel.update`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `id` | path | string | yes | Channel id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `id` | path | string (uuid) | yes | — | Channel id |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
 | `enabled` | boolean | no | — |
-| `minSeverity` | one of several | no | — |
+| `minSeverity` | one of `info`, `warning`, `critical` or null | no | — |
 | `name` | string | yes | 1 to 80 characters, unique. |
 | `secretRef` | string | yes | The name of the environment variable on the worker holding the signing secret, e.g. `APELORA_ALERT_SECRET_OPS`. Never the secret itself. |
 | `url` | string | yes | `https://…` only, without a user name or password. |
 
 ```json
 {
-  "name": "example",
-  "url": "https://example.org",
-  "secretRef": "<redacted>"
+  "name": "On-call webhook",
+  "url": "https://hooks.example.invalid/apelora",
+  "secretRef": "APELORA_ALERT_SECRET_ONCALL",
+  "minSeverity": "critical",
+  "enabled": true
 }
 ```
 
@@ -305,42 +401,57 @@ Changes a webhook channel. Needs `alert.configure`; audited as `alert.channel.up
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/455aa2df-8831-497c-a671-f2fa2fcbb2d9" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"example","url":"https://example.org","secretRef":"<redacted>"}'
+  --data-raw '{"name":"On-call webhook","url":"https://hooks.example.invalid/apelora","secretRef":"APELORA_ALERT_SECRET_ONCALL","minSeverity":"critical","enabled":true}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("update_alert_channel", { params: { id: "455aa2df-8831-497c-a671-f2fa2fcbb2d9" }, body /* the request body above */ });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "createdAt": "2026-01-01T09:00:00Z",
-  "createdBy": "example",
+  "id": "455aa2df-8831-497c-a671-f2fa2fcbb2d9",
+  "name": "On-call webhook",
+  "kind": "webhook",
+  "host": "hooks.example.invalid",
+  "url": "https://hooks.example.invalid/apelora",
+  "secretRef": "APELORA_ALERT_SECRET_ONCALL",
+  "enabled": true,
+  "minSeverity": "critical",
   "delivery": {
-    "failing": 1,
-    "pending": 1,
-    "lastDeliveredAt": "2026-01-01T09:00:00Z",
-    "lastError": "example"
+    "pending": 0,
+    "failing": 0,
+    "lastError": null,
+    "lastDeliveredAt": null
   },
-  "enabled": false,
-  "host": "example",
-  "id": "00000000-0000-4000-8000-000000000001",
-  "kind": "example",
-  "minSeverity": "info",
-  "name": "example",
-  "secretRef": "<redacted>",
-  "updatedAt": "2026-01-01T09:00:00Z",
-  "url": "https://example.org"
+  "createdAt": "2026-10-25T16:32:59.835242Z",
+  "createdBy": "token:docs-verifier",
+  "updatedAt": "2026-10-25T16:32:59.838791Z"
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `name_taken` |
+| `503` | `database_not_configured` |
 
 ### `DELETE /api/v1/alerts/channels/{id}`
 
@@ -350,22 +461,35 @@ Deletes a webhook channel; messages still waiting for it are dropped by the rela
 
 **Needs:** `alert.configure`; audited as `alert.channel.delete`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `id` | path | string | yes | Channel id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `id` | path | string (uuid) | yes | — | Channel id |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/channels/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/channels/455aa2df-8831-497c-a671-f2fa2fcbb2d9" \
   -H "Authorization: Bearer $APELORA_TOKEN"
+```
+
+**TypeScript:**
+
+```ts
+await client.request("delete_alert_channel", { params: { id: "455aa2df-8831-497c-a671-f2fa2fcbb2d9" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `401`, `403`, `404`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/alerts/channels/{id}/test`
 
@@ -375,33 +499,47 @@ Queues a test notification for one channel through the same outbox path as real 
 
 **Needs:** `alert.configure`; audited as `alert.channel.test` in the same transaction as the message.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `id` | path | string | yes | Channel id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `id` | path | string (uuid) | yes | — | Channel id |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/00000000-0000-4000-8000-000000000001/test" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/455aa2df-8831-497c-a671-f2fa2fcbb2d9/test" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("test_alert_channel", { params: { id: "455aa2df-8831-497c-a671-f2fa2fcbb2d9" } });
 ```
 
 **Response `202`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "messageId": 1
+  "messageId": 96
 }
 ```
 
-**Errors:** `401`, `403`, `404`, `409`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `channel_disabled` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/alerts/history`
 
@@ -411,10 +549,10 @@ Resolved alerts, newest first, paged by `before`. Kept 90 days. Needs `cluster.v
 
 **Needs:** `cluster.view`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `before` | query | integer | no | Only alerts with a smaller id (the last one of the previous page). |
-| `limit` | query | integer | no | 1 to 200 (default 50). |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `before` | query | integer | no | — | Only alerts with a smaller id (the last one of the previous page). |
+| `limit` | query | integer | no | `50` | 1 to 200 (default 50). |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
@@ -422,6 +560,22 @@ Resolved alerts, newest first, paged by `before`. Kept 90 days. Needs `cluster.v
 curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/history" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**With options** (`before`, `limit`):
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/history?before=1&limit=1" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**Next page:** repeat the request with `before` set to the `id` of the last item. A page shorter than `limit` is the last one.
+
+**TypeScript:**
+
+```ts
+const result = await client.request("alert_history", { query: { before: 1, limit: 1 } });
 ```
 
 **Response `200`** — Success.
@@ -436,7 +590,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/alerts/rules`
 
@@ -454,11 +614,17 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/rules" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("alert_rules", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
@@ -485,11 +651,11 @@ Content-Type: `application/json`.
         "severity": "warning"
       },
       "source": "Job queue",
-      "sourceState": "unknown",
-      "firing": 0,
+      "sourceState": "ok",
+      "firing": 1,
       "runbook": "alerts.md#jobs-are-failing",
-      "updatedAt": null,
-      "updatedBy": null
+      "updatedAt": "2026-10-25T16:32:59.851327Z",
+      "updatedBy": "token:docs-verifier"
     },
     {
       "id": "job-queue-wait",
@@ -513,401 +679,9 @@ Content-Type: `application/json`.
         "severity": "warning"
       },
       "source": "Job queue",
-      "sourceState": "unknown",
+      "sourceState": "ok",
       "firing": 0,
       "runbook": "alerts.md#jobs-are-waiting-too-long",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "job-leases-expired",
-      "title": "Running jobs lost their worker",
-      "description": "Running jobs whose worker stopped renewing the lease. Another worker takes them over; if none does, they stay stuck.",
-      "unit": "jobs",
-      "comparison": "at-least",
-      "thresholdEditable": true,
-      "thresholdMin": 1,
-      "thresholdMax": 1000,
-      "params": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 120,
-        "severity": "warning"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 120,
-        "severity": "warning"
-      },
-      "source": "Job queue",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#running-jobs-lost-their-worker",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "worker-silent",
-      "title": "A worker stopped reporting",
-      "description": "A deployment worker that did not stop cleanly and has not written its heartbeat for this long (workers write one every 15 seconds).",
-      "unit": "seconds since its heartbeat",
-      "comparison": "at-least",
-      "thresholdEditable": true,
-      "thresholdMin": 30,
-      "thresholdMax": 86400,
-      "params": {
-        "enabled": true,
-        "threshold": 60,
-        "forSecs": 0,
-        "severity": "critical"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 60,
-        "forSecs": 0,
-        "severity": "critical"
-      },
-      "source": "Worker heartbeats",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#a-worker-stopped-reporting",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "leader-missing",
-      "title": "Nobody holds a leader role",
-      "description": "A role only one worker plays (replica supervisor, outbox relay, alert evaluator) has had no holder for this long.",
-      "unit": "seconds without a holder",
-      "comparison": "at-least",
-      "thresholdEditable": true,
-      "thresholdMin": 30,
-      "thresholdMax": 86400,
-      "params": {
-        "enabled": true,
-        "threshold": 90,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 90,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "source": "Leader leases",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#nobody-holds-a-leader-role",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "supervisor-actions",
-      "title": "The supervisor is acting often",
-      "description": "Replica actions (recreate, restart, substitute, retire) the supervisor took in the last hour. Many in a row usually mean one cause that keeps coming back.",
-      "unit": "actions in an hour",
-      "comparison": "at-least",
-      "thresholdEditable": true,
-      "thresholdMin": 1,
-      "thresholdMax": 1000,
-      "params": {
-        "enabled": true,
-        "threshold": 4,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 4,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "source": "Supervisor audit rows",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#the-supervisor-is-acting-often",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "replica-unhealthy",
-      "title": "A replica is unhealthy",
-      "description": "An instance the supervisor rates unhealthy (its port check keeps failing).",
-      "unit": "while it lasts",
-      "comparison": "at-least",
-      "thresholdEditable": false,
-      "thresholdMin": 1,
-      "thresholdMax": 1,
-      "params": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 300,
-        "severity": "warning"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 300,
-        "severity": "warning"
-      },
-      "source": "Instance health",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#a-replica-is-unhealthy",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "application-status",
-      "title": "An application is failed or degraded",
-      "description": "An application whose derived status is failed (its last start, stop or restart failed) or degraded (fewer instances run than it should have).",
-      "unit": "while it lasts",
-      "comparison": "at-least",
-      "thresholdEditable": false,
-      "thresholdMin": 1,
-      "thresholdMax": 1,
-      "params": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 600,
-        "severity": "warning"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 600,
-        "severity": "warning"
-      },
-      "source": "Applications",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#an-application-is-failed-or-degraded",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "incus-unreachable",
-      "title": "Incus cannot be reached",
-      "description": "The worker cannot read the member or instance list from Incus. Deployments, moves and recovery wait until it can.",
-      "unit": "while it lasts",
-      "comparison": "at-least",
-      "thresholdEditable": false,
-      "thresholdMin": 1,
-      "thresholdMax": 1,
-      "params": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 60,
-        "severity": "critical"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 60,
-        "severity": "critical"
-      },
-      "source": "Incus",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#incus-cannot-be-reached",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "member-offline",
-      "title": "A cluster member is not online",
-      "description": "An Incus cluster member whose status is not Online. Two of three offline puts the cluster's quorum at risk.",
-      "unit": "while it lasts",
-      "comparison": "at-least",
-      "thresholdEditable": false,
-      "thresholdMin": 1,
-      "thresholdMax": 1,
-      "params": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 120,
-        "severity": "critical"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 120,
-        "severity": "critical"
-      },
-      "source": "Incus members",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#a-cluster-member-is-not-online",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "member-unfenced",
-      "title": "A failed server is waiting for fencing",
-      "description": "A server Incus reports Offline holds modules on shared storage that restart on another server only once it is fenced: its storage lease expired, or a person confirmed it is off. Normally about 140 s after it stopped.",
-      "unit": "while it lasts",
-      "comparison": "at-least",
-      "thresholdEditable": false,
-      "thresholdMin": 1,
-      "thresholdMax": 1,
-      "params": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 300,
-        "severity": "critical"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 300,
-        "severity": "critical"
-      },
-      "source": "Failed servers",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#a-failed-server-is-waiting-for-fencing",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "certificate-expiry",
-      "title": "A certificate expires soon",
-      "description": "Days left before the certificate the worker uses to reach Incus, or the Incus server certificate it trusts, expires.",
-      "unit": "days left",
-      "comparison": "at-most",
-      "thresholdEditable": true,
-      "thresholdMin": 1,
-      "thresholdMax": 365,
-      "params": {
-        "enabled": true,
-        "threshold": 30,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 30,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "source": "Worker's Incus configuration",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#a-certificate-expires-soon",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "backup-failed",
-      "title": "A scheduled snapshot or backup failed",
-      "description": "The last scheduled snapshot or backup of a volume failed (or no backup pool is configured).",
-      "unit": "while it lasts",
-      "comparison": "at-least",
-      "thresholdEditable": false,
-      "thresholdMin": 1,
-      "thresholdMax": 1,
-      "params": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 1,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "source": "Volume schedules",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#a-scheduled-snapshot-or-backup-failed",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "backup-age",
-      "title": "A backup is overdue",
-      "description": "Age of a scheduled volume's newest backup, in schedule periods (2 means two backups were missed in a row).",
-      "unit": "schedule periods",
-      "comparison": "at-least",
-      "thresholdEditable": true,
-      "thresholdMin": 1,
-      "thresholdMax": 100,
-      "params": {
-        "enabled": true,
-        "threshold": 2,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 2,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "source": "Volume schedules",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#a-backup-is-overdue",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "outbox-stuck",
-      "title": "Messages are not being delivered",
-      "description": "How long the oldest undelivered outbox message (audit copies, alert notifications) has waited.",
-      "unit": "seconds",
-      "comparison": "at-least",
-      "thresholdEditable": true,
-      "thresholdMin": 60,
-      "thresholdMax": 86400,
-      "params": {
-        "enabled": true,
-        "threshold": 600,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 600,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "source": "Outbox",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#messages-are-not-being-delivered",
-      "updatedAt": null,
-      "updatedBy": null
-    },
-    {
-      "id": "restore-drill-age",
-      "title": "Apelora's database restore is not proven",
-      "description": "Days since a restore of Apelora's own database was last verified by the drill. Read from the drill's record where the worker can see it (APELORA_RESTORE_DRILL_RECORD).",
-      "unit": "days",
-      "comparison": "at-least",
-      "thresholdEditable": true,
-      "thresholdMin": 1,
-      "thresholdMax": 365,
-      "params": {
-        "enabled": true,
-        "threshold": 35,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "defaults": {
-        "enabled": true,
-        "threshold": 35,
-        "forSecs": 0,
-        "severity": "warning"
-      },
-      "source": "Restore drill record",
-      "sourceState": "unknown",
-      "firing": 0,
-      "runbook": "alerts.md#apeloras-database-restore-is-not-proven",
       "updatedAt": null,
       "updatedBy": null
     }
@@ -925,7 +699,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `503` | `database_not_configured` |
 
 ### `PUT /api/v1/alerts/rules/{rule}`
 
@@ -935,9 +715,9 @@ Changes a rule's parameters (on or off, threshold within the rule's bounds, dura
 
 **Needs:** `alert.configure`; audited as `alert.rule.update` with the parameters before and after.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `rule` | path | string | yes | Rule id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `rule` | path | string | yes | — | Rule id |
 
 **Request body** (JSON):
 
@@ -945,15 +725,15 @@ Changes a rule's parameters (on or off, threshold within the rule's bounds, dura
 |---|---|---|---|
 | `enabled` | boolean | yes | — |
 | `forSecs` | integer | yes | Seconds the condition must hold before firing, and stay clear before resolving. |
-| `severity` | `info`, `warning`, `critical` | yes | — |
+| `severity` | one of `info`, `warning`, `critical` | yes | — |
 | `threshold` | number | yes | — |
 
 ```json
 {
-  "enabled": false,
+  "enabled": true,
   "threshold": 1,
   "forSecs": 0,
-  "severity": "info"
+  "severity": "warning"
 }
 ```
 
@@ -962,51 +742,65 @@ Changes a rule's parameters (on or off, threshold within the rule's bounds, dura
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/rules/example" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/rules/job-failures" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"enabled":false,"threshold":1,"forSecs":0,"severity":"info"}'
+  --data-raw '{"enabled":true,"threshold":1,"forSecs":0,"severity":"warning"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("update_alert_rule", { params: { rule: "job-failures" }, body: { enabled: true, threshold: 1, forSecs: 0, severity: "warning" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
+  "id": "job-failures",
+  "title": "Jobs are failing",
+  "description": "Jobs of one kind that ended failed in the last 15 minutes. A failed job did not reach its goal after its retries.",
+  "unit": "failed jobs in 15 minutes",
   "comparison": "at-least",
-  "defaults": {
-    "enabled": false,
-    "forSecs": 0,
-    "severity": "info",
-    "threshold": 1
-  },
-  "description": "A description",
-  "firing": 0,
-  "id": "example",
-  "params": {
-    "enabled": false,
-    "forSecs": 0,
-    "severity": "info",
-    "threshold": 1
-  },
-  "runbook": "example",
-  "source": "example",
-  "sourceState": "example",
-  "thresholdEditable": false,
-  "thresholdMax": 1,
+  "thresholdEditable": true,
   "thresholdMin": 1,
-  "title": "example",
-  "unit": "example",
-  "updatedAt": "2026-01-01T09:00:00Z",
-  "updatedBy": "example"
+  "thresholdMax": 1000,
+  "params": {
+    "enabled": true,
+    "threshold": 1,
+    "forSecs": 0,
+    "severity": "warning"
+  },
+  "defaults": {
+    "enabled": true,
+    "threshold": 1,
+    "forSecs": 0,
+    "severity": "warning"
+  },
+  "source": "Job queue",
+  "sourceState": "unknown",
+  "firing": 0,
+  "runbook": "alerts.md#jobs-are-failing",
+  "updatedAt": "2026-10-25T16:32:59.851327Z",
+  "updatedBy": "token:docs-verifier"
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/alerts/silences`
 
@@ -1021,14 +815,15 @@ Silences a rule (every subject, or one) for `minutes` from now: no notification 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
 | `minutes` | integer | yes | 1 to 10080 (a week). |
-| `note` | string | no | — |
+| `note` | string or null | no | — |
 | `rule` | string | yes | — |
-| `subject` | string | no | One subject; absent: every subject of the rule. |
+| `subject` | string or null | no | One subject; absent: every subject of the rule. |
 
 ```json
 {
-  "rule": "example",
-  "minutes": 0
+  "rule": "backup-age",
+  "minutes": 120,
+  "note": "Backup pool maintenance tonight"
 }
 ```
 
@@ -1041,30 +836,43 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/silences" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"rule":"example","minutes":0}'
+  --data-raw '{"rule":"backup-age","minutes":120,"note":"Backup pool maintenance tonight"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("create_alert_silence", { body: { rule: "backup-age", minutes: 120, note: "Backup pool maintenance tonight" } });
 ```
 
 **Response `201`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "createdBy": "example",
-  "endsAt": "2026-01-01T09:00:00Z",
-  "id": "00000000-0000-4000-8000-000000000001",
-  "note": "example",
-  "rule": "example",
-  "ruleTitle": "example",
-  "startsAt": "2026-01-01T09:00:00Z",
-  "createdByName": "example",
-  "subject": "example"
+  "id": "4c106c89-6e2e-476c-9dec-3ca4e039e7d5",
+  "rule": "backup-age",
+  "ruleTitle": "A backup is overdue",
+  "subject": null,
+  "startsAt": "2026-10-25T16:32:59.857852Z",
+  "endsAt": "2026-10-25T18:32:59.857852Z",
+  "note": "Backup pool maintenance tonight",
+  "createdBy": "token:docs-verifier",
+  "createdByName": "docs-verifier"
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `503` | `database_not_configured` |
 
 ### `DELETE /api/v1/alerts/silences/{id}`
 
@@ -1074,20 +882,33 @@ Ends a silence now. Needs `alert.respond`; audited as `alert.silence.end`. 404 w
 
 **Needs:** `alert.respond`; audited as `alert.silence.end`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `id` | path | string | yes | Silence id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `id` | path | string (uuid) | yes | — | Silence id |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/silences/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/silences/4c106c89-6e2e-476c-9dec-3ca4e039e7d5" \
   -H "Authorization: Bearer $APELORA_TOKEN"
+```
+
+**TypeScript:**
+
+```ts
+await client.request("end_alert_silence", { params: { id: "4c106c89-6e2e-476c-9dec-3ca4e039e7d5" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `401`, `403`, `404`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `503` | `database_not_configured` |
 

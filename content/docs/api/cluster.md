@@ -7,7 +7,7 @@ label: Cluster
 source: packages/api-client/openapi.json
 summary: Members, machines, join tokens, settings and recovery.
 ---
-The cluster's servers: members, maintenance, machines and join tokens, cluster settings, groups, certificates and recovery. This page lists 27 operations.
+The cluster's servers: members and their maintenance (evacuate, restore, remove, fencing), rolling upgrades, cluster settings and groups, recovery, machines and join tokens, and MAAS provisioning. This page lists 27 operations.
 
 Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
@@ -61,6 +61,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/groups" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("cluster_groups", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -71,7 +77,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.311592Z"
+    "observedAt": "2026-10-25T16:33:05.791353Z"
   },
   "items": [
     {
@@ -87,7 +93,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/cluster/join-tokens`
 
@@ -105,6 +117,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/join-tokens" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("list_join_tokens", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -115,13 +133,25 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.313387Z"
+    "observedAt": "2026-10-25T16:32:59.787461Z"
   },
-  "items": []
+  "items": [
+    {
+      "memberName": "rack2-01",
+      "expiresAt": "mock: never used"
+    }
+  ]
 }
 ```
 
-**Errors:** `401`, `403`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured`, `store_unavailable` |
 
 ### `POST /api/v1/cluster/join-tokens`
 
@@ -139,7 +169,7 @@ Approves a new cluster member: asks Incus for a single-use join token. Needs `ma
 
 ```json
 {
-  "memberName": "example"
+  "memberName": "rack2-01"
 }
 ```
 
@@ -152,27 +182,39 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/join-tokens" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"memberName":"example"}'
+  --data-raw '{"memberName":"rack2-01"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("create_join_token", { body: { memberName: "rack2-01" } });
 ```
 
 **Response `201`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "expiresAt": "2026-01-01T09:00:00Z",
-  "memberName": "example",
-  "token": "<redacted>",
-  "warnings": [
-    "example"
-  ]
+  "memberName": "rack2-01",
+  "expiresAt": "mock: never used",
+  "token": "<token, shown once>",
+  "warnings": []
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `DELETE /api/v1/cluster/join-tokens/{member}`
 
@@ -182,22 +224,37 @@ Withdraws a new member's approval: revokes its unused join token. Needs `manage-
 
 **Needs:** `manage-infrastructure`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `member` | path | string | yes | Name the token was issued for |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `member` | path | string | yes | — | Name the token was issued for |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/cluster/join-tokens/node-1" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/cluster/join-tokens/rack2-01" \
   -H "Authorization: Bearer $APELORA_TOKEN"
+```
+
+**TypeScript:**
+
+```ts
+await client.request("revoke_join_token", { params: { member: "rack2-01" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `400`, `401`, `403`, `404`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `GET /api/v1/cluster/members`
 
@@ -215,17 +272,23 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("cluster_members", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.317396Z"
+    "observedAt": "2026-10-25T16:32:59.773572Z"
   },
   "clustered": true,
   "members": [
@@ -254,28 +317,6 @@ Content-Type: `application/json`.
     },
     {
       "name": "mock-member-02",
-      "status": "Online",
-      "message": "Fully operational",
-      "roles": [
-        "database"
-      ],
-      "databaseRole": "voter",
-      "leader": false,
-      "eventHub": false,
-      "ovnChassis": false,
-      "databaseExcluded": false,
-      "upForDatabase": true,
-      "failureDomain": "default",
-      "groups": [
-        "default"
-      ],
-      "architecture": "x86_64",
-      "held": false,
-      "incusVersion": null,
-      "versionError": null
-    },
-    {
-      "name": "mock-member-03",
       "status": "Online",
       "message": "Fully operational",
       "roles": [
@@ -354,7 +395,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `POST /api/v1/cluster/members/{member}/evacuate`
 
@@ -364,9 +411,9 @@ Evacuates a cluster member through Incus after re-running the dry run: refused w
 
 **Needs:** `manage-infrastructure` and the admin identity; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `member` | path | string | yes | Cluster member name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `member` | path | string | yes | — | Cluster member name |
 
 **Request body** (JSON):
 
@@ -377,7 +424,8 @@ Evacuates a cluster member through Incus after re-running the dry run: refused w
 
 ```json
 {
-  "confirm": "example"
+  "confirm": "mock-member-02",
+  "force": false
 }
 ```
 
@@ -386,27 +434,43 @@ Evacuates a cluster member through Incus after re-running the dry run: refused w
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/node-1/evacuate" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/mock-member-02/evacuate" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example"}'
+  --data-raw '{"confirm":"mock-member-02","force":false}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("evacuate_member", { params: { member: "mock-member-02" }, body: { confirm: "mock-member-02", force: false } });
 ```
 
 **Response `202`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "member": "example",
-  "operation": "example"
+  "member": "mock-member-02",
+  "operation": "00000000-0000-4000-8000-000000000001"
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `approval_invalid`, `approval_required`, `evacuation_blocked` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `GET /api/v1/cluster/members/{member}/evacuation`
 
@@ -416,58 +480,67 @@ Dry run of evacuating a cluster member: per instance, what Incus will do and wha
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `member` | path | string | yes | Cluster member name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `member` | path | string | yes | — | Cluster member name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members/node-1/evacuation" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members/mock-member-03/evacuation" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("preview_evacuation", { params: { member: "mock-member-03" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:32:59.776007Z"
+  },
   "plan": {
-    "blocked": [
-      "example"
+    "member": "mock-member-03",
+    "targets": [
+      "mock-member-01",
+      "mock-member-02"
     ],
     "items": [
       {
-        "impact": "example",
-        "instance": "example",
-        "mode": "example",
-        "outcome": "example",
-        "project": "apelora",
-        "status": "example",
-        "application": "example",
-        "module": "example"
+        "project": "default",
+        "instance": "mock-db-01",
+        "status": "Running",
+        "mode": "auto",
+        "outcome": "moves if it can; stopped during the move",
+        "impact": "not Apelora's"
       }
     ],
-    "member": "example",
-    "targets": [
-      "example"
-    ],
-    "warnings": [
-      "example"
-    ]
-  },
-  "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
+    "blocked": [],
+    "warnings": []
   }
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | an `incus_…` code |
 
 ### `POST /api/v1/cluster/members/{member}/fencing`
 
@@ -477,9 +550,9 @@ Confirms that a failed server is powered off (or cut off from the shared storage
 
 **Needs:** `cluster.fence_confirm` and another person's approval; the member's name typed again; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `member` | path | string | yes | Cluster member name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `member` | path | string | yes | — | Cluster member name |
 
 **Request body** (JSON):
 
@@ -490,8 +563,8 @@ Confirms that a failed server is powered off (or cut off from the shared storage
 
 ```json
 {
-  "confirm": "example",
-  "poweredOff": false
+  "confirm": "mock-member-01",
+  "poweredOff": true
 }
 ```
 
@@ -500,11 +573,17 @@ Confirms that a failed server is powered off (or cut off from the shared storage
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/node-1/fencing" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/mock-member-01/fencing" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example","poweredOff":false}'
+  --data-raw '{"confirm":"mock-member-01","poweredOff":true}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("confirm_fenced", { params: { member: "mock-member-01" }, body: { confirm: "mock-member-01", poweredOff: true } });
 ```
 
 **Response `200`** — Success.
@@ -567,7 +646,17 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `approval_invalid`, `approval_required`, `member_not_offline` |
+| `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/cluster/members/{member}/removal`
 
@@ -577,50 +666,65 @@ Dry run of removing a cluster member for good: what is still on it, what blocks 
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `member` | path | string | yes | Cluster member name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `member` | path | string | yes | — | Cluster member name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members/node-1/removal" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members/mock-member-03/removal" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("preview_member_removal", { params: { member: "mock-member-03" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:32:59.782401Z"
+  },
   "plan": {
-    "blocked": [
-      "example"
-    ],
+    "member": "mock-member-03",
+    "status": "Online",
     "instances": [
-      "example"
+      "default/mock-db-01"
     ],
-    "member": "example",
-    "status": "example",
-    "volumes": [
-      "example"
+    "volumes": [],
+    "blocked": [
+      "evacuate it first, so Incus moves its instances away",
+      "1 instance is still on it (default/mock-db-01); an evacuation leaves instances whose volumes are on the member stopped in place"
     ],
     "warnings": [
-      "example"
+      "the cluster keeps 2 database members (fewer than three): losing one more member can stop it",
+      "2 members remain: replicas have fewer places to spread over",
+      "to use the server again, reinstall it and enrol it as a new machine"
     ]
-  },
-  "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
   }
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | an `incus_…` code |
 
 ### `POST /api/v1/cluster/members/{member}/remove`
 
@@ -630,9 +734,9 @@ Removes an evacuated, empty member from the cluster for good, after the check ru
 
 **Needs:** `cluster.manage`, the admin identity and the member's name typed again; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `member` | path | string | yes | Cluster member name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `member` | path | string | yes | — | Cluster member name |
 
 **Request body** (JSON):
 
@@ -643,7 +747,8 @@ Removes an evacuated, empty member from the cluster for good, after the check ru
 
 ```json
 {
-  "confirm": "example"
+  "confirm": "mock-member-03",
+  "force": false
 }
 ```
 
@@ -652,15 +757,31 @@ Removes an evacuated, empty member from the cluster for good, after the check ru
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/node-1/remove" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/mock-member-03/remove" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example"}'
+  --data-raw '{"confirm":"mock-member-03","force":false}'
+```
+
+**TypeScript:**
+
+```ts
+await client.request("remove_member", { params: { member: "mock-member-03" }, body: { confirm: "mock-member-03", force: false } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `approval_invalid`, `approval_required`, `removal_blocked` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `POST /api/v1/cluster/members/{member}/restore`
 
@@ -670,9 +791,9 @@ Restores an evacuated member: Incus moves its instances back and starts them. Ne
 
 **Needs:** `manage-infrastructure` and the admin identity; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `member` | path | string | yes | Cluster member name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `member` | path | string | yes | — | Cluster member name |
 
 **Request body** (JSON):
 
@@ -683,7 +804,8 @@ Restores an evacuated member: Incus moves its instances back and starts them. Ne
 
 ```json
 {
-  "confirm": "example"
+  "confirm": "mock-member-02",
+  "force": false
 }
 ```
 
@@ -692,27 +814,42 @@ Restores an evacuated member: Incus moves its instances back and starts them. Ne
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/node-1/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/mock-member-02/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example"}'
+  --data-raw '{"confirm":"mock-member-02","force":false}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("restore_member", { params: { member: "mock-member-02" }, body: { confirm: "mock-member-02", force: false } });
 ```
 
 **Response `202`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "member": "example",
-  "operation": "example"
+  "member": "mock-member-02",
+  "operation": "00000000-0000-4000-8000-000000000002"
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | — |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `GET /api/v1/cluster/recovery`
 
@@ -730,6 +867,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/recovery" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("cluster_recovery", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -740,13 +883,19 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.319819Z"
+    "observedAt": "2026-10-25T16:32:59.803486Z"
   },
   "items": []
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/cluster/settings`
 
@@ -764,17 +913,23 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/settings" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("cluster_settings", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.321391Z"
+    "observedAt": "2026-10-25T16:32:59.796976Z"
   },
   "identity": "admin",
   "items": [
@@ -793,68 +948,19 @@ Content-Type: `application/json`.
       "value": null,
       "default": "0",
       "usesDefault": true
-    },
-    {
-      "key": "cluster.max_voters",
-      "label": "Database voters",
-      "meaning": "How many members vote in the cluster database (an odd number, 3 or more).",
-      "value": null,
-      "default": "3",
-      "usesDefault": true
-    },
-    {
-      "key": "cluster.max_standby",
-      "label": "Database stand-bys",
-      "meaning": "How many members keep a copy of the cluster database without voting (0 to 5).",
-      "value": null,
-      "default": "2",
-      "usesDefault": true
-    },
-    {
-      "key": "cluster.join_token_expiry",
-      "label": "Join tokens expire after",
-      "meaning": "Apelora recommends one hour or less.",
-      "value": "1H",
-      "default": "3H",
-      "usesDefault": false
-    },
-    {
-      "key": "cluster.images_minimal_replica",
-      "label": "Copies of each image",
-      "meaning": "How many members keep each image (-1: every member).",
-      "value": null,
-      "default": "3",
-      "usesDefault": true
-    },
-    {
-      "key": "cluster.rebalance.interval",
-      "label": "Rebalance every (minutes)",
-      "meaning": "0: Incus does not move instances to even out load.",
-      "value": null,
-      "default": "0",
-      "usesDefault": true
-    },
-    {
-      "key": "images.auto_update_interval",
-      "label": "Check for image updates every (hours)",
-      "meaning": "0 turns the checks off.",
-      "value": null,
-      "default": "6",
-      "usesDefault": true
-    },
-    {
-      "key": "images.auto_update_cached",
-      "label": "Update cached images",
-      "meaning": "Whether images cached from image servers are refreshed automatically.",
-      "value": null,
-      "default": "true",
-      "usesDefault": true
     }
   ]
 }
 ```
 
-**Errors:** `401`, `403`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured`, `store_unavailable` |
 
 ### `PATCH /api/v1/cluster/settings`
 
@@ -869,13 +975,15 @@ Changes cluster settings through Incus with the admin identity. Every key must b
 | Field | Type | Required | Meaning |
 |---|---|---|---|
 | `changes` | object | yes | — |
+| `changes.<key>` | string or null | no | Any key. |
 | `dryRun` | boolean | no | Only report what would change and what to watch for; nothing is changed and no approval is needed. |
 
 ```json
 {
   "changes": {
-    "key": "example"
-  }
+    "cluster.join_token_expiry": "3H"
+  },
+  "dryRun": true
 }
 ```
 
@@ -888,34 +996,49 @@ curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/cluster/settings" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"changes":{"key":"example"}}'
+  --data-raw '{"changes":{"cluster.join_token_expiry":"3H"},"dryRun":true}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("change_cluster_settings", { body: { changes: { "cluster.join_token_expiry": "3H" }, dryRun: true } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
   "applied": false,
-  "approvalTarget": "example",
   "changes": [
     {
-      "key": "example",
-      "label": "example",
+      "key": "cluster.join_token_expiry",
+      "label": "Join tokens expire after",
+      "from": "1H",
+      "to": "3H",
       "warnings": [
-        "example"
-      ],
-      "from": "example",
-      "to": "example"
+        "Apelora recommends join tokens that last an hour or less."
+      ]
     }
-  ]
+  ],
+  "approvalTarget": "cluster-settings:cluster.join_token_expiry"
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request`, `invalid_setting` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `409` | `approval_invalid`, `approval_required`, `nothing_to_change` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `POST /api/v1/cluster/upgrade`
 
@@ -935,8 +1058,8 @@ One step of the rolling upgrade. Apelora evacuates and restores. It does not ins
 
 ```json
 {
-  "action": "example",
-  "confirm": "example"
+  "action": "start",
+  "confirm": "upgrade"
 }
 ```
 
@@ -949,7 +1072,13 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/upgrade" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"action":"example","confirm":"example"}'
+  --data-raw '{"action":"start","confirm":"upgrade"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("cluster_upgrade", { body: { action: "start", confirm: "upgrade" } });
 ```
 
 **Response `200`** — Success.
@@ -988,7 +1117,16 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `409` | `evacuation_blocked`, `no_upgrade`, `upgrade_blocked`, `upgrade_in_progress`, `upgrade_step` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `GET /api/v1/machines`
 
@@ -1006,6 +1144,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/machines" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("list_machines", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -1016,13 +1160,44 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.437327Z"
+    "observedAt": "2026-10-25T16:33:05.965052Z"
   },
-  "items": []
+  "items": [
+    {
+      "name": "mock-member-03",
+      "provider": "manual",
+      "providerRef": null,
+      "capabilities": {
+        "discovers": false,
+        "installs": false,
+        "powers": false
+      },
+      "description": "First rack, slot 3",
+      "state": "eligible",
+      "memberStatus": "Online",
+      "architecture": "x86_64",
+      "nextStep": "None.",
+      "warnings": [],
+      "registeredBy": "token:docs-verifier",
+      "registeredAt": "2026-10-25T16:32:59.811376Z",
+      "approvedBy": null,
+      "approvedAt": null,
+      "approvalExpiresAt": null,
+      "admittedBy": "token:docs-verifier",
+      "admittedAt": "2026-10-25T16:32:59.819456Z"
+    }
+  ]
 }
 ```
 
-**Errors:** `401`, `403`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `POST /api/v1/machines`
 
@@ -1038,12 +1213,14 @@ Registers a machine. A name that is already an eligible member is adopted as adm
 |---|---|---|---|
 | `description` | string | no | — |
 | `name` | string | yes | The name it will have as a cluster member. |
-| `provider` | one of several | no | — |
-| `systemId` | string | no | For a `maas` machine: its MAAS system id (from `GET /api/v1/provisioners/maas/machines`). |
+| `provider` | one of `manual`, `maas` or null | no | — |
+| `systemId` | string or null | no | For a `maas` machine: its MAAS system id (from `GET /api/v1/provisioners/maas/machines`). |
 
 ```json
 {
-  "name": "example"
+  "name": "rack2-01",
+  "description": "Second rack, slot 1",
+  "provider": "manual"
 }
 ```
 
@@ -1056,44 +1233,57 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"example"}'
+  --data-raw '{"name":"rack2-01","description":"Second rack, slot 1","provider":"manual"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("register_machine", { body: { name: "rack2-01", description: "Second rack, slot 1", provider: "manual" } });
 ```
 
 **Response `201`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
+  "name": "rack2-01",
+  "provider": "manual",
+  "providerRef": null,
   "capabilities": {
     "discovers": false,
     "installs": false,
     "powers": false
   },
-  "description": "A description",
-  "name": "example",
-  "nextStep": "example",
-  "provider": "manual",
-  "registeredAt": "2026-01-01T09:00:00Z",
-  "registeredBy": "example",
+  "description": "Second rack, slot 1",
   "state": "registered",
-  "warnings": [
-    "example"
-  ],
-  "admittedAt": "2026-01-01T09:00:00Z",
-  "admittedBy": "example",
-  "approvalExpiresAt": "2026-01-01T09:00:00Z",
-  "approvedAt": "2026-01-01T09:00:00Z",
-  "approvedBy": "example",
-  "architecture": "example",
-  "memberStatus": "example",
-  "providerRef": "example"
+  "memberStatus": null,
+  "architecture": null,
+  "nextStep": "Install Incus on the server, then approve it.",
+  "warnings": [],
+  "registeredBy": "token:docs-verifier",
+  "registeredAt": "2026-10-25T16:32:59.806185Z",
+  "approvedBy": null,
+  "approvedAt": null,
+  "approvalExpiresAt": null,
+  "admittedBy": null,
+  "admittedAt": null
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request`, `provisioner_not_configured`, `unknown_machine` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `409` | — |
+| `502` | `provisioner_unavailable`, an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `DELETE /api/v1/machines/{name}`
 
@@ -1103,22 +1293,38 @@ Forgets a machine that is not a cluster member (revoking an unused join token). 
 
 **Needs:** `manage-infrastructure`; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Machine name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Machine name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/machines/shop" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/machines/rack2-01" \
   -H "Authorization: Bearer $APELORA_TOKEN"
+```
+
+**TypeScript:**
+
+```ts
+await client.request("remove_machine", { params: { name: "rack2-01" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | — |
+| `409` | `approval_invalid`, `approval_required`, `still_a_member` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `GET /api/v1/machines/{name}/admission`
 
@@ -1128,44 +1334,66 @@ The admission checks for a joined machine (dry run; changes nothing). Needs `man
 
 **Needs:** `manage-infrastructure`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Machine name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Machine name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/machines/shop/admission" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/machines/mock-member-03/admission" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("machine_admission", { params: { name: "mock-member-03" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
-  "admissible": false,
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:32:59.817185Z"
+  },
+  "name": "mock-member-03",
+  "admissible": true,
   "checks": [
     {
-      "detail": "example",
-      "id": "example",
+      "id": "member-online",
+      "title": "Member online",
       "status": "pass",
-      "title": "example"
+      "detail": "online"
+    },
+    {
+      "id": "incus-version",
+      "title": "Incus version",
+      "status": "not-checked",
+      "detail": "the member did not report its version"
     }
-  ],
-  "name": "example",
-  "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
-  }
+  ]
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | — |
+| `409` | `not_a_member` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `POST /api/v1/machines/{name}/admit`
 
@@ -1175,46 +1403,68 @@ Admits a joined machine: re-runs the admission checks and, when none fails, lets
 
 **Needs:** `manage-infrastructure`; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Machine name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Machine name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines/shop/admit" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines/mock-member-03/admit" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("admit_machine", { params: { name: "mock-member-03" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
-  "admissible": false,
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:32:59.819394Z"
+  },
+  "name": "mock-member-03",
+  "admissible": true,
   "checks": [
     {
-      "detail": "example",
-      "id": "example",
+      "id": "member-online",
+      "title": "Member online",
       "status": "pass",
-      "title": "example"
+      "detail": "online"
+    },
+    {
+      "id": "incus-version",
+      "title": "Incus version",
+      "status": "not-checked",
+      "detail": "the member did not report its version"
     }
-  ],
-  "name": "example",
-  "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
-  }
+  ]
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | — |
+| `409` | `admission_blocked`, `not_a_member` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `DELETE /api/v1/machines/{name}/approval`
 
@@ -1224,22 +1474,37 @@ Withdraws an approval: revokes the machine's unused join token. Needs `manage-in
 
 **Needs:** `manage-infrastructure`; audited.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Machine name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Machine name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/machines/shop/approval" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/machines/rack2-01/approval" \
   -H "Authorization: Bearer $APELORA_TOKEN"
+```
+
+**TypeScript:**
+
+```ts
+await client.request("withdraw_machine_approval", { params: { name: "rack2-01" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `400`, `401`, `403`, `404`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | — |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `POST /api/v1/machines/{name}/approve`
 
@@ -1249,39 +1514,53 @@ Approves a machine: asks Incus for its single-use join token, returned only in t
 
 **Needs:** `manage-infrastructure`; audited without the token.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `name` | path | string | yes | Machine name |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Machine name |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines/shop/approve" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines/rack2-01/approve" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("approve_machine", { params: { name: "rack2-01" } });
 ```
 
 **Response `201`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "enrolCommand": "example",
-  "expiresAt": "2026-01-01T09:00:00Z",
-  "name": "example",
-  "token": "<redacted>",
-  "warnings": [
-    "example"
-  ]
+  "name": "rack2-01",
+  "expiresAt": "mock: never used",
+  "token": "<token, shown once>",
+  "enrolCommand": "sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address <this server's cluster address>",
+  "warnings": []
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | — |
+| `409` | `already_a_member`, `approval_invalid`, `approval_pending`, `approval_required` |
+| `502` | an `incus_…` code |
+| `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
 ### `GET /api/v1/provisioners/maas/machines`
 
@@ -1299,6 +1578,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/provisioners/maas/machines
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("maas_machines", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -1309,14 +1594,21 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.453915Z"
+    "observedAt": "2026-10-25T16:33:05.99709Z"
   },
   "configured": false,
   "items": []
 }
 ```
 
-**Errors:** `401`, `403`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | `provisioner_unavailable`, an `incus_…` code |
+| `503` | `database_not_configured`, `store_unavailable` |
 
 ### `POST /api/v1/provisioners/maas/machines/{system_id}/commission`
 
@@ -1326,9 +1618,9 @@ Starts commissioning. Needs `hardware.commission` and the hostname typed again. 
 
 **Needs:** `hardware.commission` and the hostname typed again.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `system_id` | path | string | yes | MAAS system id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `system_id` | path | string | yes | — | MAAS system id |
 
 **Request body** (JSON):
 
@@ -1338,7 +1630,7 @@ Starts commissioning. Needs `hardware.commission` and the hostname typed again. 
 
 ```json
 {
-  "confirm": "example"
+  "confirm": "rack3-04"
 }
 ```
 
@@ -1347,11 +1639,17 @@ Starts commissioning. Needs `hardware.commission` and the hostname typed again. 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machines/00000000-0000-4000-8000-000000000001/commission" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machines/4y3h7n/commission" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example"}'
+  --data-raw '{"confirm":"rack3-04"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("maas_commission", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04" } });
 ```
 
 **Response `202`** — Success.
@@ -1368,7 +1666,16 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | `provisioner_unavailable`, an `incus_…` code |
+| `503` | `provisioner_not_configured`, `database_not_configured` |
 
 ### `POST /api/v1/provisioners/maas/machines/{system_id}/deploy`
 
@@ -1378,9 +1685,9 @@ Installs an operating system. Needs `hardware.deploy` and the hostname typed aga
 
 **Needs:** `hardware.deploy` and the hostname typed again.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `system_id` | path | string | yes | MAAS system id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `system_id` | path | string | yes | — | MAAS system id |
 
 **Request body** (JSON):
 
@@ -1392,9 +1699,9 @@ Installs an operating system. Needs `hardware.deploy` and the hostname typed aga
 
 ```json
 {
-  "confirm": "example",
-  "distroSeries": "example",
-  "userData": "example"
+  "confirm": "rack3-04",
+  "distroSeries": "noble",
+  "userData": ""
 }
 ```
 
@@ -1403,11 +1710,17 @@ Installs an operating system. Needs `hardware.deploy` and the hostname typed aga
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machines/00000000-0000-4000-8000-000000000001/deploy" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machines/4y3h7n/deploy" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example","distroSeries":"example","userData":"example"}'
+  --data-raw '{"confirm":"rack3-04","distroSeries":"noble","userData":""}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("maas_deploy", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04", distroSeries: "noble", userData: "" } });
 ```
 
 **Response `202`** — Success.
@@ -1424,7 +1737,16 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | `provisioner_unavailable`, an `incus_…` code |
+| `503` | `provisioner_not_configured`, `database_not_configured` |
 
 ### `POST /api/v1/provisioners/maas/machines/{system_id}/release`
 
@@ -1434,9 +1756,9 @@ Returns the machine to MAAS's pool. Needs `hardware.deploy` and the hostname typ
 
 **Needs:** `hardware.deploy` and the hostname typed again. `hardware.delete` as well and is off unless asked.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `system_id` | path | string | yes | MAAS system id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `system_id` | path | string | yes | — | MAAS system id |
 
 **Request body** (JSON):
 
@@ -1447,7 +1769,8 @@ Returns the machine to MAAS's pool. Needs `hardware.deploy` and the hostname typ
 
 ```json
 {
-  "confirm": "example"
+  "confirm": "rack3-04",
+  "eraseDisks": true
 }
 ```
 
@@ -1456,11 +1779,17 @@ Returns the machine to MAAS's pool. Needs `hardware.deploy` and the hostname typ
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machines/00000000-0000-4000-8000-000000000001/release" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machines/4y3h7n/release" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example"}'
+  --data-raw '{"confirm":"rack3-04","eraseDisks":true}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("maas_release", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04", eraseDisks: true } });
 ```
 
 **Response `202`** — Success.
@@ -1477,7 +1806,16 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | `provisioner_unavailable`, an `incus_…` code |
+| `503` | `provisioner_not_configured`, `database_not_configured` |
 
 ### `POST /api/v1/provisioners/maas/machines/{system_id}/test`
 
@@ -1487,9 +1825,9 @@ Starts a hardware test run (burn-in) through MAAS. Needs `hardware.commission` a
 
 **Needs:** `hardware.commission` and the hostname typed again.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `system_id` | path | string | yes | MAAS system id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `system_id` | path | string | yes | — | MAAS system id |
 
 **Request body** (JSON):
 
@@ -1500,7 +1838,10 @@ Starts a hardware test run (burn-in) through MAAS. Needs `hardware.commission` a
 
 ```json
 {
-  "confirm": "example"
+  "confirm": "rack3-04",
+  "scripts": [
+    "smartctl-validate"
+  ]
 }
 ```
 
@@ -1509,11 +1850,17 @@ Starts a hardware test run (burn-in) through MAAS. Needs `hardware.commission` a
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machines/00000000-0000-4000-8000-000000000001/test" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machines/4y3h7n/test" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"example"}'
+  --data-raw '{"confirm":"rack3-04","scripts":["smartctl-validate"]}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("maas_test", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04", scripts: ["smartctl-validate"] } });
 ```
 
 **Response `202`** — Success.
@@ -1530,5 +1877,15 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `409`, `502`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `409` | `machine_in_use` |
+| `502` | `provisioner_unavailable`, an `incus_…` code |
+| `503` | `provisioner_not_configured`, `database_not_configured` |
 

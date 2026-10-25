@@ -5,9 +5,9 @@ slug: inventory
 order: 2
 label: Inventory
 source: packages/api-client/openapi.json
-summary: Servers, instances, networks, storage, jobs and preflight.
+summary: Servers, instances and logs, networks, storage, capacity and preflight.
 ---
-What exists in the cluster, as Incus reports it: instances, networks, storage pools, jobs, preflight and capacity. This page lists 14 operations.
+What exists in the cluster, as Incus reports it: servers and capacity, instances and their logs, Incus projects, networks, storage pools and volumes nobody owns, and preflight checks. This page lists 14 operations.
 
 Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
@@ -48,20 +48,26 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/capacity" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("capacity", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.308625Z"
+    "observedAt": "2026-10-25T16:33:05.786407Z"
   },
   "named": true,
-  "volumePool": null,
+  "volumePool": "mock-local",
   "volumePoolShared": false,
   "servers": [
     {
@@ -75,12 +81,15 @@ Content-Type: `application/json`.
         "usedBytes": 9663676416,
         "totalBytes": 34359738368
       },
-      "volumePool": null
+      "volumePool": {
+        "usedBytes": 128849018880,
+        "totalBytes": 536870912000
+      }
     },
     {
       "label": "mock-member-02",
-      "acceptsModules": true,
-      "reason": null,
+      "acceptsModules": false,
+      "reason": "It is Evacuated",
       "architecture": "x86_64",
       "cpuThreads": 8,
       "load": 1.4,
@@ -88,33 +97,29 @@ Content-Type: `application/json`.
         "usedBytes": 13958643712,
         "totalBytes": 34359738368
       },
-      "volumePool": null
-    },
-    {
-      "label": "mock-member-03",
-      "acceptsModules": true,
-      "reason": null,
-      "architecture": "x86_64",
-      "cpuThreads": 8,
-      "load": 0.3,
-      "memory": {
-        "usedBytes": 6442450944,
-        "totalBytes": 34359738368
-      },
-      "volumePool": null
+      "volumePool": {
+        "usedBytes": 225485783040,
+        "totalBytes": 536870912000
+      }
     }
   ],
   "totals": {
-    "serversAccepting": 3,
-    "cpuThreads": 24,
-    "memoryFreeBytes": 73014444032,
-    "memoryTotalBytes": 103079215104,
-    "volumePoolFreeBytes": null
+    "serversAccepting": 2,
+    "cpuThreads": 16,
+    "memoryFreeBytes": 52613349376,
+    "memoryTotalBytes": 68719476736,
+    "volumePoolFreeBytes": 858993459200
   }
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/cluster`
 
@@ -132,17 +137,23 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("cluster", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.31024Z"
+    "observedAt": "2026-10-25T16:33:05.788736Z"
   },
   "server": {
     "apiVersion": "1.0",
@@ -179,23 +190,7 @@ Content-Type: `application/json`.
       "roles": [
         "database"
       ],
-      "status": "Online",
-      "message": "Fully operational",
-      "architecture": "x86_64",
-      "failureDomain": "default",
-      "database": true,
-      "groups": [
-        "default"
-      ],
-      "scheduler": "all"
-    },
-    {
-      "name": "mock-member-03",
-      "url": "https://mock-member-03.invalid:8443",
-      "roles": [
-        "database"
-      ],
-      "status": "Online",
+      "status": "Evacuated",
       "message": "Fully operational",
       "architecture": "x86_64",
       "failureDomain": "default",
@@ -209,7 +204,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/instances`
 
@@ -227,17 +228,23 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("instances", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.430566Z"
+    "observedAt": "2026-10-25T16:32:59.737997Z"
   },
   "items": [
     {
@@ -259,32 +266,18 @@ Content-Type: `application/json`.
       "architecture": "x86_64",
       "description": "mock data",
       "managed": false
-    },
-    {
-      "name": "mock-db-01",
-      "project": "default",
-      "kind": "container",
-      "status": "Running",
-      "location": "mock-member-03",
-      "architecture": "x86_64",
-      "description": "mock data",
-      "managed": false
-    },
-    {
-      "name": "mock-vm-01",
-      "project": "default",
-      "kind": "virtual-machine",
-      "status": "Running",
-      "location": "mock-member-02",
-      "architecture": "x86_64",
-      "description": "mock data",
-      "managed": false
     }
   ]
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/instances/{project}/{name}`
 
@@ -294,161 +287,131 @@ The instance with the application it belongs to, its recent jobs, and what the c
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `project` | path | string | yes | Incus project. |
-| `name` | path | string | yes | Instance name. |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `project` | path | string | yes | — | Incus project. |
+| `name` | path | string | yes | — | Instance name. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/default/mock-web-01" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("instance_page", { params: { project: "default", name: "mock-web-01" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:32:59.740704Z"
+  },
+  "instance": {
+    "name": "mock-web-01",
+    "project": "default",
+    "kind": "container",
+    "status": "Running",
+    "location": "mock-member-01",
+    "architecture": "x86_64",
+    "description": "mock data",
+    "managed": false,
+    "createdAt": "2026-10-01T09:00:00Z",
+    "lastUsedAt": "2026-10-20T08:00:00Z",
+    "startedAt": "2026-10-20T08:00:00Z",
+    "profiles": [
+      "default"
+    ],
+    "image": {
+      "description": "Mock image",
+      "os": "Debian",
+      "release": "13",
+      "fingerprint": null
+    },
+    "limits": {
+      "cpu": "2",
+      "memory": "2GiB",
+      "rootDisk": "10GiB"
+    },
+    "usage": {
+      "cpuNs": 42000000000,
+      "memoryBytes": 268435456,
+      "memoryPeakBytes": 301989888,
+      "memoryTotalBytes": 2147483648,
+      "processes": 23,
+      "rootDiskBytes": 1073741824
+    },
+    "addresses": [
+      {
+        "interface": "eth0",
+        "family": "inet",
+        "address": "10.0.0.10",
+        "netmask": "24",
+        "scope": "global"
+      }
+    ],
+    "disks": [
+      {
+        "device": "root",
+        "path": "/",
+        "pool": "mock-local",
+        "volume": null,
+        "size": "10GiB"
+      }
+    ],
+    "snapshots": []
+  },
+  "application": null,
+  "jobs": [],
   "actions": {
-    "delete": {
-      "allowed": false,
-      "reason": "example"
-    },
-    "logs": {
-      "allowed": false,
-      "reason": "example"
-    },
-    "move": {
-      "allowed": false,
-      "reason": "example"
-    },
-    "restart": {
-      "allowed": false,
-      "reason": "example"
-    },
     "start": {
       "allowed": false,
-      "reason": "example"
+      "reason": "Not managed by Apelora: Apelora changes only instances it created."
     },
     "stop": {
       "allowed": false,
-      "reason": "example"
-    }
-  },
-  "instance": {
-    "addresses": [
-      {
-        "address": "example",
-        "family": "example",
-        "interface": "example",
-        "netmask": "example",
-        "scope": "example"
-      }
-    ],
-    "architecture": "example",
-    "description": "A description",
-    "disks": [
-      {
-        "device": "example",
-        "path": "example",
-        "pool": "example",
-        "size": "example",
-        "volume": "example"
-      }
-    ],
-    "image": {
-      "description": "A description",
-      "fingerprint": "example",
-      "os": "example",
-      "release": "example"
+      "reason": "Not managed by Apelora: Apelora changes only instances it created."
     },
-    "kind": "container",
-    "limits": {
-      "cpu": "example",
-      "memory": "example",
-      "rootDisk": "example"
+    "restart": {
+      "allowed": false,
+      "reason": "Not managed by Apelora: Apelora changes only instances it created."
     },
-    "location": "example",
-    "managed": false,
-    "name": "example",
-    "profiles": [
-      "example"
-    ],
-    "project": "apelora",
-    "snapshots": [
-      {
-        "name": "example",
-        "stateful": false,
-        "createdAt": "2026-01-01T09:00:00Z",
-        "expiresAt": "2026-01-01T09:00:00Z"
-      }
-    ],
-    "status": "example",
-    "createdAt": "2026-01-01T09:00:00Z",
-    "lastUsedAt": "2026-01-01T09:00:00Z",
-    "owner": {
-      "application": "example",
-      "module": "example",
-      "replica": 0
+    "move": {
+      "allowed": false,
+      "reason": "Not managed by Apelora: Apelora changes only instances it created."
     },
-    "startedAt": "2026-01-01T09:00:00Z",
-    "usage": {
-      "cpuNs": 1,
-      "memoryBytes": 1,
-      "memoryPeakBytes": 1,
-      "memoryTotalBytes": 1,
-      "processes": 1,
-      "rootDiskBytes": 1
+    "delete": {
+      "allowed": false,
+      "reason": "Not managed by Apelora: Apelora changes only instances it created."
+    },
+    "logs": {
+      "allowed": true,
+      "reason": null
     }
-  },
-  "jobs": [
-    {
-      "actions": {
-        "cancel": {
-          "allowed": false,
-          "reason": "example"
-        },
-        "retry": {
-          "allowed": false,
-          "reason": "example"
-        }
-      },
-      "attempts": 1,
-      "createdAt": "2026-01-01T09:00:00Z",
-      "id": "00000000-0000-4000-8000-000000000001",
-      "incusOperations": [
-        "example"
-      ],
-      "kind": "example",
-      "maxAttempts": 1,
-      "request": {},
-      "status": "example",
-      "updatedAt": "2026-01-01T09:00:00Z",
-      "cancelRequestedAt": "2026-01-01T09:00:00Z",
-      "cancelRequestedBy": "example",
-      "incusOperation": "example",
-      "lastError": "example",
-      "queuedBy": "example",
-      "requestId": "example",
-      "retriedBy": "00000000-0000-4000-8000-000000000001",
-      "retryOf": "00000000-0000-4000-8000-000000000001"
-    }
-  ],
-  "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
-  },
-  "application": "example"
+  }
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/instances/{project}/{name}/console-log`
 
@@ -458,43 +421,65 @@ The end of the instance's console log (`tailKib`, default 64, at most 1024).
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `project` | path | string | yes | Incus project. |
-| `name` | path | string | yes | Instance name. |
-| `tailKib` | query | integer | no | How many KiB from the end of the log (1–1024, default 64). |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `project` | path | string | yes | — | Incus project. |
+| `name` | path | string | yes | — | Instance name. |
+| `tailKib` | query | integer | no | `64` | How many KiB from the end of the log (1–1024, default 64). |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop/console-log" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/default/mock-vm-01/console-log" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**With options** (`tailKib`):
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/default/mock-vm-01/console-log?tailKib=8" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("instance_console_log", { params: { project: "default", name: "mock-vm-01" }, query: { tailKib: 8 } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "file": "example",
-  "log": {
-    "content": "example",
-    "size": 0,
-    "truncated": false
-  },
   "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:32:59.747327Z"
   },
-  "tailKib": 0
+  "file": "console",
+  "tailKib": 64,
+  "log": {
+    "content": "Mock · console of default/mock-vm-01; not read from Incus\nMock · mock-vm-01 reached its login prompt\n",
+    "size": 103,
+    "truncated": false
+  }
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/instances/{project}/{name}/logs`
 
@@ -504,38 +489,52 @@ The instance's log files as Incus lists them (names only).
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `project` | path | string | yes | Incus project. |
-| `name` | path | string | yes | Instance name. |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `project` | path | string | yes | — | Incus project. |
+| `name` | path | string | yes | — | Instance name. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop/logs" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/default/mock-web-01/logs" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("instance_logs", { params: { project: "default", name: "mock-web-01" } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "files": [
-    "example"
-  ],
   "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
-  }
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:32:59.742601Z"
+  },
+  "files": [
+    "lxc.log"
+  ]
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/instances/{project}/{name}/logs/{file}`
 
@@ -545,44 +544,66 @@ The end of one of the instance's log files (`tailKib`, default 64, at most 1024)
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `project` | path | string | yes | Incus project. |
-| `name` | path | string | yes | Instance name. |
-| `file` | path | string | yes | Log file name, as listed. |
-| `tailKib` | query | integer | no | How many KiB from the end of the log (1–1024, default 64). |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `project` | path | string | yes | — | Incus project. |
+| `name` | path | string | yes | — | Instance name. |
+| `file` | path | string | yes | — | Log file name, as listed. |
+| `tailKib` | query | integer | no | `64` | How many KiB from the end of the log (1–1024, default 64). |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/apelora/shop/logs/example" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/default/mock-web-01/logs/lxc.log" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
+```
+
+**With options** (`tailKib`):
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/default/mock-web-01/logs/lxc.log?tailKib=16" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("instance_log", { params: { project: "default", name: "mock-web-01", file: "lxc.log" }, query: { tailKib: 16 } });
 ```
 
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "file": "example",
-  "log": {
-    "content": "example",
-    "size": 0,
-    "truncated": false
-  },
   "source": {
-    "observedAt": "2026-01-01T09:00:00Z",
-    "provider": "mock"
+    "provider": "mock",
+    "observedAt": "2026-10-25T16:32:59.744212Z"
   },
-  "tailKib": 0
+  "file": "lxc.log",
+  "tailKib": 64,
+  "log": {
+    "content": "Mock · fixture log of default/mock-web-01; not read from Incus\nMock · mock-web-01 is Running\n",
+    "size": 95,
+    "truncated": false
+  }
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `404`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/networks`
 
@@ -600,6 +621,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("networks", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -610,7 +637,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.444982Z"
+    "observedAt": "2026-10-25T16:33:05.977002Z"
   },
   "items": [
     {
@@ -630,7 +657,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/networks/settings`
 
@@ -648,23 +681,37 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks/settings" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("network_settings", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.449917Z"
+    "observedAt": "2026-10-25T16:33:05.989381Z"
   },
   "uplink": null,
   "serviceRange": null,
   "serviceAddressesUsed": 0,
   "serviceAddressesTotal": null,
   "projects": [
+    {
+      "project": "acme-shop-staging",
+      "found": false,
+      "restricted": false,
+      "ownNetworks": false,
+      "uplinks": [],
+      "subnets": []
+    },
     {
       "project": "apelora",
       "found": true,
@@ -676,14 +723,6 @@ Content-Type: `application/json`.
       "subnets": [
         "mock-br0:198.18.100.0/28"
       ]
-    },
-    {
-      "project": "docs-org-docs-project-development",
-      "found": false,
-      "restricted": false,
-      "ownNetworks": false,
-      "uplinks": [],
-      "subnets": []
     }
   ],
   "uplinkObserved": null,
@@ -691,17 +730,23 @@ Content-Type: `application/json`.
   "findings": [
     {
       "severity": "warn",
-      "message": "Project docs-org-docs-project-development does not exist in Incus or is not visible to the deploy identity"
+      "message": "Project acme-shop-staging does not exist in Incus or is not visible to the deploy identity"
     },
     {
-      "severity": "info",
-      "message": "No uplink is set (APELORA_NETWORK_UPLINK): connections are not enforced and instances share their project's network"
+      "severity": "warn",
+      "message": "Project shop-prod does not exist in Incus or is not visible to the deploy identity"
     }
   ]
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/preflight`
 
@@ -719,17 +764,23 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/preflight" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("preflight", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.451277Z"
+    "observedAt": "2026-10-25T16:33:05.992157Z"
   },
   "overall": "fail",
   "checks": [
@@ -744,72 +795,18 @@ Content-Type: `application/json`.
       "title": "Kernel version",
       "status": "not-checked",
       "detail": "the server did not report its kernel"
-    },
-    {
-      "id": "api-extensions",
-      "title": "Required API extensions",
-      "status": "fail",
-      "detail": "missing: instance_create_start, operation_wait"
-    },
-    {
-      "id": "oci",
-      "title": "OCI application containers",
-      "status": "warn",
-      "detail": "instance_oci is missing; OCI modules cannot be deployed"
-    },
-    {
-      "id": "members",
-      "title": "Cluster members",
-      "status": "pass",
-      "detail": "3 online"
-    },
-    {
-      "id": "project-apelora",
-      "title": "Project apelora",
-      "status": "pass",
-      "detail": "exists and is restricted"
-    },
-    {
-      "id": "storage",
-      "title": "Storage pools",
-      "status": "pass",
-      "detail": "mock-local"
-    },
-    {
-      "id": "volume-pool",
-      "title": "Pool for volumes",
-      "status": "warn",
-      "detail": "none configured (APELORA_VOLUME_POOL): designs with volumes are refused"
-    },
-    {
-      "id": "network",
-      "title": "Managed networks",
-      "status": "pass",
-      "detail": "mock-br0"
-    },
-    {
-      "id": "clock",
-      "title": "Clock agreement between members",
-      "status": "not-checked",
-      "detail": "not measurable through the Incus API; check on the members"
-    },
-    {
-      "id": "latency",
-      "title": "Latency between members (≤ 10 ms)",
-      "status": "not-checked",
-      "detail": "not measurable through the Incus API; check on the members"
-    },
-    {
-      "id": "image-mirrors",
-      "title": "Image mirrors",
-      "status": "warn",
-      "detail": "none configured, so the catalog's 2 image servers are used directly. Fine with internet access; without it, set APELORA_IMAGE_MIRRORS and APELORA_IMAGE_SERVERS=mirrors-only"
     }
   ]
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/projects`
 
@@ -827,6 +824,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/projects" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("projects", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -837,7 +840,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.452763Z"
+    "observedAt": "2026-10-25T16:33:05.994739Z"
   },
   "items": [
     {
@@ -854,7 +857,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/storage-pools`
 
@@ -872,6 +881,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage-pools" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("storage_pools", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -882,7 +897,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.461592Z"
+    "observedAt": "2026-10-25T16:33:06.010033Z"
   },
   "items": [
     {
@@ -900,7 +915,13 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/storage/orphans`
 
@@ -918,6 +939,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/orphans" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("orphan_volumes", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -928,17 +955,25 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.465035Z"
+    "observedAt": "2026-10-25T16:33:06.015948Z"
   },
   "projects": [
+    "acme-shop-staging",
     "apelora",
-    "docs-org-docs-project-development"
+    "default",
+    "shop-prod"
   ],
   "items": []
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 
 ### `GET /api/v1/storage/pools`
 
@@ -956,20 +991,26 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/pools" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("storage_pool_usage", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** from a test installation; your IDs, names and times differ.
+**Example response** from a test installation; your IDs, names and times differ. Long lists are cut to their first items.
 
 ```json
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T15:45:26.466287Z"
+    "observedAt": "2026-10-25T16:33:06.018151Z"
   },
-  "volumePool": null,
-  "backupPool": null,
+  "volumePool": "mock-local",
+  "backupPool": "mock-local",
   "items": [
     {
       "name": "mock-local",
@@ -977,7 +1018,7 @@ Content-Type: `application/json`.
       "status": "Created",
       "description": "mock data",
       "shared": false,
-      "role": null,
+      "role": "volumes",
       "members": [
         {
           "member": "mock-member-01",
@@ -987,11 +1028,6 @@ Content-Type: `application/json`.
         {
           "member": "mock-member-02",
           "usedBytes": 225485783040,
-          "totalBytes": 536870912000
-        },
-        {
-          "member": "mock-member-03",
-          "usedBytes": 85899345920,
           "totalBytes": 536870912000
         }
       ],
@@ -1005,5 +1041,11 @@ Content-Type: `application/json`.
 }
 ```
 
-**Errors:** `401`, `403`, `502`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `502` | an `incus_…` code |
 

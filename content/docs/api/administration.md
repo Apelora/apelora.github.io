@@ -5,9 +5,9 @@ slug: administration
 order: 6
 label: Administration
 source: packages/api-client/openapi.json
-summary: Tokens and Apelora's own database.
+summary: API tokens for scripts and automation: list, create and revoke.
 ---
-API tokens and Apelora's own database backups. This page lists 3 operations.
+API tokens for scripts and automation: list, create and revoke them. This page lists 3 operations.
 
 Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
@@ -37,6 +37,12 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/tokens" \
   -H "Accept: application/json"
 ```
 
+**TypeScript:**
+
+```ts
+const result = await client.request("tokens", {});
+```
+
 **Response `200`** — Success.
 
 Content-Type: `application/json`.
@@ -47,19 +53,25 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "726a0075-6258-4585-8ce7-60c829d0b7fc",
+      "id": "f5d07f4c-6ef8-4ae1-b4c6-bd4a47b30e4c",
       "name": "docs-verifier",
       "role": "fabric-admin",
-      "createdAt": "2026-10-25T15:45:26.003476Z",
-      "expiresAt": "2026-10-26T15:45:25.975378Z",
+      "createdAt": "2026-10-25T16:32:57.03554Z",
+      "expiresAt": "2026-10-26T16:32:57.006387Z",
       "revokedAt": null,
-      "lastUsedAt": "2026-10-25T15:45:26.50639Z"
+      "lastUsedAt": "2026-10-25T16:32:59.613772Z"
     }
   ]
 }
 ```
 
-**Errors:** `401`, `403`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/tokens`
 
@@ -69,22 +81,23 @@ Creates an API token, shown only in this response. Needs `manage-tokens` and eve
 
 **Needs:** `manage-tokens` and every permission the token's role carries (a token never does more than its creator).
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `Apelora-Approval` | header | string | no | For a fabric-admin token: the approval another person granted for token.create_admin on token:fabric-admin |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `Apelora-Approval` | header | string (uuid) | no | — | For a fabric-admin token: the approval another person granted for token.create_admin on token:fabric-admin |
 
 **Request body** (JSON):
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `expiresInDays` | integer | no | 1–365 days; 90 when omitted. |
+| `expiresInDays` | integer or null | no | 1–365 days; 90 when omitted. |
 | `name` | string | yes | Who or what uses it, e.g. "ci" or a person's name. |
-| `role` | `fabric-admin`, `operator`, `studio-designer`, `auditor` | yes | Who may do what. Every API route names the permission it needs; roles map to permissions here and nowhere else. |
+| `role` | one of `fabric-admin`, `operator`, `studio-designer`, `auditor` | yes | Who may do what. Every API route names the permission it needs; roles map to permissions here and nowhere else. |
 
 ```json
 {
-  "name": "example",
-  "role": "fabric-admin"
+  "name": "monitoring",
+  "role": "operator",
+  "expiresInDays": 90
 }
 ```
 
@@ -97,31 +110,57 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/tokens" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"example","role":"fabric-admin"}'
+  --data-raw '{"name":"monitoring","role":"operator","expiresInDays":90}'
+```
+
+**With options** (`Apelora-Approval`):
+
+```sh
+# APPROVAL_ID: the id of the approval another person granted (POST /api/v1/approvals).
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/tokens" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
+  -H "Apelora-Approval: $APPROVAL_ID" \
+  -H "Content-Type: application/json" \
+  --data-raw '{"name":"backup-site-admin","role":"fabric-admin","expiresInDays":30}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("create_token", { body: { name: "monitoring", role: "operator", expiresInDays: 90 } });
 ```
 
 **Response `201`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
+  "token": "<token, shown once>",
   "info": {
-    "createdAt": "2026-01-01T09:00:00Z",
-    "id": "00000000-0000-4000-8000-000000000001",
-    "name": "example",
-    "role": "fabric-admin",
-    "expiresAt": "2026-01-01T09:00:00Z",
-    "lastUsedAt": "2026-01-01T09:00:00Z",
-    "revokedAt": "2026-01-01T09:00:00Z"
-  },
-  "token": "<redacted>"
+    "id": "0e2ade92-397e-4f7b-bc08-de314bb7cc5d",
+    "name": "monitoring",
+    "role": "operator",
+    "createdAt": "2026-10-25T16:32:59.616487Z",
+    "expiresAt": "2027-01-23T16:32:59.616487Z",
+    "revokedAt": null,
+    "lastUsedAt": null
+  }
 }
 ```
 
-**Errors:** `400`, `401`, `403`, `409`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `approval_unavailable`, `token_exceeds_caller`, `forbidden`, `mfa_required` |
+| `409` | `approval_invalid`, `approval_required` |
+| `503` | `database_not_configured` |
 
 ### `DELETE /api/v1/tokens/{id}`
 
@@ -131,20 +170,33 @@ Revokes an API token; it stops working at once. Needs `manage-tokens`.
 
 **Needs:** `manage-tokens`.
 
-| Parameter | In | Type | Required | Meaning |
-|---|---|---|---|---|
-| `id` | path | string | yes | Token id |
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `id` | path | string (uuid) | yes | — | Token id |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/tokens/00000000-0000-4000-8000-000000000001" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/tokens/0e2ade92-397e-4f7b-bc08-de314bb7cc5d" \
   -H "Authorization: Bearer $APELORA_TOKEN"
+```
+
+**TypeScript:**
+
+```ts
+await client.request("revoke_token", { params: { id: "0e2ade92-397e-4f7b-bc08-de314bb7cc5d" } });
 ```
 
 **Response `204`** — Success, with no body.
 
-**Errors:** `401`, `403`, `404`, `503`. The body is `{ "error": { "code": …, "message": … } }`.
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | — |
+| `503` | `database_not_configured` |
 
