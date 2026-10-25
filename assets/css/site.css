@@ -65,6 +65,10 @@ code { font: 500 0.88em var(--mono); background: var(--soft); padding: 0.12em 0.
 .nav > a:not(.btn) { color: var(--body); text-decoration: none; font-weight: 600; font-size: 0.97rem; min-height: 2.75rem; display: inline-flex; align-items: center; position: relative; }
 @media (hover: hover) and (pointer: fine) { .nav > a:not(.btn):hover { color: var(--ink); } }
 .nav > a[aria-current="page"] { color: var(--ink); }
+/* The repository link: the GitHub mark on wide screens, the mark and its name in the phone menu. */
+.nav > a.nav-gh { justify-content: center; gap: 0.5rem; min-width: 2.75rem; color: var(--ink); }
+.nav-gh-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (hover: hover) and (pointer: fine) { .nav > a.nav-gh:hover { color: var(--teal); } }
 .nav > a[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0.375rem; height: 0.125rem; border-radius: 0.125rem; background: var(--teal-deco); }
 .menu-toggle { display: none; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.375rem; background: none; border: 0; font: 700 0.97rem var(--font); color: var(--ink); cursor: pointer; }
 .menu-toggle svg { transition: transform 0.2s; }
@@ -76,6 +80,8 @@ code { font: 500 0.88em var(--mono); background: var(--soft); padding: 0.12em 0.
   .js .nav > a:not(.btn) { padding: 0.875rem 0; border-bottom: 0.0625rem solid var(--line); font-size: 1.05rem; }
   .js .nav > a[aria-current="page"]::after { display: none; }
   .js .nav .nav-cta { margin-top: 1rem; }
+  .js .nav > a.nav-gh { justify-content: flex-start; }
+  .js .nav-gh-text { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
   .nav { gap: 0.75rem 1.25rem; flex-wrap: wrap; justify-content: flex-end; }
   .bar { flex-wrap: wrap; padding-block: 0.5rem; }
 }
