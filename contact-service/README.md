@@ -23,6 +23,16 @@ SMTP_HOST=... SMTP_USER=... SMTP_PASS=... MAIL_TO=... ALLOWED_ORIGINS=https://ap
 npm test        # includes a real SMTP conversation with a local test server
 ```
 
-Put it behind HTTPS (a reverse proxy or your platform's TLS), then set `endpoint` in `assets/js/config.js` to its address (`https://…/contact`), rebuild, and update the privacy section of `src/pages/legal.html` to say where the message goes.
+## Run it in production
+
+Any host that runs a container or Node.js works. With the container:
+
+```sh
+cp .env.example .env    # fill it in; keep it out of git
+docker build -t apelora-contact .
+docker run -d --restart unless-stopped --env-file .env -p 127.0.0.1:8787:8787 apelora-contact
+```
+
+Put it behind HTTPS (a reverse proxy such as Caddy or NGINX, or your platform's TLS), with `TRUSTED_PROXY=true` so the rate limit sees the visitor's address and not the proxy's. `GET /healthz` answers when it is up. Use a mailbox made for the site, or an app password, never your main password. Then set `endpoint` in `assets/js/config.js` to its address (`https://…/contact`), rebuild, and update the privacy section of `src/pages/legal.html` to say where the message goes.
 
 What it does with a message: accepts the form (`multipart/form-data` or URL-encoded, 32 KB at most), checks the fields, drops it silently if the hidden `website` field is filled, limits each caller, and sends one plain-text email with the visitor as `Reply-To` so you answer from your mail program. Nothing is stored. A failed send is `502` and the error text, which could mention the server, is only logged.

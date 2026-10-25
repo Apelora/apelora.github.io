@@ -102,6 +102,26 @@ const withFacts = (text, where) => text.replace(/\{\{fact:([A-Za-z]+)(\|cap)?\}\
   return cap ? v[0].toUpperCase() + v.slice(1) : v;
 });
 
+const SITE = JSON.parse(read("content/site.json"));
+const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+/** {{site:name}} in pages: business details and policy settings from content/site.json. An unknown name stops the build. */
+function siteValue(k) {
+  const { company: c, policy: p } = SITE;
+  const values = {
+    operator: c.legalName
+      ? `The services are provided by ${esc(c.legalName)}${c.address ? `, ${esc(c.address)}` : ""}.${c.email ? ` Email: <a href="mailto:${esc(c.email)}">${esc(c.email)}</a>.` : ""}`
+      : "The legal name and postal address of the company that provides paid services are given in the written quote for each service, and are added to this page before the first paid engagement starts.",
+    draftNotice: p.legalReviewed ? "" : `<p class="notice" role="note">These pages describe how this website and our quotes work today. They have not yet been reviewed by a lawyer, and the terms in a written quote take precedence.</p>`,
+    updated: esc(p.updated),
+    replyWorkingDays: String(p.replyWorkingDays),
+    refundDays: String(p.refundDays),
+    rightsResponse: esc(p.rightsResponse),
+  };
+  if (!(k in values)) throw new Error(`unknown site value ${k}`);
+  return values[k];
+}
+const withSite = (text) => text.replace(/\{\{site:([A-Za-z]+)\}\}/g, (_, k) => siteValue(k));
+
 const urls = [];
 function emit(meta, body) {
   const html = `<!doctype html>
@@ -125,7 +145,7 @@ ${partial("footer")}
 
 const pages = readdirSync(join(root, "src/pages")).filter((f) => f.endsWith(".html"));
 for (const file of pages) {
-  const raw = withFacts(read(`src/pages/${file}`), file);
+  const raw = withSite(withFacts(read(`src/pages/${file}`), file));
   const m = raw.match(/^<!--page (\{[\s\S]*?\}) -->\s*/);
   if (!m) throw new Error(`${file}: missing the <!--page {...} --> header`);
   console.log(emit(JSON.parse(m[1]), raw.slice(m[0].length)));

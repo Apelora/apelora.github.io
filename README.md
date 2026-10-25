@@ -58,6 +58,14 @@ Regression notes: inline code inside Markdown links must share the renderer's pl
 
 The `Website checks` workflow runs Node regressions, the build, the site checker and a generated-file drift check on pushes and pull requests. Local API and browser verification additionally require the product checkout and its development tools.
 
+## Business details and policy settings
+
+`content/site.json` holds the company's legal name, postal address and contact email, and the numbers the legal pages promise (reply time, refund time, the date they were last updated, and whether a lawyer has reviewed them). Pages read them as `{{site:name}}`; change them there, never in the pages. While `legalReviewed` is `false`, the legal pages say they have not been reviewed yet.
+
+## Moving to another host
+
+GitHub Pages' terms restrict using it mainly to run a commercial business. Before the site sells services, move it to a host that allows that, such as Cloudflare Pages or Netlify: connect this repository, build command none (the built files are committed), output directory the repository root. `_headers` then adds security headers that a page cannot set itself (no framing, HSTS). Point the domain at the new host, then turn GitHub Pages off so there is one copy.
+
 ## Publish
 
 Repository `Apelora/apelora.github.io`, Settings → Pages → Deploy from a branch → `main` / root. `.nojekyll` turns off GitHub's own processing.

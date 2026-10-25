@@ -1,0 +1,15 @@
+{
+  "_readme": "Business details and policy settings used by the legal pages. Fill these in once; every page that needs them reads them from here. Empty company fields keep the pages' fallback wording.",
+  "company": {
+    "legalName": "",
+    "address": "",
+    "email": ""
+  },
+  "policy": {
+    "updated": "25 October 2026",
+    "legalReviewed": false,
+    "replyWorkingDays": 5,
+    "refundDays": 14,
+    "rightsResponse": "one month"
+  }
+}
