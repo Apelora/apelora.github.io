@@ -101,7 +101,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.753519Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.637817Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -116,7 +116,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1clusterjoin-tokens"><code>GET /api/v1/cluster/join-tokens</code></h3>
 <p>Join tokens waiting to be used (no secrets). Needs <code>manage-infrastructure</code>.</p>
 <p><strong>Operation ID:</strong> <code>list_join_tokens</code></p>
@@ -133,17 +133,17 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.823029Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.105785Z&quot;
   },
   &quot;items&quot;: [
     {
       &quot;memberName&quot;: &quot;rack2-01&quot;,
-      &quot;expiresAt&quot;: &quot;mock: never used&quot;
+      &quot;expiresAt&quot;: &quot;2026-10-25T21:59:31.103823Z&quot;
     }
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1clusterjoin-tokens"><code>POST /api/v1/cluster/join-tokens</code></h3>
 <p>Approves a new cluster member: asks Incus for a single-use join token. Needs <code>manage-infrastructure</code>. The token is in this response only.</p>
 <p><strong>Operation ID:</strong> <code>create_join_token</code></p>
@@ -167,12 +167,12 @@
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;memberName&quot;: &quot;rack2-01&quot;,
-  &quot;expiresAt&quot;: &quot;mock: never used&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-25T21:59:31.103823Z&quot;,
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
   &quot;warnings&quot;: []
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="delete-apiv1clusterjoin-tokensmember"><code>DELETE /api/v1/cluster/join-tokens/{member}</code></h3>
 <p>Withdraws a new member's approval: revokes its unused join token. Needs <code>manage-infrastructure</code>.</p>
 <p><strong>Operation ID:</strong> <code>revoke_join_token</code></p>
@@ -186,7 +186,7 @@
 <pre data-lang="ts" tabindex="0"><code>await client.request(&quot;revoke_join_token&quot;, { params: { member: &quot;rack2-01&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1clustermembers"><code>GET /api/v1/cluster/members</code></h3>
 <p>Members with their database role (voter, stand-by, spare), the leader, other roles, failure domain, groups and Incus release; the database majority (how many voters answer, how many are needed, how many more can be lost); and version skew against the pinned Incus release with what blocks an upgrade. Read-only; needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>cluster_members</code></p>
@@ -203,7 +203,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.793737Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.090495Z&quot;
   },
   &quot;clustered&quot;: true,
   &quot;members&quot;: [
@@ -309,7 +309,7 @@
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="post-apiv1clustermembersmemberevacuate"><code>POST /api/v1/cluster/members/{member}/evacuate</code></h3>
 <p>Evacuates a cluster member through Incus after re-running the dry run: refused while anything blocks it. Needs <code>manage-infrastructure</code> and the admin identity; audited.</p>
 <p><strong>Operation ID:</strong> <code>evacuate_member</code></p>
@@ -338,7 +338,7 @@
   &quot;operation&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>evacuation_blocked</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>evacuation_blocked</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1clustermembersmemberevacuation"><code>GET /api/v1/cluster/members/{member}/evacuation</code></h3>
 <p>Dry run of evacuating a cluster member: per instance, what Incus will do and what it means for the application; what blocks it; what to accept. Changes nothing.</p>
 <p><strong>Operation ID:</strong> <code>preview_evacuation</code></p>
@@ -356,7 +356,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.798008Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.092915Z&quot;
   },
   &quot;plan&quot;: {
     &quot;member&quot;: &quot;mock-member-03&quot;,
@@ -379,7 +379,7 @@
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="post-apiv1clustermembersmemberfencing"><code>POST /api/v1/cluster/members/{member}/fencing</code></h3>
 <p>Confirms that a failed server is powered off (or cut off from the shared storage). This fences it: Apelora then restarts its modules on shared storage on other servers. Refused unless Incus reports the member Offline. Needs <code>cluster.fence_confirm</code> and another person's approval; the member's name typed again; audited.</p>
 <p><strong>Operation ID:</strong> <code>confirm_fenced</code></p>
@@ -455,7 +455,7 @@
   &quot;lastHeartbeat&quot;: &quot;2026-01-01T09:00:00Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>member_not_offline</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>member_not_offline</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1clustermembersmemberremoval"><code>GET /api/v1/cluster/members/{member}/removal</code></h3>
 <p>Dry run of removing a cluster member for good: what is still on it, what blocks it and what to accept. Changes nothing.</p>
 <p><strong>Operation ID:</strong> <code>preview_member_removal</code></p>
@@ -473,7 +473,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.812705Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.100258Z&quot;
   },
   &quot;plan&quot;: {
     &quot;member&quot;: &quot;mock-member-03&quot;,
@@ -494,7 +494,7 @@
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="post-apiv1clustermembersmemberremove"><code>POST /api/v1/cluster/members/{member}/remove</code></h3>
 <p>Removes an evacuated, empty member from the cluster for good, after the check runs again: refused while anything blocks it. Needs <code>cluster.manage</code>, the admin identity and the member's name typed again; audited.</p>
 <p><strong>Operation ID:</strong> <code>remove_member</code></p>
@@ -516,7 +516,7 @@
 <pre data-lang="ts" tabindex="0"><code>await client.request(&quot;remove_member&quot;, { params: { member: &quot;mock-member-03&quot; }, body: { confirm: &quot;mock-member-03&quot;, force: false } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>removal_blocked</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>removal_blocked</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1clustermembersmemberrestore"><code>POST /api/v1/cluster/members/{member}/restore</code></h3>
 <p>Restores an evacuated member: Incus moves its instances back and starts them. Needs <code>manage-infrastructure</code> and the admin identity; audited.</p>
 <p><strong>Operation ID:</strong> <code>restore_member</code></p>
@@ -545,7 +545,7 @@
   &quot;operation&quot;: &quot;00000000-0000-4000-8000-000000000002&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1clusterrecovery"><code>GET /api/v1/cluster/recovery</code></h3>
 <p>Failed members: whether each is fenced (and the evidence), or why Apelora waits; and per instance whether it restarts on another server (and where) or waits (and why). Read-only; needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>cluster_recovery</code></p>
@@ -562,12 +562,12 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.836731Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.113052Z&quot;
   },
   &quot;items&quot;: []
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1clustersettings"><code>GET /api/v1/cluster/settings</code></h3>
 <p>Cluster-wide settings (offline and healing thresholds, database voters and stand-bys, join-token lifetime, image replication and updates): the value set, Incus's default and whether the default applies. Read with the admin identity, since Incus shows its configuration only to an unrestricted one (503 <code>cluster_admin_not_configured</code> without it); only these keys are returned. Read-only; needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>cluster_settings</code></p>
@@ -584,7 +584,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.834254Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.111708Z&quot;
   },
   &quot;identity&quot;: &quot;admin&quot;,
   &quot;items&quot;: [
@@ -607,7 +607,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
 <h3 id="patch-apiv1clustersettings"><code>PATCH /api/v1/cluster/settings</code></h3>
 <p>Changes cluster settings through Incus with the admin identity. Every key must be one the Servers page lists and every value is checked. Settings that already hold the value are left out; nothing to change is refused. With <code>dryRun</code> it only reports (what each becomes and what to watch for). Applying needs <code>cluster.sensitive_change</code> and another person's approval of <code>cluster-settings:&lt;keys joined by /&gt;</code> (<code>Apelora-Approval</code>), spent before the change, and is audited with the old and new values.</p>
 <p><strong>Operation ID:</strong> <code>change_cluster_settings</code></p>
@@ -648,7 +648,7 @@
   &quot;approvalTarget&quot;: &quot;cluster-settings:cluster.join_token_expiry&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code>, <code>invalid_setting</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>nothing_to_change</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code>, <code>invalid_setting</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>nothing_to_change</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1clusterupgrade"><code>POST /api/v1/cluster/upgrade</code></h3>
 <p>One step of the rolling upgrade. Apelora evacuates and restores. It does not install Incus: <code>upgraded</code> records that the package was upgraded on the server. Needs <code>cluster.evacuate</code>.</p>
 <p><strong>Operation ID:</strong> <code>cluster_upgrade</code></p>
@@ -693,7 +693,7 @@
   &quot;member&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td><code>evacuation_blocked</code>, <code>no_upgrade</code>, <code>upgrade_blocked</code>, <code>upgrade_in_progress</code>, <code>upgrade_step</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td><code>evacuation_blocked</code>, <code>no_upgrade</code>, <code>upgrade_blocked</code>, <code>upgrade_in_progress</code>, <code>upgrade_step</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1machines"><code>GET /api/v1/machines</code></h3>
 <p>Machines being enrolled, with their state derived from Incus. Needs <code>manage-infrastructure</code>.</p>
 <p><strong>Operation ID:</strong> <code>list_machines</code></p>
@@ -710,7 +710,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.870727Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.810966Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -729,17 +729,17 @@
       &quot;nextStep&quot;: &quot;None.&quot;,
       &quot;warnings&quot;: [],
       &quot;registeredBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;registeredAt&quot;: &quot;2026-10-25T17:20:01.846505Z&quot;,
+      &quot;registeredAt&quot;: &quot;2026-10-25T20:59:31.117253Z&quot;,
       &quot;approvedBy&quot;: null,
       &quot;approvedAt&quot;: null,
       &quot;approvalExpiresAt&quot;: null,
       &quot;admittedBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;admittedAt&quot;: &quot;2026-10-25T17:20:01.858235Z&quot;
+      &quot;admittedAt&quot;: &quot;2026-10-25T20:59:31.122984Z&quot;
     }
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1machines"><code>POST /api/v1/machines</code></h3>
 <p>Registers a machine. A name that is already an eligible member is adopted as admitted. Needs <code>manage-infrastructure</code>; audited.</p>
 <p><strong>Operation ID:</strong> <code>register_machine</code></p>
@@ -779,7 +779,7 @@
   &quot;nextStep&quot;: &quot;Install Incus on the server, then approve it.&quot;,
   &quot;warnings&quot;: [],
   &quot;registeredBy&quot;: &quot;token:docs-verifier&quot;,
-  &quot;registeredAt&quot;: &quot;2026-10-25T17:20:01.840323Z&quot;,
+  &quot;registeredAt&quot;: &quot;2026-10-25T20:59:31.113959Z&quot;,
   &quot;approvedBy&quot;: null,
   &quot;approvedAt&quot;: null,
   &quot;approvalExpiresAt&quot;: null,
@@ -787,7 +787,7 @@
   &quot;admittedAt&quot;: null
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code>, <code>provisioner_not_configured</code>, <code>unknown_machine</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td>—</td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code>, <code>provisioner_not_configured</code>, <code>unknown_machine</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="delete-apiv1machinesname"><code>DELETE /api/v1/machines/{name}</code></h3>
 <p>Forgets a machine that is not a cluster member (revoking an unused join token). Needs <code>manage-infrastructure</code>; audited.</p>
 <p><strong>Operation ID:</strong> <code>remove_machine</code></p>
@@ -801,7 +801,7 @@
 <pre data-lang="ts" tabindex="0"><code>await client.request(&quot;remove_machine&quot;, { params: { name: &quot;rack2-01&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>still_a_member</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>still_a_member</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1machinesnameadmission"><code>GET /api/v1/machines/{name}/admission</code></h3>
 <p>The admission checks for a joined machine (dry run; changes nothing). Needs <code>manage-infrastructure</code>.</p>
 <p><strong>Operation ID:</strong> <code>machine_admission</code></p>
@@ -819,7 +819,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.854293Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.121275Z&quot;
   },
   &quot;name&quot;: &quot;mock-member-03&quot;,
   &quot;admissible&quot;: true,
@@ -839,7 +839,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>not_a_member</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>not_a_member</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1machinesnameadmit"><code>POST /api/v1/machines/{name}/admit</code></h3>
 <p>Admits a joined machine: re-runs the admission checks and, when none fails, lets Incus place instances on it. Needs <code>manage-infrastructure</code>; audited.</p>
 <p><strong>Operation ID:</strong> <code>admit_machine</code></p>
@@ -858,7 +858,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.857984Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.123241Z&quot;
   },
   &quot;name&quot;: &quot;mock-member-03&quot;,
   &quot;admissible&quot;: true,
@@ -878,7 +878,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>admission_blocked</code>, <code>not_a_member</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>admission_blocked</code>, <code>not_a_member</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="delete-apiv1machinesnameapproval"><code>DELETE /api/v1/machines/{name}/approval</code></h3>
 <p>Withdraws an approval: revokes the machine's unused join token. Needs <code>manage-infrastructure</code>; audited.</p>
 <p><strong>Operation ID:</strong> <code>withdraw_machine_approval</code></p>
@@ -892,7 +892,7 @@
 <pre data-lang="ts" tabindex="0"><code>await client.request(&quot;withdraw_machine_approval&quot;, { params: { name: &quot;rack2-01&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1machinesnameapprove"><code>POST /api/v1/machines/{name}/approve</code></h3>
 <p>Approves a machine: asks Incus for its single-use join token, returned only in this response with the command to run on the server. Needs <code>manage-infrastructure</code>; audited without the token.</p>
 <p><strong>Operation ID:</strong> <code>approve_machine</code></p>
@@ -910,13 +910,13 @@
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;name&quot;: &quot;rack2-01&quot;,
-  &quot;expiresAt&quot;: &quot;mock: never used&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-25T21:59:31.127286Z&quot;,
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
   &quot;enrolCommand&quot;: &quot;sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address &lt;this server's cluster address&gt;&quot;,
   &quot;warnings&quot;: []
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>already_a_member</code>, <code>approval_invalid</code>, <code>approval_pending</code>, <code>approval_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>already_a_member</code>, <code>approval_invalid</code>, <code>approval_pending</code>, <code>approval_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1provisionersmaasmachines"><code>GET /api/v1/provisioners/maas/machines</code></h3>
 <p>The machines MAAS manages, with the Apelora machine and Incus member each became. Needs <code>cluster.view</code>. Read-only: MAAS is asked to list, nothing else.</p>
 <p><strong>Operation ID:</strong> <code>maas_machines</code></p>
@@ -933,13 +933,13 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.889894Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.840773Z&quot;
   },
   &quot;configured&quot;: false,
   &quot;items&quot;: []
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1provisionersmaasmachinessystem_idcommission"><code>POST /api/v1/provisioners/maas/machines/{system_id}/commission</code></h3>
 <p>Starts commissioning. Needs <code>hardware.commission</code> and the hostname typed again. The cloud-init of a later deploy is not part of this. Audited; MAAS is asked first.</p>
 <p><strong>Operation ID:</strong> <code>maas_commission</code></p>
@@ -968,7 +968,7 @@
   &quot;systemId&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1provisionersmaasmachinessystem_iddeploy"><code>POST /api/v1/provisioners/maas/machines/{system_id}/deploy</code></h3>
 <p>Installs an operating system. Needs <code>hardware.deploy</code> and the hostname typed again. <code>userData</code> is sent to MAAS and is not stored or written to the audit log. Audited.</p>
 <p><strong>Operation ID:</strong> <code>maas_deploy</code></p>
@@ -999,7 +999,7 @@
   &quot;systemId&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1provisionersmaasmachinessystem_idrelease"><code>POST /api/v1/provisioners/maas/machines/{system_id}/release</code></h3>
 <p>Returns the machine to MAAS's pool. Needs <code>hardware.deploy</code> and the hostname typed again. Disk erasure needs <code>hardware.delete</code> as well and is off unless asked. A secure wipe is not offered. Audited; MAAS is asked first.</p>
 <p><strong>Operation ID:</strong> <code>maas_release</code></p>
@@ -1029,7 +1029,7 @@
   &quot;systemId&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1provisionersmaasmachinessystem_idtest"><code>POST /api/v1/provisioners/maas/machines/{system_id}/test</code></h3>
 <p>Starts a hardware test run (burn-in) through MAAS. Needs <code>hardware.commission</code> and the hostname typed again. Only a machine that is <code>Ready</code>, <code>Broken</code> or <code>Failed testing</code>: one that is allocated or deployed (an Incus member, for one) is refused, so tests never load a running server. Audited with the test names; MAAS is asked first.</p>
 <p><strong>Operation ID:</strong> <code>maas_test</code></p>
@@ -1061,7 +1061,7 @@
   &quot;systemId&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>machine_in_use</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>machine_in_use</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
         </div>
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/applications/"><span>Previous</span>Applications</a><a class="next" href="/docs/api/administration/"><span>Next</span>Administration</a></nav>

@@ -122,7 +122,7 @@
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1health"><code>GET /api/v1/health</code></h3>
 <p>Public. Reports that the service answers, the inventory provider, the authentication mode and whether Incus is reachable. Incus is asked at most every 15 s whatever the request rate; versions and error text are only on <code>GET /api/v1/system</code> (signed in).</p>
 <p><strong>Operation ID:</strong> <code>health</code></p>
@@ -145,7 +145,7 @@
   &quot;incus&quot;: {
     &quot;connected&quot;: false
   },
-  &quot;checkedAt&quot;: &quot;2026-10-25T17:19:58.712777Z&quot;
+  &quot;checkedAt&quot;: &quot;2026-10-25T20:59:28.502797Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
@@ -163,13 +163,13 @@
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;checkedAt&quot;: &quot;2026-10-25T17:20:07.795084Z&quot;,
+  &quot;checkedAt&quot;: &quot;2026-10-25T20:59:37.694608Z&quot;,
   &quot;overall&quot;: &quot;degraded&quot;,
   &quot;controlPlane&quot;: {
     &quot;state&quot;: &quot;healthy&quot;,
     &quot;version&quot;: &quot;0.0.0&quot;,
     &quot;apiVersion&quot;: &quot;v1&quot;,
-    &quot;startedAt&quot;: &quot;2026-10-25T17:19:58.634103Z&quot;,
+    &quot;startedAt&quot;: &quot;2026-10-25T20:59:28.427608Z&quot;,
     &quot;uptimeSecs&quot;: 9,
     &quot;auth&quot;: &quot;tokens&quot;,
     &quot;provider&quot;: &quot;mock&quot;,
@@ -178,7 +178,7 @@
   },
   &quot;database&quot;: {
     &quot;state&quot;: &quot;healthy&quot;,
-    &quot;roundTripMs&quot;: 0.9,
+    &quot;roundTripMs&quot;: 1.8,
     &quot;schemaVersion&quot;: 33,
     &quot;expectedSchemaVersion&quot;: 33,
     &quot;reason&quot;: null,
@@ -191,8 +191,8 @@
         &quot;id&quot;: &quot;docs-worker&quot;,
         &quot;host&quot;: &quot;unknown&quot;,
         &quot;version&quot;: &quot;0.0.0&quot;,
-        &quot;startedAt&quot;: &quot;2026-10-25T17:20:02.059739Z&quot;,
-        &quot;lastSeen&quot;: &quot;2026-10-25T17:20:02.059739Z&quot;,
+        &quot;startedAt&quot;: &quot;2026-10-25T20:59:31.834773Z&quot;,
+        &quot;lastSeen&quot;: &quot;2026-10-25T20:59:31.834773Z&quot;,
         &quot;secondsSinceSeen&quot;: 5,
         &quot;state&quot;: &quot;running&quot;
       }
@@ -253,7 +253,7 @@
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1healthservers"><code>GET /api/v1/health/servers</code></h3>
 <p>Each server's status, CPU, memory, storage and the instances on it, with warnings. Read-only; needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>health_servers</code></p>
@@ -270,7 +270,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.797172Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.697631Z&quot;
   },
   &quot;clustered&quot;: true,
   &quot;items&quot;: [
@@ -373,7 +373,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1image-mirrors"><code>GET /api/v1/image-mirrors</code></h3>
 <p>Image mirrors: the configuration this control plane runs with (upstream → mirror pairs and whether only mirrors may be used; URLs, not secrets), whether each mirror answers (probed at most once a minute), and the image servers each deployable catalog class needs with whether it is covered. Read-only: configuration stays in the environment. Needs <code>read-inventory</code>.</p>
 <p><strong>Operation ID:</strong> <code>image_mirrors</code></p>
@@ -443,7 +443,7 @@
   &quot;overall&quot;: &quot;warn&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="put-apiv1mepassword"><code>PUT /api/v1/me/password</code></h3>
 <p>Changes the caller's own password (local accounts only). Every other session of theirs is revoked; the one making the request stays. Counts towards the account's lock like a sign-in.</p>
 <p><strong>Operation ID:</strong> <code>change_password</code></p>
@@ -507,7 +507,7 @@
   &quot;incusMetricsPath&quot;: &quot;/1.0/metrics&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1settings"><code>GET /api/v1/settings</code></h3>
 <p>The settings this control plane runs with: every setting the control plane and the worker read, the value when it may be shown (never a secret, a key or a certificate path), whether it is the default and where it came from; sign-in settings saved in the Console; the workers seen recently. Needs <code>cluster.view</code> on the platform.</p>
 <p><strong>Operation ID:</strong> <code>effective_settings</code></p>
@@ -587,13 +587,13 @@
       &quot;id&quot;: &quot;docs-worker&quot;,
       &quot;host&quot;: &quot;unknown&quot;,
       &quot;version&quot;: &quot;0.0.0&quot;,
-      &quot;lastSeen&quot;: &quot;2026-10-25T17:20:02.059739Z&quot;
+      &quot;lastSeen&quot;: &quot;2026-10-25T20:59:31.834773Z&quot;
     }
   ],
-  &quot;readAt&quot;: &quot;2026-10-25T17:19:58.634103Z&quot;
+  &quot;readAt&quot;: &quot;2026-10-25T20:59:28.427608Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1sign-in"><code>GET /api/v1/sign-in</code></h3>
 <p>Public. How people can sign in to this control plane.</p>
 <p><strong>Operation ID:</strong> <code>sign_in_options</code></p>
@@ -612,6 +612,8 @@
   &quot;localAccounts&quot;: false,
   &quot;directories&quot;: []
 }</code></pre>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1sign-inpassword"><code>POST /api/v1/sign-in/password</code></h3>
 <p>Public. Signs a person in with a username and password and returns an Apelora session. Every refusal answers <code>invalid_credentials</code> (unknown, wrong, locked or disabled alike). Limited to 10 attempts a minute per client address.</p>
 <p><strong>Operation ID:</strong> <code>sign_in_with_password</code></p>
@@ -635,7 +637,7 @@
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-26T01:19:59.243693Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-26T04:59:29.025804Z&quot;,
   &quot;name&quot;: &quot;Ada Lovelace&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
@@ -672,7 +674,7 @@
 <pre data-lang="ts" tabindex="0"><code>await client.request(&quot;sign_out&quot;, {});</code></pre>
 <p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1support-bundle"><code>GET /api/v1/support-bundle</code></h3>
 <p>Downloads a support bundle (a tar file, streamed): manifest, versions, effective settings (secrets never included), health, preflight, jobs that failed in the last 24 hours with their attempts, a metrics snapshot and where to find logs. Never tokens, passwords, certificates or keys. Needs <code>support.bundle</code>; audited (<code>support.bundle.downloaded</code>) before it is sent.</p>
 <p><strong>Operation ID:</strong> <code>support_bundle</code></p>
@@ -689,17 +691,17 @@
 <p>Binary download; the command saves the response to a file. For a tar bundle, list the files after a successful download:</p>
 <pre data-lang="sh" tabindex="0"><code>tar -tf support-bundle.tar</code></pre>
 <p><strong>Example contents:</strong></p>
-<pre data-lang="text" tabindex="0"><code>apelora-support-20261025-172007/manifest.json
-apelora-support-20261025-172007/versions.json
-apelora-support-20261025-172007/settings.json
-apelora-support-20261025-172007/health.json
-apelora-support-20261025-172007/preflight.json
-apelora-support-20261025-172007/jobs-failed.json
-apelora-support-20261025-172007/metrics.txt
-apelora-support-20261025-172007/logs/README.txt
-apelora-support-20261025-172007/README.txt</code></pre>
+<pre data-lang="text" tabindex="0"><code>apelora-support-20261025-205937/manifest.json
+apelora-support-20261025-205937/versions.json
+apelora-support-20261025-205937/settings.json
+apelora-support-20261025-205937/health.json
+apelora-support-20261025-205937/preflight.json
+apelora-support-20261025-205937/jobs-failed.json
+apelora-support-20261025-205937/metrics.txt
+apelora-support-20261025-205937/logs/README.txt
+apelora-support-20261025-205937/README.txt</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1system"><code>GET /api/v1/system</code></h3>
 <p>Versions of this control plane and the Incus release it is pinned to, and when the certificates Apelora uses to reach Incus expire, and Incus as observed now (running version, or the error that keeps it unreachable). Needs <code>read-inventory</code>.</p>
 <p><strong>Operation ID:</strong> <code>system</code></p>
@@ -728,7 +730,7 @@ apelora-support-20261025-172007/README.txt</code></pre>
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1whoami"><code>GET /api/v1/whoami</code></h3>
 <p>Who is calling, with the role assignments and permissions in force.</p>
 <p><strong>Operation ID:</strong> <code>whoami</code></p>
@@ -775,7 +777,7 @@ apelora-support-20261025-172007/README.txt</code></pre>
   &quot;credential&quot;: &quot;api-token&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="get-metrics"><code>GET /metrics</code></h3>
 <p>Metrics of this control plane in the text exposition format (OpenMetrics when the <code>Accept</code> header asks for <code>application/openmetrics-text</code>). Needs <code>fabric.metrics.read</code> (built-in role Metrics Reader, for the collector's service identity). Labels never carry names, ids, paths with ids, tokens or error texts; see docs/architecture/MONITORING.md.</p>
 <p><strong>Operation ID:</strong> <code>metrics</code></p>
@@ -797,7 +799,7 @@ apelora_build_info{region=&quot;default&quot;,site=&quot;default&quot;,sector=&q
 apelora_provider_info{region=&quot;default&quot;,site=&quot;default&quot;,sector=&quot;default&quot;,mode=&quot;mock&quot;} 1
 # HELP apelora_http_requests_total API requests answered, by route template, method and status class.
 # TYPE apelora_http_requests_total counter
-apelora_http_requests_total{region=&quot;default&quot;,site=&quot;default&quot;,sector=&quot;default&quot;,route=&quot;/api/v1/alerts&quot;,method=&quot;GET&quot;,status=&quot;2xx&quot;} 8
+apelora_http_requests_total{region=&quot;default&quot;,site=&quot;default&quot;,sector=&quot;default&quot;,route=&quot;/api/v1/alerts&quot;,method=&quot;GET&quot;,status=&quot;2xx&quot;} 9
 apelora_http_requests_total{region=&quot;default&quot;,site=&quot;default&quot;,sector=&quot;default&quot;,route=&quot;/api/v1/alerts/channels&quot;,method=&quot;GET&quot;,status=&quot;2xx&quot;} 2
 apelora_http_requests_total{region=&quot;default&quot;,site=&quot;default&quot;,sector=&quot;default&quot;,route=&quot;/api/v1/alerts/channels&quot;,method=&quot;POST&quot;,status=&quot;2xx&quot;} 1
 apelora_http_requests_total{region=&quot;default&quot;,site=&quot;default&quot;,sector=&quot;default&quot;,route=&quot;/api/v1/alerts/channels/{id}&quot;,method=&quot;DELETE&quot;,status=&quot;2xx&quot;} 1
@@ -805,7 +807,7 @@ apelora_http_requests_total{region=&quot;default&quot;,site=&quot;default&quot;,
 apelora_http_requests_total{region=&quot;default&quot;,site=&quot;default&quot;,sector=&quot;default&quot;,route=&quot;/api/v1/alerts/channels/{id}/test&quot;,method=&quot;POST&quot;,status=&quot;2xx&quot;} 1
 apelora_http_requests_total{region=&quot;default&quot;,site=&quot;default&quot;,sector=&quot;default&quot;,route=&quot;/api/v1/alerts/history&quot;,method=&quot;GET&quot;,status=&quot;2xx&quot;} 2</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
         </div>
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/overview/"><span>Previous</span>Overview</a><a class="next" href="/docs/api/inventory/"><span>Next</span>Inventory</a></nav>

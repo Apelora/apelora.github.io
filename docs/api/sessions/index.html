@@ -107,7 +107,7 @@
   &quot;maxSecs&quot;: 3600
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>404</code></td><td><code>not_found</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1applicationsnameinstancesinstancesessions"><code>POST /api/v1/applications/{name}/instances/{instance}/sessions</code></h3>
 <p>Opens a session: checks the caller, the instance and the approval rule, and answers with a single-use ticket for the websocket. Needs <code>instance.console</code> (terminal, PowerShell) or <code>instance.desktop</code> (RDP) on the application; in production also an approval (<code>Apelora-Approval: &lt;id&gt;</code>) of <code>instance.console</code> on <code>instance:&lt;application&gt;/&lt;instance&gt;</code>.</p>
 <p><strong>Operation ID:</strong> <code>open_session</code></p>
@@ -145,7 +145,7 @@
   &quot;ticket&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>instance_state_unknown</code>, <code>session_unavailable</code></td></tr><tr><td><code>429</code></td><td><code>too_many_sessions</code>, <code>rate_limited</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>instance_state_unknown</code>, <code>session_unavailable</code></td></tr><tr><td><code>429</code></td><td><code>too_many_sessions</code>, <code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1sessions"><code>GET /api/v1/sessions</code></h3>
 <p>Open sessions the caller started, and those on applications they may operate.</p>
 <p><strong>Operation ID:</strong> <code>sessions</code></p>
@@ -163,7 +163,7 @@
   &quot;items&quot;: []
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="delete-apiv1sessionsid"><code>DELETE /api/v1/sessions/{id}</code></h3>
 <p>Ends a session now. Allowed for the person who has it and for whoever may operate its application. Anything else answers 404.</p>
 <p><strong>Operation ID:</strong> <code>terminate_session</code></p>
@@ -171,13 +171,13 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Session id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/sessions/aafbdccd-b3ae-4141-90cd-18a8a9c0aa97&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/sessions/534bc37f-0c24-4778-9b10-7d058597a893&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;terminate_session&quot;, { params: { id: &quot;aafbdccd-b3ae-4141-90cd-18a8a9c0aa97&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;terminate_session&quot;, { params: { id: &quot;534bc37f-0c24-4778-9b10-7d058597a893&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>404</code></td><td><code>not_found</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
         </div>
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/identity/"><span>Previous</span>Identity and access</a><a class="next" href="/docs/api/alerts/"><span>Next</span>Alerts</a></nav>

@@ -73,9 +73,9 @@ Content-Type: `application/json`.
       "threshold": 1,
       "comparison": "at-least",
       "unit": "failed jobs in 15 minutes",
-      "startedAt": "2026-10-25T17:20:07.117122Z",
-      "firedAt": "2026-10-25T17:20:07.117122Z",
-      "lastSeenAt": "2026-10-25T17:20:07.117122Z",
+      "startedAt": "2026-10-25T20:59:36.872927Z",
+      "firedAt": "2026-10-25T20:59:36.872927Z",
+      "lastSeenAt": "2026-10-25T20:59:36.872927Z",
       "resolvedAt": null,
       "clearingSince": null,
       "acknowledged": null,
@@ -91,10 +91,10 @@ Content-Type: `application/json`.
     "needsAttention": 1
   },
   "evaluator": {
-    "lastPassAt": "2026-10-25T17:20:07.117122Z",
+    "lastPassAt": "2026-10-25T20:59:36.872927Z",
     "everySecs": 5,
     "worker": "docs-worker",
-    "durationSecs": 0.030069375,
+    "durationSecs": 0.029738125,
     "stale": false,
     "message": "Evaluated every 5 s by docs-worker."
   },
@@ -117,6 +117,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `POST /api/v1/alerts/{id}/acknowledge`
@@ -180,15 +181,15 @@ Content-Type: `application/json`.
   "threshold": 1,
   "comparison": "at-least",
   "unit": "failed jobs in 15 minutes",
-  "startedAt": "2026-10-25T17:20:07.117122Z",
-  "firedAt": "2026-10-25T17:20:07.117122Z",
-  "lastSeenAt": "2026-10-25T17:20:07.117122Z",
+  "startedAt": "2026-10-25T20:59:36.872927Z",
+  "firedAt": "2026-10-25T20:59:36.872927Z",
+  "lastSeenAt": "2026-10-25T20:59:36.872927Z",
   "resolvedAt": null,
   "clearingSince": null,
   "acknowledged": {
     "by": "token:docs-verifier",
     "byName": "docs-verifier",
-    "at": "2026-10-25T17:20:07.330996Z",
+    "at": "2026-10-25T20:59:37.111723Z",
     "note": "Looking into the failed job"
   },
   "silencedBy": null,
@@ -205,6 +206,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `already_acknowledged`, `not_firing` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `GET /api/v1/alerts/channels`
@@ -239,7 +241,7 @@ Content-Type: `application/json`.
 {
   "channels": [
     {
-      "id": "697d223e-6c16-4630-b498-977a5bf76081",
+      "id": "e329c268-2490-42b5-b9f0-55793d5582c4",
       "name": "On-call webhook",
       "kind": "webhook",
       "host": "hooks.example.invalid",
@@ -253,9 +255,9 @@ Content-Type: `application/json`.
         "lastError": null,
         "lastDeliveredAt": null
       },
-      "createdAt": "2026-10-25T17:20:01.889079Z",
+      "createdAt": "2026-10-25T20:59:31.137349Z",
       "createdBy": "token:docs-verifier",
-      "updatedAt": "2026-10-25T17:20:01.898482Z"
+      "updatedAt": "2026-10-25T20:59:31.141067Z"
     }
   ],
   "secretPrefix": "APELORA_ALERT_SECRET_",
@@ -278,6 +280,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `POST /api/v1/alerts/channels`
@@ -334,7 +337,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "697d223e-6c16-4630-b498-977a5bf76081",
+  "id": "e329c268-2490-42b5-b9f0-55793d5582c4",
   "name": "On-call webhook",
   "kind": "webhook",
   "host": "hooks.example.invalid",
@@ -348,9 +351,9 @@ Content-Type: `application/json`.
     "lastError": null,
     "lastDeliveredAt": null
   },
-  "createdAt": "2026-10-25T17:20:01.889079Z",
+  "createdAt": "2026-10-25T20:59:31.137349Z",
   "createdBy": "token:docs-verifier",
-  "updatedAt": "2026-10-25T17:20:01.889079Z"
+  "updatedAt": "2026-10-25T20:59:31.137349Z"
 }
 ```
 
@@ -362,6 +365,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `409` | `name_taken` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `PUT /api/v1/alerts/channels/{id}`
@@ -401,7 +405,7 @@ Changes a webhook channel. Needs `alert.configure`; audited as `alert.channel.up
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/697d223e-6c16-4630-b498-977a5bf76081" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/e329c268-2490-42b5-b9f0-55793d5582c4" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -411,7 +415,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/697d223e-6
 **TypeScript:**
 
 ```ts
-const result = await client.request("update_alert_channel", { params: { id: "697d223e-6c16-4630-b498-977a5bf76081" }, body /* the request body above */ });
+const result = await client.request("update_alert_channel", { params: { id: "e329c268-2490-42b5-b9f0-55793d5582c4" }, body /* the request body above */ });
 ```
 
 **Response `200`** — Success.
@@ -422,7 +426,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "697d223e-6c16-4630-b498-977a5bf76081",
+  "id": "e329c268-2490-42b5-b9f0-55793d5582c4",
   "name": "On-call webhook",
   "kind": "webhook",
   "host": "hooks.example.invalid",
@@ -436,9 +440,9 @@ Content-Type: `application/json`.
     "lastError": null,
     "lastDeliveredAt": null
   },
-  "createdAt": "2026-10-25T17:20:01.889079Z",
+  "createdAt": "2026-10-25T20:59:31.137349Z",
   "createdBy": "token:docs-verifier",
-  "updatedAt": "2026-10-25T17:20:01.898482Z"
+  "updatedAt": "2026-10-25T20:59:31.141067Z"
 }
 ```
 
@@ -451,6 +455,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `name_taken` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `DELETE /api/v1/alerts/channels/{id}`
@@ -470,14 +475,14 @@ Deletes a webhook channel; messages still waiting for it are dropped by the rela
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/channels/697d223e-6c16-4630-b498-977a5bf76081" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/channels/e329c268-2490-42b5-b9f0-55793d5582c4" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_alert_channel", { params: { id: "697d223e-6c16-4630-b498-977a5bf76081" } });
+await client.request("delete_alert_channel", { params: { id: "e329c268-2490-42b5-b9f0-55793d5582c4" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -489,6 +494,7 @@ await client.request("delete_alert_channel", { params: { id: "697d223e-6c16-4630
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `POST /api/v1/alerts/channels/{id}/test`
@@ -508,7 +514,7 @@ Queues a test notification for one channel through the same outbox path as real 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/697d223e-6c16-4630-b498-977a5bf76081/test" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/e329c268-2490-42b5-b9f0-55793d5582c4/test" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -516,7 +522,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/697d223e-
 **TypeScript:**
 
 ```ts
-const result = await client.request("test_alert_channel", { params: { id: "697d223e-6c16-4630-b498-977a5bf76081" } });
+const result = await client.request("test_alert_channel", { params: { id: "e329c268-2490-42b5-b9f0-55793d5582c4" } });
 ```
 
 **Response `202`** — Success.
@@ -539,6 +545,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `channel_disabled` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `GET /api/v1/alerts/history`
@@ -596,6 +603,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `GET /api/v1/alerts/rules`
@@ -654,7 +662,7 @@ Content-Type: `application/json`.
       "sourceState": "ok",
       "firing": 1,
       "runbook": "alerts.md#jobs-are-failing",
-      "updatedAt": "2026-10-25T17:20:01.923456Z",
+      "updatedAt": "2026-10-25T20:59:31.153854Z",
       "updatedBy": "token:docs-verifier"
     },
     {
@@ -705,6 +713,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `PUT /api/v1/alerts/rules/{rule}`
@@ -787,7 +796,7 @@ Content-Type: `application/json`.
   "sourceState": "unknown",
   "firing": 0,
   "runbook": "alerts.md#jobs-are-failing",
-  "updatedAt": "2026-10-25T17:20:01.923456Z",
+  "updatedAt": "2026-10-25T20:59:31.153854Z",
   "updatedBy": "token:docs-verifier"
 }
 ```
@@ -800,6 +809,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `POST /api/v1/alerts/silences`
@@ -853,12 +863,12 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "3c5b02d3-4946-4f4d-9d7d-c4244ea29156",
+  "id": "ee2c83b7-ea16-4f49-a021-9057621bbf82",
   "rule": "backup-age",
   "ruleTitle": "A backup is overdue",
   "subject": null,
-  "startsAt": "2026-10-25T17:20:01.935351Z",
-  "endsAt": "2026-10-25T19:20:01.935351Z",
+  "startsAt": "2026-10-25T20:59:31.160126Z",
+  "endsAt": "2026-10-25T22:59:31.160126Z",
   "note": "Backup pool maintenance tonight",
   "createdBy": "token:docs-verifier",
   "createdByName": "docs-verifier"
@@ -872,6 +882,7 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `DELETE /api/v1/alerts/silences/{id}`
@@ -891,14 +902,14 @@ Ends a silence now. Needs `alert.respond`; audited as `alert.silence.end`. 404 w
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/silences/3c5b02d3-4946-4f4d-9d7d-c4244ea29156" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/silences/ee2c83b7-ea16-4f49-a021-9057621bbf82" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("end_alert_silence", { params: { id: "3c5b02d3-4946-4f4d-9d7d-c4244ea29156" } });
+await client.request("end_alert_silence", { params: { id: "ee2c83b7-ea16-4f49-a021-9057621bbf82" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -910,5 +921,6 @@ await client.request("end_alert_silence", { params: { id: "3c5b02d3-4946-4f4d-9d
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 

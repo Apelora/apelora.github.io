@@ -64,7 +64,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.750795Z"
+    "observedAt": "2026-10-25T20:59:37.633326Z"
   },
   "named": true,
   "volumePool": "mock-local",
@@ -119,6 +119,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/cluster`
@@ -153,7 +154,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.752258Z"
+    "observedAt": "2026-10-25T20:59:37.635642Z"
   },
   "server": {
     "apiVersion": "1.0",
@@ -210,6 +211,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/instances`
@@ -244,7 +246,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.721553Z"
+    "observedAt": "2026-10-25T20:59:31.056326Z"
   },
   "items": [
     {
@@ -277,6 +279,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/instances/{project}/{name}`
@@ -316,7 +319,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.727232Z"
+    "observedAt": "2026-10-25T20:59:31.059326Z"
   },
   "instance": {
     "name": "mock-web-01",
@@ -411,6 +414,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/instances/{project}/{name}/console-log`
@@ -459,7 +463,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.742147Z"
+    "observedAt": "2026-10-25T20:59:31.06601Z"
   },
   "file": "console",
   "tailKib": 64,
@@ -479,6 +483,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/instances/{project}/{name}/logs`
@@ -518,7 +523,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.730749Z"
+    "observedAt": "2026-10-25T20:59:31.061246Z"
   },
   "files": [
     "lxc.log"
@@ -534,6 +539,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/instances/{project}/{name}/logs/{file}`
@@ -583,7 +589,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.736503Z"
+    "observedAt": "2026-10-25T20:59:31.062819Z"
   },
   "file": "lxc.log",
   "tailKib": 64,
@@ -603,6 +609,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/networks`
@@ -637,7 +644,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.879036Z"
+    "observedAt": "2026-10-25T20:59:37.822443Z"
   },
   "items": [
     {
@@ -663,6 +670,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/networks/settings`
@@ -697,7 +705,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.885795Z"
+    "observedAt": "2026-10-25T20:59:37.834073Z"
   },
   "uplink": null,
   "serviceRange": null,
@@ -746,6 +754,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/preflight`
@@ -780,7 +789,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.887207Z"
+    "observedAt": "2026-10-25T20:59:37.836326Z"
   },
   "overall": "fail",
   "checks": [
@@ -806,6 +815,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/projects`
@@ -840,7 +850,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.888723Z"
+    "observedAt": "2026-10-25T20:59:37.838584Z"
   },
   "items": [
     {
@@ -863,6 +873,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/storage-pools`
@@ -897,7 +908,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.897549Z"
+    "observedAt": "2026-10-25T20:59:37.851937Z"
   },
   "items": [
     {
@@ -921,6 +932,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/storage/orphans`
@@ -955,7 +967,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.901566Z"
+    "observedAt": "2026-10-25T20:59:37.859016Z"
   },
   "projects": [
     "acme-shop-staging",
@@ -973,6 +985,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/storage/pools`
@@ -1007,7 +1020,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.903635Z"
+    "observedAt": "2026-10-25T20:59:37.861483Z"
   },
   "volumePool": "mock-local",
   "backupPool": "mock-local",
@@ -1047,5 +1060,6 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 

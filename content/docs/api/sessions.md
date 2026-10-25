@@ -68,7 +68,9 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 
 ### `POST /api/v1/applications/{name}/instances/{instance}/sessions`
 
@@ -143,6 +145,7 @@ Content-Type: `application/json`.
 | Status | Codes |
 |---|---|
 | `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `approval_invalid`, `approval_required`, `instance_state_unknown`, `session_unavailable` |
@@ -187,6 +190,7 @@ Content-Type: `application/json`.
 | Status | Codes |
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
+| `429` | `rate_limited` |
 
 ### `DELETE /api/v1/sessions/{id}`
 
@@ -205,14 +209,14 @@ Ends a session now. Allowed for the person who has it and for whoever may operat
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/aafbdccd-b3ae-4141-90cd-18a8a9c0aa97" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/534bc37f-0c24-4778-9b10-7d058597a893" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("terminate_session", { params: { id: "aafbdccd-b3ae-4141-90cd-18a8a9c0aa97" } });
+await client.request("terminate_session", { params: { id: "534bc37f-0c24-4778-9b10-7d058597a893" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -221,5 +225,7 @@ await client.request("terminate_session", { params: { id: "aafbdccd-b3ae-4141-90
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 

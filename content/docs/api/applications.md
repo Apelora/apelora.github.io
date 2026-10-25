@@ -98,19 +98,19 @@ Content-Type: `application/json`.
     {
       "name": "blog",
       "latestRevision": null,
-      "createdAt": "2026-10-25T17:20:01.4976Z",
-      "updatedAt": "2026-10-25T17:20:01.4976Z",
+      "createdAt": "2026-10-25T20:59:30.940235Z",
+      "updatedAt": "2026-10-25T20:59:30.940235Z",
       "description": "Company blog",
       "icon": "box",
       "project": {
-        "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
+        "id": "910d487a-a19c-4d1a-8396-64320906aab9",
         "slug": "shop",
         "name": "Online shop",
-        "organizationId": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
+        "organizationId": "c08726bf-625c-4ac3-b6bd-7220720d1098",
         "organizationSlug": "acme"
       },
       "environment": {
-        "id": "d6d93f9f-97ff-4c42-a4d5-35f70dc906fd",
+        "id": "05df2442-d8da-492d-a351-795ee35cb3cb",
         "slug": "staging",
         "name": "Staging",
         "kind": "staging",
@@ -127,7 +127,7 @@ Content-Type: `application/json`.
       },
       "deployment": {
         "status": "not-deployed",
-        "observedAt": "2026-10-25T17:20:01.605949Z",
+        "observedAt": "2026-10-25T20:59:31.002495Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": null,
@@ -167,19 +167,19 @@ Content-Type: `application/json`.
     {
       "name": "shop",
       "latestRevision": 1,
-      "createdAt": "2026-10-25T17:20:01.480375Z",
-      "updatedAt": "2026-10-25T17:20:01.526982Z",
+      "createdAt": "2026-10-25T20:59:30.929915Z",
+      "updatedAt": "2026-10-25T20:59:30.962279Z",
       "description": "Storefront, API and order database",
       "icon": "cart",
       "project": {
-        "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
+        "id": "910d487a-a19c-4d1a-8396-64320906aab9",
         "slug": "shop",
         "name": "Online shop",
-        "organizationId": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
+        "organizationId": "c08726bf-625c-4ac3-b6bd-7220720d1098",
         "organizationSlug": "acme"
       },
       "environment": {
-        "id": "440284ce-f6ce-4468-b29b-e94ecad8f8a0",
+        "id": "f753e217-b2af-4563-a811-f0b668fae27e",
         "slug": "production",
         "name": "Production",
         "kind": "production",
@@ -192,11 +192,11 @@ Content-Type: `application/json`.
         "validationErrors": 0,
         "publishedVersion": 1,
         "hasUnpublishedChanges": false,
-        "updatedAt": "2026-10-25T17:20:01.526982Z"
+        "updatedAt": "2026-10-25T20:59:30.962279Z"
       },
       "deployment": {
         "status": "degraded",
-        "observedAt": "2026-10-25T17:20:01.605949Z",
+        "observedAt": "2026-10-25T20:59:31.002495Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": 1,
@@ -207,7 +207,7 @@ Content-Type: `application/json`.
           "healthy": 0,
           "unhealthy": 0
         },
-        "lastActivityAt": "2026-10-25T17:20:01.590884Z",
+        "lastActivityAt": "2026-10-25T20:59:30.993953Z",
         "operation": null
       },
       "actions": {
@@ -234,7 +234,7 @@ Content-Type: `application/json`.
       }
     }
   ],
-  "observedAt": "2026-10-25T17:20:01.605949Z",
+  "observedAt": "2026-10-25T20:59:31.002495Z",
   "stale": false
 }
 ```
@@ -245,6 +245,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications`
@@ -268,7 +269,7 @@ Creates an application in an environment, optionally with its first draft. Needs
 ```json
 {
   "name": "shop",
-  "environmentId": "440284ce-f6ce-4468-b29b-e94ecad8f8a0",
+  "environmentId": "f753e217-b2af-4563-a811-f0b668fae27e",
   "description": "Storefront and order database",
   "icon": "cart"
 }
@@ -283,7 +284,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"shop","environmentId":"440284ce-f6ce-4468-b29b-e94ecad8f8a0","description":"Storefront and order database","icon":"cart"}'
+  --data-raw '{"name":"shop","environmentId":"f753e217-b2af-4563-a811-f0b668fae27e","description":"Storefront and order database","icon":"cart"}'
 ```
 
 **TypeScript:**
@@ -302,19 +303,19 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-25T17:20:01.480375Z",
-  "updatedAt": "2026-10-25T17:20:01.480375Z",
+  "createdAt": "2026-10-25T20:59:30.929915Z",
+  "updatedAt": "2026-10-25T20:59:30.929915Z",
   "description": "Storefront and order database",
   "icon": "cart",
   "project": {
-    "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
+    "id": "910d487a-a19c-4d1a-8396-64320906aab9",
     "slug": "shop",
     "name": "Online shop",
-    "organizationId": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
+    "organizationId": "c08726bf-625c-4ac3-b6bd-7220720d1098",
     "organizationSlug": "acme"
   },
   "environment": {
-    "id": "440284ce-f6ce-4468-b29b-e94ecad8f8a0",
+    "id": "f753e217-b2af-4563-a811-f0b668fae27e",
     "slug": "production",
     "name": "Production",
     "kind": "production",
@@ -331,7 +332,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-25T17:20:01.48741Z",
+    "observedAt": "2026-10-25T20:59:30.934306Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -375,8 +376,10 @@ Content-Type: `application/json`.
 | Status | Codes |
 |---|---|
 | `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `409` | `draft_conflict` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/applications/{name}`
 
@@ -415,19 +418,19 @@ Content-Type: `application/json`.
   "application": {
     "name": "shop",
     "latestRevision": 1,
-    "createdAt": "2026-10-25T17:20:01.480375Z",
-    "updatedAt": "2026-10-25T17:20:01.526982Z",
+    "createdAt": "2026-10-25T20:59:30.929915Z",
+    "updatedAt": "2026-10-25T20:59:30.962279Z",
     "description": "Storefront, API and order database",
     "icon": "cart",
     "project": {
-      "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
+      "id": "910d487a-a19c-4d1a-8396-64320906aab9",
       "slug": "shop",
       "name": "Online shop",
-      "organizationId": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
+      "organizationId": "c08726bf-625c-4ac3-b6bd-7220720d1098",
       "organizationSlug": "acme"
     },
     "environment": {
-      "id": "440284ce-f6ce-4468-b29b-e94ecad8f8a0",
+      "id": "f753e217-b2af-4563-a811-f0b668fae27e",
       "slug": "production",
       "name": "Production",
       "kind": "production",
@@ -440,11 +443,11 @@ Content-Type: `application/json`.
       "validationErrors": 0,
       "publishedVersion": 1,
       "hasUnpublishedChanges": false,
-      "updatedAt": "2026-10-25T17:20:01.526982Z"
+      "updatedAt": "2026-10-25T20:59:30.962279Z"
     },
     "deployment": {
       "status": "degraded",
-      "observedAt": "2026-10-25T17:20:01.636594Z",
+      "observedAt": "2026-10-25T20:59:31.018231Z",
       "stale": false,
       "source": "mock",
       "deployedVersion": 1,
@@ -455,7 +458,7 @@ Content-Type: `application/json`.
         "healthy": 0,
         "unhealthy": 0
       },
-      "lastActivityAt": "2026-10-25T17:20:01.590884Z",
+      "lastActivityAt": "2026-10-25T20:59:30.993953Z",
       "operation": null
     },
     "actions": {
@@ -502,7 +505,7 @@ Content-Type: `application/json`.
       "label": "First release",
       "draftVersion": 1,
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-25T17:20:01.543999Z"
+      "createdAt": "2026-10-25T20:59:30.971366Z"
     }
   ],
   "operations": []
@@ -515,6 +518,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 
 ### `PATCH /api/v1/applications/{name}`
 
@@ -569,19 +573,19 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-25T17:20:01.480375Z",
-  "updatedAt": "2026-10-25T17:20:01.510361Z",
+  "createdAt": "2026-10-25T20:59:30.929915Z",
+  "updatedAt": "2026-10-25T20:59:30.95192Z",
   "description": "Storefront, API and order database",
   "icon": "cart",
   "project": {
-    "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
+    "id": "910d487a-a19c-4d1a-8396-64320906aab9",
     "slug": "shop",
     "name": "Online shop",
-    "organizationId": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
+    "organizationId": "c08726bf-625c-4ac3-b6bd-7220720d1098",
     "organizationSlug": "acme"
   },
   "environment": {
-    "id": "440284ce-f6ce-4468-b29b-e94ecad8f8a0",
+    "id": "f753e217-b2af-4563-a811-f0b668fae27e",
     "slug": "production",
     "name": "Production",
     "kind": "production",
@@ -598,7 +602,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-25T17:20:01.515316Z",
+    "observedAt": "2026-10-25T20:59:30.955482Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -642,8 +646,10 @@ Content-Type: `application/json`.
 | Status | Codes |
 |---|---|
 | `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 
 ### `POST /api/v1/applications/{name}/archive`
 
@@ -678,9 +684,11 @@ await client.request("archive_application", { params: { name: "blog" } });
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `still_running` |
+| `429` | `rate_limited` |
 
 ### `POST /api/v1/applications/{name}/deployments`
 
@@ -707,7 +715,7 @@ Deploys the design: saves it as a new revision and queues the planned changes. R
 | `document` | object | yes | The Studio document, saved as an immutable revision. Ignored when `version` is given. |
 | `modules` | list of object | yes | — |
 | `modules[].availability` | one of `stateless`, `singleton`, `stateful` | no | How a module may be run and recovered (from its catalog class). |
-| `modules[].dnsResolver` | boolean | no | This module answers service names for the application (ADR 0004 step 4). Absent means it does not: a resolver is never added unless the design asks for one. |
+| `modules[].dnsResolver` | boolean | no | This module answers service names for the application. Absent means it does not: a resolver is never added unless the design asks for one. |
 | `modules[].guestOs` | one of `linux`, `windows` | no | The operating system inside (from the class): decides which sessions it offers. |
 | `modules[].internet` | one of `none`, `web`, `any` | no | What it may reach outside the application (enforced with the connections). |
 | `modules[].module` | string | yes | The module's stable id in the design (e.g. `nginx-01`). |
@@ -915,7 +923,7 @@ Content-Type: `application/json`.
       "scopes": [
         {
           "kind": "project",
-          "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
+          "id": "910d487a-a19c-4d1a-8396-64320906aab9",
           "name": "Online shop",
           "dimensions": [
             {
@@ -942,13 +950,13 @@ Content-Type: `application/json`.
       "module": "web-01",
       "instance": "shop-web-01",
       "action": "create",
-      "jobId": "80dfb8cc-68c9-442d-b4e7-6e925f0f8871"
+      "jobId": "9b8cab8b-2036-4f8c-83b0-db5398b6dbb9"
     },
     {
       "module": "db-01",
       "instance": "shop-db-01",
       "action": "create",
-      "jobId": "18f09a1d-4b8d-4bad-959b-9a15decd3d8b"
+      "jobId": "1fce2d1b-4eb6-4925-bea3-7a4aeb90ad35"
     }
   ],
   "networkJob": null
@@ -963,6 +971,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
 | `409` | `incus_project_exists`, `not_published`, `plan_conflict`, `project_mismatch`, `quota_exceeded`, `service_range_exhausted` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `incus_project_not_ready`, `quota_unverifiable`, `database_not_configured` |
 
@@ -1015,7 +1024,7 @@ Content-Type: `application/json`.
   },
   "validationErrors": [],
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-25T17:20:01.526982Z"
+  "updatedAt": "2026-10-25T20:59:30.962279Z"
 }
 ```
 
@@ -1023,7 +1032,9 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `404` | `no_draft`, `not_found` |
+| `429` | `rate_limited` |
 
 ### `PUT /api/v1/applications/{name}/draft`
 
@@ -1102,7 +1113,7 @@ Content-Type: `application/json`.
   },
   "validationErrors": [],
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-25T17:20:01.526982Z"
+  "updatedAt": "2026-10-25T20:59:30.962279Z"
 }
 ```
 
@@ -1111,8 +1122,10 @@ Content-Type: `application/json`.
 | Status | Codes |
 |---|---|
 | `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
-| `409` | `draft_conflict` |
+| `409` | — |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/applications/{name}/events`
 
@@ -1151,7 +1164,7 @@ Content-Type: `application/json`.
   "items": [
     {
       "id": 77,
-      "at": "2026-10-25T17:20:01.590884Z",
+      "at": "2026-10-25T20:59:30.993953Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -1159,16 +1172,16 @@ Content-Type: `application/json`.
       "target": "shop-prod/shop",
       "outcome": "success",
       "scope": {
-        "application": "82ad5c6e-26bd-4b75-9c72-0a24f73cb674",
-        "organization": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
-        "project": "5482778a-cdec-421b-bc0a-eb991241ac7c"
+        "application": "8dca0e7e-f7ad-449c-8c03-8e9f6e7fe82a",
+        "organization": "c08726bf-625c-4ac3-b6bd-7220720d1098",
+        "project": "910d487a-a19c-4d1a-8396-64320906aab9"
       },
       "detail": {
         "create": 3,
         "keep": 0,
         "name": "docs-verifier",
         "remove": 0,
-        "requestId": "7abaded4-d63f-4a3e-a765-e0f9cbc3bae1",
+        "requestId": "1f2f68a8-8c58-4459-bc10-fc3e93d9fd30",
         "resize": 0,
         "revision": 1,
         "role": "fabric-admin"
@@ -1176,7 +1189,7 @@ Content-Type: `application/json`.
     },
     {
       "id": 76,
-      "at": "2026-10-25T17:20:01.543999Z",
+      "at": "2026-10-25T20:59:30.971366Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -1184,14 +1197,14 @@ Content-Type: `application/json`.
       "target": "shop",
       "outcome": "success",
       "scope": {
-        "application": "82ad5c6e-26bd-4b75-9c72-0a24f73cb674",
-        "organization": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
-        "project": "5482778a-cdec-421b-bc0a-eb991241ac7c"
+        "application": "8dca0e7e-f7ad-449c-8c03-8e9f6e7fe82a",
+        "organization": "c08726bf-625c-4ac3-b6bd-7220720d1098",
+        "project": "910d487a-a19c-4d1a-8396-64320906aab9"
       },
       "detail": {
         "draftVersion": 1,
         "name": "docs-verifier",
-        "requestId": "67f3bc8a-af9e-4959-b686-927047e07ddd",
+        "requestId": "76c71edd-1b61-4739-b513-ab88bfb11fc6",
         "revision": 1,
         "role": "fabric-admin"
       }
@@ -1204,7 +1217,9 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/applications/{name}/migration`
 
@@ -1243,7 +1258,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:03.023877Z"
+    "observedAt": "2026-10-25T20:59:32.248264Z"
   },
   "target": "mock-member-02",
   "items": [],
@@ -1257,9 +1272,11 @@ Content-Type: `application/json`.
 | Status | Codes |
 |---|---|
 | `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
 | `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `not_deployed` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/applications/{name}/operations`
@@ -1304,7 +1321,9 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 
 ### `POST /api/v1/applications/{name}/operations`
 
@@ -1397,9 +1416,11 @@ Content-Type: `application/json`.
 | Status | Codes |
 |---|---|
 | `400` | `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
 | `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `action_not_available`, `already_running`, `already_stopped`, `confirmation_required`, `member_unreachable`, `migration_blocked`, `not_deployed`, `nothing_deployed`, `nothing_to_do`, `operation_in_progress` |
+| `429` | `rate_limited` |
 | `503` | `incus_unreachable`, `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/operations/{id}`
@@ -1418,7 +1439,7 @@ One operation with the progress of each phase and instance. Needs `application.v
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/f779935a-4817-44a1-b240-1356fdacbf34" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/ab05746a-760f-4515-b830-5bd0bc80abae" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -1426,7 +1447,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operatio
 **TypeScript:**
 
 ```ts
-const result = await client.request("application_operation", { params: { name: "shop", id: "f779935a-4817-44a1-b240-1356fdacbf34" } });
+const result = await client.request("application_operation", { params: { name: "shop", id: "ab05746a-760f-4515-b830-5bd0bc80abae" } });
 ```
 
 **Response `200`** — Success.
@@ -1468,7 +1489,9 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 
 ### `POST /api/v1/applications/{name}/plan`
 
@@ -1493,7 +1516,7 @@ What deploying the design would change, without changing anything. Needs `deploy
 | `connections[].transport` | string | yes | `tcp` or `udp`. |
 | `modules` | list of object | yes | — |
 | `modules[].availability` | one of `stateless`, `singleton`, `stateful` | no | How a module may be run and recovered (from its catalog class). |
-| `modules[].dnsResolver` | boolean | no | This module answers service names for the application (ADR 0004 step 4). Absent means it does not: a resolver is never added unless the design asks for one. |
+| `modules[].dnsResolver` | boolean | no | This module answers service names for the application. Absent means it does not: a resolver is never added unless the design asks for one. |
 | `modules[].guestOs` | one of `linux`, `windows` | no | The operating system inside (from the class): decides which sessions it offers. |
 | `modules[].internet` | one of `none`, `web`, `any` | no | What it may reach outside the application (enforced with the connections). |
 | `modules[].module` | string | yes | The module's stable id in the design (e.g. `nginx-01`). |
@@ -1679,7 +1702,7 @@ Content-Type: `application/json`.
     "scopes": [
       {
         "kind": "project",
-        "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
+        "id": "910d487a-a19c-4d1a-8396-64320906aab9",
         "name": "Online shop",
         "dimensions": [
           {
@@ -1710,6 +1733,7 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `POST /api/v1/applications/{name}/restore`
@@ -1745,8 +1769,10 @@ await client.request("restore_application", { params: { name: "blog" } });
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/applications/{name}/status`
 
@@ -1793,7 +1819,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:03.034296Z"
+    "observedAt": "2026-10-25T20:59:32.257781Z"
   },
   "items": [],
   "services": []
@@ -1807,6 +1833,7 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/applications/{name}/versions`
@@ -1850,7 +1877,7 @@ Content-Type: `application/json`.
       "label": "First release",
       "draftVersion": 1,
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-25T17:20:01.543999Z"
+      "createdAt": "2026-10-25T20:59:30.971366Z"
     }
   ]
 }
@@ -1860,7 +1887,9 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 
 ### `POST /api/v1/applications/{name}/versions`
 
@@ -1917,7 +1946,7 @@ Content-Type: `application/json`.
   "label": "First release",
   "draftVersion": 1,
   "createdBy": "token:docs-verifier",
-  "createdAt": "2026-10-25T17:20:01.543999Z"
+  "createdAt": "2026-10-25T20:59:30.971366Z"
 }
 ```
 
@@ -1925,10 +1954,12 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `no_draft`, `not_found` |
 | `409` | `already_published` |
 | `422` | `draft_invalid` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/applications/{name}/versions/{revision}`
 
@@ -1985,7 +2016,9 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `401` | `unauthenticated`, `invalid_token` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/applications/{name}/volumes`
 
@@ -2023,7 +2056,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:03.04219Z"
+    "observedAt": "2026-10-25T20:59:32.264976Z"
   },
   "items": [
     {
@@ -2038,7 +2071,7 @@ Content-Type: `application/json`.
       "class": "data-local",
       "state": "missing",
       "usedBy": [],
-      "createdAt": "2026-10-25T17:20:02.09497Z"
+      "createdAt": "2026-10-25T20:59:31.866153Z"
     },
     {
       "module": "db-01",
@@ -2052,7 +2085,7 @@ Content-Type: `application/json`.
       "class": "data-local",
       "state": "missing",
       "usedBy": [],
-      "createdAt": "2026-10-25T17:20:02.079737Z"
+      "createdAt": "2026-10-25T20:59:31.853456Z"
     }
   ]
 }
@@ -2065,6 +2098,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `PATCH /api/v1/applications/{name}/volumes/{volume}`
@@ -2120,6 +2154,7 @@ await client.request("grow_application_volume", { params: { name: "shop", volume
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | — |
+| `429` | `rate_limited` |
 | `502` | `incus_not_found` |
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}`
@@ -2175,6 +2210,7 @@ await client.request("delete_application_volume", { params: { name: "shop", volu
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `approval_invalid`, `approval_required`, `volume_in_use` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/backups`
@@ -2214,7 +2250,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:04.721309Z"
+    "observedAt": "2026-10-25T20:59:33.943504Z"
   },
   "backupPool": "mock-local",
   "schedules": {
@@ -2233,21 +2269,21 @@ Content-Type: `application/json`.
   },
   "items": [
     {
-      "name": "shop-db-01-data-bk-20261025172003",
+      "name": "shop-db-01-data-bk-20261025205932",
       "pool": "mock-local",
       "member": "mock-member-02",
       "sizeMib": 10240,
-      "takenAt": "2026-10-25T17:20:03.075248Z",
+      "takenAt": "2026-10-25T20:59:32.293111Z",
       "scheduled": false,
       "beforeRestore": null,
       "present": false
     },
     {
-      "name": "shop-db-01-data-bk-20261025172004",
+      "name": "shop-db-01-data-bk-20261025205933",
       "pool": "mock-local",
       "member": "mock-member-02",
       "sizeMib": 10240,
-      "takenAt": "2026-10-25T17:20:04.190528Z",
+      "takenAt": "2026-10-25T20:59:33.404434Z",
       "scheduled": false,
       "beforeRestore": null,
       "present": false
@@ -2263,6 +2299,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/backups`
 
@@ -2305,7 +2342,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "fcd28e04-1610-4198-9311-3882b792db1a",
+  "jobId": "d3226906-9df4-42ee-ba24-b98a946fcaa3",
   "created": true
 }
 ```
@@ -2318,6 +2355,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `backup_pool_missing` |
+| `429` | `rate_limited` |
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}/backups/{backup}`
 
@@ -2341,7 +2379,7 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 
 ```json
 {
-  "confirm": "shop-db-01-data-bk-20261025172004"
+  "confirm": "shop-db-01-data-bk-20261025205933"
 }
 ```
 
@@ -2350,16 +2388,16 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025172004" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025205933" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"shop-db-01-data-bk-20261025172004"}'
+  --data-raw '{"confirm":"shop-db-01-data-bk-20261025205933"}'
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025172004" }, body: { confirm: "shop-db-01-data-bk-20261025172004" } });
+await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025205933" }, body: { confirm: "shop-db-01-data-bk-20261025205933" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -2373,6 +2411,7 @@ await client.request("delete_volume_backup", { params: { name: "shop", volume: "
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `approval_invalid`, `approval_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`
@@ -2393,7 +2432,7 @@ Dry run of restoring the volume from one of its backups: what is replaced (data 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025172003/restore" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025205932/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2401,7 +2440,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 **With options** (`safetyBackup`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025172003/restore?safetyBackup=false" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025205932/restore?safetyBackup=false" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2409,7 +2448,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 **TypeScript:**
 
 ```ts
-const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025172003" }, query: { safetyBackup: false } });
+const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025205932" }, query: { safetyBackup: false } });
 ```
 
 **Response `200`** — Success.
@@ -2422,28 +2461,28 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:04.726423Z"
+    "observedAt": "2026-10-25T20:59:33.949473Z"
   },
   "plan": {
     "volume": "shop-db-01-data",
     "pool": "mock-local",
     "member": "mock-member-01",
     "sizeMib": 10240,
-    "backup": "shop-db-01-data-bk-20261025172003",
+    "backup": "shop-db-01-data-bk-20261025205932",
     "backupPool": "mock-local",
     "backupMember": "mock-member-02",
-    "backupTakenAt": "2026-10-25T17:20:03.075248Z",
+    "backupTakenAt": "2026-10-25T20:59:32.293111Z",
     "snapshotsDeleted": [],
     "usedBy": [],
     "running": [],
     "safetyBackupPool": "mock-local",
     "blocked": [
       "volume shop-db-01-data is not in Incus (its member may be unreachable); nothing can be restored into it",
-      "backup shop-db-01-data-bk-20261025172003 is not in Incus"
+      "backup shop-db-01-data-bk-20261025205932 is not in Incus"
     ],
     "steps": [
       "Copy the volume as it is now into pool mock-local (a safety backup, listed with the others)",
-      "Copy backup shop-db-01-data-bk-20261025172003 over volume shop-db-01-data on mock-member-01"
+      "Copy backup shop-db-01-data-bk-20261025205932 over volume shop-db-01-data on mock-member-01"
     ]
   }
 }
@@ -2456,6 +2495,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`
@@ -2494,7 +2534,7 @@ This request can change state. Check permissions, prerequisites and any required
 ```sh
 # Generate once per distinct change; keep this value when retrying.
 IDEMPOTENCY_KEY=$(uuidgen)
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025172003/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025205932/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
@@ -2505,7 +2545,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes
 **TypeScript:**
 
 ```ts
-const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025172003" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
+const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025205932" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
 ```
 
 **Response `202`** — Success.
@@ -2530,6 +2570,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `approval_invalid`, `approval_required`, `restore_blocked` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `PUT /api/v1/applications/{name}/volumes/{volume}/schedules`
@@ -2597,6 +2638,7 @@ await client.request("set_volume_schedules", { params: { name: "shop", volume: "
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `backup_pool_missing` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/snapshots`
 
@@ -2635,7 +2677,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:03.052471Z"
+    "observedAt": "2026-10-25T20:59:32.274261Z"
   },
   "items": []
 }
@@ -2648,6 +2690,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/snapshots`
@@ -2700,6 +2743,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `snapshots_not_allowed`, `volume_missing` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}`
@@ -2740,6 +2784,7 @@ await client.request("delete_volume_snapshot", { params: { name: "shop", volume:
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | `incus_not_found` |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}/restore`
@@ -2796,6 +2841,7 @@ await client.request("restore_volume_snapshot", { params: { name: "shop", volume
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `approval_invalid`, `approval_required`, `volume_in_use`, `volume_missing` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/networks/applications`
@@ -2830,7 +2876,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.882737Z"
+    "observedAt": "2026-10-25T20:59:37.827958Z"
   },
   "incusError": null,
   "items": [
@@ -2872,6 +2918,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/storage/volumes`
 
@@ -2905,7 +2952,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:03.047965Z"
+    "observedAt": "2026-10-25T20:59:32.270292Z"
   },
   "backupPool": "mock-local",
   "incusError": null,
@@ -2958,4 +3005,5 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 

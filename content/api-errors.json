@@ -1,5 +1,5 @@
 {
- "openapiSha256": "23d79e27bc237b99112132306a680724654649f4b61f557f5156914cf718d19c",
+ "openapiSha256": "0e543e01bacf170b1d6867e15ce01dad4f0284ae68d7cd2baf29fe6c89e08d33",
  "operations": {
   "acknowledge_alert": {
    "400": [
@@ -2024,9 +2024,6 @@
    ],
    "404": [
     "not_found"
-   ],
-   "409": [
-    "draft_conflict"
    ],
    "503": [
     "database_not_configured"

@@ -53,13 +53,13 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "7c8d9b09-0c9d-43fa-9c1e-9af63f22dc4e",
+      "id": "8c32dcc7-2fe4-47f6-a152-388f7250c543",
       "name": "docs-verifier",
       "role": "fabric-admin",
-      "createdAt": "2026-10-25T17:19:58.587603Z",
-      "expiresAt": "2026-10-26T17:19:58.559696Z",
+      "createdAt": "2026-10-25T20:59:28.378527Z",
+      "expiresAt": "2026-10-26T20:59:28.348677Z",
       "revokedAt": null,
-      "lastUsedAt": "2026-10-25T17:20:01.441074Z"
+      "lastUsedAt": "2026-10-25T20:59:30.912158Z"
     }
   ]
 }
@@ -71,6 +71,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `POST /api/v1/tokens`
@@ -141,11 +142,11 @@ Content-Type: `application/json`.
 {
   "token": "<token, shown once>",
   "info": {
-    "id": "4372a6ec-2e44-4ada-8ec4-f120dc2f833e",
+    "id": "ef802048-9274-43d1-997a-c1eeec84e59f",
     "name": "monitoring",
     "role": "operator",
-    "createdAt": "2026-10-25T17:20:01.446621Z",
-    "expiresAt": "2027-01-23T17:20:01.446142Z",
+    "createdAt": "2026-10-25T20:59:30.914798Z",
+    "expiresAt": "2027-01-23T20:59:30.91508Z",
     "revokedAt": null,
     "lastUsedAt": null
   }
@@ -160,6 +161,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `approval_unavailable`, `token_exceeds_caller`, `forbidden`, `mfa_required` |
 | `409` | `approval_invalid`, `approval_required` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `DELETE /api/v1/tokens/{id}`
@@ -179,14 +181,14 @@ Revokes an API token; it stops working at once. Needs `manage-tokens`.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/tokens/4372a6ec-2e44-4ada-8ec4-f120dc2f833e" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/tokens/ef802048-9274-43d1-997a-c1eeec84e59f" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("revoke_token", { params: { id: "4372a6ec-2e44-4ada-8ec4-f120dc2f833e" } });
+await client.request("revoke_token", { params: { id: "ef802048-9274-43d1-997a-c1eeec84e59f" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -198,5 +200,6 @@ await client.request("revoke_token", { params: { id: "4372a6ec-2e44-4ada-8ec4-f1
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | — |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 

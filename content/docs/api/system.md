@@ -94,6 +94,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/health`
 
@@ -133,7 +134,7 @@ Content-Type: `application/json`.
   "incus": {
     "connected": false
   },
-  "checkedAt": "2026-10-25T17:19:58.712777Z"
+  "checkedAt": "2026-10-25T20:59:28.502797Z"
 }
 ```
 
@@ -173,13 +174,13 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "checkedAt": "2026-10-25T17:20:07.795084Z",
+  "checkedAt": "2026-10-25T20:59:37.694608Z",
   "overall": "degraded",
   "controlPlane": {
     "state": "healthy",
     "version": "0.0.0",
     "apiVersion": "v1",
-    "startedAt": "2026-10-25T17:19:58.634103Z",
+    "startedAt": "2026-10-25T20:59:28.427608Z",
     "uptimeSecs": 9,
     "auth": "tokens",
     "provider": "mock",
@@ -188,7 +189,7 @@ Content-Type: `application/json`.
   },
   "database": {
     "state": "healthy",
-    "roundTripMs": 0.9,
+    "roundTripMs": 1.8,
     "schemaVersion": 33,
     "expectedSchemaVersion": 33,
     "reason": null,
@@ -201,8 +202,8 @@ Content-Type: `application/json`.
         "id": "docs-worker",
         "host": "unknown",
         "version": "0.0.0",
-        "startedAt": "2026-10-25T17:20:02.059739Z",
-        "lastSeen": "2026-10-25T17:20:02.059739Z",
+        "startedAt": "2026-10-25T20:59:31.834773Z",
+        "lastSeen": "2026-10-25T20:59:31.834773Z",
         "secondsSinceSeen": 5,
         "state": "running"
       }
@@ -270,6 +271,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/health/servers`
 
@@ -303,7 +305,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.797172Z"
+    "observedAt": "2026-10-25T20:59:37.697631Z"
   },
   "clustered": true,
   "items": [
@@ -413,6 +415,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/image-mirrors`
@@ -507,6 +510,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 
 ### `PUT /api/v1/me/password`
 
@@ -623,6 +627,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/settings`
 
@@ -719,10 +724,10 @@ Content-Type: `application/json`.
       "id": "docs-worker",
       "host": "unknown",
       "version": "0.0.0",
-      "lastSeen": "2026-10-25T17:20:02.059739Z"
+      "lastSeen": "2026-10-25T20:59:31.834773Z"
     }
   ],
-  "readAt": "2026-10-25T17:19:58.634103Z"
+  "readAt": "2026-10-25T20:59:28.427608Z"
 }
 ```
 
@@ -732,6 +737,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured`, `store_unavailable` |
 
 ### `GET /api/v1/sign-in`
@@ -769,6 +775,12 @@ Content-Type: `application/json`.
   "directories": []
 }
 ```
+
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `429` | `rate_limited` |
 
 ### `POST /api/v1/sign-in/password`
 
@@ -819,7 +831,7 @@ Content-Type: `application/json`.
 ```json
 {
   "token": "<token, shown once>",
-  "expiresAt": "2026-10-26T01:19:59.243693Z",
+  "expiresAt": "2026-10-26T04:59:29.025804Z",
   "name": "Ada Lovelace"
 }
 ```
@@ -911,6 +923,7 @@ await client.request("sign_out", {});
 | Status | Codes |
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/support-bundle`
 
@@ -948,15 +961,15 @@ tar -tf support-bundle.tar
 **Example contents:**
 
 ```text
-apelora-support-20261025-172007/manifest.json
-apelora-support-20261025-172007/versions.json
-apelora-support-20261025-172007/settings.json
-apelora-support-20261025-172007/health.json
-apelora-support-20261025-172007/preflight.json
-apelora-support-20261025-172007/jobs-failed.json
-apelora-support-20261025-172007/metrics.txt
-apelora-support-20261025-172007/logs/README.txt
-apelora-support-20261025-172007/README.txt
+apelora-support-20261025-205937/manifest.json
+apelora-support-20261025-205937/versions.json
+apelora-support-20261025-205937/settings.json
+apelora-support-20261025-205937/health.json
+apelora-support-20261025-205937/preflight.json
+apelora-support-20261025-205937/jobs-failed.json
+apelora-support-20261025-205937/metrics.txt
+apelora-support-20261025-205937/logs/README.txt
+apelora-support-20261025-205937/README.txt
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
@@ -965,6 +978,7 @@ apelora-support-20261025-172007/README.txt
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 
 ### `GET /api/v1/system`
@@ -1018,6 +1032,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 
 ### `GET /api/v1/whoami`
 
@@ -1087,6 +1102,7 @@ Content-Type: `application/json`.
 | Status | Codes |
 |---|---|
 | `401` | `unauthenticated` |
+| `429` | `rate_limited` |
 
 ### `GET /metrics`
 
@@ -1125,7 +1141,7 @@ apelora_build_info{region="default",site="default",sector="default",component="c
 apelora_provider_info{region="default",site="default",sector="default",mode="mock"} 1
 # HELP apelora_http_requests_total API requests answered, by route template, method and status class.
 # TYPE apelora_http_requests_total counter
-apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",status="2xx"} 8
+apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",status="2xx"} 9
 apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",status="2xx"} 2
 apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="POST",status="2xx"} 1
 apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels/{id}",method="DELETE",status="2xx"} 1
@@ -1140,4 +1156,5 @@ apelora_http_requests_total{region="default",site="default",sector="default",rou
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 

@@ -92,7 +92,10 @@ network sync replaces the dead backend in the load balancer. This is audited as
 <p>With Incus 7.0, the load balancer cannot change while the member is offline: Incus refuses
 every load balancer update in the cluster (<code>peer node … is down</code>). The substitute then runs but
 gets no traffic, and the service address can keep sending a share of requests to the dead
-replica until the member returns or you remove it (what to do, step 2).</p></li><li><p>Singletons and stateful modules whose disks are all on the shared pool (volume class
+replica until the member returns or you remove it (what to do, step 2). Apelora says so, naming
+the member: on the application's row in the Console (Workloads → Applications), as <em>Traffic
+stuck</em> in the Studio's header, in the failed <code>network.sync</code> job, and in the <em>Jobs are failing</em>
+alert. The notice clears after the first network sync that goes through.</p></li><li><p>Singletons and stateful modules whose disks are all on the shared pool (volume class
 <code>data-replicated</code>) restart on another member once the failed one is <strong>fenced</strong> (next section).
 Everything else on a member-local pool is <strong>not</strong> recovered automatically: it waits for its
 member, or you restore it elsewhere (step 2 below). Servers → Members lists every instance of

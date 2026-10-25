@@ -108,7 +108,7 @@
   &quot;items&quot;: [
     {
       &quot;id&quot;: 112,
-      &quot;at&quot;: &quot;2026-10-25T17:20:07.337042Z&quot;,
+      &quot;at&quot;: &quot;2026-10-25T20:59:37.122407Z&quot;,
       &quot;actor&quot;: &quot;token:docs-verifier&quot;,
       &quot;actorType&quot;: &quot;token&quot;,
       &quot;actorName&quot;: &quot;docs-verifier&quot;,
@@ -119,17 +119,17 @@
       &quot;detail&quot;: {
         &quot;enabled&quot;: true,
         &quot;host&quot;: &quot;hooks.example.invalid&quot;,
-        &quot;id&quot;: &quot;697d223e-6c16-4630-b498-977a5bf76081&quot;,
+        &quot;id&quot;: &quot;e329c268-2490-42b5-b9f0-55793d5582c4&quot;,
         &quot;minSeverity&quot;: &quot;critical&quot;,
         &quot;name&quot;: &quot;docs-verifier&quot;,
-        &quot;requestId&quot;: &quot;ed701500-05ba-4886-8726-48267b8ecfb9&quot;,
+        &quot;requestId&quot;: &quot;d0c479e3-553a-49a6-aa6b-4541c30a2661&quot;,
         &quot;role&quot;: &quot;fabric-admin&quot;,
         &quot;secretRef&quot;: &quot;APELORA_ALERT_SECRET_ONCALL&quot;
       }
     },
     {
       &quot;id&quot;: 111,
-      &quot;at&quot;: &quot;2026-10-25T17:20:07.330996Z&quot;,
+      &quot;at&quot;: &quot;2026-10-25T20:59:37.111723Z&quot;,
       &quot;actor&quot;: &quot;token:docs-verifier&quot;,
       &quot;actorType&quot;: &quot;token&quot;,
       &quot;actorName&quot;: &quot;docs-verifier&quot;,
@@ -140,7 +140,7 @@
       &quot;detail&quot;: {
         &quot;name&quot;: &quot;docs-verifier&quot;,
         &quot;note&quot;: &quot;Looking into the failed job&quot;,
-        &quot;requestId&quot;: &quot;5a4353c8-57cc-4faf-acbe-480f0daa2aa0&quot;,
+        &quot;requestId&quot;: &quot;bf47ea8c-b99a-49a8-a77f-4bc568b367cd&quot;,
         &quot;role&quot;: &quot;fabric-admin&quot;,
         &quot;rule&quot;: &quot;job-failures&quot;,
         &quot;severity&quot;: &quot;warning&quot;,
@@ -150,7 +150,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1auditexport"><code>GET /api/v1/audit/export</code></h3>
 <p>Exports the audit events the caller may read, with the same filters as the list (<code>limit</code> does not apply), newest first, as CSV or JSON lines. Streamed one database page at a time. Needs <code>audit.read</code>; the export itself is audited as <code>audit.exported</code> with its filters.</p>
 <p><strong>Operation ID:</strong> <code>audit_export</code></p>
@@ -166,7 +166,7 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/x-ndjson&quot;</code></pre>
 <p><strong>With options</strong> (<code>action</code>, <code>from</code>):</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/audit/export?format=csv&amp;action=token.&amp;from=2026-10-24T17%3A20%3A07Z&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/audit/export?format=csv&amp;action=token.&amp;from=2026-10-24T20%3A59%3A37Z&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: text/csv&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
@@ -175,16 +175,16 @@
 <p>Content-Type: <code>text/csv</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. The first 4 of 114 lines.</p>
 <pre data-lang="text" tabindex="0"><code>id,at,actor,actorName,actorType,action,target,outcome,requestId,scope,detail
-113,2026-10-25T17:20:07.386461Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,fa0dfde0-cf2b-45ae-8aba-17e6afde9bbd,,&quot;{&quot;&quot;filters&quot;&quot;:{},&quot;&quot;format&quot;&quot;:&quot;&quot;csv&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;fa0dfde0-cf2b-45ae-8aba-17e6afde9bbd&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;}&quot;
-112,2026-10-25T17:20:07.337042Z,token:docs-verifier,docs-verifier,token,alert.channel.delete,alert-channel:On-call webhook,success,ed701500-05ba-4886-8726-48267b8ecfb9,,&quot;{&quot;&quot;enabled&quot;&quot;:true,&quot;&quot;host&quot;&quot;:&quot;&quot;hooks.example.invalid&quot;&quot;,&quot;&quot;id&quot;&quot;:&quot;&quot;697d223e-6c16-4630-b498-977a5bf76081&quot;&quot;,&quot;&quot;minSeverity&quot;&quot;:&quot;&quot;critical&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;ed701500-05ba-4886-8726-48267b8ecfb9&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;,&quot;&quot;secretRef&quot;&quot;:&quot;&quot;APELORA_ALERT_SECRET_ONCALL&quot;&quot;}&quot;
-111,2026-10-25T17:20:07.330996Z,token:docs-verifier,docs-verifier,token,alert.acknowledge,alert:2,success,5a4353c8-57cc-4faf-acbe-480f0daa2aa0,,&quot;{&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;note&quot;&quot;:&quot;&quot;Looking into the failed job&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;5a4353c8-57cc-4faf-acbe-480f0daa2aa0&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;,&quot;&quot;rule&quot;&quot;:&quot;&quot;job-failures&quot;&quot;,&quot;&quot;severity&quot;&quot;:&quot;&quot;warning&quot;&quot;,&quot;&quot;subject&quot;&quot;:&quot;&quot;instance.restart&quot;&quot;}&quot;</code></pre>
+113,2026-10-25T20:59:37.192086Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,357cc10a-b7e7-429b-8d59-e3d06c7afde1,,&quot;{&quot;&quot;filters&quot;&quot;:{},&quot;&quot;format&quot;&quot;:&quot;&quot;csv&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;357cc10a-b7e7-429b-8d59-e3d06c7afde1&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;}&quot;
+112,2026-10-25T20:59:37.122407Z,token:docs-verifier,docs-verifier,token,alert.channel.delete,alert-channel:On-call webhook,success,d0c479e3-553a-49a6-aa6b-4541c30a2661,,&quot;{&quot;&quot;enabled&quot;&quot;:true,&quot;&quot;host&quot;&quot;:&quot;&quot;hooks.example.invalid&quot;&quot;,&quot;&quot;id&quot;&quot;:&quot;&quot;e329c268-2490-42b5-b9f0-55793d5582c4&quot;&quot;,&quot;&quot;minSeverity&quot;&quot;:&quot;&quot;critical&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;d0c479e3-553a-49a6-aa6b-4541c30a2661&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;,&quot;&quot;secretRef&quot;&quot;:&quot;&quot;APELORA_ALERT_SECRET_ONCALL&quot;&quot;}&quot;
+111,2026-10-25T20:59:37.111723Z,token:docs-verifier,docs-verifier,token,alert.acknowledge,alert:2,success,bf47ea8c-b99a-49a8-a77f-4bc568b367cd,,&quot;{&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;note&quot;&quot;:&quot;&quot;Looking into the failed job&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;bf47ea8c-b99a-49a8-a77f-4bc568b367cd&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;,&quot;&quot;rule&quot;&quot;:&quot;&quot;job-failures&quot;&quot;,&quot;&quot;severity&quot;&quot;:&quot;&quot;warning&quot;&quot;,&quot;&quot;subject&quot;&quot;:&quot;&quot;instance.restart&quot;&quot;}&quot;</code></pre>
 <p>Content-Type: <code>application/x-ndjson</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. The first 3 of 114 lines.</p>
-<pre data-lang="text" tabindex="0"><code>{&quot;id&quot;:114,&quot;at&quot;:&quot;2026-10-25T17:20:07.393682Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;jsonl&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;272422ec-de18-41fd-93ad-a1b2ed60a23c&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
-{&quot;id&quot;:113,&quot;at&quot;:&quot;2026-10-25T17:20:07.386461Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;csv&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;fa0dfde0-cf2b-45ae-8aba-17e6afde9bbd&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
-{&quot;id&quot;:112,&quot;at&quot;:&quot;2026-10-25T17:20:07.337042Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;alert.channel.delete&quot;,&quot;target&quot;:&quot;alert-channel:On-call webhook&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;enabled&quot;:true,&quot;host&quot;:&quot;hooks.example.invalid&quot;,&quot;id&quot;:&quot;697d223e-6c16-4630-b498-977a5bf76081&quot;,&quot;minSeverity&quot;:&quot;critical&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;ed701500-05ba-4886-8726-48267b8ecfb9&quot;,&quot;role&quot;:&quot;fabric-admin&quot;,&quot;secretRef&quot;:&quot;APELORA_ALERT_SECRET_ONCALL&quot;}}</code></pre>
+<pre data-lang="text" tabindex="0"><code>{&quot;id&quot;:114,&quot;at&quot;:&quot;2026-10-25T20:59:37.201187Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;jsonl&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;fc4a1eb7-c1fe-4ccf-9d5e-82c69a920376&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
+{&quot;id&quot;:113,&quot;at&quot;:&quot;2026-10-25T20:59:37.192086Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;csv&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;357cc10a-b7e7-429b-8d59-e3d06c7afde1&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
+{&quot;id&quot;:112,&quot;at&quot;:&quot;2026-10-25T20:59:37.122407Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;alert.channel.delete&quot;,&quot;target&quot;:&quot;alert-channel:On-call webhook&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;enabled&quot;:true,&quot;host&quot;:&quot;hooks.example.invalid&quot;,&quot;id&quot;:&quot;e329c268-2490-42b5-b9f0-55793d5582c4&quot;,&quot;minSeverity&quot;:&quot;critical&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;d0c479e3-553a-49a6-aa6b-4541c30a2661&quot;,&quot;role&quot;:&quot;fabric-admin&quot;,&quot;secretRef&quot;:&quot;APELORA_ALERT_SECRET_ONCALL&quot;}}</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
         </div>
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/administration/"><span>Previous</span>Administration</a><a class="next" href="/docs/api/identity/"><span>Next</span>Identity and access</a></nav>

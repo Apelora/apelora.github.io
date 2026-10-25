@@ -77,7 +77,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.753519Z"
+    "observedAt": "2026-10-25T20:59:37.637817Z"
   },
   "items": [
     {
@@ -99,6 +99,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/cluster/join-tokens`
@@ -133,12 +134,12 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.823029Z"
+    "observedAt": "2026-10-25T20:59:31.105785Z"
   },
   "items": [
     {
       "memberName": "rack2-01",
-      "expiresAt": "mock: never used"
+      "expiresAt": "2026-10-25T21:59:31.103823Z"
     }
   ]
 }
@@ -150,6 +151,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured`, `store_unavailable` |
 
@@ -200,7 +202,7 @@ Content-Type: `application/json`.
 ```json
 {
   "memberName": "rack2-01",
-  "expiresAt": "mock: never used",
+  "expiresAt": "2026-10-25T21:59:31.103823Z",
   "token": "<token, shown once>",
   "warnings": []
 }
@@ -213,6 +215,7 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -253,6 +256,7 @@ await client.request("revoke_join_token", { params: { member: "rack2-01" } });
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -288,7 +292,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.793737Z"
+    "observedAt": "2026-10-25T20:59:31.090495Z"
   },
   "clustered": true,
   "members": [
@@ -401,6 +405,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `POST /api/v1/cluster/members/{member}/evacuate`
@@ -469,6 +474,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `approval_invalid`, `approval_required`, `evacuation_blocked` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -508,7 +514,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.798008Z"
+    "observedAt": "2026-10-25T20:59:31.092915Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -540,6 +546,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `POST /api/v1/cluster/members/{member}/fencing`
@@ -655,6 +662,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `approval_invalid`, `approval_required`, `member_not_offline` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `database_not_configured` |
 
@@ -694,7 +702,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.812705Z"
+    "observedAt": "2026-10-25T20:59:31.100258Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -724,6 +732,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `POST /api/v1/cluster/members/{member}/remove`
@@ -780,6 +789,7 @@ await client.request("remove_member", { params: { member: "mock-member-03" }, bo
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `approval_invalid`, `approval_required`, `removal_blocked` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -848,6 +858,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | — |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -883,7 +894,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.836731Z"
+    "observedAt": "2026-10-25T20:59:31.113052Z"
   },
   "items": []
 }
@@ -895,6 +906,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
 ### `GET /api/v1/cluster/settings`
@@ -929,7 +941,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.834254Z"
+    "observedAt": "2026-10-25T20:59:31.111708Z"
   },
   "identity": "admin",
   "items": [
@@ -959,6 +971,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured`, `store_unavailable` |
 
@@ -1037,6 +1050,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `409` | `approval_invalid`, `approval_required`, `nothing_to_change` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -1125,6 +1139,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `409` | `evacuation_blocked`, `no_upgrade`, `upgrade_blocked`, `upgrade_in_progress`, `upgrade_step` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -1160,7 +1175,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.870727Z"
+    "observedAt": "2026-10-25T20:59:37.810966Z"
   },
   "items": [
     {
@@ -1179,12 +1194,12 @@ Content-Type: `application/json`.
       "nextStep": "None.",
       "warnings": [],
       "registeredBy": "token:docs-verifier",
-      "registeredAt": "2026-10-25T17:20:01.846505Z",
+      "registeredAt": "2026-10-25T20:59:31.117253Z",
       "approvedBy": null,
       "approvedAt": null,
       "approvalExpiresAt": null,
       "admittedBy": "token:docs-verifier",
-      "admittedAt": "2026-10-25T17:20:01.858235Z"
+      "admittedAt": "2026-10-25T20:59:31.122984Z"
     }
   ]
 }
@@ -1196,6 +1211,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -1265,7 +1281,7 @@ Content-Type: `application/json`.
   "nextStep": "Install Incus on the server, then approve it.",
   "warnings": [],
   "registeredBy": "token:docs-verifier",
-  "registeredAt": "2026-10-25T17:20:01.840323Z",
+  "registeredAt": "2026-10-25T20:59:31.113959Z",
   "approvedBy": null,
   "approvedAt": null,
   "approvalExpiresAt": null,
@@ -1282,6 +1298,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `409` | — |
+| `429` | `rate_limited` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -1323,6 +1340,7 @@ await client.request("remove_machine", { params: { name: "rack2-01" } });
 | `403` | `forbidden`, `mfa_required` |
 | `404` | — |
 | `409` | `approval_invalid`, `approval_required`, `still_a_member` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -1362,7 +1380,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.854293Z"
+    "observedAt": "2026-10-25T20:59:31.121275Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1392,6 +1410,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | — |
 | `409` | `not_a_member` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -1433,7 +1452,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:01.857984Z"
+    "observedAt": "2026-10-25T20:59:31.123241Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1463,6 +1482,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | — |
 | `409` | `admission_blocked`, `not_a_member` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -1503,6 +1523,7 @@ await client.request("withdraw_machine_approval", { params: { name: "rack2-01" }
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | — |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -1543,7 +1564,7 @@ Content-Type: `application/json`.
 ```json
 {
   "name": "rack2-01",
-  "expiresAt": "mock: never used",
+  "expiresAt": "2026-10-25T21:59:31.127286Z",
   "token": "<token, shown once>",
   "enrolCommand": "sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address <this server's cluster address>",
   "warnings": []
@@ -1559,6 +1580,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | — |
 | `409` | `already_a_member`, `approval_invalid`, `approval_pending`, `approval_required` |
+| `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
 
@@ -1594,7 +1616,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T17:20:07.889894Z"
+    "observedAt": "2026-10-25T20:59:37.840773Z"
   },
   "configured": false,
   "items": []
@@ -1607,6 +1629,7 @@ Content-Type: `application/json`.
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `database_not_configured`, `store_unavailable` |
 
@@ -1674,6 +1697,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 
@@ -1745,6 +1769,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 
@@ -1814,6 +1839,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `429` | `rate_limited` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 
@@ -1886,6 +1912,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `machine_in_use` |
+| `429` | `rate_limited` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 

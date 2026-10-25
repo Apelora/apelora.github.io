@@ -101,7 +101,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.750795Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.633326Z&quot;
   },
   &quot;named&quot;: true,
   &quot;volumePool&quot;: &quot;mock-local&quot;,
@@ -149,7 +149,7 @@
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1cluster"><code>GET /api/v1/cluster</code></h3>
 <p>The Incus server and its cluster members. Needs <code>read-inventory</code>.</p>
 <p><strong>Operation ID:</strong> <code>cluster</code></p>
@@ -166,7 +166,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.752258Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.635642Z&quot;
   },
   &quot;server&quot;: {
     &quot;apiVersion&quot;: &quot;1.0&quot;,
@@ -216,7 +216,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1instances"><code>GET /api/v1/instances</code></h3>
 <p>Instances in all projects. Needs <code>read-inventory</code>.</p>
 <p><strong>Operation ID:</strong> <code>instances</code></p>
@@ -233,7 +233,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.721553Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.056326Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -259,7 +259,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1instancesprojectname"><code>GET /api/v1/instances/{project}/{name}</code></h3>
 <p>The instance with the application it belongs to, its recent jobs, and what the caller may do (Start, Stop, Restart, Move and Delete go through the existing instance routes and jobs).</p>
 <p><strong>Operation ID:</strong> <code>instance_page</code></p>
@@ -277,7 +277,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.727232Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.059326Z&quot;
   },
   &quot;instance&quot;: {
     &quot;name&quot;: &quot;mock-web-01&quot;,
@@ -363,7 +363,7 @@
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>project_not_allowed</code>, <code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>project_not_allowed</code>, <code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1instancesprojectnameconsole-log"><code>GET /api/v1/instances/{project}/{name}/console-log</code></h3>
 <p>The end of the instance's console log (<code>tailKib</code>, default 64, at most 1024).</p>
 <p><strong>Operation ID:</strong> <code>instance_console_log</code></p>
@@ -385,7 +385,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.742147Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.06601Z&quot;
   },
   &quot;file&quot;: &quot;console&quot;,
   &quot;tailKib&quot;: 64,
@@ -396,7 +396,7 @@
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1instancesprojectnamelogs"><code>GET /api/v1/instances/{project}/{name}/logs</code></h3>
 <p>The instance's log files as Incus lists them (names only).</p>
 <p><strong>Operation ID:</strong> <code>instance_logs</code></p>
@@ -414,14 +414,14 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.730749Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.061246Z&quot;
   },
   &quot;files&quot;: [
     &quot;lxc.log&quot;
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1instancesprojectnamelogsfile"><code>GET /api/v1/instances/{project}/{name}/logs/{file}</code></h3>
 <p>The end of one of the instance's log files (<code>tailKib</code>, default 64, at most 1024).</p>
 <p><strong>Operation ID:</strong> <code>instance_log</code></p>
@@ -443,7 +443,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:01.736503Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.062819Z&quot;
   },
   &quot;file&quot;: &quot;lxc.log&quot;,
   &quot;tailKib&quot;: 64,
@@ -454,7 +454,7 @@
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1networks"><code>GET /api/v1/networks</code></h3>
 <p>Networks in all projects. Needs <code>read-inventory</code>.</p>
 <p><strong>Operation ID:</strong> <code>networks</code></p>
@@ -471,7 +471,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.879036Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.822443Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -490,7 +490,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1networkssettings"><code>GET /api/v1/networks/settings</code></h3>
 <p>The network settings in effect: Apelora's uplink and service range, each deploy project's network limits, and the uplink as Incus reports it (with the administrator identity, when configured), with what does not fit together. Read-only. Needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>network_settings</code></p>
@@ -507,7 +507,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.885795Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.834073Z&quot;
   },
   &quot;uplink&quot;: null,
   &quot;serviceRange&quot;: null,
@@ -549,7 +549,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1preflight"><code>GET /api/v1/preflight</code></h3>
 <p>Read-only readiness checks of the Incus server or cluster, of the projects Apelora deploys into, and of the image mirrors (whether each image server the catalog uses is mirrored and whether the mirrors answer). Changes nothing. Needs <code>read-inventory</code>.</p>
 <p><strong>Operation ID:</strong> <code>preflight</code></p>
@@ -566,7 +566,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.887207Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.836326Z&quot;
   },
   &quot;overall&quot;: &quot;fail&quot;,
   &quot;checks&quot;: [
@@ -585,7 +585,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1projects"><code>GET /api/v1/projects</code></h3>
 <p>Incus projects. Needs <code>read-inventory</code>.</p>
 <p><strong>Operation ID:</strong> <code>projects</code></p>
@@ -602,7 +602,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.888723Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.838584Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -618,7 +618,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1storage-pools"><code>GET /api/v1/storage-pools</code></h3>
 <p>Storage pools. Needs <code>read-inventory</code>.</p>
 <p><strong>Operation ID:</strong> <code>storage_pools</code></p>
@@ -635,7 +635,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.897549Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.851937Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -652,7 +652,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1storageorphans"><code>GET /api/v1/storage/orphans</code></h3>
 <p>Custom volumes in Apelora's projects that no application volume or backup record refers to, in every pool, with their size. Read-only: deleting one is a decision made in Incus or, for a kept application volume, on the application. Needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>orphan_volumes</code></p>
@@ -669,7 +669,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.901566Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.859016Z&quot;
   },
   &quot;projects&quot;: [
     &quot;acme-shop-staging&quot;,
@@ -680,7 +680,7 @@
   &quot;items&quot;: []
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1storagepools"><code>GET /api/v1/storage/pools</code></h3>
 <p>Storage pools with how full each is, per member and in total (read from each member's state, like the Health page). Read-only. Needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>storage_pool_usage</code></p>
@@ -697,7 +697,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T17:20:07.903635Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.861483Z&quot;
   },
   &quot;volumePool&quot;: &quot;mock-local&quot;,
   &quot;backupPool&quot;: &quot;mock-local&quot;,
@@ -730,7 +730,7 @@
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
         </div>
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/system/"><span>Previous</span>System</a><a class="next" href="/docs/api/deployment/"><span>Next</span>Deployment</a></nav>
