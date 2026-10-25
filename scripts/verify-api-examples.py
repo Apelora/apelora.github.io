@@ -490,6 +490,10 @@ def scenario(api, start_worker):
         call("list_directories", expect=200)
         if directory and directory.get("id"):
             call("update_directory", params={"id": directory["id"]}, body={**directory_body, "startTls": False, "emailAttribute": "mail"}, expect=200)
+            # A group whose members come from this directory: named by its full DN there.
+            mapped = call("create_group", body={"name": "head-office-admins", "description": "Administrators from the head office directory"}, record=False, expect=201)
+            call("set_group_external", params={"group": mapped["id"]},
+                 body={"source": f"directory:{directory['id']}", "name": "cn=admins,ou=groups,dc=acme,dc=example"}, expect=200)
             call("delete_directory", params={"id": directory["id"]}, body={"confirm": "Head office directory"}, expect=204)
 
     @section

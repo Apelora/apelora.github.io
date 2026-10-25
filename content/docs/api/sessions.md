@@ -205,14 +205,14 @@ Ends a session now. Allowed for the person who has it and for whoever may operat
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/34ebd16d-4a35-4bae-b104-8c1604479445" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/aafbdccd-b3ae-4141-90cd-18a8a9c0aa97" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("terminate_session", { params: { id: "34ebd16d-4a35-4bae-b104-8c1604479445" } });
+await client.request("terminate_session", { params: { id: "aafbdccd-b3ae-4141-90cd-18a8a9c0aa97" } });
 ```
 
 **Response `204`** — Success, with no body.

@@ -101,13 +101,13 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;f5d07f4c-6ef8-4ae1-b4c6-bd4a47b30e4c&quot;,
+      &quot;id&quot;: &quot;7c8d9b09-0c9d-43fa-9c1e-9af63f22dc4e&quot;,
       &quot;name&quot;: &quot;docs-verifier&quot;,
       &quot;role&quot;: &quot;fabric-admin&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-25T16:32:57.03554Z&quot;,
-      &quot;expiresAt&quot;: &quot;2026-10-26T16:32:57.006387Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-25T17:19:58.587603Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-10-26T17:19:58.559696Z&quot;,
       &quot;revokedAt&quot;: null,
-      &quot;lastUsedAt&quot;: &quot;2026-10-25T16:32:59.613772Z&quot;
+      &quot;lastUsedAt&quot;: &quot;2026-10-25T17:20:01.441074Z&quot;
     }
   ]
 }</code></pre>
@@ -148,11 +148,11 @@ curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/tokens&quot; \
 <pre data-lang="json" tabindex="0"><code>{
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
   &quot;info&quot;: {
-    &quot;id&quot;: &quot;0e2ade92-397e-4f7b-bc08-de314bb7cc5d&quot;,
+    &quot;id&quot;: &quot;4372a6ec-2e44-4ada-8ec4-f120dc2f833e&quot;,
     &quot;name&quot;: &quot;monitoring&quot;,
     &quot;role&quot;: &quot;operator&quot;,
-    &quot;createdAt&quot;: &quot;2026-10-25T16:32:59.616487Z&quot;,
-    &quot;expiresAt&quot;: &quot;2027-01-23T16:32:59.616487Z&quot;,
+    &quot;createdAt&quot;: &quot;2026-10-25T17:20:01.446621Z&quot;,
+    &quot;expiresAt&quot;: &quot;2027-01-23T17:20:01.446142Z&quot;,
     &quot;revokedAt&quot;: null,
     &quot;lastUsedAt&quot;: null
   }
@@ -166,10 +166,10 @@ curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/tokens&quot; \
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Token id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/tokens/0e2ade92-397e-4f7b-bc08-de314bb7cc5d&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/tokens/4372a6ec-2e44-4ada-8ec4-f120dc2f833e&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;revoke_token&quot;, { params: { id: &quot;0e2ade92-397e-4f7b-bc08-de314bb7cc5d&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;revoke_token&quot;, { params: { id: &quot;4372a6ec-2e44-4ada-8ec4-f120dc2f833e&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>

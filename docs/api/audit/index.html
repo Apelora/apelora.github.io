@@ -107,8 +107,8 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: 109,
-      &quot;at&quot;: &quot;2026-10-25T16:33:05.254393Z&quot;,
+      &quot;id&quot;: 112,
+      &quot;at&quot;: &quot;2026-10-25T17:20:07.337042Z&quot;,
       &quot;actor&quot;: &quot;token:docs-verifier&quot;,
       &quot;actorType&quot;: &quot;token&quot;,
       &quot;actorName&quot;: &quot;docs-verifier&quot;,
@@ -119,17 +119,17 @@
       &quot;detail&quot;: {
         &quot;enabled&quot;: true,
         &quot;host&quot;: &quot;hooks.example.invalid&quot;,
-        &quot;id&quot;: &quot;455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot;,
+        &quot;id&quot;: &quot;697d223e-6c16-4630-b498-977a5bf76081&quot;,
         &quot;minSeverity&quot;: &quot;critical&quot;,
         &quot;name&quot;: &quot;docs-verifier&quot;,
-        &quot;requestId&quot;: &quot;79e836e2-148b-4072-947b-19c5cb7d31e6&quot;,
+        &quot;requestId&quot;: &quot;ed701500-05ba-4886-8726-48267b8ecfb9&quot;,
         &quot;role&quot;: &quot;fabric-admin&quot;,
         &quot;secretRef&quot;: &quot;APELORA_ALERT_SECRET_ONCALL&quot;
       }
     },
     {
-      &quot;id&quot;: 108,
-      &quot;at&quot;: &quot;2026-10-25T16:33:05.24455Z&quot;,
+      &quot;id&quot;: 111,
+      &quot;at&quot;: &quot;2026-10-25T17:20:07.330996Z&quot;,
       &quot;actor&quot;: &quot;token:docs-verifier&quot;,
       &quot;actorType&quot;: &quot;token&quot;,
       &quot;actorName&quot;: &quot;docs-verifier&quot;,
@@ -140,7 +140,7 @@
       &quot;detail&quot;: {
         &quot;name&quot;: &quot;docs-verifier&quot;,
         &quot;note&quot;: &quot;Looking into the failed job&quot;,
-        &quot;requestId&quot;: &quot;52e3a17e-f174-4251-95e7-ac613ee9ae7b&quot;,
+        &quot;requestId&quot;: &quot;5a4353c8-57cc-4faf-acbe-480f0daa2aa0&quot;,
         &quot;role&quot;: &quot;fabric-admin&quot;,
         &quot;rule&quot;: &quot;job-failures&quot;,
         &quot;severity&quot;: &quot;warning&quot;,
@@ -166,23 +166,23 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/x-ndjson&quot;</code></pre>
 <p><strong>With options</strong> (<code>action</code>, <code>from</code>):</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/audit/export?format=csv&amp;action=token.&amp;from=2026-10-24T16%3A33%3A05Z&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/audit/export?format=csv&amp;action=token.&amp;from=2026-10-24T17%3A20%3A07Z&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: text/csv&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;audit_export&quot;, { query: { format: &quot;csv&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — The events: CSV with a header row, or one JSON object per line.</p>
 <p>Content-Type: <code>text/csv</code>.</p>
-<p><strong>Example response</strong> from a test installation; your IDs, names and times differ. The first 4 of 111 lines.</p>
+<p><strong>Example response</strong> from a test installation; your IDs, names and times differ. The first 4 of 114 lines.</p>
 <pre data-lang="text" tabindex="0"><code>id,at,actor,actorName,actorType,action,target,outcome,requestId,scope,detail
-110,2026-10-25T16:33:05.326264Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,03bf1921-ea24-4023-bf20-205eaf620565,,&quot;{&quot;&quot;filters&quot;&quot;:{},&quot;&quot;format&quot;&quot;:&quot;&quot;csv&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;03bf1921-ea24-4023-bf20-205eaf620565&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;}&quot;
-109,2026-10-25T16:33:05.254393Z,token:docs-verifier,docs-verifier,token,alert.channel.delete,alert-channel:On-call webhook,success,79e836e2-148b-4072-947b-19c5cb7d31e6,,&quot;{&quot;&quot;enabled&quot;&quot;:true,&quot;&quot;host&quot;&quot;:&quot;&quot;hooks.example.invalid&quot;&quot;,&quot;&quot;id&quot;&quot;:&quot;&quot;455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot;&quot;,&quot;&quot;minSeverity&quot;&quot;:&quot;&quot;critical&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;79e836e2-148b-4072-947b-19c5cb7d31e6&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;,&quot;&quot;secretRef&quot;&quot;:&quot;&quot;APELORA_ALERT_SECRET_ONCALL&quot;&quot;}&quot;
-108,2026-10-25T16:33:05.24455Z,token:docs-verifier,docs-verifier,token,alert.acknowledge,alert:2,success,52e3a17e-f174-4251-95e7-ac613ee9ae7b,,&quot;{&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;note&quot;&quot;:&quot;&quot;Looking into the failed job&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;52e3a17e-f174-4251-95e7-ac613ee9ae7b&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;,&quot;&quot;rule&quot;&quot;:&quot;&quot;job-failures&quot;&quot;,&quot;&quot;severity&quot;&quot;:&quot;&quot;warning&quot;&quot;,&quot;&quot;subject&quot;&quot;:&quot;&quot;instance.restart&quot;&quot;}&quot;</code></pre>
+113,2026-10-25T17:20:07.386461Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,fa0dfde0-cf2b-45ae-8aba-17e6afde9bbd,,&quot;{&quot;&quot;filters&quot;&quot;:{},&quot;&quot;format&quot;&quot;:&quot;&quot;csv&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;fa0dfde0-cf2b-45ae-8aba-17e6afde9bbd&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;}&quot;
+112,2026-10-25T17:20:07.337042Z,token:docs-verifier,docs-verifier,token,alert.channel.delete,alert-channel:On-call webhook,success,ed701500-05ba-4886-8726-48267b8ecfb9,,&quot;{&quot;&quot;enabled&quot;&quot;:true,&quot;&quot;host&quot;&quot;:&quot;&quot;hooks.example.invalid&quot;&quot;,&quot;&quot;id&quot;&quot;:&quot;&quot;697d223e-6c16-4630-b498-977a5bf76081&quot;&quot;,&quot;&quot;minSeverity&quot;&quot;:&quot;&quot;critical&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;ed701500-05ba-4886-8726-48267b8ecfb9&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;,&quot;&quot;secretRef&quot;&quot;:&quot;&quot;APELORA_ALERT_SECRET_ONCALL&quot;&quot;}&quot;
+111,2026-10-25T17:20:07.330996Z,token:docs-verifier,docs-verifier,token,alert.acknowledge,alert:2,success,5a4353c8-57cc-4faf-acbe-480f0daa2aa0,,&quot;{&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;note&quot;&quot;:&quot;&quot;Looking into the failed job&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;5a4353c8-57cc-4faf-acbe-480f0daa2aa0&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;,&quot;&quot;rule&quot;&quot;:&quot;&quot;job-failures&quot;&quot;,&quot;&quot;severity&quot;&quot;:&quot;&quot;warning&quot;&quot;,&quot;&quot;subject&quot;&quot;:&quot;&quot;instance.restart&quot;&quot;}&quot;</code></pre>
 <p>Content-Type: <code>application/x-ndjson</code>.</p>
-<p><strong>Example response</strong> from a test installation; your IDs, names and times differ. The first 3 of 111 lines.</p>
-<pre data-lang="text" tabindex="0"><code>{&quot;id&quot;:111,&quot;at&quot;:&quot;2026-10-25T16:33:05.336593Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;jsonl&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;9941a717-2b1b-466e-85d2-08814c15f99e&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
-{&quot;id&quot;:110,&quot;at&quot;:&quot;2026-10-25T16:33:05.326264Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;csv&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;03bf1921-ea24-4023-bf20-205eaf620565&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
-{&quot;id&quot;:109,&quot;at&quot;:&quot;2026-10-25T16:33:05.254393Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;alert.channel.delete&quot;,&quot;target&quot;:&quot;alert-channel:On-call webhook&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;enabled&quot;:true,&quot;host&quot;:&quot;hooks.example.invalid&quot;,&quot;id&quot;:&quot;455aa2df-8831-497c-a671-f2fa2fcbb2d9&quot;,&quot;minSeverity&quot;:&quot;critical&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;79e836e2-148b-4072-947b-19c5cb7d31e6&quot;,&quot;role&quot;:&quot;fabric-admin&quot;,&quot;secretRef&quot;:&quot;APELORA_ALERT_SECRET_ONCALL&quot;}}</code></pre>
+<p><strong>Example response</strong> from a test installation; your IDs, names and times differ. The first 3 of 114 lines.</p>
+<pre data-lang="text" tabindex="0"><code>{&quot;id&quot;:114,&quot;at&quot;:&quot;2026-10-25T17:20:07.393682Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;jsonl&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;272422ec-de18-41fd-93ad-a1b2ed60a23c&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
+{&quot;id&quot;:113,&quot;at&quot;:&quot;2026-10-25T17:20:07.386461Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;csv&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;fa0dfde0-cf2b-45ae-8aba-17e6afde9bbd&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
+{&quot;id&quot;:112,&quot;at&quot;:&quot;2026-10-25T17:20:07.337042Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;alert.channel.delete&quot;,&quot;target&quot;:&quot;alert-channel:On-call webhook&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;enabled&quot;:true,&quot;host&quot;:&quot;hooks.example.invalid&quot;,&quot;id&quot;:&quot;697d223e-6c16-4630-b498-977a5bf76081&quot;,&quot;minSeverity&quot;:&quot;critical&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;ed701500-05ba-4886-8726-48267b8ecfb9&quot;,&quot;role&quot;:&quot;fabric-admin&quot;,&quot;secretRef&quot;:&quot;APELORA_ALERT_SECRET_ONCALL&quot;}}</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
         </div>

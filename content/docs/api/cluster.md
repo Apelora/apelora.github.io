@@ -77,7 +77,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:05.791353Z"
+    "observedAt": "2026-10-25T17:20:07.753519Z"
   },
   "items": [
     {
@@ -133,7 +133,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:32:59.787461Z"
+    "observedAt": "2026-10-25T17:20:01.823029Z"
   },
   "items": [
     {
@@ -288,7 +288,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:32:59.773572Z"
+    "observedAt": "2026-10-25T17:20:01.793737Z"
   },
   "clustered": true,
   "members": [
@@ -508,7 +508,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:32:59.776007Z"
+    "observedAt": "2026-10-25T17:20:01.798008Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -694,7 +694,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:32:59.782401Z"
+    "observedAt": "2026-10-25T17:20:01.812705Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -883,7 +883,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:32:59.803486Z"
+    "observedAt": "2026-10-25T17:20:01.836731Z"
   },
   "items": []
 }
@@ -929,7 +929,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:32:59.796976Z"
+    "observedAt": "2026-10-25T17:20:01.834254Z"
   },
   "identity": "admin",
   "items": [
@@ -1160,7 +1160,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:05.965052Z"
+    "observedAt": "2026-10-25T17:20:07.870727Z"
   },
   "items": [
     {
@@ -1179,12 +1179,12 @@ Content-Type: `application/json`.
       "nextStep": "None.",
       "warnings": [],
       "registeredBy": "token:docs-verifier",
-      "registeredAt": "2026-10-25T16:32:59.811376Z",
+      "registeredAt": "2026-10-25T17:20:01.846505Z",
       "approvedBy": null,
       "approvedAt": null,
       "approvalExpiresAt": null,
       "admittedBy": "token:docs-verifier",
-      "admittedAt": "2026-10-25T16:32:59.819456Z"
+      "admittedAt": "2026-10-25T17:20:01.858235Z"
     }
   ]
 }
@@ -1265,7 +1265,7 @@ Content-Type: `application/json`.
   "nextStep": "Install Incus on the server, then approve it.",
   "warnings": [],
   "registeredBy": "token:docs-verifier",
-  "registeredAt": "2026-10-25T16:32:59.806185Z",
+  "registeredAt": "2026-10-25T17:20:01.840323Z",
   "approvedBy": null,
   "approvedAt": null,
   "approvalExpiresAt": null,
@@ -1362,7 +1362,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:32:59.817185Z"
+    "observedAt": "2026-10-25T17:20:01.854293Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1433,7 +1433,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:32:59.819394Z"
+    "observedAt": "2026-10-25T17:20:01.857984Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1594,7 +1594,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:05.99709Z"
+    "observedAt": "2026-10-25T17:20:07.889894Z"
   },
   "configured": false,
   "items": []

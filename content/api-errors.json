@@ -1,5 +1,5 @@
 {
- "openapiSha256": "f4dde337069f8f39d41b883ade3a48bb93fa9627b18f1e5c653d6a418590e2c7",
+ "openapiSha256": "23d79e27bc237b99112132306a680724654649f4b61f557f5156914cf718d19c",
  "operations": {
   "acknowledge_alert": {
    "400": [
@@ -23,6 +23,7 @@
   "add_group_member": {
    "403": [
     "forbidden",
+    "membership_refused",
     "mfa_required"
    ],
    "404": [
@@ -285,6 +286,7 @@
   },
   "approve_request": {
    "403": [
+    "approval_needs_a_person",
     "forbidden",
     "mfa_required"
    ],
@@ -634,6 +636,7 @@
     "not_found"
    ],
    "409": [
+    "incus_project_exists",
     "reserved_name"
    ],
    "503": [
@@ -686,6 +689,7 @@
     "not_found"
    ],
    "409": [
+    "incus_project_exists",
     "quota_exceeded"
    ],
    "503": [
@@ -966,6 +970,7 @@
     "not_found"
    ],
    "409": [
+    "incus_project_exists",
     "not_published",
     "plan_conflict",
     "project_mismatch",
@@ -1584,6 +1589,9 @@
    "404": [
     "not_found"
    ],
+   "409": [
+    "incus_project_exists"
+   ],
    "503": [
     "cluster_admin_not_configured",
     "database_not_configured"
@@ -1732,6 +1740,7 @@
   },
   "reject_request": {
    "403": [
+    "approval_needs_a_person",
     "forbidden",
     "mfa_required"
    ],
@@ -1742,6 +1751,7 @@
   "remove_group_member": {
    "403": [
     "forbidden",
+    "membership_refused",
     "mfa_required"
    ],
    "404": [
@@ -2065,6 +2075,22 @@
     "approval_required",
     "locked_by_environment",
     "would_lock_out"
+   ],
+   "503": [
+    "database_not_configured"
+   ]
+  },
+  "set_group_external": {
+   "400": [
+    "invalid_request"
+   ],
+   "403": [
+    "forbidden",
+    "membership_refused",
+    "mfa_required"
+   ],
+   "404": [
+    "not_found"
    ],
    "503": [
     "database_not_configured"

@@ -98,19 +98,19 @@ Content-Type: `application/json`.
     {
       "name": "blog",
       "latestRevision": null,
-      "createdAt": "2026-10-25T16:32:59.638001Z",
-      "updatedAt": "2026-10-25T16:32:59.638001Z",
+      "createdAt": "2026-10-25T17:20:01.4976Z",
+      "updatedAt": "2026-10-25T17:20:01.4976Z",
       "description": "Company blog",
       "icon": "box",
       "project": {
-        "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+        "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
         "slug": "shop",
         "name": "Online shop",
-        "organizationId": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+        "organizationId": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
         "organizationSlug": "acme"
       },
       "environment": {
-        "id": "5a2bed50-145e-4a9e-9df5-974de12cc193",
+        "id": "d6d93f9f-97ff-4c42-a4d5-35f70dc906fd",
         "slug": "staging",
         "name": "Staging",
         "kind": "staging",
@@ -127,7 +127,7 @@ Content-Type: `application/json`.
       },
       "deployment": {
         "status": "not-deployed",
-        "observedAt": "2026-10-25T16:32:59.68908Z",
+        "observedAt": "2026-10-25T17:20:01.605949Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": null,
@@ -167,19 +167,19 @@ Content-Type: `application/json`.
     {
       "name": "shop",
       "latestRevision": 1,
-      "createdAt": "2026-10-25T16:32:59.630853Z",
-      "updatedAt": "2026-10-25T16:32:59.651895Z",
+      "createdAt": "2026-10-25T17:20:01.480375Z",
+      "updatedAt": "2026-10-25T17:20:01.526982Z",
       "description": "Storefront, API and order database",
       "icon": "cart",
       "project": {
-        "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+        "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
         "slug": "shop",
         "name": "Online shop",
-        "organizationId": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+        "organizationId": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
         "organizationSlug": "acme"
       },
       "environment": {
-        "id": "0b7fa228-4c47-4af8-9a53-28df2612fd4e",
+        "id": "440284ce-f6ce-4468-b29b-e94ecad8f8a0",
         "slug": "production",
         "name": "Production",
         "kind": "production",
@@ -192,11 +192,11 @@ Content-Type: `application/json`.
         "validationErrors": 0,
         "publishedVersion": 1,
         "hasUnpublishedChanges": false,
-        "updatedAt": "2026-10-25T16:32:59.651895Z"
+        "updatedAt": "2026-10-25T17:20:01.526982Z"
       },
       "deployment": {
         "status": "degraded",
-        "observedAt": "2026-10-25T16:32:59.68908Z",
+        "observedAt": "2026-10-25T17:20:01.605949Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": 1,
@@ -207,7 +207,7 @@ Content-Type: `application/json`.
           "healthy": 0,
           "unhealthy": 0
         },
-        "lastActivityAt": "2026-10-25T16:32:59.680965Z",
+        "lastActivityAt": "2026-10-25T17:20:01.590884Z",
         "operation": null
       },
       "actions": {
@@ -234,7 +234,7 @@ Content-Type: `application/json`.
       }
     }
   ],
-  "observedAt": "2026-10-25T16:32:59.68908Z",
+  "observedAt": "2026-10-25T17:20:01.605949Z",
   "stale": false
 }
 ```
@@ -268,7 +268,7 @@ Creates an application in an environment, optionally with its first draft. Needs
 ```json
 {
   "name": "shop",
-  "environmentId": "0b7fa228-4c47-4af8-9a53-28df2612fd4e",
+  "environmentId": "440284ce-f6ce-4468-b29b-e94ecad8f8a0",
   "description": "Storefront and order database",
   "icon": "cart"
 }
@@ -283,7 +283,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"shop","environmentId":"0b7fa228-4c47-4af8-9a53-28df2612fd4e","description":"Storefront and order database","icon":"cart"}'
+  --data-raw '{"name":"shop","environmentId":"440284ce-f6ce-4468-b29b-e94ecad8f8a0","description":"Storefront and order database","icon":"cart"}'
 ```
 
 **TypeScript:**
@@ -302,19 +302,19 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-25T16:32:59.630853Z",
-  "updatedAt": "2026-10-25T16:32:59.630853Z",
+  "createdAt": "2026-10-25T17:20:01.480375Z",
+  "updatedAt": "2026-10-25T17:20:01.480375Z",
   "description": "Storefront and order database",
   "icon": "cart",
   "project": {
-    "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+    "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
     "slug": "shop",
     "name": "Online shop",
-    "organizationId": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+    "organizationId": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
     "organizationSlug": "acme"
   },
   "environment": {
-    "id": "0b7fa228-4c47-4af8-9a53-28df2612fd4e",
+    "id": "440284ce-f6ce-4468-b29b-e94ecad8f8a0",
     "slug": "production",
     "name": "Production",
     "kind": "production",
@@ -331,7 +331,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-25T16:32:59.634856Z",
+    "observedAt": "2026-10-25T17:20:01.48741Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -415,19 +415,19 @@ Content-Type: `application/json`.
   "application": {
     "name": "shop",
     "latestRevision": 1,
-    "createdAt": "2026-10-25T16:32:59.630853Z",
-    "updatedAt": "2026-10-25T16:32:59.651895Z",
+    "createdAt": "2026-10-25T17:20:01.480375Z",
+    "updatedAt": "2026-10-25T17:20:01.526982Z",
     "description": "Storefront, API and order database",
     "icon": "cart",
     "project": {
-      "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+      "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
       "slug": "shop",
       "name": "Online shop",
-      "organizationId": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+      "organizationId": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
       "organizationSlug": "acme"
     },
     "environment": {
-      "id": "0b7fa228-4c47-4af8-9a53-28df2612fd4e",
+      "id": "440284ce-f6ce-4468-b29b-e94ecad8f8a0",
       "slug": "production",
       "name": "Production",
       "kind": "production",
@@ -440,11 +440,11 @@ Content-Type: `application/json`.
       "validationErrors": 0,
       "publishedVersion": 1,
       "hasUnpublishedChanges": false,
-      "updatedAt": "2026-10-25T16:32:59.651895Z"
+      "updatedAt": "2026-10-25T17:20:01.526982Z"
     },
     "deployment": {
       "status": "degraded",
-      "observedAt": "2026-10-25T16:32:59.702511Z",
+      "observedAt": "2026-10-25T17:20:01.636594Z",
       "stale": false,
       "source": "mock",
       "deployedVersion": 1,
@@ -455,7 +455,7 @@ Content-Type: `application/json`.
         "healthy": 0,
         "unhealthy": 0
       },
-      "lastActivityAt": "2026-10-25T16:32:59.680965Z",
+      "lastActivityAt": "2026-10-25T17:20:01.590884Z",
       "operation": null
     },
     "actions": {
@@ -502,7 +502,7 @@ Content-Type: `application/json`.
       "label": "First release",
       "draftVersion": 1,
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-25T16:32:59.66018Z"
+      "createdAt": "2026-10-25T17:20:01.543999Z"
     }
   ],
   "operations": []
@@ -569,19 +569,19 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-25T16:32:59.630853Z",
-  "updatedAt": "2026-10-25T16:32:59.644663Z",
+  "createdAt": "2026-10-25T17:20:01.480375Z",
+  "updatedAt": "2026-10-25T17:20:01.510361Z",
   "description": "Storefront, API and order database",
   "icon": "cart",
   "project": {
-    "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+    "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
     "slug": "shop",
     "name": "Online shop",
-    "organizationId": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
+    "organizationId": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
     "organizationSlug": "acme"
   },
   "environment": {
-    "id": "0b7fa228-4c47-4af8-9a53-28df2612fd4e",
+    "id": "440284ce-f6ce-4468-b29b-e94ecad8f8a0",
     "slug": "production",
     "name": "Production",
     "kind": "production",
@@ -598,7 +598,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-25T16:32:59.647088Z",
+    "observedAt": "2026-10-25T17:20:01.515316Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -915,7 +915,7 @@ Content-Type: `application/json`.
       "scopes": [
         {
           "kind": "project",
-          "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+          "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
           "name": "Online shop",
           "dimensions": [
             {
@@ -942,13 +942,13 @@ Content-Type: `application/json`.
       "module": "web-01",
       "instance": "shop-web-01",
       "action": "create",
-      "jobId": "ec8b46f2-fd31-419f-a2e9-3615a931d307"
+      "jobId": "80dfb8cc-68c9-442d-b4e7-6e925f0f8871"
     },
     {
       "module": "db-01",
       "instance": "shop-db-01",
       "action": "create",
-      "jobId": "3835973f-32f6-4006-a676-8ea82f284454"
+      "jobId": "18f09a1d-4b8d-4bad-959b-9a15decd3d8b"
     }
   ],
   "networkJob": null
@@ -962,7 +962,7 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
-| `409` | `not_published`, `plan_conflict`, `project_mismatch`, `quota_exceeded`, `service_range_exhausted` |
+| `409` | `incus_project_exists`, `not_published`, `plan_conflict`, `project_mismatch`, `quota_exceeded`, `service_range_exhausted` |
 | `502` | an `incus_…` code |
 | `503` | `incus_project_not_ready`, `quota_unverifiable`, `database_not_configured` |
 
@@ -1015,7 +1015,7 @@ Content-Type: `application/json`.
   },
   "validationErrors": [],
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-25T16:32:59.651895Z"
+  "updatedAt": "2026-10-25T17:20:01.526982Z"
 }
 ```
 
@@ -1102,7 +1102,7 @@ Content-Type: `application/json`.
   },
   "validationErrors": [],
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-25T16:32:59.651895Z"
+  "updatedAt": "2026-10-25T17:20:01.526982Z"
 }
 ```
 
@@ -1150,8 +1150,8 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": 74,
-      "at": "2026-10-25T16:32:59.680965Z",
+      "id": 77,
+      "at": "2026-10-25T17:20:01.590884Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -1159,24 +1159,24 @@ Content-Type: `application/json`.
       "target": "shop-prod/shop",
       "outcome": "success",
       "scope": {
-        "application": "05132f0f-8350-430e-ae8e-8df0bf170dd3",
-        "organization": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
-        "project": "96dd378f-883d-443e-b4b0-5e929f0f7dea"
+        "application": "82ad5c6e-26bd-4b75-9c72-0a24f73cb674",
+        "organization": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
+        "project": "5482778a-cdec-421b-bc0a-eb991241ac7c"
       },
       "detail": {
         "create": 3,
         "keep": 0,
         "name": "docs-verifier",
         "remove": 0,
-        "requestId": "0ad7aa02-2de8-4cf8-b589-7946f58f391d",
+        "requestId": "7abaded4-d63f-4a3e-a765-e0f9cbc3bae1",
         "resize": 0,
         "revision": 1,
         "role": "fabric-admin"
       }
     },
     {
-      "id": 73,
-      "at": "2026-10-25T16:32:59.66018Z",
+      "id": 76,
+      "at": "2026-10-25T17:20:01.543999Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -1184,14 +1184,14 @@ Content-Type: `application/json`.
       "target": "shop",
       "outcome": "success",
       "scope": {
-        "application": "05132f0f-8350-430e-ae8e-8df0bf170dd3",
-        "organization": "0c039899-47c5-4f07-a59e-13ca204a9fe2",
-        "project": "96dd378f-883d-443e-b4b0-5e929f0f7dea"
+        "application": "82ad5c6e-26bd-4b75-9c72-0a24f73cb674",
+        "organization": "49e0c0fc-cc22-4fcb-be31-770078fe7eea",
+        "project": "5482778a-cdec-421b-bc0a-eb991241ac7c"
       },
       "detail": {
         "draftVersion": 1,
         "name": "docs-verifier",
-        "requestId": "03b9db65-15d0-4a5b-8d2b-2ae6efe8d42f",
+        "requestId": "67f3bc8a-af9e-4959-b686-927047e07ddd",
         "revision": 1,
         "role": "fabric-admin"
       }
@@ -1243,7 +1243,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:00.933977Z"
+    "observedAt": "2026-10-25T17:20:03.023877Z"
   },
   "target": "mock-member-02",
   "items": [],
@@ -1418,7 +1418,7 @@ One operation with the progress of each phase and instance. Needs `application.v
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/ba37ab04-984c-4a70-a6af-e1d3c91823f0" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/f779935a-4817-44a1-b240-1356fdacbf34" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -1426,7 +1426,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operatio
 **TypeScript:**
 
 ```ts
-const result = await client.request("application_operation", { params: { name: "shop", id: "ba37ab04-984c-4a70-a6af-e1d3c91823f0" } });
+const result = await client.request("application_operation", { params: { name: "shop", id: "f779935a-4817-44a1-b240-1356fdacbf34" } });
 ```
 
 **Response `200`** — Success.
@@ -1679,7 +1679,7 @@ Content-Type: `application/json`.
     "scopes": [
       {
         "kind": "project",
-        "id": "96dd378f-883d-443e-b4b0-5e929f0f7dea",
+        "id": "5482778a-cdec-421b-bc0a-eb991241ac7c",
         "name": "Online shop",
         "dimensions": [
           {
@@ -1793,7 +1793,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:00.941421Z"
+    "observedAt": "2026-10-25T17:20:03.034296Z"
   },
   "items": [],
   "services": []
@@ -1850,7 +1850,7 @@ Content-Type: `application/json`.
       "label": "First release",
       "draftVersion": 1,
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-25T16:32:59.66018Z"
+      "createdAt": "2026-10-25T17:20:01.543999Z"
     }
   ]
 }
@@ -1917,7 +1917,7 @@ Content-Type: `application/json`.
   "label": "First release",
   "draftVersion": 1,
   "createdBy": "token:docs-verifier",
-  "createdAt": "2026-10-25T16:32:59.66018Z"
+  "createdAt": "2026-10-25T17:20:01.543999Z"
 }
 ```
 
@@ -2023,7 +2023,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:00.947872Z"
+    "observedAt": "2026-10-25T17:20:03.04219Z"
   },
   "items": [
     {
@@ -2038,7 +2038,7 @@ Content-Type: `application/json`.
       "class": "data-local",
       "state": "missing",
       "usedBy": [],
-      "createdAt": "2026-10-25T16:33:00.0107Z"
+      "createdAt": "2026-10-25T17:20:02.09497Z"
     },
     {
       "module": "db-01",
@@ -2052,7 +2052,7 @@ Content-Type: `application/json`.
       "class": "data-local",
       "state": "missing",
       "usedBy": [],
-      "createdAt": "2026-10-25T16:33:00.002772Z"
+      "createdAt": "2026-10-25T17:20:02.079737Z"
     }
   ]
 }
@@ -2214,7 +2214,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:02.109613Z"
+    "observedAt": "2026-10-25T17:20:04.721309Z"
   },
   "backupPool": "mock-local",
   "schedules": {
@@ -2233,21 +2233,21 @@ Content-Type: `application/json`.
   },
   "items": [
     {
-      "name": "shop-db-01-data-bk-20261025163300",
+      "name": "shop-db-01-data-bk-20261025172003",
       "pool": "mock-local",
       "member": "mock-member-02",
       "sizeMib": 10240,
-      "takenAt": "2026-10-25T16:33:00.974824Z",
+      "takenAt": "2026-10-25T17:20:03.075248Z",
       "scheduled": false,
       "beforeRestore": null,
       "present": false
     },
     {
-      "name": "shop-db-01-data-bk-20261025163302",
+      "name": "shop-db-01-data-bk-20261025172004",
       "pool": "mock-local",
       "member": "mock-member-02",
       "sizeMib": 10240,
-      "takenAt": "2026-10-25T16:33:02.096298Z",
+      "takenAt": "2026-10-25T17:20:04.190528Z",
       "scheduled": false,
       "beforeRestore": null,
       "present": false
@@ -2305,7 +2305,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "eefb3aa8-b626-40d9-9e6e-f4a3fab60436",
+  "jobId": "fcd28e04-1610-4198-9311-3882b792db1a",
   "created": true
 }
 ```
@@ -2341,7 +2341,7 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 
 ```json
 {
-  "confirm": "shop-db-01-data-bk-20261025163302"
+  "confirm": "shop-db-01-data-bk-20261025172004"
 }
 ```
 
@@ -2350,16 +2350,16 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025163302" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025172004" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"shop-db-01-data-bk-20261025163302"}'
+  --data-raw '{"confirm":"shop-db-01-data-bk-20261025172004"}'
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025163302" }, body: { confirm: "shop-db-01-data-bk-20261025163302" } });
+await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025172004" }, body: { confirm: "shop-db-01-data-bk-20261025172004" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -2393,7 +2393,7 @@ Dry run of restoring the volume from one of its backups: what is replaced (data 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025163300/restore" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025172003/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2401,7 +2401,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 **With options** (`safetyBackup`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025163300/restore?safetyBackup=false" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025172003/restore?safetyBackup=false" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2409,7 +2409,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 **TypeScript:**
 
 ```ts
-const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025163300" }, query: { safetyBackup: false } });
+const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025172003" }, query: { safetyBackup: false } });
 ```
 
 **Response `200`** — Success.
@@ -2422,28 +2422,28 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:02.114291Z"
+    "observedAt": "2026-10-25T17:20:04.726423Z"
   },
   "plan": {
     "volume": "shop-db-01-data",
     "pool": "mock-local",
     "member": "mock-member-01",
     "sizeMib": 10240,
-    "backup": "shop-db-01-data-bk-20261025163300",
+    "backup": "shop-db-01-data-bk-20261025172003",
     "backupPool": "mock-local",
     "backupMember": "mock-member-02",
-    "backupTakenAt": "2026-10-25T16:33:00.974824Z",
+    "backupTakenAt": "2026-10-25T17:20:03.075248Z",
     "snapshotsDeleted": [],
     "usedBy": [],
     "running": [],
     "safetyBackupPool": "mock-local",
     "blocked": [
       "volume shop-db-01-data is not in Incus (its member may be unreachable); nothing can be restored into it",
-      "backup shop-db-01-data-bk-20261025163300 is not in Incus"
+      "backup shop-db-01-data-bk-20261025172003 is not in Incus"
     ],
     "steps": [
       "Copy the volume as it is now into pool mock-local (a safety backup, listed with the others)",
-      "Copy backup shop-db-01-data-bk-20261025163300 over volume shop-db-01-data on mock-member-01"
+      "Copy backup shop-db-01-data-bk-20261025172003 over volume shop-db-01-data on mock-member-01"
     ]
   }
 }
@@ -2494,7 +2494,7 @@ This request can change state. Check permissions, prerequisites and any required
 ```sh
 # Generate once per distinct change; keep this value when retrying.
 IDEMPOTENCY_KEY=$(uuidgen)
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025163300/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261025172003/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
@@ -2505,7 +2505,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes
 **TypeScript:**
 
 ```ts
-const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025163300" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
+const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261025172003" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
 ```
 
 **Response `202`** — Success.
@@ -2635,7 +2635,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:00.956727Z"
+    "observedAt": "2026-10-25T17:20:03.052471Z"
   },
   "items": []
 }
@@ -2830,7 +2830,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:05.983168Z"
+    "observedAt": "2026-10-25T17:20:07.882737Z"
   },
   "incusError": null,
   "items": [
@@ -2905,7 +2905,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:00.952816Z"
+    "observedAt": "2026-10-25T17:20:03.047965Z"
   },
   "backupPool": "mock-local",
   "incusError": null,

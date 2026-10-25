@@ -82,22 +82,29 @@
         <div class="prose">
 <p>Use this page when a cluster member goes Offline: what Apelora does on its own, and what you do.</p>
 <h2 id="what-happens-on-its-own">What happens on its own</h2>
-<ol><li>Incus marks the member <em>Offline</em> after about 20 s. Its instances stay listed (status <code>Error</code>,
-configuration unknown). Incus does not move them (<code>cluster.healing_threshold</code> stays off).</li><li>Service addresses keep sending a share of requests to the dead member's replicas. The load
+<ol><li><p>Incus marks the member <em>Offline</em> after about 20 s. Its instances stay listed (status <code>Error</code>,
+configuration unknown). Incus does not move them (<code>cluster.healing_threshold</code> stays off).</p></li><li><p>Service addresses keep sending a share of requests to the dead member's replicas. The load
 balancer's health checks run on the member that hosts the replica, so they cannot notice that
-it is gone. Expect failed requests until step 3.</li><li>After <code>APELORA_RECOVER_AFTER_SECS</code> (default 120 s), the replica supervisor creates a substitute
+it is gone. Expect failed requests until step 3.</p></li><li><p>After <code>APELORA_RECOVER_AFTER_SECS</code> (default 120 s), the replica supervisor creates a substitute
 (<code>&lt;replica&gt;-s&lt;n&gt;</code>) on another member for every stateless replica stranded there. The next
 network sync replaces the dead backend in the load balancer. This is audited as
-<code>application.replica.substitute</code>. Incus sometimes refuses load balancer updates for the
-whole outage (<code>peer node … is down</code>); the sync is retried, and the service can then take a few
-minutes longer to be whole again.</li><li>Singletons and stateful modules whose disks are all on the shared pool (volume class
+<code>application.replica.substitute</code>.</p>
+<p>With Incus 7.0, the load balancer cannot change while the member is offline: Incus refuses
+every load balancer update in the cluster (<code>peer node … is down</code>). The substitute then runs but
+gets no traffic, and the service address can keep sending a share of requests to the dead
+replica until the member returns or you remove it (what to do, step 2).</p></li><li><p>Singletons and stateful modules whose disks are all on the shared pool (volume class
 <code>data-replicated</code>) restart on another member once the failed one is <strong>fenced</strong> (next section).
 Everything else on a member-local pool is <strong>not</strong> recovered automatically: it waits for its
 member, or you restore it elsewhere (step 2 below). Servers → Members lists every instance of
-the failed server with what happens to it and why.</li></ol>
+the failed server with what happens to it and why.</p></li></ol>
 <h2 id="what-to-do">What to do</h2>
 <ol><li>Confirm the failure: Servers → Members shows the member Offline. Check the server's power,
-network and Incus service.</li><li>For single-instance and stateful modules on the member: wait for the member if it will be
+network and Incus service.</li><li>Decide whether the member will be back soon. If it will not, and service addresses must
+stop sending requests to its replicas, remove it from the cluster with Incus on a remaining
+member: <code>incus cluster remove --force &lt;member&gt;</code>. Apelora does not force a removal for you.
+A forced removal deletes the member and the records of every instance on it, so do it only
+after step 3 for anything stateful. Afterwards load balancer updates go through again and the
+substitutes receive the traffic.</li><li>For single-instance and stateful modules on the member: wait for the member if it will be
 back soon. Otherwise restore them elsewhere from your backups (Apelora never recreates
 stateful data from scratch).</li><li>When the member returns, Incus starts its instances again. Each replica slot then holds two
 instances; the supervisor keeps the one that puts replicas back on different members and
@@ -160,7 +167,7 @@ to lose.</li><li><strong>A BMC without Redfish (IPMI).</strong> Map it as <code>
 This deletes the records of its instances.</li><li>Let the supervisor recreate the missing stateless replicas.</li><li>Keep at least three database members, so the cluster keeps quorum when one is lost.</li></ol>
 <h2 id="before-you-rely-on-it">Before you rely on it</h2>
 <ul><li>The times on this page come from a lab of virtual machines with clustered LVM on a test SAN.
-Your servers and storage will differ; measure them once on your own hardware.</li><li>The Redfish and IPMI providers have been checked against test servers only, not real BMCs.</li><li>Removing a member that will not return has not been tried yet.</li></ul>
+Your servers and storage will differ; measure them once on your own hardware.</li><li>The Redfish and IPMI providers have been checked against test servers only, not real BMCs.</li><li>Removing a member that will not return, including to unblock its service addresses, has not been tried on a cluster yet.</li></ul>
         </div>
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/runbooks/member-failure.md">docs/runbooks/member-failure.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/runbooks/member-failure.md">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/runbooks/member-maintenance/"><span>Previous</span>Maintenance on a server</a><a class="next" href="/docs/runbooks/member-removal/"><span>Next</span>Remove a server from the cluster for good</a></nav>

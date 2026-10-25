@@ -133,7 +133,7 @@ Content-Type: `application/json`.
   "incus": {
     "connected": false
   },
-  "checkedAt": "2026-10-25T16:32:57.159341Z"
+  "checkedAt": "2026-10-25T17:19:58.712777Z"
 }
 ```
 
@@ -173,14 +173,14 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "checkedAt": "2026-10-25T16:33:05.848472Z",
+  "checkedAt": "2026-10-25T17:20:07.795084Z",
   "overall": "degraded",
   "controlPlane": {
     "state": "healthy",
     "version": "0.0.0",
     "apiVersion": "v1",
-    "startedAt": "2026-10-25T16:32:57.090401Z",
-    "uptimeSecs": 8,
+    "startedAt": "2026-10-25T17:19:58.634103Z",
+    "uptimeSecs": 9,
     "auth": "tokens",
     "provider": "mock",
     "reason": null,
@@ -188,9 +188,9 @@ Content-Type: `application/json`.
   },
   "database": {
     "state": "healthy",
-    "roundTripMs": 1.9,
-    "schemaVersion": 31,
-    "expectedSchemaVersion": 31,
+    "roundTripMs": 0.9,
+    "schemaVersion": 33,
+    "expectedSchemaVersion": 33,
     "reason": null,
     "nextStep": null
   },
@@ -201,8 +201,8 @@ Content-Type: `application/json`.
         "id": "docs-worker",
         "host": "unknown",
         "version": "0.0.0",
-        "startedAt": "2026-10-25T16:32:59.990009Z",
-        "lastSeen": "2026-10-25T16:32:59.990009Z",
+        "startedAt": "2026-10-25T17:20:02.059739Z",
+        "lastSeen": "2026-10-25T17:20:02.059739Z",
         "secondsSinceSeen": 5,
         "state": "running"
       }
@@ -303,7 +303,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T16:33:05.851345Z"
+    "observedAt": "2026-10-25T17:20:07.797172Z"
   },
   "clustered": true,
   "items": [
@@ -475,14 +475,14 @@ Content-Type: `application/json`.
       "mirror": null,
       "images": [
         {
-          "class": "linux-base",
-          "displayName": "Linux base",
+          "class": "resolver",
+          "displayName": "Resolver",
           "setting": null,
           "alias": "debian/13"
         },
         {
-          "class": "resolver",
-          "displayName": "Resolver",
+          "class": "linux-base",
+          "displayName": "Linux base",
           "setting": null,
           "alias": "debian/13"
         }
@@ -719,10 +719,10 @@ Content-Type: `application/json`.
       "id": "docs-worker",
       "host": "unknown",
       "version": "0.0.0",
-      "lastSeen": "2026-10-25T16:32:59.990009Z"
+      "lastSeen": "2026-10-25T17:20:02.059739Z"
     }
   ],
-  "readAt": "2026-10-25T16:32:57.090401Z"
+  "readAt": "2026-10-25T17:19:58.634103Z"
 }
 ```
 
@@ -819,7 +819,7 @@ Content-Type: `application/json`.
 ```json
 {
   "token": "<token, shown once>",
-  "expiresAt": "2026-10-26T00:32:57.737086Z",
+  "expiresAt": "2026-10-26T01:19:59.243693Z",
   "name": "Ada Lovelace"
 }
 ```
@@ -948,15 +948,15 @@ tar -tf support-bundle.tar
 **Example contents:**
 
 ```text
-apelora-support-20261025-163306/manifest.json
-apelora-support-20261025-163306/versions.json
-apelora-support-20261025-163306/settings.json
-apelora-support-20261025-163306/health.json
-apelora-support-20261025-163306/preflight.json
-apelora-support-20261025-163306/jobs-failed.json
-apelora-support-20261025-163306/metrics.txt
-apelora-support-20261025-163306/logs/README.txt
-apelora-support-20261025-163306/README.txt
+apelora-support-20261025-172007/manifest.json
+apelora-support-20261025-172007/versions.json
+apelora-support-20261025-172007/settings.json
+apelora-support-20261025-172007/health.json
+apelora-support-20261025-172007/preflight.json
+apelora-support-20261025-172007/jobs-failed.json
+apelora-support-20261025-172007/metrics.txt
+apelora-support-20261025-172007/logs/README.txt
+apelora-support-20261025-172007/README.txt
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
@@ -1114,7 +1114,7 @@ const result = await client.request("metrics", {});
 
 Content-Type: `text/plain`.
 
-**Example response** from a test installation; your IDs, names and times differ. The first 15 of 2937 lines.
+**Example response** from a test installation; your IDs, names and times differ. The first 15 of 2952 lines.
 
 ```text
 # HELP apelora_build_info Always 1: which component, version and commit is running.
@@ -1125,7 +1125,7 @@ apelora_build_info{region="default",site="default",sector="default",component="c
 apelora_provider_info{region="default",site="default",sector="default",mode="mock"} 1
 # HELP apelora_http_requests_total API requests answered, by route template, method and status class.
 # TYPE apelora_http_requests_total counter
-apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",status="2xx"} 9
+apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",status="2xx"} 8
 apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",status="2xx"} 2
 apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="POST",status="2xx"} 1
 apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels/{id}",method="DELETE",status="2xx"} 1

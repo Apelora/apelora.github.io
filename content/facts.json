@@ -1,10 +1,10 @@
 {
-  "modules": "84",
-  "categories": "12",
+  "modules": "143",
+  "categories": "9",
   "deployable": "4",
   "deployableWord": "four",
   "alertRules": 16,
-  "apiOperations": 187,
+  "apiOperations": 188,
   "apiOperationsFloor": 180,
   "apiGroups": 10,
   "incusSeries": "7.0",
