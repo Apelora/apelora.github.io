@@ -1,5 +1,5 @@
 {
- "openapiSha256": "0e543e01bacf170b1d6867e15ce01dad4f0284ae68d7cd2baf29fe6c89e08d33",
+ "openapiSha256": "beba9340f805a31ebee4e8a22214186d69c495f97ab71d29100587fccdb8b90f",
  "operations": {
   "acknowledge_alert": {
    "400": [

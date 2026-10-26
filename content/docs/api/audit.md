@@ -74,7 +74,7 @@ Content-Type: `application/json`.
   "items": [
     {
       "id": 112,
-      "at": "2026-10-25T20:59:37.122407Z",
+      "at": "2026-10-26T01:11:12.855Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -85,17 +85,17 @@ Content-Type: `application/json`.
       "detail": {
         "enabled": true,
         "host": "hooks.example.invalid",
-        "id": "e329c268-2490-42b5-b9f0-55793d5582c4",
+        "id": "15a6c2d8-09c8-446a-9a9a-14aea68b697d",
         "minSeverity": "critical",
         "name": "docs-verifier",
-        "requestId": "d0c479e3-553a-49a6-aa6b-4541c30a2661",
+        "requestId": "fb74e3e0-889c-4b0b-b551-00dbb06ef811",
         "role": "fabric-admin",
         "secretRef": "APELORA_ALERT_SECRET_ONCALL"
       }
     },
     {
       "id": 111,
-      "at": "2026-10-25T20:59:37.111723Z",
+      "at": "2026-10-26T01:11:12.845853Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -106,7 +106,7 @@ Content-Type: `application/json`.
       "detail": {
         "name": "docs-verifier",
         "note": "Looking into the failed job",
-        "requestId": "bf47ea8c-b99a-49a8-a77f-4bc568b367cd",
+        "requestId": "19322a4d-c602-4173-9e5e-9d717d486ad6",
         "role": "fabric-admin",
         "rule": "job-failures",
         "severity": "warning",
@@ -168,7 +168,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=jsonl"
 **With options** (`action`, `from`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-24T20%3A59%3A37Z" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-25T01%3A11%3A12Z" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: text/csv"
 ```
@@ -187,9 +187,9 @@ Content-Type: `text/csv`.
 
 ```text
 id,at,actor,actorName,actorType,action,target,outcome,requestId,scope,detail
-113,2026-10-25T20:59:37.192086Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,357cc10a-b7e7-429b-8d59-e3d06c7afde1,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""357cc10a-b7e7-429b-8d59-e3d06c7afde1"",""role"":""fabric-admin""}"
-112,2026-10-25T20:59:37.122407Z,token:docs-verifier,docs-verifier,token,alert.channel.delete,alert-channel:On-call webhook,success,d0c479e3-553a-49a6-aa6b-4541c30a2661,,"{""enabled"":true,""host"":""hooks.example.invalid"",""id"":""e329c268-2490-42b5-b9f0-55793d5582c4"",""minSeverity"":""critical"",""name"":""docs-verifier"",""requestId"":""d0c479e3-553a-49a6-aa6b-4541c30a2661"",""role"":""fabric-admin"",""secretRef"":""APELORA_ALERT_SECRET_ONCALL""}"
-111,2026-10-25T20:59:37.111723Z,token:docs-verifier,docs-verifier,token,alert.acknowledge,alert:2,success,bf47ea8c-b99a-49a8-a77f-4bc568b367cd,,"{""name"":""docs-verifier"",""note"":""Looking into the failed job"",""requestId"":""bf47ea8c-b99a-49a8-a77f-4bc568b367cd"",""role"":""fabric-admin"",""rule"":""job-failures"",""severity"":""warning"",""subject"":""instance.restart""}"
+113,2026-10-26T01:11:12.919731Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,f68d7dae-cf25-48e1-95a8-421fec785861,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""f68d7dae-cf25-48e1-95a8-421fec785861"",""role"":""fabric-admin""}"
+112,2026-10-26T01:11:12.855Z,token:docs-verifier,docs-verifier,token,alert.channel.delete,alert-channel:On-call webhook,success,fb74e3e0-889c-4b0b-b551-00dbb06ef811,,"{""enabled"":true,""host"":""hooks.example.invalid"",""id"":""15a6c2d8-09c8-446a-9a9a-14aea68b697d"",""minSeverity"":""critical"",""name"":""docs-verifier"",""requestId"":""fb74e3e0-889c-4b0b-b551-00dbb06ef811"",""role"":""fabric-admin"",""secretRef"":""APELORA_ALERT_SECRET_ONCALL""}"
+111,2026-10-26T01:11:12.845853Z,token:docs-verifier,docs-verifier,token,alert.acknowledge,alert:2,success,19322a4d-c602-4173-9e5e-9d717d486ad6,,"{""name"":""docs-verifier"",""note"":""Looking into the failed job"",""requestId"":""19322a4d-c602-4173-9e5e-9d717d486ad6"",""role"":""fabric-admin"",""rule"":""job-failures"",""severity"":""warning"",""subject"":""instance.restart""}"
 ```
 
 Content-Type: `application/x-ndjson`.
@@ -197,9 +197,9 @@ Content-Type: `application/x-ndjson`.
 **Example response** from a test installation; your IDs, names and times differ. The first 3 of 114 lines.
 
 ```text
-{"id":114,"at":"2026-10-25T20:59:37.201187Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"fc4a1eb7-c1fe-4ccf-9d5e-82c69a920376","role":"fabric-admin"}}
-{"id":113,"at":"2026-10-25T20:59:37.192086Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"357cc10a-b7e7-429b-8d59-e3d06c7afde1","role":"fabric-admin"}}
-{"id":112,"at":"2026-10-25T20:59:37.122407Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"alert.channel.delete","target":"alert-channel:On-call webhook","outcome":"success","scope":null,"detail":{"enabled":true,"host":"hooks.example.invalid","id":"e329c268-2490-42b5-b9f0-55793d5582c4","minSeverity":"critical","name":"docs-verifier","requestId":"d0c479e3-553a-49a6-aa6b-4541c30a2661","role":"fabric-admin","secretRef":"APELORA_ALERT_SECRET_ONCALL"}}
+{"id":114,"at":"2026-10-26T01:11:12.928759Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"8f94431c-562e-4383-ab22-0662c1997d56","role":"fabric-admin"}}
+{"id":113,"at":"2026-10-26T01:11:12.919731Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"f68d7dae-cf25-48e1-95a8-421fec785861","role":"fabric-admin"}}
+{"id":112,"at":"2026-10-26T01:11:12.855Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"alert.channel.delete","target":"alert-channel:On-call webhook","outcome":"success","scope":null,"detail":{"enabled":true,"host":"hooks.example.invalid","id":"15a6c2d8-09c8-446a-9a9a-14aea68b697d","minSeverity":"critical","name":"docs-verifier","requestId":"fb74e3e0-889c-4b0b-b551-00dbb06ef811","role":"fabric-admin","secretRef":"APELORA_ALERT_SECRET_ONCALL"}}
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.

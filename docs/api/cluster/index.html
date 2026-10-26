@@ -101,7 +101,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.637817Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:13.305284Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -133,12 +133,12 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.105785Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:06.7667Z&quot;
   },
   &quot;items&quot;: [
     {
       &quot;memberName&quot;: &quot;rack2-01&quot;,
-      &quot;expiresAt&quot;: &quot;2026-10-25T21:59:31.103823Z&quot;
+      &quot;expiresAt&quot;: &quot;2026-10-26T02:11:06.762781Z&quot;
     }
   ]
 }</code></pre>
@@ -167,7 +167,7 @@
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;memberName&quot;: &quot;rack2-01&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-25T21:59:31.103823Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-26T02:11:06.762781Z&quot;,
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
   &quot;warnings&quot;: []
 }</code></pre>
@@ -203,7 +203,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.090495Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:06.749343Z&quot;
   },
   &quot;clustered&quot;: true,
   &quot;members&quot;: [
@@ -335,7 +335,8 @@
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;member&quot;: &quot;mock-member-02&quot;,
-  &quot;operation&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;
+  &quot;operation&quot;: &quot;00000000-0000-4000-8000-000000000001&quot;,
+  &quot;drain&quot;: &quot;No application replica moves, so none was taken out of a service address.&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>evacuation_blocked</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
@@ -356,7 +357,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.092915Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:06.751817Z&quot;
   },
   &quot;plan&quot;: {
     &quot;member&quot;: &quot;mock-member-03&quot;,
@@ -473,7 +474,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.100258Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:06.759495Z&quot;
   },
   &quot;plan&quot;: {
     &quot;member&quot;: &quot;mock-member-03&quot;,
@@ -542,7 +543,8 @@
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;member&quot;: &quot;mock-member-02&quot;,
-  &quot;operation&quot;: &quot;00000000-0000-4000-8000-000000000002&quot;
+  &quot;operation&quot;: &quot;00000000-0000-4000-8000-000000000002&quot;,
+  &quot;drain&quot;: &quot;No application replica moves, so none was taken out of a service address.&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
@@ -562,7 +564,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.113052Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:06.779161Z&quot;
   },
   &quot;items&quot;: []
 }</code></pre>
@@ -584,7 +586,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.111708Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:06.776586Z&quot;
   },
   &quot;identity&quot;: &quot;admin&quot;,
   &quot;items&quot;: [
@@ -710,7 +712,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.810966Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:13.416805Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -729,12 +731,12 @@
       &quot;nextStep&quot;: &quot;None.&quot;,
       &quot;warnings&quot;: [],
       &quot;registeredBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;registeredAt&quot;: &quot;2026-10-25T20:59:31.117253Z&quot;,
+      &quot;registeredAt&quot;: &quot;2026-10-26T01:11:06.787063Z&quot;,
       &quot;approvedBy&quot;: null,
       &quot;approvedAt&quot;: null,
       &quot;approvalExpiresAt&quot;: null,
       &quot;admittedBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;admittedAt&quot;: &quot;2026-10-25T20:59:31.122984Z&quot;
+      &quot;admittedAt&quot;: &quot;2026-10-26T01:11:06.797701Z&quot;
     }
   ]
 }</code></pre>
@@ -779,7 +781,7 @@
   &quot;nextStep&quot;: &quot;Install Incus on the server, then approve it.&quot;,
   &quot;warnings&quot;: [],
   &quot;registeredBy&quot;: &quot;token:docs-verifier&quot;,
-  &quot;registeredAt&quot;: &quot;2026-10-25T20:59:31.113959Z&quot;,
+  &quot;registeredAt&quot;: &quot;2026-10-26T01:11:06.781679Z&quot;,
   &quot;approvedBy&quot;: null,
   &quot;approvedAt&quot;: null,
   &quot;approvalExpiresAt&quot;: null,
@@ -819,7 +821,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.121275Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:06.793446Z&quot;
   },
   &quot;name&quot;: &quot;mock-member-03&quot;,
   &quot;admissible&quot;: true,
@@ -858,7 +860,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:31.123241Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:06.797153Z&quot;
   },
   &quot;name&quot;: &quot;mock-member-03&quot;,
   &quot;admissible&quot;: true,
@@ -910,7 +912,7 @@
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;name&quot;: &quot;rack2-01&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-25T21:59:31.127286Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-26T02:11:06.804963Z&quot;,
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
   &quot;enrolCommand&quot;: &quot;sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address &lt;this server's cluster address&gt;&quot;,
   &quot;warnings&quot;: []
@@ -933,7 +935,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.840773Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:13.43435Z&quot;
   },
   &quot;configured&quot;: false,
   &quot;items&quot;: []

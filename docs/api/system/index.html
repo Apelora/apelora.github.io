@@ -145,7 +145,7 @@
   &quot;incus&quot;: {
     &quot;connected&quot;: false
   },
-  &quot;checkedAt&quot;: &quot;2026-10-25T20:59:28.502797Z&quot;
+  &quot;checkedAt&quot;: &quot;2026-10-26T01:11:04.191656Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
@@ -163,13 +163,13 @@
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;checkedAt&quot;: &quot;2026-10-25T20:59:37.694608Z&quot;,
+  &quot;checkedAt&quot;: &quot;2026-10-26T01:11:13.347836Z&quot;,
   &quot;overall&quot;: &quot;degraded&quot;,
   &quot;controlPlane&quot;: {
     &quot;state&quot;: &quot;healthy&quot;,
     &quot;version&quot;: &quot;0.0.0&quot;,
     &quot;apiVersion&quot;: &quot;v1&quot;,
-    &quot;startedAt&quot;: &quot;2026-10-25T20:59:28.427608Z&quot;,
+    &quot;startedAt&quot;: &quot;2026-10-26T01:11:04.1143Z&quot;,
     &quot;uptimeSecs&quot;: 9,
     &quot;auth&quot;: &quot;tokens&quot;,
     &quot;provider&quot;: &quot;mock&quot;,
@@ -178,9 +178,9 @@
   },
   &quot;database&quot;: {
     &quot;state&quot;: &quot;healthy&quot;,
-    &quot;roundTripMs&quot;: 1.8,
-    &quot;schemaVersion&quot;: 33,
-    &quot;expectedSchemaVersion&quot;: 33,
+    &quot;roundTripMs&quot;: 1,
+    &quot;schemaVersion&quot;: 34,
+    &quot;expectedSchemaVersion&quot;: 34,
     &quot;reason&quot;: null,
     &quot;nextStep&quot;: null
   },
@@ -191,8 +191,8 @@
         &quot;id&quot;: &quot;docs-worker&quot;,
         &quot;host&quot;: &quot;unknown&quot;,
         &quot;version&quot;: &quot;0.0.0&quot;,
-        &quot;startedAt&quot;: &quot;2026-10-25T20:59:31.834773Z&quot;,
-        &quot;lastSeen&quot;: &quot;2026-10-25T20:59:31.834773Z&quot;,
+        &quot;startedAt&quot;: &quot;2026-10-26T01:11:07.452506Z&quot;,
+        &quot;lastSeen&quot;: &quot;2026-10-26T01:11:07.452506Z&quot;,
         &quot;secondsSinceSeen&quot;: 5,
         &quot;state&quot;: &quot;running&quot;
       }
@@ -270,7 +270,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-25T20:59:37.697631Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-26T01:11:13.349864Z&quot;
   },
   &quot;clustered&quot;: true,
   &quot;items&quot;: [
@@ -587,10 +587,10 @@
       &quot;id&quot;: &quot;docs-worker&quot;,
       &quot;host&quot;: &quot;unknown&quot;,
       &quot;version&quot;: &quot;0.0.0&quot;,
-      &quot;lastSeen&quot;: &quot;2026-10-25T20:59:31.834773Z&quot;
+      &quot;lastSeen&quot;: &quot;2026-10-26T01:11:07.452506Z&quot;
     }
   ],
-  &quot;readAt&quot;: &quot;2026-10-25T20:59:28.427608Z&quot;
+  &quot;readAt&quot;: &quot;2026-10-26T01:11:04.1143Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
@@ -637,7 +637,7 @@
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-26T04:59:29.025804Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-26T09:11:04.715088Z&quot;,
   &quot;name&quot;: &quot;Ada Lovelace&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
@@ -691,15 +691,15 @@
 <p>Binary download; the command saves the response to a file. For a tar bundle, list the files after a successful download:</p>
 <pre data-lang="sh" tabindex="0"><code>tar -tf support-bundle.tar</code></pre>
 <p><strong>Example contents:</strong></p>
-<pre data-lang="text" tabindex="0"><code>apelora-support-20261025-205937/manifest.json
-apelora-support-20261025-205937/versions.json
-apelora-support-20261025-205937/settings.json
-apelora-support-20261025-205937/health.json
-apelora-support-20261025-205937/preflight.json
-apelora-support-20261025-205937/jobs-failed.json
-apelora-support-20261025-205937/metrics.txt
-apelora-support-20261025-205937/logs/README.txt
-apelora-support-20261025-205937/README.txt</code></pre>
+<pre data-lang="text" tabindex="0"><code>apelora-support-20261026-011113/manifest.json
+apelora-support-20261026-011113/versions.json
+apelora-support-20261026-011113/settings.json
+apelora-support-20261026-011113/health.json
+apelora-support-20261026-011113/preflight.json
+apelora-support-20261026-011113/jobs-failed.json
+apelora-support-20261026-011113/metrics.txt
+apelora-support-20261026-011113/logs/README.txt
+apelora-support-20261026-011113/README.txt</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1system"><code>GET /api/v1/system</code></h3>

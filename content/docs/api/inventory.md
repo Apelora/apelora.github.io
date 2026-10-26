@@ -64,7 +64,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.633326Z"
+    "observedAt": "2026-10-26T01:11:13.302078Z"
   },
   "named": true,
   "volumePool": "mock-local",
@@ -154,7 +154,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.635642Z"
+    "observedAt": "2026-10-26T01:11:13.303799Z"
   },
   "server": {
     "apiVersion": "1.0",
@@ -246,7 +246,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.056326Z"
+    "observedAt": "2026-10-26T01:11:06.712689Z"
   },
   "items": [
     {
@@ -319,7 +319,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.059326Z"
+    "observedAt": "2026-10-26T01:11:06.716265Z"
   },
   "instance": {
     "name": "mock-web-01",
@@ -463,7 +463,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.06601Z"
+    "observedAt": "2026-10-26T01:11:06.723442Z"
   },
   "file": "console",
   "tailKib": 64,
@@ -523,7 +523,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.061246Z"
+    "observedAt": "2026-10-26T01:11:06.71836Z"
   },
   "files": [
     "lxc.log"
@@ -589,7 +589,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.062819Z"
+    "observedAt": "2026-10-26T01:11:06.720093Z"
   },
   "file": "lxc.log",
   "tailKib": 64,
@@ -644,7 +644,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.822443Z"
+    "observedAt": "2026-10-26T01:11:13.423962Z"
   },
   "items": [
     {
@@ -705,7 +705,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.834073Z"
+    "observedAt": "2026-10-26T01:11:13.430343Z"
   },
   "uplink": null,
   "serviceRange": null,
@@ -789,7 +789,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.836326Z"
+    "observedAt": "2026-10-26T01:11:13.431836Z"
   },
   "overall": "fail",
   "checks": [
@@ -850,7 +850,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.838584Z"
+    "observedAt": "2026-10-26T01:11:13.433269Z"
   },
   "items": [
     {
@@ -908,7 +908,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.851937Z"
+    "observedAt": "2026-10-26T01:11:13.442083Z"
   },
   "items": [
     {
@@ -967,7 +967,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.859016Z"
+    "observedAt": "2026-10-26T01:11:13.445682Z"
   },
   "projects": [
     "acme-shop-staging",
@@ -1020,7 +1020,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.861483Z"
+    "observedAt": "2026-10-26T01:11:13.446904Z"
   },
   "volumePool": "mock-local",
   "backupPool": "mock-local",

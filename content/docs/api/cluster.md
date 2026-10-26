@@ -77,7 +77,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.637817Z"
+    "observedAt": "2026-10-26T01:11:13.305284Z"
   },
   "items": [
     {
@@ -134,12 +134,12 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.105785Z"
+    "observedAt": "2026-10-26T01:11:06.7667Z"
   },
   "items": [
     {
       "memberName": "rack2-01",
-      "expiresAt": "2026-10-25T21:59:31.103823Z"
+      "expiresAt": "2026-10-26T02:11:06.762781Z"
     }
   ]
 }
@@ -202,7 +202,7 @@ Content-Type: `application/json`.
 ```json
 {
   "memberName": "rack2-01",
-  "expiresAt": "2026-10-25T21:59:31.103823Z",
+  "expiresAt": "2026-10-26T02:11:06.762781Z",
   "token": "<token, shown once>",
   "warnings": []
 }
@@ -292,7 +292,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.090495Z"
+    "observedAt": "2026-10-26T01:11:06.749343Z"
   },
   "clustered": true,
   "members": [
@@ -461,7 +461,8 @@ Content-Type: `application/json`.
 ```json
 {
   "member": "mock-member-02",
-  "operation": "00000000-0000-4000-8000-000000000001"
+  "operation": "00000000-0000-4000-8000-000000000001",
+  "drain": "No application replica moves, so none was taken out of a service address."
 }
 ```
 
@@ -514,7 +515,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.092915Z"
+    "observedAt": "2026-10-26T01:11:06.751817Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -702,7 +703,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.100258Z"
+    "observedAt": "2026-10-26T01:11:06.759495Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -846,7 +847,8 @@ Content-Type: `application/json`.
 ```json
 {
   "member": "mock-member-02",
-  "operation": "00000000-0000-4000-8000-000000000002"
+  "operation": "00000000-0000-4000-8000-000000000002",
+  "drain": "No application replica moves, so none was taken out of a service address."
 }
 ```
 
@@ -894,7 +896,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.113052Z"
+    "observedAt": "2026-10-26T01:11:06.779161Z"
   },
   "items": []
 }
@@ -941,7 +943,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.111708Z"
+    "observedAt": "2026-10-26T01:11:06.776586Z"
   },
   "identity": "admin",
   "items": [
@@ -1175,7 +1177,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.810966Z"
+    "observedAt": "2026-10-26T01:11:13.416805Z"
   },
   "items": [
     {
@@ -1194,12 +1196,12 @@ Content-Type: `application/json`.
       "nextStep": "None.",
       "warnings": [],
       "registeredBy": "token:docs-verifier",
-      "registeredAt": "2026-10-25T20:59:31.117253Z",
+      "registeredAt": "2026-10-26T01:11:06.787063Z",
       "approvedBy": null,
       "approvedAt": null,
       "approvalExpiresAt": null,
       "admittedBy": "token:docs-verifier",
-      "admittedAt": "2026-10-25T20:59:31.122984Z"
+      "admittedAt": "2026-10-26T01:11:06.797701Z"
     }
   ]
 }
@@ -1281,7 +1283,7 @@ Content-Type: `application/json`.
   "nextStep": "Install Incus on the server, then approve it.",
   "warnings": [],
   "registeredBy": "token:docs-verifier",
-  "registeredAt": "2026-10-25T20:59:31.113959Z",
+  "registeredAt": "2026-10-26T01:11:06.781679Z",
   "approvedBy": null,
   "approvedAt": null,
   "approvalExpiresAt": null,
@@ -1380,7 +1382,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.121275Z"
+    "observedAt": "2026-10-26T01:11:06.793446Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1452,7 +1454,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:31.123241Z"
+    "observedAt": "2026-10-26T01:11:06.797153Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1564,7 +1566,7 @@ Content-Type: `application/json`.
 ```json
 {
   "name": "rack2-01",
-  "expiresAt": "2026-10-25T21:59:31.127286Z",
+  "expiresAt": "2026-10-26T02:11:06.804963Z",
   "token": "<token, shown once>",
   "enrolCommand": "sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address <this server's cluster address>",
   "warnings": []
@@ -1616,7 +1618,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-25T20:59:37.840773Z"
+    "observedAt": "2026-10-26T01:11:13.43435Z"
   },
   "configured": false,
   "items": []
