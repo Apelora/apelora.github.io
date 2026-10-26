@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-riitXBKGtl5y5ccA7GF6ccqJuwEVP5tm8j0ff/fbw9U='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'none'; manifest-src 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Apelora Fabric compared with Proxmox VE and Kubernetes · Apelora</title>
+  <meta name="description" content="How Apelora Fabric compares with Proxmox VE and Kubernetes for running applications on your own Linux servers: what each does, when to choose another, and the sources for every claim.">
+  <link rel="canonical" href="https://apelora.github.io/compare/">
+  <meta name="theme-color" content="#ffffff">
+  
+  
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apelora">
+  <meta property="og:title" content="Apelora Fabric compared with Proxmox VE and Kubernetes · Apelora">
+  <meta property="og:description" content="How Apelora Fabric compares with Proxmox VE and Kubernetes for running applications on your own Linux servers: what each does, when to choose another, and the sources for every claim.">
+  <meta property="og:url" content="https://apelora.github.io/compare/">
+  <meta property="og:image" content="https://apelora.github.io/assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin-wght-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script>document.documentElement.className += " js";</script>
+  <script src="/assets/js/config.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="/" aria-label="Apelora, home">
+        <img src="/assets/img/logo.svg" alt="" width="32" height="32">
+        <span>Apelora</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.25 6 8l4-3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="/product/">Product</a>
+        <a href="/services/">Services</a>
+        <a href="/training/">Training</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/docs/">Documentation</a>
+        <a class="nav-gh" href="https://github.com/Apelora/apelora-fabric" aria-label="Apelora Fabric on GitHub" title="Apelora Fabric on GitHub">
+          <svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          <span class="nav-gh-text">GitHub</span>
+        </a>
+        <a class="btn btn-primary btn-sm nav-cta" href="/contact/?type=demo">Request a demo</a>
+      </nav>
+    </div>
+  </header>
+
+<main id="main">
+    <section class="page-head" style="padding-bottom:0">
+      <div class="wrap">
+        <h1><span>Run applications,</span> <span>not machines.</span></h1>
+        <p>Proxmox VE runs virtual machines and containers very well. Kubernetes runs containerised services. Apelora Fabric runs an application you drew, with its parts, their connections and their failover, on your own Linux servers.</p>
+        <nav class="subnav" aria-label="On this page"><a class="chip" href="#why-not">Why not Proxmox VE?</a><a class="chip" href="#compare">Side by side</a><a class="chip" href="#choose">When to choose another</a><a class="chip" href="#sources">Sources</a></nav>
+      </div>
+    </section>
+
+    <section id="why-not" aria-labelledby="why-not-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="why-not-title">Why not Proxmox VE?</h2>
+          <p>If looking after virtual machines yourself is what you want, use Proxmox VE: it is mature and widely used. Apelora Fabric is for teams that would rather describe the application and let the platform do the rest.</p>
+        </div>
+        <ul class="checks" style="max-width:62ch">
+          <li><span><b>You draw the application,</b> not the machines: web servers, a database, a cache, and which connects to which.</span></li>
+          <li><span><b>Its network follows the drawing:</b> the application gets its own network, and only the connections you drew are allowed.</span></li>
+          <li><span><b>Replicas sit behind one address</b> with health checks, on different servers. A lost replica is replaced, and before a server goes into maintenance its replicas stop receiving requests.</span></li>
+          <li><span><b>Risky actions need a second person,</b> and every change is recorded with who made it.</span></li>
+        </ul>
+        <p class="caption" style="margin-top:20px">Apelora Fabric runs on Incus, the open source system container and virtual machine manager. It is in early development; see <a href="/docs/project/current-state/">what works today</a>.</p>
+      </div>
+    </section>
+
+    <section class="tint" id="compare" aria-labelledby="compare-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="compare-title">Side by side</h2>
+          <p>What each does out of the box, by the job you need done. Every statement about another product comes from its own documentation, listed under <a href="#sources">Sources</a>.</p>
+        </div>
+        <ul class="legend" aria-label="Key">
+          <li><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Yes</li>
+          <li><span class="mk part"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><circle cx="8" cy="8" r="2.6" fill="#fff"/></svg></span> Partly, as written</li>
+          <li><span class="mk no"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m5.4 5.4 5.2 5.2m0-5.2-5.2 5.2" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg></span> No</li>
+        </ul>
+        <div class="table-wrap stack-sm">
+          <table>
+            <thead><tr><th scope="col"><span class="sr-only">What you need</span></th><th scope="col">Apelora Fabric</th><th scope="col">Proxmox VE</th><th scope="col">Kubernetes</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Describe a whole application, its parts and their connections, and deploy it from that design</th><td class="cell" data-label="Apelora Fabric"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">In the Studio designer</span></span></td><td class="cell" data-label="Proxmox VE"><span class="mk no"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m5.4 5.4 5.2 5.2m0-5.2-5.2 5.2" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg><span class="sr-only">No: </span><span class="mk-text">Manages single VMs and containers; multi-guest applications are on its roadmap</span></span></td><td class="cell" data-label="Kubernetes"><span class="mk part"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><circle cx="8" cy="8" r="2.6" fill="#fff"/></svg><span class="sr-only">Partly: </span><span class="mk-text">In YAML files; its web Dashboard is deprecated and deploys one app at a time</span></span></td></tr>
+              <tr><th scope="row">Only the connections you declared are allowed; everything else is refused</th><td class="cell" data-label="Apelora Fabric"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">Built from the drawn connections, when OVN networking is set up</span></span></td><td class="cell" data-label="Proxmox VE"><span class="mk part"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><circle cx="8" cy="8" r="2.6" fill="#fff"/></svg><span class="sr-only">Partly: </span><span class="mk-text">Firewall rules per guest and security groups; the firewall is off by default</span></span></td><td class="cell" data-label="Kubernetes"><span class="mk part"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><circle cx="8" cy="8" r="2.6" fill="#fff"/></svg><span class="sr-only">Partly: </span><span class="mk-text">NetworkPolicy, when the network plugin enforces it; a pod accepts all traffic until a policy selects it</span></span></td></tr>
+              <tr><th scope="row">One service address with health checks in front of the replicas</th><td class="cell" data-label="Apelora Fabric"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">A load balancer per service, with health checks, when OVN networking is set up</span></span></td><td class="cell" data-label="Proxmox VE"><span class="mk no"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m5.4 5.4 5.2 5.2m0-5.2-5.2 5.2" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg><span class="sr-only">No: </span><span class="mk-text">No service address of its own; each HA resource is one VM or container</span></span></td><td class="cell" data-label="Kubernetes"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">A Service and readiness probes; on your own servers you provide the external load balancer</span></span></td></tr>
+              <tr><th scope="row">Replicas on different servers, and a lost one replaced</th><td class="cell" data-label="Apelora Fabric"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">Stateless replicas spread over servers; a lost one recreated elsewhere</span></span></td><td class="cell" data-label="Proxmox VE"><span class="mk part"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><circle cx="8" cy="8" r="2.6" fill="#fff"/></svg><span class="sr-only">Partly: </span><span class="mk-text">HA restarts a failed VM or container on another node, in about two minutes, with at least three nodes and shared storage</span></span></td><td class="cell" data-label="Kubernetes"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">Deployments replace lost Pods; spread constraints place them</span></span></td></tr>
+              <tr><th scope="row">Traffic moved away from a server before maintenance</th><td class="cell" data-label="Apelora Fabric"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">Replicas leave their service address before Incus moves them</span></span></td><td class="cell" data-label="Proxmox VE"><span class="mk part"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><circle cx="8" cy="8" r="2.6" fill="#fff"/></svg><span class="sr-only">Partly: </span><span class="mk-text">Maintenance mode migrates HA guests, from the command line; rolling drain is on its roadmap</span></span></td><td class="cell" data-label="Kubernetes"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">kubectl drain, respecting disruption budgets</span></span></td></tr>
+              <tr><th scope="row">A second person approves risky actions</th><td class="cell" data-label="Apelora Fabric"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">Approvals for production environments, decided by people</span></span></td><td class="cell" data-label="Proxmox VE"><span class="mk no"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m5.4 5.4 5.2 5.2m0-5.2-5.2 5.2" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg><span class="sr-only">No: </span><span class="mk-text">Roles and permissions; no approval workflow in its documentation</span></span></td><td class="cell" data-label="Kubernetes"><span class="mk no"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m5.4 5.4 5.2 5.2m0-5.2-5.2 5.2" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg><span class="sr-only">No: </span><span class="mk-text">Role-based access; no approval workflow in its documentation</span></span></td></tr>
+              <tr><th scope="row">A record of who changed what</th><td class="cell" data-label="Apelora Fabric"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">An append-only audit log, with the person and the outcome</span></span></td><td class="cell" data-label="Proxmox VE"><span class="mk part"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><circle cx="8" cy="8" r="2.6" fill="#fff"/></svg><span class="sr-only">Partly: </span><span class="mk-text">Task logs; an audit log with the person is on its roadmap</span></span></td><td class="cell" data-label="Kubernetes"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">API audit logging, once an audit policy is configured</span></span></td></tr>
+              <tr><th scope="row">Virtual machines and full Linux systems, not only application containers</th><td class="cell" data-label="Apelora Fabric"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">System containers, application containers and VMs, through Incus</span></span></td><td class="cell" data-label="Proxmox VE"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">KVM VMs and LXC containers; OCI images are a technology preview</span></span></td><td class="cell" data-label="Kubernetes"><span class="mk part"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><circle cx="8" cy="8" r="2.6" fill="#fff"/></svg><span class="sr-only">Partly: </span><span class="mk-text">Containers; VMs with the KubeVirt add-on</span></span></td></tr>
+              <tr><th scope="row">Track record</th><td class="cell" data-label="Apelora Fabric"><span class="mk no"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m5.4 5.4 5.2 5.2m0-5.2-5.2 5.2" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg><span class="sr-only">No: </span><span class="mk-text">Early development: tested on a four-server lab, not yet on production hardware</span></span></td><td class="cell" data-label="Proxmox VE"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">Stable releases since 2008</span></span></td><td class="cell" data-label="Kubernetes"><span class="mk yes"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8"/><path d="m4.6 8.2 2.3 2.3 4.5-4.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Yes: </span><span class="mk-text">Open sourced in 2014</span></span></td></tr>
+              <tr><th scope="row">Licence and price</th><td data-label="Apelora Fabric">AGPL-3.0, free; services quoted</td><td data-label="Proxmox VE">AGPL-3.0, free; an optional subscription per CPU socket adds the enterprise repository and, on most plans, support</td><td data-label="Kubernetes">Open source and free</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption" style="margin-top:20px">Proxmox VE 9.2 and Kubernetes 1.37, as documented on 26 October 2026. Other tools can add what a column lacks; this compares what each product documents itself.</p>
+      </div>
+    </section>
+
+    <section id="choose" aria-labelledby="choose-title">
+      <div class="wrap">
+        <div class="sec-head"><h2 id="choose-title">When to choose another</h2></div>
+        <div class="faq">
+          <details open><summary>Choose Proxmox VE when…</summary><div><p>You want to create and look after virtual machines and containers yourself, one by one. You need a long track record today: Proxmox VE has had stable releases since 2008.</p></div></details>
+          <details open><summary>Choose Kubernetes when…</summary><div><p>Your team builds containerised services, already knows its tools and manifests, and is ready to add the parts it leaves to you on your own servers, such as a load balancer for external addresses and a network plugin that enforces network policies.</p></div></details>
+          <details open><summary>Choose Apelora Fabric when…</summary><div><p>You run your own Linux servers and want to run applications rather than machines: drawn once, with their network rules, service addresses, failover and approvals handled for you. It is early software, so start with a lab or a non-critical application, and <a href="/contact/?type=demo">talk to us</a> about what it is ready for.</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="tint" id="sources" aria-labelledby="sources-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 id="sources-title">Sources</h2>
+          <p>Checked on 26 October 2026. If something here is out of date, <a href="https://github.com/Apelora/apelora.github.io/issues">tell us</a> and we will correct it.</p>
+        </div>
+        <ul class="sources">
+          <li><b>Proxmox VE:</b> <a href="https://pve.proxmox.com/pve-docs/chapter-pve-intro.html">introduction</a> (history, licence, KVM and LXC), <a href="https://pve.proxmox.com/pve-docs/chapter-pve-gui.html">web interface</a>, <a href="https://pve.proxmox.com/pve-docs/chapter-pve-firewall.html">firewall</a>, <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html">software-defined networking</a>, <a href="https://pve.proxmox.com/pve-docs/chapter-ha-manager.html">high availability</a> (requirements, failover time, maintenance mode), <a href="https://pve.proxmox.com/pve-docs/chapter-pveum.html">users and permissions</a>, <a href="https://pve.proxmox.com/pve-docs/chapter-pct.html">containers</a> (OCI images), <a href="https://pve.proxmox.com/wiki/Roadmap">roadmap</a>, <a href="https://www.proxmox.com/en/products/proxmox-virtual-environment/pricing">subscriptions</a>.</li>
+          <li><b>Kubernetes:</b> <a href="https://kubernetes.io/docs/concepts/overview/">overview</a>, <a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/">Dashboard</a>, <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">network policies</a>, <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Services</a>, <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/">readiness probes</a>, <a href="https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/">ReplicaSets</a>, <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/">topology spread</a>, <a href="https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/">draining a node</a>, <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/">RBAC</a>, <a href="https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/">auditing</a>; <a href="https://kubevirt.io/user-guide/architecture/architecture/">KubeVirt</a>.</li>
+          <li><b>Apelora Fabric:</b> <a href="/docs/project/current-state/">what works today</a>, with what was tested on real Incus and what only against the mock.</li>
+        </ul>
+        <p class="caption" style="margin-top:20px">Proxmox VE and Kubernetes are trademarks of their respective owners. They are named here only to compare; no affiliation or endorsement is implied.</p>
+      </div>
+    </section>
+        <section class="cta-band" aria-labelledby="cta-title">
+      <div class="wrap">
+        <div class="cta-card">
+          <h2 id="cta-title">Tell us about your environment</h2>
+          <p>How many servers, what storage and network, who needs access. We will tell you what Apelora does for that today and what it does not.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="/contact/?type=demo">Request a demo</a>
+            <a class="btn btn-soft" href="/contact/?type=deployment">Ask about deployment</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div class="foot-brand">
+          <a class="brand" href="/" aria-label="Apelora, home"><img src="/assets/img/logo.svg" alt="" width="32" height="32"><span>Apelora</span></a>
+          <p>Design applications, control infrastructure. Open source, on your own Linux servers.</p>
+        </div>
+        <div>
+          <h2>Product</h2>
+          <ul>
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/use-cases/">Use cases</a></li>
+            <li><a href="/compare/">Compare</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/training/">Training</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric">Source code</a></li>
+            <li><a href="/docs/project/current-state/">What works today</a></li>
+            <li><a href="https://github.com/Apelora/apelora-fabric/issues">Report a problem</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Talk to us</h2>
+          <ul>
+            <li><a href="/contact/?type=demo">Request a demo</a></li>
+            <li><a href="/contact/?type=support">Ask about support</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/legal/#licence">Licence: AGPL-3.0</a></li>
+            <li><a href="/privacy/">Privacy policy</a></li>
+            <li><a href="/terms/">Terms of use</a></li>
+            <li><a href="/refunds/">Refunds and cancellation</a></li>
+            <li><a href="/cookies/">Cookie policy</a></li>
+            <li><a href="/legal/#names">Names and logos</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legalese">Apelora is an independent open-source project. Incus is a project of the Linux Containers community. Product names and logos in screenshots belong to their owners and appear only to show the modules the catalog offers; they imply no endorsement.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

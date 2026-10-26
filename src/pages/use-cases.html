@@ -18,7 +18,7 @@
           <div><dl>
             <div><dt>What you do</dt><dd>Design in Studio, review the plan, deploy. Fabric creates the instances, the application's network, the access rules and a service address that the gateway publishes.</dd></div>
             <div><dt>Verified</dt><dd>Real Incus tested on the lab: replicas on different servers, enforced connections, a service address with health checks, and the restart of a crashed replica.</dd></div>
-            <div><dt>Not yet</dt><dd>NGINX, Debian and a Linux virtual machine are the deployable modules. Other catalog modules can be designed but not deployed. Nothing has run on production servers.</dd></div>
+            <div><dt>Not yet</dt><dd>{{fact:deployableWord|cap}} catalog modules can be deployed today, NGINX among them; the others can be designed but not deployed. Nothing has run on production servers.</dd></div>
           </dl>
           <figure class="shot paper"><a href="/assets/diagrams/design-to-cluster.svg" aria-label="Open the diagram full size"><img src="/assets/diagrams/design-to-cluster.svg" width="1200" height="600" loading="lazy" alt="A design with a gateway, a web module with three replicas and a database, and the instances it becomes on three servers behind one service address."></a><figcaption>Illustration: a design and the instances it becomes. Select it to open full size.</figcaption></figure></div>
         </article>
