@@ -89,7 +89,7 @@
 <p>The client is <code>crates/maas-adapter</code>. It uses HTTPS, checked against the system trust store or a CA file. Plain HTTP is only for tests on the local machine.</p>
 <p>The API key has the form <code>consumer:token:secret</code> and is signed the way MAAS expects. It is read from <code>APELORA_MAAS_API_KEY</code> when the service starts. It is not logged, stored, returned, or put in an error. The Console never sees it. Give the key a MAAS user that can read machines and power the ones Apelora fences, and nothing else.</p>
 <p>The control plane lists machines at <code>GET /api/v1/provisioners/maas/machines</code>. The list says when <code>APELORA_MAAS_URL</code> is unset or MAAS cannot be reached. It does not return the key or any credential field from MAAS.</p>
-<figure class="diagram"><a href="/assets/docs/diagrams/design-provisioner-maas-0.svg"><img width="1049" height="173" src="/assets/docs/diagrams/design-provisioner-maas-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart LR
+<figure class="diagram"><a href="/assets/docs/diagrams/design-provisioner-maas-0.svg"><img width="842" height="158" src="/assets/docs/diagrams/design-provisioner-maas-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart LR
   console[Fabric Console] --&gt;|list| api[Control plane]
   api --&gt;|read| maas[(MAAS)]
   worker[Deployment worker] --&gt;|power| maas

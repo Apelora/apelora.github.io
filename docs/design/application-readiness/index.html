@@ -90,6 +90,16 @@
 <h2 id="how-it-is-run">How it is run</h2>
 <p>The deployment worker's health supervision, once per pass and only on the supervisor's leader lease:</p>
 <ul><li>picks each running, reachable, Apelora-owned instance of a module that has a command, at most eight at a time;</li><li>asks Incus to run it without a terminal (<code>POST /1.0/instances/&lt;name&gt;/exec</code>, <code>interactive: false</code>, <code>record-output: false</code>) as the numeric user <code>APELORA_PROBE_UID</code> (default 65534, never root unless set to 0, which is logged) in <code>/</code>, and waits for the operation; a command still running at the limit is cancelled and counts as failing;</li><li>turns the result into a probe (<code>probe_of_run</code>): exit 0 passes, any other exit or a timeout fails, and <strong>a command Incus could not run says nothing</strong> and is logged, so a misdeclared command cannot restart healthy replicas;</li><li>combines it with the port check (<code>combine</code>): any failure fails the instance; otherwise any pass passes it, so an instance without a service address (a database) is judged by its command alone.</li></ul>
+<figure class="diagram"><a href="/assets/docs/diagrams/design-application-readiness-0.svg"><img width="1545" height="254" src="/assets/docs/diagrams/design-application-readiness-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart LR
+  P[Port check&lt;br/&gt;OVN load balancer] --&gt; K{combine}
+  R[Readiness command&lt;br/&gt;exec, unprivileged, 1-15 s] --&gt; K
+  R -. Incus could not run it .-&gt; X[says nothing, logged]
+  K --&gt;|any fails| F[failing]
+  K --&gt;|none fails, one passes| OK[passing]
+  F --&gt; H[hysteresis 20 s]
+  OK --&gt; H
+  H --&gt;|unhealthy 60 s, stateless| RS[restart once per cooldown, audited]
+  H --&gt;|singleton or stateful| RP[reported only]</code></pre></details></figure>
 <p>The result goes through the same hysteresis as the port check (unhealthy after failing 20 s, healthy after passing 20 s). The recorded detail says which check failed: <em>port check failing</em>, <em>readiness command failing</em>, <em>port check and readiness command failing</em>, and so on. A stateless replica that stays unhealthy for 60 s is restarted, once per cooldown, and audited, exactly as before; singleton and stateful modules are reported, never restarted.</p>
 <h2 id="why-a-command-inside-the-instance">Why a command inside the instance</h2>
 <p>The alternatives were weighed and rejected for now:</p>

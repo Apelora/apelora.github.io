@@ -56,7 +56,36 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "items": [],
+  "items": [
+    {
+      "instance": "shop-db-01",
+      "module": "db-01",
+      "guestOs": "linux",
+      "status": "Running",
+      "kinds": [
+        {
+          "kind": "terminal",
+          "allowed": false,
+          "reason": "interactive sessions are for signed-in people",
+          "approvalRequired": false
+        }
+      ]
+    },
+    {
+      "instance": "shop-web-01",
+      "module": "web-01",
+      "guestOs": "linux",
+      "status": "Running",
+      "kinds": [
+        {
+          "kind": "terminal",
+          "allowed": false,
+          "reason": "interactive sessions are for signed-in people",
+          "approvalRequired": false
+        }
+      ]
+    }
+  ],
   "observed": true,
   "provider": "mock",
   "idleSecs": 900,
@@ -106,7 +135,7 @@ Opens a session: checks the caller, the instance and the approval rule, and answ
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/instances/shop-web-01/sessions" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/instances/shop-db-01/sessions" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -116,27 +145,27 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/instanc
 **TypeScript:**
 
 ```ts
-const result = await client.request("open_session", { params: { name: "shop", instance: "shop-web-01" }, body: { kind: "terminal", cols: 120, rows: 32 } });
+const result = await client.request("open_session", { params: { name: "shop", instance: "shop-db-01" }, body: { kind: "terminal", cols: 120, rows: 32 } });
 ```
 
 **Response `201`** — Success.
 
 Content-Type: `application/json`.
 
-**Example response** (placeholder values that show the shape):
+**Example response** from a test installation; your IDs, names and times differ.
 
 ```json
 {
-  "connectPath": "example",
-  "expiresAt": "2026-01-01T09:00:00Z",
-  "id": "00000000-0000-4000-8000-000000000001",
-  "idleSecs": 0,
-  "instance": "example",
+  "id": "8732e470-6d14-4fe1-80e9-8a99502e0a18",
+  "ticket": "<one-time session ticket>",
+  "expiresAt": "2026-10-26T18:16:16.361997Z",
+  "connectPath": "/api/v1/sessions/connect",
+  "protocol": "apelora.session.v1",
   "kind": "terminal",
-  "maxSecs": 0,
-  "protocol": "example",
-  "provider": "mock",
-  "ticket": "example"
+  "instance": "shop-db-01",
+  "idleSecs": 900,
+  "maxSecs": 3600,
+  "provider": "mock"
 }
 ```
 
@@ -209,14 +238,14 @@ Ends a session now. Allowed for the person who has it and for whoever may operat
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/49c1c508-14db-48e7-ba03-09e0ada3bd36" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/8732e470-6d14-4fe1-80e9-8a99502e0a18" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("terminate_session", { params: { id: "49c1c508-14db-48e7-ba03-09e0ada3bd36" } });
+await client.request("terminate_session", { params: { id: "8732e470-6d14-4fe1-80e9-8a99502e0a18" } });
 ```
 
 **Response `204`** — Success, with no body.

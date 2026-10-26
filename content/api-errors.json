@@ -1,5 +1,5 @@
 {
- "openapiSha256": "beba9340f805a31ebee4e8a22214186d69c495f97ab71d29100587fccdb8b90f",
+ "openapiSha256": "7f4913a240074c24f320cb69cc2919b22dee7140fef56033c2b6121aaf12f255",
  "operations": {
   "acknowledge_alert": {
    "400": [
@@ -35,6 +35,26 @@
    ],
    "503": [
     "database_not_configured"
+   ]
+  },
+  "add_sector": {
+   "400": [
+    "invalid_request",
+    "invalid_sector"
+   ],
+   "403": [
+    "forbidden",
+    "mfa_required"
+   ],
+   "409": [
+    "sector_exists"
+   ],
+   "500": [
+    "internal",
+    "invalid_place"
+   ],
+   "503": [
+    "no_database"
    ]
   },
   "admit_machine": {
@@ -494,6 +514,7 @@
    "409": [
     "evacuation_blocked",
     "no_upgrade",
+    "not_upgraded",
     "upgrade_blocked",
     "upgrade_in_progress",
     "upgrade_step"
@@ -1805,6 +1826,22 @@
     "database_not_configured"
    ]
   },
+  "remove_sector": {
+   "400": [
+    "confirmation_mismatch",
+    "invalid_request"
+   ],
+   "403": [
+    "forbidden",
+    "mfa_required"
+   ],
+   "404": [
+    "not_found"
+   ],
+   "503": [
+    "no_database"
+   ]
+  },
   "request_approval": {
    "400": [
     "invalid_request"
@@ -2042,6 +2079,15 @@
    ],
    "503": [
     "database_not_configured"
+   ]
+  },
+  "sectors": {
+   "403": [
+    "forbidden",
+    "mfa_required"
+   ],
+   "500": [
+    "invalid_place"
    ]
   },
   "service_identities": {

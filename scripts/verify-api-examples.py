@@ -6,11 +6,13 @@
 
 uv run scripts/verify-api-examples.py [../apelora-fabric] [--record] [--explore]
 
-Needs the product's current debug binaries (control plane and deployment worker), Docker and
-apelora-dev-db. Never uses the shared application database, an existing API or any Incus
-credentials: the control plane and the worker run against the mock provider, each with its own
-in-memory fixture cluster, in a database created for this run and dropped afterwards. Nothing is
-sent outside this machine (the worker's outbox relay is off, so alert channels are never called).
+Needs the product's current debug control plane built with the deployment worker inside it
+(`cargo build -p apelora-control-plane --features dev-worker`), Docker and apelora-dev-db. Never
+uses the shared application database, an existing API or any Incus credentials: the control plane
+runs against the mock provider, in a database created for this run and dropped afterwards; part
+way through it restarts with the worker inside it, on the same mock cluster, so the API sees what
+the worker creates. Nothing is sent outside this machine (the worker's outbox relay is off, so
+alert channels are never called).
 
 --explore keeps going after an unexpected status and lists every mismatch at the end.
 """
@@ -39,7 +41,6 @@ REPO = Path(next((a for a in sys.argv[1:] if not a.startswith("--")), ROOT.paren
 SPEC_TEXT = (REPO / "packages/api-client/openapi.json").read_text()
 SPEC = json.loads(SPEC_TEXT)
 BINARY = REPO / "target/debug/apelora-control-plane"
-WORKER = REPO / "target/debug/apelora-deployment-worker"
 METHODS = {"get", "post", "put", "patch", "delete"}
 OPS = {op["operationId"]: (method, path, op) for path, item in SPEC["paths"].items() for method, op in item.items() if method in METHODS}
 EXPLORE = "--explore" in sys.argv
@@ -68,21 +69,9 @@ PLACEHOLDERS = {
 # Values that only say where this run happened (temporary directories), with what the pages show.
 LOCAL = {}
 # Why an operation keeps placeholder output: for the maintainers (README), never on reader pages.
-# The control plane and the worker each run their own in-memory mock cluster, so what the worker
-# creates (instances, volumes) is not visible to the control plane.
-SEPARATE = "the control plane must see what the worker created; with the mock provider each process has its own fixture cluster"
 UNAVAILABLE = {
-    "operate_application": SEPARATE + " (409 nothing_deployed)",
-    "application_operation": "needs an operation, which needs operate_application",
-    "open_session": SEPARATE + " (needs a running module)",
-    "terminate_session": "needs an open session",
-    "take_volume_snapshot": SEPARATE + " (409 volume_missing)",
-    "delete_volume_snapshot": "needs a snapshot",
-    "restore_volume_snapshot": "needs a snapshot",
-    "grow_application_volume": SEPARATE + " (502 incus_not_found)",
-    "restore_volume_backup": SEPARATE + " (409 restore_blocked)",
-    "move_instance": "needs an instance Apelora created that the control plane sees; the fixture's are not Apelora's (409 move_blocked)",
-    "remove_member": "needs a member without instances; the fixture's members keep theirs after evacuation (409 removal_blocked)",
+    "terminate_session": "ends a connected session; the recorder opens one but does not connect a terminal to it (404 not_found)",
+    "remove_member": "needs a member without instances; the mock keeps a member's instances on it when it is evacuated (409 removal_blocked)",
     "cluster_upgrade": "needs members that report their Incus release, a real cluster (409 upgrade_blocked)",
     "confirm_fenced": "needs a failed member and fencing evidence, a real cluster (409 member_not_offline)",
     "check_identity_provider": "needs a reachable OpenID Connect provider",
@@ -579,6 +568,11 @@ def scenario(api, start_worker):
         call("evacuate_member", params={"member": "mock-member-02"}, body={"confirm": "mock-member-02", "force": False}, expect=202)
         call("restore_member", params={"member": "mock-member-02"}, body={"confirm": "mock-member-02", "force": False}, expect=202)
         call("preview_member_removal", params={"member": "mock-member-03"}, expect=200)
+        # A second cluster in another site. Its credentials are not on this machine, so it reads as
+        # missing its identity and nothing is contacted (the address is in .invalid as well).
+        call("add_sector", body={"name": "site-b", "site": "rotterdam", "url": "https://incus.site-b.example.invalid:8443", "credentials": "SITE_B"}, expect=201)
+        call("sectors", expect=200)
+        call("remove_sector", params={"name": "site-b"}, body={"confirm": "site-b"}, expect=204)
         # The fixture cluster does not report its members' Incus releases, so an upgrade cannot start.
         call("cluster_upgrade", body={"action": "start", "confirm": "upgrade"}, expect=409)
         joined = call("create_join_token", body={"memberName": "rack2-01"}, expect=201)
@@ -624,11 +618,13 @@ def scenario(api, start_worker):
         if first:
             call("job", params={"id": first}, expect=200)
             call("job_detail", params={"id": first}, expect=200)
-        # The control plane's fixture cluster does not hold what the worker created: refused here.
-        operation = call("operate_application", params={"name": "shop"}, body={"action": "start"}, headers=idem(), expect=409)
-        if operation and "operation" in operation:
-            wait_for(lambda: api.call("application_operation", params={"name": "shop", "id": operation["operation"]["id"]}, record=False, quiet=True)["state"] not in {"queued", "running"}, 90)
-            call("application_operation", params={"name": "shop", "id": operation["operation"]["id"]}, expect=200)
+        # The worker runs inside the control plane now: the API sees the instances it created.
+        def operate(action, record=True):
+            started = call("operate_application", params={"name": "shop"}, body={"action": action, "confirmDisruption": True}, headers=idem(), record=record, expect=202)
+            state = lambda: api.call("application_operation", params={"name": "shop", "id": started["operation"]["id"]}, record=False, quiet=True)["state"]
+            assert wait_for(lambda: state() not in {"pending", "running"}, 90), f"The {action} operation did not finish"
+            assert state() == "succeeded", f"The {action} operation ended {state()}"
+            call("application_operation", params={"name": "shop", "id": started["operation"]["id"]}, record=record, expect=200)
         call("application_operations", params={"name": "shop"}, expect=200)
         failed = wait_for(lambda: api.call("jobs", query={"status": "failed"}, record=False, quiet=True)["items"], 90)
         if failed:
@@ -643,9 +639,9 @@ def scenario(api, start_worker):
         v, spare = "shop-db-01-data", "shop-cache-01-cache"
         assert {v, spare} <= names, f"Volumes not recorded: {names}"
         call("volume_snapshots", params={"name": "shop", "volume": v}, expect=200)
-        call("take_volume_snapshot", params={"name": "shop", "volume": v}, expect=409)
+        snapshot = call("take_volume_snapshot", params={"name": "shop", "volume": v}, expect=201)["name"]
         call("set_volume_schedules", params={"name": "shop", "volume": v}, body={"snapshots": {"everyMinutes": 60, "keep": 24}, "backups": {"everyMinutes": 1440, "keep": 7}}, expect=204)
-        call("grow_application_volume", params={"name": "shop", "volume": v}, body={"sizeMib": 20480}, expect=502)
+        call("grow_application_volume", params={"name": "shop", "volume": v}, body={"sizeMib": 20480}, expect=204)
         backup_jobs = [call("back_up_volume", params={"name": "shop", "volume": v}, headers=idem(), expect=202)["jobId"]]
         time.sleep(1.1)  # backups are named after the second they are taken
         backup_jobs.append(call("back_up_volume", params={"name": "shop", "volume": v}, headers=idem(), record=False, expect=202)["jobId"])
@@ -655,13 +651,24 @@ def scenario(api, start_worker):
         kept, removed = backups
         call("preview_volume_restore", params={"name": "shop", "volume": v, "backup": kept}, expect=200)
         call("preview_volume_restore", params={"name": "shop", "volume": v, "backup": kept}, query={"safetyBackup": False}, variant="options", expect=200)
-        call("restore_volume_backup", params={"name": "shop", "volume": v, "backup": kept}, body={"confirm": v, "safetyBackup": True}, headers=idem(), expect=409)
+        # A volume is restored only under a stopped instance: shut the application down first.
+        call("restore_volume_snapshot", params={"name": "shop", "volume": v, "snapshot": snapshot}, body={"confirm": snapshot}, record=False, expect=409, error_example=True)
+        operate("stop")
+        call("restore_volume_snapshot", params={"name": "shop", "volume": v, "snapshot": snapshot}, body={"confirm": snapshot}, expect=204)
+        call("delete_volume_snapshot", params={"name": "shop", "volume": v, "snapshot": snapshot}, expect=204)
+        # Restoring a backup replaces the volume, its snapshots with it.
+        restoring = call("restore_volume_backup", params={"name": "shop", "volume": v, "backup": kept}, body={"confirm": v, "safetyBackup": True}, headers=idem(), expect=202)
+        wait_for(lambda: api.call("job", params={"id": restoring["jobId"]}, record=False, quiet=True)["status"] in {"succeeded", "failed"}, 90)
         call("delete_volume_backup", params={"name": "shop", "volume": v, "backup": removed}, body={"confirm": removed}, expect=204)
-        # There is no snapshot to restore or delete (taking one was refused above).
-        snapshot = "snap-20261025-120000"
-        call("restore_volume_snapshot", params={"name": "shop", "volume": v, "snapshot": snapshot}, body={"confirm": snapshot}, expect=(404, 409, 502))
-        call("delete_volume_snapshot", params={"name": "shop", "volume": v, "snapshot": snapshot}, expect=(404, 409, 502))
+        operate("start", record=False)
+        # A volume is deleted only once no instance uses it: the cache module's instance goes first.
+        call("delete_application_volume", params={"name": "shop", "volume": spare}, body={"confirm": spare}, record=False, expect=409, error_example=True)
+        gone = call("delete_instance", params={"project": "shop-prod", "name": "shop-cache-01"}, headers=idem(), record=False, expect=202)
+        wait_for(lambda: api.call("job", params={"id": gone["jobId"]}, record=False, quiet=True)["status"] in {"succeeded", "failed"}, 60)
         call("delete_application_volume", params={"name": "shop", "volume": spare}, body={"confirm": spare}, expect=204)
+        # Moving a module Apelora created to another member, with a short stop.
+        call("preview_instance_move", params={"project": "shop-prod", "name": "shop-web-01"}, query={"target": "mock-member-03", "allowStop": True}, record=False, expect=200)
+        call("move_instance", params={"project": "shop-prod", "name": "shop-web-01"}, body={"target": "mock-member-03", "confirm": "shop-web-01", "allowStop": True}, headers=idem(), expect=202)
 
         # Alerts that the worker raised: the restart of an instance Apelora does not own fails.
         alert = wait_for(lambda: next((a for a in api.call("alerts", record=False, quiet=True)["alerts"] if a.get("state") == "firing" or not a.get("resolvedAt")), None), 60)
@@ -679,9 +686,13 @@ def scenario(api, start_worker):
         """sessions into modules"""
         call("application_access", params={"name": "shop"}, expect=200)
         call("sessions", expect=200)
-        # The control plane's fixture cluster has no shop-web-01, so no session opens here.
-        call("open_session", token="ada", params={"name": "shop", "instance": "shop-web-01"}, body={"kind": "terminal", "cols": 120, "rows": 32}, expect=(404, 409))
-        call("terminate_session", token="ada", params={"id": str(uuid.uuid4())}, expect=404)
+        # A terminal into a production module needs another person's approval: Ada asks, Grace approves.
+        asked = call("request_approval", token="ada", body={"action": "instance.console", "target": "instance:shop/shop-db-01", "reason": "Check the order database's disk use"}, record=False, expect=201)
+        call("approve_request", token="grace", params={"id": asked["id"]}, record=False, expect=200)
+        opened = call("open_session", token="ada", params={"name": "shop", "instance": "shop-db-01"}, body={"kind": "terminal", "cols": 120, "rows": 32},
+                      headers={"apelora-approval": asked["id"]}, expect=201)
+        # Only a connected session can be ended: this one was opened, never connected.
+        call("terminate_session", token="ada", params={"id": opened["id"]}, expect=404)
         call("application_operation", params={"name": "shop", "id": str(uuid.uuid4())}, expect=404)
 
     @section
@@ -743,10 +754,12 @@ def main():
     env = {**base, "APELORA_API_ADDR": f"127.0.0.1:{port}", "APELORA_DB_BACKUP_DIR": backups_dir.name,
            "APELORA_RATE_LIMIT_WRITES_PER_MIN": "100000", "APELORA_RATE_LIMIT_WRITES_BURST": "100000",
            "APELORA_RATE_LIMIT_PUBLIC_PER_MIN": "100000", "APELORA_RATE_LIMIT_PUBLIC_BURST": "100000"}
-    # The worker never delivers outside: no outbox relay, no metrics listener, no supervisor actions.
-    worker_env = {**base, "APELORA_OUTBOX_SINK": "off", "APELORA_WORKER_METRICS_ADDR": "off", "APELORA_SUPERVISE_SECS": "0",
+    # Later the control plane restarts with the deployment worker inside it (development builds with
+    # the dev-worker feature), on the same mock cluster, so the API sees what the worker creates.
+    # The worker never delivers outside: no outbox relay, no supervisor actions.
+    worker_env = {**env, "APELORA_MOCK_WORKER": "1", "APELORA_OUTBOX_SINK": "off", "APELORA_SUPERVISE_SECS": "0",
                   "APELORA_ALERT_EVALUATE_SECS": "5", "APELORA_WORKER_ID": "docs-worker"}
-    server = worker = None
+    server = None
     run("docker", "exec", "apelora-dev-db", "psql", "-U", "apelora", "-d", "postgres", "-v", "ON_ERROR_STOP=1", "-c", f"CREATE DATABASE {database}")
     try:
         # Capture CLI output in memory only: the one-time bearer secret never enters a file or log.
@@ -756,36 +769,39 @@ def main():
         SECRETS.add(token)
         api = Api(url)
         api.tokens["admin"] = token
-        with tempfile.TemporaryFile() as log, tempfile.TemporaryFile() as worker_log:
-            server = subprocess.Popen([str(BINARY)], cwd=REPO, env=env, stdout=log, stderr=log)
+        with tempfile.TemporaryFile() as log:
+            def start(process_env, record=True):
+                nonlocal server
+                server = subprocess.Popen([str(BINARY)], cwd=REPO, env=process_env, stdout=log, stderr=log)
+                # Health is public, with no credentials. Readiness polling is bounded.
+                deadline = time.monotonic() + 30
+                while True:
+                    if server.poll() is not None:
+                        log.seek(0)
+                        raise RuntimeError("Disposable control plane exited before becoming ready:\n" + log.read().decode(errors="replace")[-2000:])
+                    try:
+                        api.call("health", token=None, expect=200, record=record, quiet=not record)
+                        break
+                    except urllib.error.URLError:
+                        if time.monotonic() >= deadline:
+                            raise TimeoutError("Disposable API did not start")
+                        time.sleep(0.1)
 
             def start_worker():
-                nonlocal worker
-                worker = subprocess.Popen([str(WORKER)], cwd=REPO, env=worker_env, stdout=worker_log, stderr=worker_log)
-                time.sleep(1)
-                assert worker.poll() is None, "The deployment worker exited at start"
+                server.terminate()
+                server.wait(timeout=15)
+                start(worker_env, record=False)
 
-            # Health is public, with no credentials. Readiness polling is bounded.
-            deadline = time.monotonic() + 30
-            while True:
-                if server.poll() is not None:
-                    raise RuntimeError("Disposable control plane exited before becoming ready")
-                try:
-                    api.call("health", token=None, expect=200)
-                    break
-                except urllib.error.URLError:
-                    if time.monotonic() >= deadline:
-                        raise TimeoutError("Disposable API did not start")
-                    time.sleep(0.1)
+            start(env)
             assert RESPONSES[-1]["body"]["provider"] == "mock"
             remote = urllib.request.urlopen(url + "/api/v1/openapi.json", timeout=10).read().decode()
             assert remote == SPEC_TEXT, "Served OpenAPI differs from the documentation source"
             try:
                 scenario(api, start_worker)
             finally:
-                if worker and (EXPLORE or sys.exc_info()[0]):
-                    worker_log.seek(0)
-                    print(worker_log.read().decode(errors="replace")[-4000:], file=sys.stderr)
+                if EXPLORE or sys.exc_info()[0]:
+                    log.seek(0)
+                    print(log.read().decode(errors="replace")[-4000:], file=sys.stderr)
             # All collection reads without required parameters.
             for operation_id, (method, path, op) in OPS.items():
                 if method != "get" or "{" in path or operation_id in {"health", "sign_in_options", "audit_export"}:
@@ -801,7 +817,7 @@ def main():
             missing = sorted(set(OPS) - {r["operationId"] for r in RESPONSES})
             report = {"verifiedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"), "productCommit": run("git", "rev-parse", "HEAD", cwd=REPO).strip(),
                       "openapiSha256": hashlib.sha256(SPEC_TEXT.encode()).hexdigest(),
-                      "environment": "Disposable PostgreSQL database, authenticated loopback control plane and deployment worker, each with the mock Incus provider; nothing sent outside this machine",
+                      "environment": "Disposable PostgreSQL database, authenticated loopback control plane with the deployment worker running inside it on the same mock Incus provider; nothing sent outside this machine",
                       "recorded": len({r["operationId"] for r in RESPONSES}), "placeholders": {op: UNAVAILABLE.get(op, "not exercised yet") for op in missing},
                       "checks": CHECKS, "errors": ERRORS, "responses": RESPONSES,
                       "requests": [r for r in REQUESTS if r["operationId"] in missing]}
@@ -830,10 +846,9 @@ def main():
             ts_count = check_typescript()
             print(f"{count} documented JSON examples schema-validated; {curl_count} exact documented curl commands executed; {ts_count} TypeScript calls type-checked.")
     finally:
-        for process in (worker, server):
-            if process:
-                process.terminate()
-                process.wait(timeout=15)
+        if server:
+            server.terminate()
+            server.wait(timeout=15)
         backups_dir.cleanup()
         run("docker", "exec", "apelora-dev-db", "psql", "-U", "apelora", "-d", "postgres", "-v", "ON_ERROR_STOP=1", "-c", f"DROP DATABASE {database} WITH (FORCE)")
 

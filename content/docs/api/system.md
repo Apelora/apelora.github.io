@@ -134,7 +134,7 @@ Content-Type: `application/json`.
   "incus": {
     "connected": false
   },
-  "checkedAt": "2026-10-26T01:11:04.191656Z"
+  "checkedAt": "2026-10-26T18:14:58.669005Z"
 }
 ```
 
@@ -174,14 +174,14 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "checkedAt": "2026-10-26T01:11:13.347836Z",
+  "checkedAt": "2026-10-26T18:15:16.806439Z",
   "overall": "degraded",
   "controlPlane": {
     "state": "healthy",
     "version": "0.0.0",
     "apiVersion": "v1",
-    "startedAt": "2026-10-26T01:11:04.1143Z",
-    "uptimeSecs": 9,
+    "startedAt": "2026-10-26T18:15:01.42459Z",
+    "uptimeSecs": 15,
     "auth": "tokens",
     "provider": "mock",
     "reason": null,
@@ -189,9 +189,9 @@ Content-Type: `application/json`.
   },
   "database": {
     "state": "healthy",
-    "roundTripMs": 1,
-    "schemaVersion": 34,
-    "expectedSchemaVersion": 34,
+    "roundTripMs": 0.7,
+    "schemaVersion": 35,
+    "expectedSchemaVersion": 35,
     "reason": null,
     "nextStep": null
   },
@@ -202,9 +202,9 @@ Content-Type: `application/json`.
         "id": "docs-worker",
         "host": "unknown",
         "version": "0.0.0",
-        "startedAt": "2026-10-26T01:11:07.452506Z",
-        "lastSeen": "2026-10-26T01:11:07.452506Z",
-        "secondsSinceSeen": 5,
+        "startedAt": "2026-10-26T18:15:01.535732Z",
+        "lastSeen": "2026-10-26T18:15:16.539057Z",
+        "secondsSinceSeen": 0,
         "state": "running"
       }
     ],
@@ -305,7 +305,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:13.349864Z"
+    "observedAt": "2026-10-26T18:15:16.808125Z"
   },
   "clustered": true,
   "items": [
@@ -349,6 +349,13 @@ Content-Type: `application/json`.
           "kind": "container",
           "status": "Running",
           "managed": false
+        },
+        {
+          "name": "shop-db-01",
+          "project": "shop-prod",
+          "kind": "container",
+          "status": "Running",
+          "managed": true
         }
       ],
       "warnings": []
@@ -662,11 +669,11 @@ Content-Type: `application/json`.
   "items": [
     {
       "name": "APELORA_ALERT_EVALUATE_SECS",
-      "value": "30",
-      "set": false,
-      "isDefault": true,
+      "value": "5",
+      "set": true,
+      "isDefault": false,
       "default": "30",
-      "source": "default",
+      "source": "environment",
       "hidden": null,
       "readBy": [
         "worker"
@@ -724,10 +731,10 @@ Content-Type: `application/json`.
       "id": "docs-worker",
       "host": "unknown",
       "version": "0.0.0",
-      "lastSeen": "2026-10-26T01:11:07.452506Z"
+      "lastSeen": "2026-10-26T18:15:16.539057Z"
     }
   ],
-  "readAt": "2026-10-26T01:11:04.1143Z"
+  "readAt": "2026-10-26T18:15:01.42459Z"
 }
 ```
 
@@ -831,7 +838,7 @@ Content-Type: `application/json`.
 ```json
 {
   "token": "<token, shown once>",
-  "expiresAt": "2026-10-26T09:11:04.715088Z",
+  "expiresAt": "2026-10-27T02:14:59.186777Z",
   "name": "Ada Lovelace"
 }
 ```
@@ -961,15 +968,15 @@ tar -tf support-bundle.tar
 **Example contents:**
 
 ```text
-apelora-support-20261026-011113/manifest.json
-apelora-support-20261026-011113/versions.json
-apelora-support-20261026-011113/settings.json
-apelora-support-20261026-011113/health.json
-apelora-support-20261026-011113/preflight.json
-apelora-support-20261026-011113/jobs-failed.json
-apelora-support-20261026-011113/metrics.txt
-apelora-support-20261026-011113/logs/README.txt
-apelora-support-20261026-011113/README.txt
+apelora-support-20261026-181516/manifest.json
+apelora-support-20261026-181516/versions.json
+apelora-support-20261026-181516/settings.json
+apelora-support-20261026-181516/health.json
+apelora-support-20261026-181516/preflight.json
+apelora-support-20261026-181516/jobs-failed.json
+apelora-support-20261026-181516/metrics.txt
+apelora-support-20261026-181516/logs/README.txt
+apelora-support-20261026-181516/README.txt
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
@@ -1130,7 +1137,7 @@ const result = await client.request("metrics", {});
 
 Content-Type: `text/plain`.
 
-**Example response** from a test installation; your IDs, names and times differ. The first 15 of 2952 lines.
+**Example response** from a test installation; your IDs, names and times differ. The first 15 of 1827 lines.
 
 ```text
 # HELP apelora_build_info Always 1: which component, version and commit is running.
@@ -1141,13 +1148,13 @@ apelora_build_info{region="default",site="default",sector="default",component="c
 apelora_provider_info{region="default",site="default",sector="default",mode="mock"} 1
 # HELP apelora_http_requests_total API requests answered, by route template, method and status class.
 # TYPE apelora_http_requests_total counter
-apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",status="2xx"} 9
-apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",status="2xx"} 2
-apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="POST",status="2xx"} 1
+apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts",method="GET",status="2xx"} 3
+apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels",method="GET",status="2xx"} 1
 apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels/{id}",method="DELETE",status="2xx"} 1
-apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels/{id}",method="PUT",status="2xx"} 1
-apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/channels/{id}/test",method="POST",status="2xx"} 1
 apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/history",method="GET",status="2xx"} 2
+apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/rules",method="GET",status="2xx"} 2
+apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/alerts/{id}/acknowledge",method="POST",status="2xx"} 1
+apelora_http_requests_total{region="default",site="default",sector="default",route="/api/v1/applications",method="GET",status="2xx"} 1
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.

@@ -97,7 +97,28 @@
   -d '{&quot;confirm&quot;:&quot;node-2&quot;}' \
   -X POST &quot;$API/api/v1/cluster/members/node-2/evacuate&quot;</code></pre>
 <p>Before Incus moves anything, Apelora takes the replicas on this server out of their service addresses, so no request goes to one that is about to stop. A replica whose service has no other replica keeps serving until it stops. This takes a few seconds per application, at most <code>APELORA_DRAIN_WAIT_SECS</code> (30 s by default); the confirmation says what was done, for example <em>Took 2 replicas of 1 application out of their service addresses first</em>. If it does not finish in time, the evacuation goes ahead and says so, and requests to those replicas can fail for up to about ten seconds, until the load balancer's health check takes them out.</p>
-<p>The member shows Evacuating, then Evacuated. A moved replica rejoins its service address once it runs on its new server and has its address (the worker checks every <code>APELORA_SUPERVISE_SECS</code>). The replica supervisor does not start a replacement for an instance on a member that is not Online.</p>
+<p>The member shows Evacuating, then Evacuated. A moved replica rejoins its service address once it runs on its new server and has its address (the worker checks every <code>APELORA_SUPERVISE_SECS</code>). The replica supervisor does not start a replacement for an instance on a member that is not Online. A replica that Incus has moved but not started yet is left for Incus to start; the supervisor starts it only if it is still stopped 60 s later.</p>
+<figure class="diagram"><a href="/assets/docs/diagrams/runbooks-member-maintenance-0.svg"><img width="1879" height="907" src="/assets/docs/diagrams/runbooks-member-maintenance-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>sequenceDiagram
+  autonumber
+  actor A as Administrator
+  participant C as Control plane
+  participant W as Worker (network sync, supervisor)
+  participant L as Load balancer (OVN)
+  participant I as Incus
+  A-&gt;&gt;C: Evacuate node-2 (typed name)
+  C-&gt;&gt;W: record drains, queue a network sync per application
+  W-&gt;&gt;L: leave node-2's replicas out of the service addresses
+  C--&gt;&gt;C: wait until synced (at most APELORA_DRAIN_WAIT_SECS)
+  C-&gt;&gt;I: evacuate node-2
+  I-&gt;&gt;I: move each instance to another member (a container stops first) and start it
+  Note over W,I: a moved replica that is still stopped is Incus's to start for 60 s
+  W-&gt;&gt;I: next pass: replica runs on its new member with its address
+  W-&gt;&gt;L: replica rejoins its service address
+  A-&gt;&gt;C: Restore node-2 (typed name)
+  C-&gt;&gt;W: drain the replicas that will move back, sync
+  C-&gt;&gt;I: restore node-2
+  I-&gt;&gt;I: move the evacuated instances back and start them
+  W-&gt;&gt;L: returning replicas rejoin once they run</code></pre></details></figure>
 <h2 id="do-the-work">Do the work</h2>
 <p>Updates, a reboot, or hardware. The instances stay where the evacuation put them.</p>
 <h2 id="restore">Restore</h2>

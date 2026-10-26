@@ -73,44 +73,44 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": 112,
-      "at": "2026-10-26T01:11:12.855Z",
-      "actor": "token:docs-verifier",
-      "actorType": "token",
-      "actorName": "docs-verifier",
-      "action": "alert.channel.delete",
-      "target": "alert-channel:On-call webhook",
+      "id": 130,
+      "at": "2026-10-26T18:15:16.361293Z",
+      "actor": "user:afb7ba87-5522-4d55-833a-138d795b7037",
+      "actorType": "user",
+      "actorName": "ada",
+      "action": "session.request",
+      "target": "instance:shop/shop-db-01",
       "outcome": "success",
-      "scope": null,
+      "scope": {
+        "application": "ff56d12a-2194-4f20-94e5-c224200179a8",
+        "organization": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+        "project": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"
+      },
       "detail": {
-        "enabled": true,
-        "host": "hooks.example.invalid",
-        "id": "15a6c2d8-09c8-446a-9a9a-14aea68b697d",
-        "minSeverity": "critical",
-        "name": "docs-verifier",
-        "requestId": "fb74e3e0-889c-4b0b-b551-00dbb06ef811",
-        "role": "fabric-admin",
-        "secretRef": "APELORA_ALERT_SECRET_ONCALL"
+        "approval": "cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125",
+        "kind": "terminal",
+        "name": "ada",
+        "requestId": "8c4a35f4-3cdc-4baa-958d-90f271faef0c",
+        "session": "8732e470-6d14-4fe1-80e9-8a99502e0a18"
       }
     },
     {
-      "id": 111,
-      "at": "2026-10-26T01:11:12.845853Z",
-      "actor": "token:docs-verifier",
-      "actorType": "token",
-      "actorName": "docs-verifier",
-      "action": "alert.acknowledge",
-      "target": "alert:2",
+      "id": 129,
+      "at": "2026-10-26T18:15:16.345876Z",
+      "actor": "user:e2617b76-d2e8-481e-8a91-b87eed87403a",
+      "actorType": "user",
+      "actorName": "grace",
+      "action": "approval.grant",
+      "target": "instance:shop/shop-db-01",
       "outcome": "success",
       "scope": null,
       "detail": {
-        "name": "docs-verifier",
-        "note": "Looking into the failed job",
-        "requestId": "19322a4d-c602-4173-9e5e-9d717d486ad6",
-        "role": "fabric-admin",
-        "rule": "job-failures",
-        "severity": "warning",
-        "subject": "instance.restart"
+        "action": "instance.console",
+        "emergencyAccess": true,
+        "id": "cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125",
+        "name": "grace",
+        "requestId": "46cc0647-bb6b-4e1a-939c-9e8449b0d755",
+        "requester": "user:afb7ba87-5522-4d55-833a-138d795b7037"
       }
     }
   ]
@@ -168,7 +168,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=jsonl"
 **With options** (`action`, `from`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-25T01%3A11%3A12Z" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-25T18%3A15%3A16Z" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: text/csv"
 ```
@@ -183,23 +183,23 @@ const result = await client.request("audit_export", { query: { format: "csv" } }
 
 Content-Type: `text/csv`.
 
-**Example response** from a test installation; your IDs, names and times differ. The first 4 of 114 lines.
+**Example response** from a test installation; your IDs, names and times differ. The first 4 of 132 lines.
 
 ```text
 id,at,actor,actorName,actorType,action,target,outcome,requestId,scope,detail
-113,2026-10-26T01:11:12.919731Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,f68d7dae-cf25-48e1-95a8-421fec785861,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""f68d7dae-cf25-48e1-95a8-421fec785861"",""role"":""fabric-admin""}"
-112,2026-10-26T01:11:12.855Z,token:docs-verifier,docs-verifier,token,alert.channel.delete,alert-channel:On-call webhook,success,fb74e3e0-889c-4b0b-b551-00dbb06ef811,,"{""enabled"":true,""host"":""hooks.example.invalid"",""id"":""15a6c2d8-09c8-446a-9a9a-14aea68b697d"",""minSeverity"":""critical"",""name"":""docs-verifier"",""requestId"":""fb74e3e0-889c-4b0b-b551-00dbb06ef811"",""role"":""fabric-admin"",""secretRef"":""APELORA_ALERT_SECRET_ONCALL""}"
-111,2026-10-26T01:11:12.845853Z,token:docs-verifier,docs-verifier,token,alert.acknowledge,alert:2,success,19322a4d-c602-4173-9e5e-9d717d486ad6,,"{""name"":""docs-verifier"",""note"":""Looking into the failed job"",""requestId"":""19322a4d-c602-4173-9e5e-9d717d486ad6"",""role"":""fabric-admin"",""rule"":""job-failures"",""severity"":""warning"",""subject"":""instance.restart""}"
+131,2026-10-26T18:15:16.405626Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,74898f10-bbd7-44fb-af53-17a8ce27b151,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""74898f10-bbd7-44fb-af53-17a8ce27b151"",""role"":""fabric-admin""}"
+130,2026-10-26T18:15:16.361293Z,user:afb7ba87-5522-4d55-833a-138d795b7037,ada,user,session.request,instance:shop/shop-db-01,success,8c4a35f4-3cdc-4baa-958d-90f271faef0c,"{""application"":""ff56d12a-2194-4f20-94e5-c224200179a8"",""organization"":""e0a97f4d-0a7d-40f3-b19f-de3548b8eba8"",""project"":""ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063""}","{""approval"":""cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125"",""kind"":""terminal"",""name"":""ada"",""requestId"":""8c4a35f4-3cdc-4baa-958d-90f271faef0c"",""session"":""8732e470-6d14-4fe1-80e9-8a99502e0a18""}"
+129,2026-10-26T18:15:16.345876Z,user:e2617b76-d2e8-481e-8a91-b87eed87403a,grace,user,approval.grant,instance:shop/shop-db-01,success,46cc0647-bb6b-4e1a-939c-9e8449b0d755,,"{""action"":""instance.console"",""emergencyAccess"":true,""id"":""cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125"",""name"":""grace"",""requestId"":""46cc0647-bb6b-4e1a-939c-9e8449b0d755"",""requester"":""user:afb7ba87-5522-4d55-833a-138d795b7037""}"
 ```
 
 Content-Type: `application/x-ndjson`.
 
-**Example response** from a test installation; your IDs, names and times differ. The first 3 of 114 lines.
+**Example response** from a test installation; your IDs, names and times differ. The first 3 of 132 lines.
 
 ```text
-{"id":114,"at":"2026-10-26T01:11:12.928759Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"8f94431c-562e-4383-ab22-0662c1997d56","role":"fabric-admin"}}
-{"id":113,"at":"2026-10-26T01:11:12.919731Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"f68d7dae-cf25-48e1-95a8-421fec785861","role":"fabric-admin"}}
-{"id":112,"at":"2026-10-26T01:11:12.855Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"alert.channel.delete","target":"alert-channel:On-call webhook","outcome":"success","scope":null,"detail":{"enabled":true,"host":"hooks.example.invalid","id":"15a6c2d8-09c8-446a-9a9a-14aea68b697d","minSeverity":"critical","name":"docs-verifier","requestId":"fb74e3e0-889c-4b0b-b551-00dbb06ef811","role":"fabric-admin","secretRef":"APELORA_ALERT_SECRET_ONCALL"}}
+{"id":132,"at":"2026-10-26T18:15:16.41456Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"9cb4795b-616f-4853-99de-a8a87a8bc767","role":"fabric-admin"}}
+{"id":131,"at":"2026-10-26T18:15:16.405626Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"74898f10-bbd7-44fb-af53-17a8ce27b151","role":"fabric-admin"}}
+{"id":130,"at":"2026-10-26T18:15:16.361293Z","actor":"user:afb7ba87-5522-4d55-833a-138d795b7037","actorType":"user","actorName":"ada","action":"session.request","target":"instance:shop/shop-db-01","outcome":"success","scope":{"application":"ff56d12a-2194-4f20-94e5-c224200179a8","organization":"e0a97f4d-0a7d-40f3-b19f-de3548b8eba8","project":"ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"},"detail":{"approval":"cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125","kind":"terminal","name":"ada","requestId":"8c4a35f4-3cdc-4baa-958d-90f271faef0c","session":"8732e470-6d14-4fe1-80e9-8a99502e0a18"}}
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.

@@ -107,6 +107,15 @@ offline members), and Members shows <em>Majority safe</em>.</li><li>Read the rel
 cluster database or API. Blocked members stop answering the API until every member runs the
 new release; their instances keep running. Upgrade the remaining members without waiting,
 evacuating each first only while the cluster still accepts changes.</li></ul></li><li><strong>Restore</strong> the member from Servers → Members, and check that its instances are back.</li><li>Take the next member.</li></ol>
+<h3 id="with-the-assistant">With the assistant</h3>
+<p>The <strong>Upgrade assistant</strong> on the same tab walks these steps and remembers where you are. Type
+<code>upgrade</code> to <strong>Start the upgrade</strong> (only when nothing blocks it). For each member in the order it
+shows, it offers one button at a time, each confirmed by typing the member's name:
+<strong>Evacuate this member</strong> (after the same dry run as on Members), <strong>Record the package upgrade</strong>
+(after you upgraded Incus on that server yourself; refused while the member still reports the
+old release or does not answer yet, accepted when it is Blocked) and <strong>Restore this member</strong>.
+<strong>Abandon the run</strong> forgets the run; evacuated members stay evacuated until you restore them.
+Every step is audited (<code>cluster.upgrade.*</code>).</p>
 <p>Afterwards: Upgrades shows <em>Up to date</em>, Preflight passes, and Operations shows queued jobs
 completing.</p>
 <h2 id="when-a-step-fails">When a step fails</h2>
@@ -121,7 +130,7 @@ upgrade has not been tried yet. Try it first on a cluster you can afford to dist
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/docs/runbooks/incus-rolling-upgrade.md">docs/runbooks/incus-rolling-upgrade.md</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/docs/runbooks/incus-rolling-upgrade.md">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/runbooks/quorum-loss/"><span>Previous</span>The cluster loses quorum</a><a class="next" href="/docs/runbooks/replica-unhealthy/"><span>Next</span>A replica fails its health check</a></nav>
       </article>
-      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#reading-quorum-servers-members-cluster-database">Reading quorum (Servers → Members → Cluster database)</a></li><li class="l2"><a href="#rolling-upgrade-servers-upgrades">Rolling upgrade (Servers → Upgrades)</a></li><li class="l2"><a href="#when-a-step-fails">When a step fails</a></li><li class="l2"><a href="#before-you-rely-on-it">Before you rely on it</a></li></ul></nav>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#reading-quorum-servers-members-cluster-database">Reading quorum (Servers → Members → Cluster database)</a></li><li class="l2"><a href="#rolling-upgrade-servers-upgrades">Rolling upgrade (Servers → Upgrades)</a></li><li class="l3"><a href="#with-the-assistant">With the assistant</a></li><li class="l2"><a href="#when-a-step-fails">When a step fails</a></li><li class="l2"><a href="#before-you-rely-on-it">Before you rely on it</a></li></ul></nav>
     </div>
   </main>
   <footer class="site-footer">

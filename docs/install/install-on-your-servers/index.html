@@ -85,6 +85,28 @@
 <h2 id="what-runs-where">What runs where</h2>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Part</th><th scope="col">What it is</th><th scope="col">Where it runs</th></tr></thead><tbody><tr><td><strong>Control plane</strong> (<code>apelora-control-plane</code>)</td><td>The API: plans, roles, audit</td><td>One process, near the database</td></tr><tr><td><strong>Worker</strong> (<code>apelora-deployment-worker</code>)</td><td>Carries out jobs, enforces the network, replaces lost replicas</td><td>One or more processes</td></tr><tr><td><strong>PostgreSQL</strong></td><td>Apelora's own records, not your applications' data</td><td>Anywhere both can reach</td></tr><tr><td><strong>Studio and Console</strong></td><td>Two sets of static files</td><td>Any web server, over HTTPS</td></tr></tbody></table></div>
 <p>Apelora is not in the data path: running instances keep running if the control plane, the worker or the database is down (<a href="/docs/runbooks/api-outage/">the control plane or the worker is down</a>).</p>
+<p>How the parts connect once this page is done:</p>
+<figure class="diagram"><a href="/assets/docs/diagrams/guides-installing-apelora-0.svg"><img width="1763" height="341" src="/assets/docs/diagrams/guides-installing-apelora-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart LR
+  B[&quot;Browser&quot;]
+  subgraph WEB[&quot;Web server, HTTPS&quot;]
+    F[&quot;Studio and Console files&quot;]
+    P[&quot;Proxy for /api/&quot;]
+  end
+  CP[&quot;Control plane&quot;]
+  WK[&quot;Worker, one or more&quot;]
+  DB[(&quot;PostgreSQL&quot;)]
+  subgraph IC[&quot;Incus cluster&quot;]
+    M[&quot;Members: REST API and instances&quot;]
+    OVN[&quot;OVN&quot;]
+  end
+  B --&gt;|&quot;static files&quot;| F
+  B --&gt;|&quot;/api/ requests&quot;| P
+  P --&gt;|&quot;loopback, or a declared proxy&quot;| CP
+  CP --&gt;|&quot;records, jobs&quot;| DB
+  WK --&gt;|&quot;jobs, heartbeats&quot;| DB
+  CP --&gt;|&quot;TLS: deploy and admin identities&quot;| M
+  WK --&gt;|&quot;TLS: deploy identity only&quot;| M
+  M -.-|&quot;with APELORA_NETWORK_UPLINK&quot;| OVN</code></pre></details></figure>
 <h2 id="1-postgresql">1. PostgreSQL</h2>
 <p>Create a role and a database for Apelora on any PostgreSQL server that the control plane and the worker can reach. Development uses the version in <code>infra/dev/compose.yaml</code>. Both services create and upgrade the schema whenever they connect, so the role needs the right to create tables in its own database.</p>
 <pre data-lang="sh" tabindex="0"><code>DB_USER=...  DB_NAME=...  DB_HOST=...

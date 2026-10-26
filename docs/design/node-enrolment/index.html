@@ -84,7 +84,7 @@
 <p>Apelora keeps a machine record, issues a single-use join token, and runs an enrolment script on the host. A new member is held out of placement until it has been checked, and then admitted. Fabric Console is where this is done. Removing a member from the cluster is a separate action.</p>
 <p>Apelora does not provide PXE, DHCP, or its own power controller, and it does not store controller credentials. Incus places instances. This covers tens of machines, with one administrator acting at a time.</p>
 <h2 id="what-is-recorded">What is recorded</h2>
-<figure class="diagram"><a href="/assets/docs/diagrams/design-node-enrolment-0.svg"><img width="916" height="346" src="/assets/docs/diagrams/design-node-enrolment-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart LR
+<figure class="diagram"><a href="/assets/docs/diagrams/design-node-enrolment-0.svg"><img width="847" height="331" src="/assets/docs/diagrams/design-node-enrolment-0.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>flowchart LR
   admin[Administrator&lt;br/&gt;Fabric Console] --&gt;|register, approve, admit| api[Control plane]
   api --&gt;|join token, member config| incus[(Incus cluster&lt;br/&gt;admin identity)]
   api --&gt; db[(PostgreSQL&lt;br/&gt;machines, audit)]

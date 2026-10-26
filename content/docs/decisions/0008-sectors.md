@@ -7,7 +7,7 @@ label:
 source: docs/adr/0008-sectors.md
 summary: Apelora manages one Incus cluster today. The owner asked how many physical servers one installation can use. The Incus maintainers recommend at most about 50 servers per cluster (clusters of 100–150…
 ---
-Status: **accepted. The survival decision is implemented and refuses while one site is connected. A sectors table, a second Incus adapter, access scope and the links are not built. Extended by [ADR 0009](0009-global-fabric.md) (regions, sites and a plane per region)** · Date: 2026-10-21 · Related: [ADR 0001](0001-incus-first.md), [connections and scale](../architecture/CONNECTIONS-AND-SCALE.md)
+Status: **accepted. The survival decision is implemented. Slice 1 (2026-10-26): a sectors table and API, one Incus connection per registered sector (credentials by name, files on the control plane), sector state on Servers → Sectors, and connected sectors of other sites counted by the survival decision. Deploying into a sector, access scope and the links are not built. Extended by [ADR 0009](0009-global-fabric.md) (regions, sites and a plane per region)** · Date: 2026-10-21 · Related: [ADR 0001](0001-incus-first.md), [connections and scale](../architecture/CONNECTIONS-AND-SCALE.md)
 
 ## Context
 

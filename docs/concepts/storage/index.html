@@ -140,7 +140,7 @@
 <h3 id="31-rules-carried-from-the-storage-volumes-skill-restated-for-this-design">3.1 Rules (carried from the <code>storage-volumes</code> skill, restated for this design)</h3>
 <ol><li>Removing a module from the canvas <strong>never</strong> deletes data. Deleting a volume is an explicit, typed-name confirmed action; retained volumes show as <em>orphaned</em> until an owner decides.</li><li>A read-write <strong>block</strong> volume attaches to at most one instance. A design that gives several replicas the same exclusive volume is invalid (validation error with a hint: use one volume per replica or a shared filesystem class).</li><li>Resize is <strong>grow-only</strong> by default; shrinking is not offered.</li><li>Snapshots are taken stopped or with an application-aware hook unless the backend guarantees consistency; Apelora records which one was achieved. <strong>Snapshots are not backups.</strong></li><li>All operations are idempotent and level-triggered like every other desired state: re-read Incus, then act.</li><li>Encrypt at rest where the backend supports it; keys are referenced, never stored in designs or the database.</li><li>Ownership labels <code>user.apelora.application</code>, <code>user.apelora.module</code>, <code>user.apelora.volume</code> are written only by Apelora; anything without them is never touched.</li></ol>
 <h2 id="4-data-model-proposed">4. Data model (PROPOSED)</h2>
-<figure class="diagram"><a href="/assets/docs/diagrams/architecture-storage-2.svg"><img width="1098" height="741" src="/assets/docs/diagrams/architecture-storage-2.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>erDiagram
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-storage-2.svg"><img width="1439" height="954" src="/assets/docs/diagrams/architecture-storage-2.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>erDiagram
   APPLICATION ||--o{ REVISION : has
   APPLICATION ||--o{ VOLUME : owns
   REVISION ||--o{ VOLUME_SPEC : declares
@@ -172,7 +172,7 @@
     string snapshot_expiry
   }</code></pre></details></figure>
 <h2 id="5-lifecycle">5. Lifecycle</h2>
-<figure class="diagram"><a href="/assets/docs/diagrams/architecture-storage-3.svg"><img width="731" height="640" src="/assets/docs/diagrams/architecture-storage-3.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>stateDiagram-v2
+<figure class="diagram"><a href="/assets/docs/diagrams/architecture-storage-3.svg"><img width="707" height="640" src="/assets/docs/diagrams/architecture-storage-3.svg" alt="Diagram. Its text version is under Diagram source." loading="lazy"></a><details><summary>Diagram source</summary><pre tabindex="0"><code>stateDiagram-v2
   [*] --&gt; Requested : plan approved
   Requested --&gt; Creating : worker claims job
   Creating --&gt; Available : volume exists in the pool

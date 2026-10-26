@@ -7,7 +7,7 @@ label: Cluster
 source: packages/api-client/openapi.json
 summary: Members, machines, join tokens, settings and recovery.
 ---
-The cluster's servers: members and their maintenance (evacuate, restore, remove, fencing), rolling upgrades, cluster settings and groups, recovery, machines and join tokens, and MAAS provisioning. This page lists 27 operations.
+The cluster's servers: members and their maintenance (evacuate, restore, remove, fencing), rolling upgrades, cluster settings and groups, recovery, machines and join tokens, and MAAS provisioning. This page lists 30 operations.
 
 Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
@@ -42,6 +42,9 @@ Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/as
 | [`POST /api/v1/provisioners/maas/machines/{system_id}/deploy`](#post-apiv1provisionersmaasmachinessystem_iddeploy) | Installs an operating system. |
 | [`POST /api/v1/provisioners/maas/machines/{system_id}/release`](#post-apiv1provisionersmaasmachinessystem_idrelease) | Returns the machine to MAAS's pool. |
 | [`POST /api/v1/provisioners/maas/machines/{system_id}/test`](#post-apiv1provisionersmaasmachinessystem_idtest) | Starts a hardware test run (burn-in) through MAAS. |
+| [`GET /api/v1/sectors`](#get-apiv1sectors) | The sectors this control plane knows and whether each answers. |
+| [`POST /api/v1/sectors`](#post-apiv1sectors) | Registers another Incus cluster as a sector. |
+| [`DELETE /api/v1/sectors/{name}`](#delete-apiv1sectorsname) | Forgets a registered sector. |
 
 ## Details
 
@@ -77,7 +80,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:13.305284Z"
+    "observedAt": "2026-10-26T18:15:16.791991Z"
   },
   "items": [
     {
@@ -134,12 +137,12 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:06.7667Z"
+    "observedAt": "2026-10-26T18:15:01.317771Z"
   },
   "items": [
     {
       "memberName": "rack2-01",
-      "expiresAt": "2026-10-26T02:11:06.762781Z"
+      "expiresAt": "2026-10-26T19:15:01.31593Z"
     }
   ]
 }
@@ -202,7 +205,7 @@ Content-Type: `application/json`.
 ```json
 {
   "memberName": "rack2-01",
-  "expiresAt": "2026-10-26T02:11:06.762781Z",
+  "expiresAt": "2026-10-26T19:15:01.31593Z",
   "token": "<token, shown once>",
   "warnings": []
 }
@@ -292,7 +295,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:06.749343Z"
+    "observedAt": "2026-10-26T18:15:01.291781Z"
   },
   "clustered": true,
   "members": [
@@ -515,7 +518,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:06.751817Z"
+    "observedAt": "2026-10-26T18:15:01.295467Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -703,7 +706,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:06.759495Z"
+    "observedAt": "2026-10-26T18:15:01.304088Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -896,7 +899,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:06.779161Z"
+    "observedAt": "2026-10-26T18:15:01.325287Z"
   },
   "items": []
 }
@@ -943,7 +946,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:06.776586Z"
+    "observedAt": "2026-10-26T18:15:01.323976Z"
   },
   "identity": "admin",
   "items": [
@@ -1140,7 +1143,7 @@ Content-Type: `application/json`.
 | `400` | `confirmation_mismatch`, `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
-| `409` | `evacuation_blocked`, `no_upgrade`, `upgrade_blocked`, `upgrade_in_progress`, `upgrade_step` |
+| `409` | `evacuation_blocked`, `no_upgrade`, `not_upgraded`, `upgrade_blocked`, `upgrade_in_progress`, `upgrade_step` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
@@ -1177,7 +1180,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:13.416805Z"
+    "observedAt": "2026-10-26T18:15:16.872618Z"
   },
   "items": [
     {
@@ -1196,12 +1199,12 @@ Content-Type: `application/json`.
       "nextStep": "None.",
       "warnings": [],
       "registeredBy": "token:docs-verifier",
-      "registeredAt": "2026-10-26T01:11:06.787063Z",
+      "registeredAt": "2026-10-26T18:15:01.329954Z",
       "approvedBy": null,
       "approvedAt": null,
       "approvalExpiresAt": null,
       "admittedBy": "token:docs-verifier",
-      "admittedAt": "2026-10-26T01:11:06.797701Z"
+      "admittedAt": "2026-10-26T18:15:01.335644Z"
     }
   ]
 }
@@ -1283,7 +1286,7 @@ Content-Type: `application/json`.
   "nextStep": "Install Incus on the server, then approve it.",
   "warnings": [],
   "registeredBy": "token:docs-verifier",
-  "registeredAt": "2026-10-26T01:11:06.781679Z",
+  "registeredAt": "2026-10-26T18:15:01.326469Z",
   "approvedBy": null,
   "approvedAt": null,
   "approvalExpiresAt": null,
@@ -1382,7 +1385,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:06.793446Z"
+    "observedAt": "2026-10-26T18:15:01.333671Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1454,7 +1457,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:06.797153Z"
+    "observedAt": "2026-10-26T18:15:01.335587Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1566,7 +1569,7 @@ Content-Type: `application/json`.
 ```json
 {
   "name": "rack2-01",
-  "expiresAt": "2026-10-26T02:11:06.804963Z",
+  "expiresAt": "2026-10-26T19:15:01.340289Z",
   "token": "<token, shown once>",
   "enrolCommand": "sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address <this server's cluster address>",
   "warnings": []
@@ -1618,7 +1621,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T01:11:13.43435Z"
+    "observedAt": "2026-10-26T18:15:16.889737Z"
   },
   "configured": false,
   "items": []
@@ -1917,4 +1920,212 @@ Content-Type: `application/json`.
 | `429` | `rate_limited` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
+
+### `GET /api/v1/sectors`
+
+The sectors this control plane knows and whether each answers. Needs `cluster.view`.
+
+**Operation ID:** `sectors`
+
+**Needs:** `cluster.view`.
+
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/sectors" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("sectors", {});
+```
+
+**Response `200`** — Success.
+
+Content-Type: `application/json`.
+
+**Example response** from a test installation; your IDs, names and times differ.
+
+```json
+{
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-26T18:15:01.309406Z"
+  },
+  "items": [
+    {
+      "name": "default",
+      "site": "default",
+      "home": true,
+      "url": null,
+      "state": "connected",
+      "members": 3,
+      "incusVersion": null,
+      "credentialVars": []
+    },
+    {
+      "name": "site-b",
+      "site": "rotterdam",
+      "home": false,
+      "url": "https://incus.site-b.example.invalid:8443",
+      "state": "connected",
+      "members": 3,
+      "incusVersion": null,
+      "credentialVars": [
+        "APELORA_SECTOR_SITE_B_CLIENT_CERT",
+        "APELORA_SECTOR_SITE_B_CLIENT_KEY",
+        "APELORA_SECTOR_SITE_B_SERVER_CERT"
+      ],
+      "addedBy": "token:docs-verifier",
+      "addedAt": "2026-10-26 18:15:01.305384 +00:00:00"
+    }
+  ],
+  "note": "Applications deploy to the home sector only. Registered sectors are read for their state and count towards the sites a second deployment could use; deploying to them is a later step."
+}
+```
+
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
+
+### `POST /api/v1/sectors`
+
+Registers another Incus cluster as a sector. Stores its name, site, address and the name of its credentials; the identity's files stay on the control plane. Needs `cluster.manage`.
+
+**Operation ID:** `add_sector`
+
+**Needs:** `cluster.manage`.
+
+**Request body** (JSON):
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `credentials` | string | yes | Names the variables `APELORA_SECTOR_<credentials>_CLIENT_CERT`, `_CLIENT_KEY` and `_SERVER_CERT` on the control plane. Never a file or a secret. |
+| `name` | string | yes | — |
+| `site` | string | yes | — |
+| `url` | string | yes | `https://host:port` of its Incus API. |
+
+```json
+{
+  "name": "site-b",
+  "site": "rotterdam",
+  "url": "https://incus.site-b.example.invalid:8443",
+  "credentials": "SITE_B"
+}
+```
+
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
+```sh
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/sectors" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  --data-raw '{"name":"site-b","site":"rotterdam","url":"https://incus.site-b.example.invalid:8443","credentials":"SITE_B"}'
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("add_sector", { body /* the request body above */ });
+```
+
+**Response `201`** — Success.
+
+Content-Type: `application/json`.
+
+**Example response** from a test installation; your IDs, names and times differ.
+
+```json
+{
+  "name": "site-b",
+  "site": "rotterdam",
+  "home": false,
+  "url": "https://incus.site-b.example.invalid:8443",
+  "state": "connected",
+  "members": 3,
+  "incusVersion": null,
+  "credentialVars": [
+    "APELORA_SECTOR_SITE_B_CLIENT_CERT",
+    "APELORA_SECTOR_SITE_B_CLIENT_KEY",
+    "APELORA_SECTOR_SITE_B_SERVER_CERT"
+  ],
+  "addedBy": "token:docs-verifier",
+  "addedAt": "2026-10-26 18:15:01.305384 +00:00:00"
+}
+```
+
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `invalid_request`, `invalid_sector` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `409` | `sector_exists` |
+| `429` | `rate_limited` |
+| `503` | `no_database`, `database_not_configured`, `store_unavailable` |
+
+### `DELETE /api/v1/sectors/{name}`
+
+Forgets a registered sector. Nothing changes in its Incus. Needs `cluster.manage`.
+
+**Operation ID:** `remove_sector`
+
+**Needs:** `cluster.manage`.
+
+| Parameter | In | Type | Required | Default | Meaning |
+|---|---|---|---|---|---|
+| `name` | path | string | yes | — | Sector name |
+
+**Request body** (JSON):
+
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `confirm` | string | yes | The sector's name, typed again. |
+
+```json
+{
+  "confirm": "site-b"
+}
+```
+
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+This request can change state. Check permissions, prerequisites and any required approval before running it.
+
+```sh
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sectors/site-b" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Content-Type: application/json" \
+  --data-raw '{"confirm":"site-b"}'
+```
+
+**TypeScript:**
+
+```ts
+await client.request("remove_sector", { params: { name: "site-b" }, body: { confirm: "site-b" } });
+```
+
+**Response `204`** — Success, with no body.
+
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `400` | `confirmation_mismatch`, `invalid_request` |
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
+| `429` | `rate_limited` |
+| `503` | `no_database`, `database_not_configured`, `store_unavailable` |
 
