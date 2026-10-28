@@ -54,7 +54,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/capacity" \
 const result = await client.request("capacity", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -64,7 +64,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.761472Z"
+    "observedAt": "2026-10-28T21:24:20.131639Z"
   },
   "named": true,
   "volumePool": "mock-local",
@@ -144,7 +144,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster" \
 const result = await client.request("cluster", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -154,7 +154,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.76341Z"
+    "observedAt": "2026-10-28T21:24:20.13549Z"
   },
   "server": {
     "apiVersion": "1.0",
@@ -236,7 +236,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances" \
 const result = await client.request("instances", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -246,7 +246,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.832239Z"
+    "observedAt": "2026-10-28T21:24:03.229575Z"
   },
   "items": [
     {
@@ -309,7 +309,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/default/mock-web
 const result = await client.request("instance_page", { params: { project: "default", name: "mock-web-01" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -319,7 +319,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.83647Z"
+    "observedAt": "2026-10-28T21:24:03.233744Z"
   },
   "instance": {
     "name": "mock-web-01",
@@ -416,6 +416,7 @@ Content-Type: `application/json`.
 | `404` | `not_found` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/instances/{project}/{name}/console-log`
 
@@ -453,7 +454,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/default/mock-vm-
 const result = await client.request("instance_console_log", { params: { project: "default", name: "mock-vm-01" }, query: { tailKib: 8 } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -463,7 +464,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.846319Z"
+    "observedAt": "2026-10-28T21:24:03.247037Z"
   },
   "file": "console",
   "tailKib": 64,
@@ -485,6 +486,7 @@ Content-Type: `application/json`.
 | `404` | `not_found` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/instances/{project}/{name}/logs`
 
@@ -513,7 +515,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/default/mock-web
 const result = await client.request("instance_logs", { params: { project: "default", name: "mock-web-01" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -523,7 +525,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.839387Z"
+    "observedAt": "2026-10-28T21:24:03.236737Z"
   },
   "files": [
     "lxc.log"
@@ -541,6 +543,7 @@ Content-Type: `application/json`.
 | `404` | `not_found` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/instances/{project}/{name}/logs/{file}`
 
@@ -579,7 +582,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/instances/default/mock-web
 const result = await client.request("instance_log", { params: { project: "default", name: "mock-web-01", file: "lxc.log" }, query: { tailKib: 16 } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -589,7 +592,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.841723Z"
+    "observedAt": "2026-10-28T21:24:03.239603Z"
   },
   "file": "lxc.log",
   "tailKib": 64,
@@ -611,6 +614,7 @@ Content-Type: `application/json`.
 | `404` | `not_found` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/networks`
 
@@ -634,7 +638,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks" \
 const result = await client.request("networks", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -644,7 +648,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.885483Z"
+    "observedAt": "2026-10-28T21:24:20.358818Z"
   },
   "items": [
     {
@@ -695,7 +699,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks/settings" \
 const result = await client.request("network_settings", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -705,7 +709,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.894491Z"
+    "observedAt": "2026-10-28T21:24:20.376354Z"
   },
   "uplink": null,
   "serviceRange": null,
@@ -779,7 +783,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/preflight" \
 const result = await client.request("preflight", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -789,7 +793,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.896394Z"
+    "observedAt": "2026-10-28T21:24:20.379759Z"
   },
   "overall": "fail",
   "checks": [
@@ -840,7 +844,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/projects" \
 const result = await client.request("projects", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -850,7 +854,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.898434Z"
+    "observedAt": "2026-10-28T21:24:20.383512Z"
   },
   "items": [
     {
@@ -898,7 +902,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage-pools" \
 const result = await client.request("storage_pools", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -908,7 +912,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.912818Z"
+    "observedAt": "2026-10-28T21:24:20.409765Z"
   },
   "items": [
     {
@@ -957,7 +961,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/orphans" \
 const result = await client.request("orphan_volumes", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -967,7 +971,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.917311Z"
+    "observedAt": "2026-10-28T21:24:20.418505Z"
   },
   "projects": [
     "acme-shop-staging",
@@ -987,6 +991,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/storage/pools`
 
@@ -1010,7 +1015,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/pools" \
 const result = await client.request("storage_pool_usage", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1020,7 +1025,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.919725Z"
+    "observedAt": "2026-10-28T21:24:20.421672Z"
   },
   "volumePool": "mock-local",
   "backupPool": "mock-local",

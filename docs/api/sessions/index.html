@@ -96,7 +96,7 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;application_access&quot;, { params: { name: &quot;shop&quot; } });</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -136,7 +136,7 @@
   &quot;maxSecs&quot;: 3600
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1applicationsnameinstancesinstancesessions"><code>POST /api/v1/applications/{name}/instances/{instance}/sessions</code></h3>
 <p>Opens a session: checks the caller, the instance and the approval rule, and answers with a single-use ticket for the websocket. Needs <code>instance.console</code> (terminal, PowerShell) or <code>instance.desktop</code> (RDP) on the application; in production also an approval (<code>Apelora-Approval: &lt;id&gt;</code>) of <code>instance.console</code> on <code>instance:&lt;application&gt;/&lt;instance&gt;</code>.</p>
 <p><strong>Operation ID:</strong> <code>open_session</code></p>
@@ -158,13 +158,13 @@
   --data-raw '{&quot;kind&quot;:&quot;terminal&quot;,&quot;cols&quot;:120,&quot;rows&quot;:32}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;open_session&quot;, { params: { name: &quot;shop&quot;, instance: &quot;shop-db-01&quot; }, body: { kind: &quot;terminal&quot;, cols: 120, rows: 32 } });</code></pre>
-<p><strong>Response <code>201</code></strong> — Success.</p>
+<p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;30efcc0f-7355-4a30-aec9-3b83b1e62c75&quot;,
+  &quot;id&quot;: &quot;17ab06f7-bcf7-41b6-ad02-d64aba42145c&quot;,
   &quot;ticket&quot;: &quot;&lt;one-time session ticket&gt;&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-28T20:02:35.250235Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-28T21:25:19.356822Z&quot;,
   &quot;connectPath&quot;: &quot;/api/v1/sessions/connect&quot;,
   &quot;protocol&quot;: &quot;apelora.session.v1&quot;,
   &quot;kind&quot;: &quot;terminal&quot;,
@@ -174,7 +174,7 @@
   &quot;provider&quot;: &quot;mock&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>instance_state_unknown</code>, <code>session_unavailable</code></td></tr><tr><td><code>429</code></td><td><code>too_many_sessions</code>, <code>rate_limited</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>instance_state_unknown</code>, <code>session_unavailable</code></td></tr><tr><td><code>429</code></td><td><code>too_many_sessions</code>, <code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>console_disabled</code>, <code>no_randomness</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1sessions"><code>GET /api/v1/sessions</code></h3>
 <p>Open sessions the caller started, and those on applications they may operate.</p>
 <p><strong>Operation ID:</strong> <code>sessions</code></p>
@@ -185,14 +185,14 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;sessions&quot;, {});</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: []
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
 <h3 id="delete-apiv1sessionsid"><code>DELETE /api/v1/sessions/{id}</code></h3>
 <p>Ends a session now. Allowed for the person who has it and for whoever may operate its application. Anything else answers 404.</p>
 <p><strong>Operation ID:</strong> <code>terminate_session</code></p>
@@ -200,13 +200,13 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Session id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/sessions/30efcc0f-7355-4a30-aec9-3b83b1e62c75&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/sessions/17ab06f7-bcf7-41b6-ad02-d64aba42145c&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;terminate_session&quot;, { params: { id: &quot;30efcc0f-7355-4a30-aec9-3b83b1e62c75&quot; } });</code></pre>
-<p><strong>Response <code>204</code></strong> — Success, with no body.</p>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;terminate_session&quot;, { params: { id: &quot;17ab06f7-bcf7-41b6-ad02-d64aba42145c&quot; } });</code></pre>
+<p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
         </div>
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/identity/"><span>Previous</span>Identity and access</a><a class="next" href="/docs/api/alerts/"><span>Next</span>Alerts</a></nav>

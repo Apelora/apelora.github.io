@@ -70,7 +70,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/groups" \
 const result = await client.request("cluster_groups", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -80,7 +80,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.765298Z"
+    "observedAt": "2026-10-28T21:24:20.138754Z"
   },
   "items": [
     {
@@ -127,7 +127,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/join-tokens" \
 const result = await client.request("list_join_tokens", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -137,12 +137,12 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.925363Z"
+    "observedAt": "2026-10-28T21:24:03.380832Z"
   },
   "items": [
     {
       "memberName": "rack2-01",
-      "expiresAt": "2026-10-28T21:01:19.92229Z"
+      "expiresAt": "2026-10-28T22:24:03.375925Z"
     }
   ]
 }
@@ -196,7 +196,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/join-tokens" \
 const result = await client.request("create_join_token", { body: { memberName: "rack2-01" } });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -205,7 +205,7 @@ Content-Type: `application/json`.
 ```json
 {
   "memberName": "rack2-01",
-  "expiresAt": "2026-10-28T21:01:19.92229Z",
+  "expiresAt": "2026-10-28T22:24:03.375925Z",
   "token": "<token, shown once>",
   "warnings": []
 }
@@ -218,6 +218,7 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `409` | `approval_invalid`, `approval_required` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `cluster_admin_not_configured`, `database_not_configured` |
@@ -249,7 +250,7 @@ curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/cluster/join-tokens/rac
 await client.request("revoke_join_token", { params: { member: "rack2-01" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -285,7 +286,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members" \
 const result = await client.request("cluster_members", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -295,7 +296,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.885883Z"
+    "observedAt": "2026-10-28T21:24:03.313107Z"
   },
   "clustered": true,
   "members": [
@@ -409,7 +410,9 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `429` | `rate_limited` |
+| `500` | `invalid_place`, `store_error` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/cluster/members/{member}/evacuate`
 
@@ -455,7 +458,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/mock-memb
 const result = await client.request("evacuate_member", { params: { member: "mock-member-02" }, body: { confirm: "mock-member-02", force: false } });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -508,7 +511,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members/mock-membe
 const result = await client.request("preview_evacuation", { params: { member: "mock-member-03" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -518,7 +521,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.891388Z"
+    "observedAt": "2026-10-28T21:24:03.321599Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -597,7 +600,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/mock-memb
 const result = await client.request("confirm_fenced", { params: { member: "mock-member-01" }, body: { confirm: "mock-member-01", poweredOff: true } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -696,7 +699,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/members/mock-membe
 const result = await client.request("preview_member_removal", { params: { member: "mock-member-03" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -706,7 +709,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.903739Z"
+    "observedAt": "2026-10-28T21:24:03.34092Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -782,7 +785,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/mock-memb
 await client.request("remove_member", { params: { member: "mock-member-03" }, body: { confirm: "mock-member-03", force: false } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -841,7 +844,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/members/mock-memb
 const result = await client.request("restore_member", { params: { member: "mock-member-02" }, body: { confirm: "mock-member-02", force: false } });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -889,7 +892,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/recovery" \
 const result = await client.request("cluster_recovery", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -899,7 +902,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.937319Z"
+    "observedAt": "2026-10-28T21:24:03.400079Z"
   },
   "items": []
 }
@@ -936,7 +939,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/settings" \
 const result = await client.request("cluster_settings", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -946,7 +949,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.935002Z"
+    "observedAt": "2026-10-28T21:24:03.397009Z"
   },
   "identity": "admin",
   "items": [
@@ -1023,7 +1026,7 @@ curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/cluster/settings" \
 const result = await client.request("change_cluster_settings", { body: { changes: { "cluster.join_token_expiry": "3H" }, dryRun: true } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1100,7 +1103,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/upgrade" \
 const result = await client.request("cluster_upgrade", { body: { action: "start", confirm: "upgrade" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1118,7 +1121,7 @@ Content-Type: `application/json`.
 }
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -1143,6 +1146,7 @@ Content-Type: `application/json`.
 | `400` | `confirmation_mismatch`, `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
 | `409` | `evacuation_blocked`, `no_upgrade`, `not_upgraded`, `upgrade_blocked`, `upgrade_in_progress`, `upgrade_step` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
@@ -1170,7 +1174,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/machines" \
 const result = await client.request("list_machines", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1180,7 +1184,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.873201Z"
+    "observedAt": "2026-10-28T21:24:20.340661Z"
   },
   "items": [
     {
@@ -1199,12 +1203,12 @@ Content-Type: `application/json`.
       "nextStep": "None.",
       "warnings": [],
       "registeredBy": "token:docs-verifier",
-      "registeredAt": "2026-10-28T20:01:19.946376Z",
+      "registeredAt": "2026-10-28T21:24:03.412827Z",
       "approvedBy": null,
       "approvedAt": null,
       "approvalExpiresAt": null,
       "admittedBy": "token:docs-verifier",
-      "admittedAt": "2026-10-28T20:01:19.956901Z"
+      "admittedAt": "2026-10-28T21:24:03.427874Z"
     }
   ]
 }
@@ -1263,7 +1267,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines" \
 const result = await client.request("register_machine", { body: { name: "rack2-01", description: "Second rack, slot 1", provider: "manual" } });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -1286,7 +1290,7 @@ Content-Type: `application/json`.
   "nextStep": "Install Incus on the server, then approve it.",
   "warnings": [],
   "registeredBy": "token:docs-verifier",
-  "registeredAt": "2026-10-28T20:01:19.939687Z",
+  "registeredAt": "2026-10-28T21:24:03.40355Z",
   "approvedBy": null,
   "approvedAt": null,
   "approvalExpiresAt": null,
@@ -1299,13 +1303,13 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
-| `400` | `invalid_request`, `provisioner_not_configured`, `unknown_machine` |
+| `400` | `invalid_request`, `unknown_machine` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `409` | — |
 | `429` | `rate_limited` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
-| `503` | `cluster_admin_not_configured`, `database_not_configured` |
+| `503` | `cluster_admin_not_configured`, `provisioner_not_configured`, `database_not_configured` |
 
 ### `DELETE /api/v1/machines/{name}`
 
@@ -1334,7 +1338,7 @@ curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/machines/rack2-01" \
 await client.request("remove_machine", { params: { name: "rack2-01" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -1375,7 +1379,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/machines/mock-member-03/ad
 const result = await client.request("machine_admission", { params: { name: "mock-member-03" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1385,7 +1389,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.952945Z"
+    "observedAt": "2026-10-28T21:24:03.422845Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1447,7 +1451,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines/mock-member-03/a
 const result = await client.request("admit_machine", { params: { name: "mock-member-03" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1457,7 +1461,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.956573Z"
+    "observedAt": "2026-10-28T21:24:03.427213Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1518,7 +1522,7 @@ curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/machines/rack2-01/appro
 await client.request("withdraw_machine_approval", { params: { name: "rack2-01" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -1560,7 +1564,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/machines/rack2-01/approve
 const result = await client.request("approve_machine", { params: { name: "rack2-01" } });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -1569,9 +1573,9 @@ Content-Type: `application/json`.
 ```json
 {
   "name": "rack2-01",
-  "expiresAt": "2026-10-28T21:01:19.962882Z",
+  "expiresAt": "2026-10-28T22:24:03.438768Z",
   "token": "<token, shown once>",
-  "enrolCommand": "sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address <this server's cluster address>",
+  "enrolCommand": "sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address <this server's cluster address> --pool-size <size of the local loop pool, such as 20GiB>",
   "warnings": []
 }
 ```
@@ -1611,7 +1615,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/provisioners/maas/machines
 const result = await client.request("maas_machines", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1621,7 +1625,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.900146Z"
+    "observedAt": "2026-10-28T21:24:20.386293Z"
   },
   "configured": false,
   "items": []
@@ -1680,7 +1684,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 const result = await client.request("maas_commission", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04" } });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -1703,6 +1707,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `500` | `store_error` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 
@@ -1752,7 +1757,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 const result = await client.request("maas_deploy", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04", distroSeries: "noble", userData: "" } });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -1775,6 +1780,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `500` | `store_error` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 
@@ -1822,7 +1828,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 const result = await client.request("maas_release", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04", eraseDisks: true } });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -1845,6 +1851,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `500` | `store_error` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 
@@ -1894,7 +1901,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 const result = await client.request("maas_test", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04", scripts: ["smartctl-validate"] } });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -1918,6 +1925,7 @@ Content-Type: `application/json`.
 | `404` | `not_found` |
 | `409` | `machine_in_use` |
 | `429` | `rate_limited` |
+| `500` | `store_error` |
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 
@@ -1943,7 +1951,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/sectors" \
 const result = await client.request("sectors", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1953,7 +1961,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:19.911812Z"
+    "observedAt": "2026-10-28T21:24:03.358479Z"
   },
   "items": [
     {
@@ -1980,7 +1988,7 @@ Content-Type: `application/json`.
         "APELORA_SECTOR_SITE_B_SERVER_CERT"
       ],
       "addedBy": "token:docs-verifier",
-      "addedAt": "2026-10-28 20:01:19.905876 +00:00:00"
+      "addedAt": "2026-10-28 21:24:03.347818 +00:00:00"
     }
   ],
   "note": "Applications deploy to the home sector only. Registered sectors are read for their state and count towards the sites a second deployment could use; deploying to them is a later step."
@@ -1994,6 +2002,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `429` | `rate_limited` |
+| `500` | `invalid_place`, `store_error` |
 
 ### `POST /api/v1/sectors`
 
@@ -2039,7 +2048,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/sectors" \
 const result = await client.request("add_sector", { body /* the request body above */ });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -2060,7 +2069,7 @@ Content-Type: `application/json`.
     "APELORA_SECTOR_SITE_B_SERVER_CERT"
   ],
   "addedBy": "token:docs-verifier",
-  "addedAt": "2026-10-28 20:01:19.905876 +00:00:00"
+  "addedAt": "2026-10-28 21:24:03.347818 +00:00:00"
 }
 ```
 
@@ -2073,6 +2082,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `409` | `sector_exists` |
 | `429` | `rate_limited` |
+| `500` | `invalid_place`, `internal` |
 | `503` | `no_database`, `database_not_configured`, `store_unavailable` |
 
 ### `DELETE /api/v1/sectors/{name}`
@@ -2116,7 +2126,7 @@ curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sectors/site-b" \
 await client.request("remove_sector", { params: { name: "site-b" }, body: { confirm: "site-b" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 

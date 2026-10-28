@@ -148,16 +148,33 @@ incus cluster list</code></pre>
 <pre data-lang="sh" tabindex="0"><code>NEW_MEMBER=...          # the name the new server will have
 incus cluster add &quot;$NEW_MEMBER&quot;      # prints the token</code></pre>
 <p>On the <strong>new server</strong>, install Incus first. It must be a fresh installation, because joining deletes what is on it. Then join with the token:</p>
-<pre data-lang="sh" tabindex="0"><code>SERVER_IP=...           # the new server's own address
+<pre data-lang="sh" tabindex="0"><code>NEW_MEMBER=...          # the same name the token was created for
+SERVER_IP=...           # the new server's own address
+LEADER=...              # a member that is already in the cluster
 TOKEN=...               # from the step above; paste it, never keep it in a file or script
 
 cat &gt;join.yaml &lt;&lt;EOF
 cluster:
   enabled: true
+  server_name: $NEW_MEMBER
   server_address: $SERVER_IP:8443
+  cluster_address: $LEADER:8443
   cluster_token: $TOKEN
+  member_config:
+  - entity: storage-pool
+    name: local
+    key: size
+    value: 20GiB
+  - entity: storage-pool
+    name: local
+    key: source
+    value: &quot;&quot;
 EOF
-incus admin init --preseed &lt;join.yaml</code></pre>
+incus admin init --preseed &lt;join.yaml
+rm -f join.yaml</code></pre>
+<p>A sized loop pool asks the new member for <code>size</code> and <code>source</code>. An empty <code>source</code> tells Incus to create the loop file. A pool on a real disk sets <code>source</code> to that device and does not set <code>size</code>. Delete <code>join.yaml</code> after the join: it held the token.</p>
+<p>The same loop-pool answers from the enrolment script, which also holds the member out of placement. The token stays on standard input:</p>
+<pre data-lang="sh" tabindex="0"><code>printf '%s\n' &quot;$TOKEN&quot; | sudo bash enrol-member.sh --name &quot;$NEW_MEMBER&quot; --address &quot;$SERVER_IP&quot; --pool-size 20GiB</code></pre>
 <p><code>incus cluster list</code> on any member now shows every server online, and three of them with the database role.</p>
 <p>Servers you add <strong>later</strong> are better enrolled through Apelora. It registers and approves a new server, and holds it until it passes its checks: <a href="/docs/runbooks/member-join/">add a server to the cluster</a>.</p>
 <h2 id="4-networking-for-applications-ovn">4. Networking for applications (OVN)</h2>

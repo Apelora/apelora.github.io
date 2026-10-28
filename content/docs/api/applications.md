@@ -86,7 +86,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications?includeArchiv
 const result = await client.request("applications", { query: { includeArchived: true } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -98,19 +98,19 @@ Content-Type: `application/json`.
     {
       "name": "blog",
       "latestRevision": null,
-      "createdAt": "2026-10-28T20:01:19.668284Z",
-      "updatedAt": "2026-10-28T20:01:19.668284Z",
+      "createdAt": "2026-10-28T21:24:03.030067Z",
+      "updatedAt": "2026-10-28T21:24:03.030067Z",
       "description": "Company blog",
       "icon": "box",
       "project": {
-        "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
+        "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
         "slug": "shop",
         "name": "Online shop",
-        "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
+        "organizationId": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
         "organizationSlug": "acme"
       },
       "environment": {
-        "id": "a9f05f0b-3026-464e-9a00-ecfef23332d8",
+        "id": "a1a9633b-c3fb-4339-aa65-ce10c30dd297",
         "slug": "staging",
         "name": "Staging",
         "kind": "staging",
@@ -127,7 +127,7 @@ Content-Type: `application/json`.
       },
       "deployment": {
         "status": "not-deployed",
-        "observedAt": "2026-10-28T20:01:19.754034Z",
+        "observedAt": "2026-10-28T21:24:03.14298Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": null,
@@ -167,19 +167,19 @@ Content-Type: `application/json`.
     {
       "name": "shop",
       "latestRevision": 1,
-      "createdAt": "2026-10-28T20:01:19.65709Z",
-      "updatedAt": "2026-10-28T20:01:19.691626Z",
+      "createdAt": "2026-10-28T21:24:03.017318Z",
+      "updatedAt": "2026-10-28T21:24:03.06761Z",
       "description": "Storefront, API and order database",
       "icon": "cart",
       "project": {
-        "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
+        "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
         "slug": "shop",
         "name": "Online shop",
-        "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
+        "organizationId": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
         "organizationSlug": "acme"
       },
       "environment": {
-        "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
+        "id": "276b703c-f198-472d-ae04-59bf969979dd",
         "slug": "production",
         "name": "Production",
         "kind": "production",
@@ -192,11 +192,11 @@ Content-Type: `application/json`.
         "validationErrors": 0,
         "publishedVersion": 1,
         "hasUnpublishedChanges": false,
-        "updatedAt": "2026-10-28T20:01:19.691626Z"
+        "updatedAt": "2026-10-28T21:24:03.06761Z"
       },
       "deployment": {
         "status": "degraded",
-        "observedAt": "2026-10-28T20:01:19.754034Z",
+        "observedAt": "2026-10-28T21:24:03.14298Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": 1,
@@ -207,7 +207,7 @@ Content-Type: `application/json`.
           "healthy": 0,
           "unhealthy": 0
         },
-        "lastActivityAt": "2026-10-28T20:01:19.739739Z",
+        "lastActivityAt": "2026-10-28T21:24:03.128046Z",
         "operation": null
       },
       "actions": {
@@ -234,7 +234,7 @@ Content-Type: `application/json`.
       }
     }
   ],
-  "observedAt": "2026-10-28T20:01:19.754034Z",
+  "observedAt": "2026-10-28T21:24:03.14298Z",
   "stale": false
 }
 ```
@@ -269,7 +269,7 @@ Creates an application in an environment, optionally with its first draft. Needs
 ```json
 {
   "name": "shop",
-  "environmentId": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
+  "environmentId": "276b703c-f198-472d-ae04-59bf969979dd",
   "description": "Storefront and order database",
   "icon": "cart"
 }
@@ -284,7 +284,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"shop","environmentId":"a24da9a4-2561-4cbb-876d-e4dd0db7bdf2","description":"Storefront and order database","icon":"cart"}'
+  --data-raw '{"name":"shop","environmentId":"276b703c-f198-472d-ae04-59bf969979dd","description":"Storefront and order database","icon":"cart"}'
 ```
 
 **TypeScript:**
@@ -293,7 +293,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications" \
 const result = await client.request("create_application", { body /* the request body above */ });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -303,19 +303,19 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-28T20:01:19.65709Z",
-  "updatedAt": "2026-10-28T20:01:19.65709Z",
+  "createdAt": "2026-10-28T21:24:03.017318Z",
+  "updatedAt": "2026-10-28T21:24:03.017318Z",
   "description": "Storefront and order database",
   "icon": "cart",
   "project": {
-    "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
+    "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
     "slug": "shop",
     "name": "Online shop",
-    "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
+    "organizationId": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
     "organizationSlug": "acme"
   },
   "environment": {
-    "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
+    "id": "276b703c-f198-472d-ae04-59bf969979dd",
     "slug": "production",
     "name": "Production",
     "kind": "production",
@@ -332,7 +332,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-28T20:01:19.662962Z",
+    "observedAt": "2026-10-28T21:24:03.02433Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -378,8 +378,10 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
 | `409` | `draft_conflict` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}`
 
@@ -407,7 +409,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop" \
 const result = await client.request("application", { params: { name: "shop" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -418,19 +420,19 @@ Content-Type: `application/json`.
   "application": {
     "name": "shop",
     "latestRevision": 1,
-    "createdAt": "2026-10-28T20:01:19.65709Z",
-    "updatedAt": "2026-10-28T20:01:19.691626Z",
+    "createdAt": "2026-10-28T21:24:03.017318Z",
+    "updatedAt": "2026-10-28T21:24:03.06761Z",
     "description": "Storefront, API and order database",
     "icon": "cart",
     "project": {
-      "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
+      "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
       "slug": "shop",
       "name": "Online shop",
-      "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
+      "organizationId": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
       "organizationSlug": "acme"
     },
     "environment": {
-      "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
+      "id": "276b703c-f198-472d-ae04-59bf969979dd",
       "slug": "production",
       "name": "Production",
       "kind": "production",
@@ -443,11 +445,11 @@ Content-Type: `application/json`.
       "validationErrors": 0,
       "publishedVersion": 1,
       "hasUnpublishedChanges": false,
-      "updatedAt": "2026-10-28T20:01:19.691626Z"
+      "updatedAt": "2026-10-28T21:24:03.06761Z"
     },
     "deployment": {
       "status": "degraded",
-      "observedAt": "2026-10-28T20:01:19.775834Z",
+      "observedAt": "2026-10-28T21:24:03.1653Z",
       "stale": false,
       "source": "mock",
       "deployedVersion": 1,
@@ -458,7 +460,7 @@ Content-Type: `application/json`.
         "healthy": 0,
         "unhealthy": 0
       },
-      "lastActivityAt": "2026-10-28T20:01:19.739739Z",
+      "lastActivityAt": "2026-10-28T21:24:03.128046Z",
       "operation": null
     },
     "actions": {
@@ -505,7 +507,7 @@ Content-Type: `application/json`.
       "label": "First release",
       "draftVersion": 1,
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-28T20:01:19.704029Z"
+      "createdAt": "2026-10-28T21:24:03.087711Z"
     }
   ],
   "operations": []
@@ -516,9 +518,12 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `PATCH /api/v1/applications/{name}`
 
@@ -563,7 +568,7 @@ curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/applications/shop" \
 const result = await client.request("update_application", { params: { name: "shop" }, body: { description: "Storefront, API and order database" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -573,19 +578,19 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-28T20:01:19.65709Z",
-  "updatedAt": "2026-10-28T20:01:19.679285Z",
+  "createdAt": "2026-10-28T21:24:03.017318Z",
+  "updatedAt": "2026-10-28T21:24:03.048096Z",
   "description": "Storefront, API and order database",
   "icon": "cart",
   "project": {
-    "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
+    "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
     "slug": "shop",
     "name": "Online shop",
-    "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
+    "organizationId": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
     "organizationSlug": "acme"
   },
   "environment": {
-    "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
+    "id": "276b703c-f198-472d-ae04-59bf969979dd",
     "slug": "production",
     "name": "Production",
     "kind": "production",
@@ -602,7 +607,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-28T20:01:19.683535Z",
+    "observedAt": "2026-10-28T21:24:03.05469Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -650,6 +655,7 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications/{name}/archive`
 
@@ -678,17 +684,19 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/blog/archive
 await client.request("archive_application", { params: { name: "blog" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `still_running` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications/{name}/deployments`
 
@@ -707,6 +715,7 @@ Deploys the design: saves it as a new revision and queues the planned changes. R
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
+| `confirmDisruption` | boolean | no | Required when the plan rebuilds a singleton or stateful module (`rebuild`): it acknowledges that the module is stopped while it is rebuilt. Data on volumes is kept. |
 | `connections` | list of object or null | no | The design's connections; enforced when the control plane has a network uplink. |
 | `connections[].from` | string | yes | — |
 | `connections[].port` | integer or null | no | `None`: any port of the transport (the protocol has no well-known port). |
@@ -880,7 +889,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/deploym
 const result = await client.request("deploy_application", { params: { name: "shop" }, body /* the request body above */, idempotencyKey: newIdempotencyKey() });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -923,7 +932,7 @@ Content-Type: `application/json`.
       "scopes": [
         {
           "kind": "project",
-          "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
+          "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
           "name": "Online shop",
           "dimensions": [
             {
@@ -950,13 +959,13 @@ Content-Type: `application/json`.
       "module": "web-01",
       "instance": "shop-web-01",
       "action": "create",
-      "jobId": "f8fa77b2-23d5-4be7-9886-9dcbb34bde10"
+      "jobId": "6e71ff9c-3a65-4bbb-bf0a-312ae83f1018"
     },
     {
       "module": "db-01",
       "instance": "shop-db-01",
       "action": "create",
-      "jobId": "cfc28cce-d36f-41c5-a9b5-53035d269f71"
+      "jobId": "788123e8-0480-48f6-bac6-18ae2b975259"
     }
   ],
   "networkJob": null
@@ -970,7 +979,8 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
-| `409` | `incus_project_exists`, `not_published`, `operation_in_progress`, `plan_conflict`, `project_mismatch`, `quota_exceeded`, `service_range_exhausted` |
+| `404` | `not_found` |
+| `409` | `confirmation_required`, `incus_project_exists`, `not_published`, `operation_in_progress`, `plan_conflict`, `project_mismatch`, `quota_exceeded`, `service_range_exhausted` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `incus_project_not_ready`, `quota_unverifiable`, `database_not_configured` |
@@ -1001,7 +1011,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/draft" \
 const result = await client.request("application_draft", { params: { name: "shop" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1024,7 +1034,7 @@ Content-Type: `application/json`.
   },
   "validationErrors": [],
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-28T20:01:19.691626Z"
+  "updatedAt": "2026-10-28T21:24:03.06761Z"
 }
 ```
 
@@ -1032,9 +1042,12 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 | `404` | `no_draft`, `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `PUT /api/v1/applications/{name}/draft`
 
@@ -1090,7 +1103,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/applications/shop/draft" \
 const result = await client.request("save_application_draft", { params: { name: "shop" }, body /* the request body above */ });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1113,7 +1126,7 @@ Content-Type: `application/json`.
   },
   "validationErrors": [],
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-28T20:01:19.691626Z"
+  "updatedAt": "2026-10-28T21:24:03.06761Z"
 }
 ```
 
@@ -1124,8 +1137,10 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
 | `409` | — |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/events`
 
@@ -1153,7 +1168,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/events" 
 const result = await client.request("application_events", { params: { name: "shop" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1164,7 +1179,7 @@ Content-Type: `application/json`.
   "items": [
     {
       "id": 77,
-      "at": "2026-10-28T20:01:19.739739Z",
+      "at": "2026-10-28T21:24:03.128046Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -1172,18 +1187,20 @@ Content-Type: `application/json`.
       "target": "shop-prod/shop",
       "outcome": "success",
       "scope": {
-        "application": "1fd1a7b8-9ab1-4301-a5d1-e5296d082924",
-        "organization": "a7b3710b-14ea-4c7a-b05c-48950892c576",
-        "project": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
+        "application": "5a291a1e-9ece-4dc7-91af-ef01835cb68b",
+        "organization": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
+        "project": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a"
       },
       "detail": {
+        "confirmedDisruption": false,
         "create": 3,
         "keep": 0,
         "name": "docs-verifier",
         "operation": null,
+        "rebuild": 0,
         "remove": 0,
         "replace": 0,
-        "requestId": "5fe43315-d8a0-4845-9872-d9af7f754f72",
+        "requestId": "d43cdec6-0cea-4914-9276-d9276d913d38",
         "resize": 0,
         "revision": 1,
         "role": "fabric-admin"
@@ -1191,7 +1208,7 @@ Content-Type: `application/json`.
     },
     {
       "id": 76,
-      "at": "2026-10-28T20:01:19.704029Z",
+      "at": "2026-10-28T21:24:03.087711Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -1199,14 +1216,14 @@ Content-Type: `application/json`.
       "target": "shop",
       "outcome": "success",
       "scope": {
-        "application": "1fd1a7b8-9ab1-4301-a5d1-e5296d082924",
-        "organization": "a7b3710b-14ea-4c7a-b05c-48950892c576",
-        "project": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
+        "application": "5a291a1e-9ece-4dc7-91af-ef01835cb68b",
+        "organization": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
+        "project": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a"
       },
       "detail": {
         "draftVersion": 1,
         "name": "docs-verifier",
-        "requestId": "dbdda97b-ca17-4a3d-a68d-7e55471db20d",
+        "requestId": "62f71448-f8e4-4454-a46a-d674d9ad8ad3",
         "revision": 1,
         "role": "fabric-admin"
       }
@@ -1219,9 +1236,12 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/migration`
 
@@ -1250,7 +1270,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/migratio
 const result = await client.request("preview_application_migration", { params: { name: "shop" }, query: { target: "mock-member-02" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1260,7 +1280,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:20.389617Z"
+    "observedAt": "2026-10-28T21:24:04.396874Z"
   },
   "target": "mock-member-02",
   "items": [
@@ -1313,6 +1333,7 @@ Content-Type: `application/json`.
 | `409` | `not_deployed` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/operations`
 
@@ -1340,7 +1361,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operatio
 const result = await client.request("application_operations", { params: { name: "shop" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1356,9 +1377,12 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications/{name}/operations`
 
@@ -1409,7 +1433,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/operati
 const result = await client.request("operate_application", { params: { name: "shop" }, body: { action: "stop", confirmDisruption: true }, idempotencyKey: newIdempotencyKey() });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -1418,11 +1442,11 @@ Content-Type: `application/json`.
 ```json
 {
   "operation": {
-    "id": "2270558f-0f9f-4ab7-9457-e1c795ffed81",
+    "id": "c8e66146-5c93-4a2b-9c83-4e33ca21be69",
     "kind": "stop",
     "state": "pending",
     "requestedBy": "token:docs-verifier",
-    "createdAt": "2026-10-28T20:01:21.709086Z",
+    "createdAt": "2026-10-28T21:24:05.744495Z",
     "startedAt": null,
     "finishedAt": null,
     "error": null,
@@ -1475,7 +1499,8 @@ Content-Type: `application/json`.
 | `404` | `not_found` |
 | `409` | `action_not_available`, `already_running`, `already_stopped`, `confirmation_required`, `member_unreachable`, `migration_blocked`, `not_deployed`, `nothing_deployed`, `nothing_to_do`, `operation_in_progress` |
 | `429` | `rate_limited` |
-| `503` | `incus_unreachable`, `database_not_configured` |
+| `502` | `incus_unreachable` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/operations/{id}`
 
@@ -1493,7 +1518,7 @@ One operation with the progress of each phase and instance. Needs `application.v
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/2270558f-0f9f-4ab7-9457-e1c795ffed81" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/c8e66146-5c93-4a2b-9c83-4e33ca21be69" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -1501,10 +1526,10 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operatio
 **TypeScript:**
 
 ```ts
-const result = await client.request("application_operation", { params: { name: "shop", id: "2270558f-0f9f-4ab7-9457-e1c795ffed81" } });
+const result = await client.request("application_operation", { params: { name: "shop", id: "c8e66146-5c93-4a2b-9c83-4e33ca21be69" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1512,13 +1537,13 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "2270558f-0f9f-4ab7-9457-e1c795ffed81",
+  "id": "c8e66146-5c93-4a2b-9c83-4e33ca21be69",
   "kind": "stop",
   "state": "succeeded",
   "requestedBy": "token:docs-verifier",
-  "createdAt": "2026-10-28T20:01:21.709086Z",
-  "startedAt": "2026-10-28T20:01:21.730641Z",
-  "finishedAt": "2026-10-28T20:01:27.844151Z",
+  "createdAt": "2026-10-28T21:24:05.744495Z",
+  "startedAt": "2026-10-28T21:24:05.768382Z",
+  "finishedAt": "2026-10-28T21:24:11.878457Z",
   "error": null,
   "phases": [
     {
@@ -1561,9 +1586,12 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications/{name}/plan`
 
@@ -1734,7 +1762,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/plan" \
 const result = await client.request("plan_application", { params: { name: "shop" }, body /* the request body above */ });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1774,7 +1802,7 @@ Content-Type: `application/json`.
     "scopes": [
       {
         "kind": "project",
-        "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
+        "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
         "name": "Online shop",
         "dimensions": [
           {
@@ -1805,8 +1833,10 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
+| `409` | `project_mismatch` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `quota_unverifiable`, `database_not_configured`, `store_unavailable` |
 
 ### `POST /api/v1/applications/{name}/restore`
 
@@ -1835,16 +1865,19 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/blog/restore
 await client.request("restore_application", { params: { name: "blog" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
+| `409` | `still_running` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/status`
 
@@ -1881,7 +1914,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/status?p
 const result = await client.request("application_status", { params: { name: "shop" }, query: { project: "shop-prod" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1891,7 +1924,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:20.417401Z"
+    "observedAt": "2026-10-28T21:24:04.423354Z"
   },
   "items": [
     {
@@ -1920,6 +1953,7 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
+| `404` | `not_found` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 
@@ -1949,7 +1983,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions
 const result = await client.request("application_versions", { params: { name: "shop" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1964,7 +1998,7 @@ Content-Type: `application/json`.
       "label": "First release",
       "draftVersion": 1,
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-28T20:01:19.704029Z"
+      "createdAt": "2026-10-28T21:24:03.087711Z"
     }
   ]
 }
@@ -1974,9 +2008,12 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications/{name}/versions`
 
@@ -2020,7 +2057,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/version
 const result = await client.request("publish_application", { params: { name: "shop" }, body: { label: "First release" } });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -2033,7 +2070,7 @@ Content-Type: `application/json`.
   "label": "First release",
   "draftVersion": 1,
   "createdBy": "token:docs-verifier",
-  "createdAt": "2026-10-28T20:01:19.704029Z"
+  "createdAt": "2026-10-28T21:24:03.087711Z"
 }
 ```
 
@@ -2041,12 +2078,14 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `no_draft`, `not_found` |
 | `409` | `already_published` |
 | `422` | `draft_invalid` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/versions/{revision}`
 
@@ -2075,7 +2114,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/versions
 const result = await client.request("application_version", { params: { name: "shop", revision: "1" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -2103,9 +2142,12 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/volumes`
 
@@ -2133,7 +2175,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes"
 const result = await client.request("application_volumes", { params: { name: "shop" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -2143,7 +2185,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:20.437248Z"
+    "observedAt": "2026-10-28T21:24:04.444688Z"
   },
   "items": [
     {
@@ -2160,7 +2202,7 @@ Content-Type: `application/json`.
       "usedBy": [
         "shop-cache-01"
       ],
-      "createdAt": "2026-10-28T20:01:20.264785Z"
+      "createdAt": "2026-10-28T21:24:03.763397Z"
     },
     {
       "module": "db-01",
@@ -2176,7 +2218,7 @@ Content-Type: `application/json`.
       "usedBy": [
         "shop-db-01"
       ],
-      "createdAt": "2026-10-28T20:01:20.238455Z"
+      "createdAt": "2026-10-28T21:24:03.736406Z"
     }
   ]
 }
@@ -2186,11 +2228,13 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `PATCH /api/v1/applications/{name}/volumes/{volume}`
 
@@ -2234,7 +2278,7 @@ curl --fail-with-body -sS -X PATCH "$APELORA_URL/api/v1/applications/shop/volume
 await client.request("grow_application_volume", { params: { name: "shop", volume: "shop-db-01-data" }, body: { sizeMib: 20480 } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -2247,6 +2291,7 @@ await client.request("grow_application_volume", { params: { name: "shop", volume
 | `409` | — |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}`
 
@@ -2290,7 +2335,7 @@ curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volum
 await client.request("delete_application_volume", { params: { name: "shop", volume: "shop-cache-01-cache" }, body: { confirm: "shop-cache-01-cache" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -2303,6 +2348,7 @@ await client.request("delete_application_volume", { params: { name: "shop", volu
 | `409` | `approval_invalid`, `approval_required`, `volume_in_use` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/backups`
 
@@ -2331,7 +2377,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 const result = await client.request("volume_backups", { params: { name: "shop", volume: "shop-db-01-data" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -2341,7 +2387,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:21.660032Z"
+    "observedAt": "2026-10-28T21:24:05.689549Z"
   },
   "backupPool": "mock-local",
   "schedules": {
@@ -2360,21 +2406,21 @@ Content-Type: `application/json`.
   },
   "items": [
     {
-      "name": "shop-db-01-data-bk-20261028200120",
+      "name": "shop-db-01-data-bk-20261028212404",
       "pool": "mock-local",
       "member": "mock-member-02",
       "sizeMib": 20480,
-      "takenAt": "2026-10-28T20:01:20.513715Z",
+      "takenAt": "2026-10-28T21:24:04.534961Z",
       "scheduled": false,
       "beforeRestore": null,
       "present": true
     },
     {
-      "name": "shop-db-01-data-bk-20261028200121",
+      "name": "shop-db-01-data-bk-20261028212405",
       "pool": "mock-local",
       "member": "mock-member-02",
       "sizeMib": 20480,
-      "takenAt": "2026-10-28T20:01:21.636241Z",
+      "takenAt": "2026-10-28T21:24:05.654166Z",
       "scheduled": false,
       "beforeRestore": null,
       "present": true
@@ -2387,10 +2433,12 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/backups`
 
@@ -2425,7 +2473,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes
 const result = await client.request("back_up_volume", { params: { name: "shop", volume: "shop-db-01-data" }, idempotencyKey: newIdempotencyKey() });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -2433,7 +2481,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "bae76edd-87e9-45c6-a753-859401cf908b",
+  "jobId": "da1286c4-4e34-4b63-9c31-34a75c04b5ef",
   "created": true
 }
 ```
@@ -2442,11 +2490,13 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `backup_pool_missing` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}/backups/{backup}`
 
@@ -2470,7 +2520,7 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 
 ```json
 {
-  "confirm": "shop-db-01-data-bk-20261028200121"
+  "confirm": "shop-db-01-data-bk-20261028212405"
 }
 ```
 
@@ -2479,19 +2529,19 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028200121" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028212405" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"shop-db-01-data-bk-20261028200121"}'
+  --data-raw '{"confirm":"shop-db-01-data-bk-20261028212405"}'
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028200121" }, body: { confirm: "shop-db-01-data-bk-20261028200121" } });
+await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028212405" }, body: { confirm: "shop-db-01-data-bk-20261028212405" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -2504,6 +2554,7 @@ await client.request("delete_volume_backup", { params: { name: "shop", volume: "
 | `409` | `approval_invalid`, `approval_required` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`
 
@@ -2523,7 +2574,7 @@ Dry run of restoring the volume from one of its backups: what is replaced (data 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028200120/restore" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028212404/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2531,7 +2582,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 **With options** (`safetyBackup`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028200120/restore?safetyBackup=false" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028212404/restore?safetyBackup=false" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2539,10 +2590,10 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 **TypeScript:**
 
 ```ts
-const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028200120" }, query: { safetyBackup: false } });
+const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028212404" }, query: { safetyBackup: false } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -2552,19 +2603,19 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:21.670448Z"
+    "observedAt": "2026-10-28T21:24:05.700715Z"
   },
   "plan": {
     "volume": "shop-db-01-data",
     "pool": "mock-local",
     "member": "mock-member-01",
     "sizeMib": 20480,
-    "backup": "shop-db-01-data-bk-20261028200120",
+    "backup": "shop-db-01-data-bk-20261028212404",
     "backupPool": "mock-local",
     "backupMember": "mock-member-02",
-    "backupTakenAt": "2026-10-28T20:01:20.513715Z",
+    "backupTakenAt": "2026-10-28T21:24:04.534961Z",
     "snapshotsDeleted": [
-      "snap-20261028-200120"
+      "snap-20261028-212404"
     ],
     "usedBy": [
       "shop-db-01"
@@ -2578,7 +2629,7 @@ Content-Type: `application/json`.
     ],
     "steps": [
       "Copy the volume as it is now into pool mock-local (a safety backup, listed with the others)",
-      "Copy backup shop-db-01-data-bk-20261028200120 over volume shop-db-01-data on mock-member-01",
+      "Copy backup shop-db-01-data-bk-20261028212404 over volume shop-db-01-data on mock-member-01",
       "Incus deletes the volume's 1 snapshot while copying",
       "Leave shop-db-01 stopped: start it again once the data is checked"
     ]
@@ -2590,11 +2641,13 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`
 
@@ -2632,7 +2685,7 @@ This request can change state. Check permissions, prerequisites and any required
 ```sh
 # Generate once per distinct change; keep this value when retrying.
 IDEMPOTENCY_KEY=$(uuidgen)
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028200120/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028212404/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
@@ -2643,10 +2696,10 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes
 **TypeScript:**
 
 ```ts
-const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028200120" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
+const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028212404" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -2654,7 +2707,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "80d0364a-7090-45a2-9e2a-203d32a4d7b9",
+  "jobId": "3b7dae79-b0d0-4bb5-8d05-5b814238ce09",
   "created": true
 }
 ```
@@ -2670,6 +2723,7 @@ Content-Type: `application/json`.
 | `409` | `approval_invalid`, `approval_required`, `restore_blocked` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `PUT /api/v1/applications/{name}/volumes/{volume}/schedules`
 
@@ -2725,7 +2779,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/applications/shop/volumes/
 await client.request("set_volume_schedules", { params: { name: "shop", volume: "shop-db-01-data" }, body: { snapshots: { everyMinutes: 60, keep: 24 }, backups: { everyMinutes: 1440, keep: 7 } } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -2737,6 +2791,7 @@ await client.request("set_volume_schedules", { params: { name: "shop", volume: "
 | `404` | `not_found` |
 | `409` | `backup_pool_missing` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/applications/{name}/volumes/{volume}/snapshots`
 
@@ -2765,7 +2820,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 const result = await client.request("volume_snapshots", { params: { name: "shop", volume: "shop-db-01-data" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -2775,7 +2830,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:20.456137Z"
+    "observedAt": "2026-10-28T21:24:04.466848Z"
   },
   "items": []
 }
@@ -2785,11 +2840,13 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/snapshots`
 
@@ -2820,7 +2877,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes
 const result = await client.request("take_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data" } });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -2828,7 +2885,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "name": "snap-20261028-200120",
+  "name": "snap-20261028-212404",
   "consistency": "crash-consistent"
 }
 ```
@@ -2837,12 +2894,14 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `409` | `snapshots_not_allowed`, `volume_missing` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `DELETE /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}`
 
@@ -2863,27 +2922,29 @@ Deletes one snapshot of the volume. Needs `application.delete`; audited.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261028-200120" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261028-212404" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261028-200120" } });
+await client.request("delete_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261028-212404" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}/restore`
 
@@ -2907,7 +2968,7 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 
 ```json
 {
-  "confirm": "snap-20261028-200120"
+  "confirm": "snap-20261028-212404"
 }
 ```
 
@@ -2916,19 +2977,19 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261028-200120/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261028-212404/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"snap-20261028-200120"}'
+  --data-raw '{"confirm":"snap-20261028-212404"}'
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("restore_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261028-200120" }, body: { confirm: "snap-20261028-200120" } });
+await client.request("restore_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261028-212404" }, body: { confirm: "snap-20261028-212404" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -2941,6 +3002,7 @@ await client.request("restore_volume_snapshot", { params: { name: "shop", volume
 | `409` | `approval_invalid`, `approval_required`, `volume_in_use`, `volume_missing` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/networks/applications`
 
@@ -2964,7 +3026,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks/applications" \
 const result = await client.request("application_networks", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -2974,7 +3036,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.890458Z"
+    "observedAt": "2026-10-28T21:24:20.367566Z"
   },
   "incusError": null,
   "items": [
@@ -3017,6 +3079,7 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/storage/volumes`
 
@@ -3040,7 +3103,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/volumes" \
 const result = await client.request("storage_volumes", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -3050,7 +3113,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:20.448258Z"
+    "observedAt": "2026-10-28T21:24:04.457612Z"
   },
   "backupPool": "mock-local",
   "incusError": null,
@@ -3108,4 +3171,5 @@ Content-Type: `application/json`.
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `forbidden`, `mfa_required` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 

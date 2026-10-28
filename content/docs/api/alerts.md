@@ -52,7 +52,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts" \
 const result = await client.request("alerts", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -73,9 +73,9 @@ Content-Type: `application/json`.
       "threshold": 1,
       "comparison": "at-least",
       "unit": "failed jobs in 15 minutes",
-      "startedAt": "2026-10-28T20:01:25.276353Z",
-      "firedAt": "2026-10-28T20:01:25.276353Z",
-      "lastSeenAt": "2026-10-28T20:01:30.354097Z",
+      "startedAt": "2026-10-28T21:24:08.805105Z",
+      "firedAt": "2026-10-28T21:24:08.805105Z",
+      "lastSeenAt": "2026-10-28T21:24:18.908483Z",
       "resolvedAt": null,
       "clearingSince": null,
       "acknowledged": null,
@@ -91,10 +91,10 @@ Content-Type: `application/json`.
     "needsAttention": 1
   },
   "evaluator": {
-    "lastPassAt": "2026-10-28T20:01:30.354097Z",
+    "lastPassAt": "2026-10-28T21:24:18.908483Z",
     "everySecs": 5,
     "worker": "docs-worker",
-    "durationSecs": 0.058307875,
+    "durationSecs": 0.046453167,
     "stale": false,
     "message": "Evaluated every 5 s by docs-worker."
   },
@@ -162,7 +162,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/2/acknowledge" \
 const result = await client.request("acknowledge_alert", { params: { id: "2" }, body: { note: "Looking into the failed job" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -181,15 +181,15 @@ Content-Type: `application/json`.
   "threshold": 1,
   "comparison": "at-least",
   "unit": "failed jobs in 15 minutes",
-  "startedAt": "2026-10-28T20:01:25.276353Z",
-  "firedAt": "2026-10-28T20:01:25.276353Z",
-  "lastSeenAt": "2026-10-28T20:01:30.354097Z",
+  "startedAt": "2026-10-28T21:24:08.805105Z",
+  "firedAt": "2026-10-28T21:24:08.805105Z",
+  "lastSeenAt": "2026-10-28T21:24:18.908483Z",
   "resolvedAt": null,
   "clearingSince": null,
   "acknowledged": {
     "by": "token:docs-verifier",
     "byName": "docs-verifier",
-    "at": "2026-10-28T20:01:35.181559Z",
+    "at": "2026-10-28T21:24:19.213851Z",
     "note": "Looking into the failed job"
   },
   "silencedBy": null,
@@ -231,7 +231,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/channels" \
 const result = await client.request("alert_channels", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -241,7 +241,7 @@ Content-Type: `application/json`.
 {
   "channels": [
     {
-      "id": "d4d902e6-5a9c-4ee2-bc20-3071142946d2",
+      "id": "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34",
       "name": "On-call webhook",
       "kind": "webhook",
       "host": "hooks.example.invalid",
@@ -255,9 +255,9 @@ Content-Type: `application/json`.
         "lastError": null,
         "lastDeliveredAt": null
       },
-      "createdAt": "2026-10-28T20:01:19.977501Z",
+      "createdAt": "2026-10-28T21:24:03.466763Z",
       "createdBy": "token:docs-verifier",
-      "updatedAt": "2026-10-28T20:01:19.985436Z"
+      "updatedAt": "2026-10-28T21:24:03.476897Z"
     }
   ],
   "secretPrefix": "APELORA_ALERT_SECRET_",
@@ -329,7 +329,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels" \
 const result = await client.request("create_alert_channel", { body /* the request body above */ });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -337,7 +337,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "d4d902e6-5a9c-4ee2-bc20-3071142946d2",
+  "id": "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34",
   "name": "On-call webhook",
   "kind": "webhook",
   "host": "hooks.example.invalid",
@@ -351,9 +351,9 @@ Content-Type: `application/json`.
     "lastError": null,
     "lastDeliveredAt": null
   },
-  "createdAt": "2026-10-28T20:01:19.977501Z",
+  "createdAt": "2026-10-28T21:24:03.466763Z",
   "createdBy": "token:docs-verifier",
-  "updatedAt": "2026-10-28T20:01:19.977501Z"
+  "updatedAt": "2026-10-28T21:24:03.466763Z"
 }
 ```
 
@@ -405,7 +405,7 @@ Changes a webhook channel. Needs `alert.configure`; audited as `alert.channel.up
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/d4d902e6-5a9c-4ee2-bc20-3071142946d2" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/0fe817a4-32f1-4fc0-b08a-5e3fb625cc34" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -415,10 +415,10 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/d4d902e6-5
 **TypeScript:**
 
 ```ts
-const result = await client.request("update_alert_channel", { params: { id: "d4d902e6-5a9c-4ee2-bc20-3071142946d2" }, body /* the request body above */ });
+const result = await client.request("update_alert_channel", { params: { id: "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34" }, body /* the request body above */ });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -426,7 +426,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "d4d902e6-5a9c-4ee2-bc20-3071142946d2",
+  "id": "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34",
   "name": "On-call webhook",
   "kind": "webhook",
   "host": "hooks.example.invalid",
@@ -440,9 +440,9 @@ Content-Type: `application/json`.
     "lastError": null,
     "lastDeliveredAt": null
   },
-  "createdAt": "2026-10-28T20:01:19.977501Z",
+  "createdAt": "2026-10-28T21:24:03.466763Z",
   "createdBy": "token:docs-verifier",
-  "updatedAt": "2026-10-28T20:01:19.985436Z"
+  "updatedAt": "2026-10-28T21:24:03.476897Z"
 }
 ```
 
@@ -475,17 +475,17 @@ Deletes a webhook channel; messages still waiting for it are dropped by the rela
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/channels/d4d902e6-5a9c-4ee2-bc20-3071142946d2" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/channels/0fe817a4-32f1-4fc0-b08a-5e3fb625cc34" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_alert_channel", { params: { id: "d4d902e6-5a9c-4ee2-bc20-3071142946d2" } });
+await client.request("delete_alert_channel", { params: { id: "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -514,7 +514,7 @@ Queues a test notification for one channel through the same outbox path as real 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/d4d902e6-5a9c-4ee2-bc20-3071142946d2/test" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/0fe817a4-32f1-4fc0-b08a-5e3fb625cc34/test" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -522,10 +522,10 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/d4d902e6-
 **TypeScript:**
 
 ```ts
-const result = await client.request("test_alert_channel", { params: { id: "d4d902e6-5a9c-4ee2-bc20-3071142946d2" } });
+const result = await client.request("test_alert_channel", { params: { id: "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34" } });
 ```
 
-**Response `202`** — Success.
+**Response `202`** — Accepted: the work is queued; the response says how to follow it..
 
 Content-Type: `application/json`.
 
@@ -585,7 +585,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/history?before=1&li
 const result = await client.request("alert_history", { query: { before: 1, limit: 1 } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -628,7 +628,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/rules" \
 const result = await client.request("alert_rules", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -662,7 +662,7 @@ Content-Type: `application/json`.
       "sourceState": "ok",
       "firing": 1,
       "runbook": "alerts.md#jobs-are-failing",
-      "updatedAt": "2026-10-28T20:01:20.015665Z",
+      "updatedAt": "2026-10-28T21:24:03.508051Z",
       "updatedBy": "token:docs-verifier"
     },
     {
@@ -764,7 +764,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/rules/job-failures"
 const result = await client.request("update_alert_rule", { params: { rule: "job-failures" }, body: { enabled: true, threshold: 1, forSecs: 0, severity: "warning" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -796,7 +796,7 @@ Content-Type: `application/json`.
   "sourceState": "unknown",
   "firing": 0,
   "runbook": "alerts.md#jobs-are-failing",
-  "updatedAt": "2026-10-28T20:01:20.015665Z",
+  "updatedAt": "2026-10-28T21:24:03.508051Z",
   "updatedBy": "token:docs-verifier"
 }
 ```
@@ -855,7 +855,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/silences" \
 const result = await client.request("create_alert_silence", { body: { rule: "backup-age", minutes: 120, note: "Backup pool maintenance tonight" } });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -863,12 +863,12 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "cb94b92e-26a7-42f7-8fa5-e0c378fed7f8",
+  "id": "697b8f1b-4955-4729-87bd-0440dc471b0c",
   "rule": "backup-age",
   "ruleTitle": "A backup is overdue",
   "subject": null,
-  "startsAt": "2026-10-28T20:01:20.0307Z",
-  "endsAt": "2026-10-28T22:01:20.0307Z",
+  "startsAt": "2026-10-28T21:24:03.531169Z",
+  "endsAt": "2026-10-28T23:24:03.531169Z",
   "note": "Backup pool maintenance tonight",
   "createdBy": "token:docs-verifier",
   "createdByName": "docs-verifier"
@@ -902,17 +902,17 @@ Ends a silence now. Needs `alert.respond`; audited as `alert.silence.end`. 404 w
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/silences/cb94b92e-26a7-42f7-8fa5-e0c378fed7f8" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/silences/697b8f1b-4955-4729-87bd-0440dc471b0c" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("end_alert_silence", { params: { id: "cb94b92e-26a7-42f7-8fa5-e0c378fed7f8" } });
+await client.request("end_alert_silence", { params: { id: "697b8f1b-4955-4729-87bd-0440dc471b0c" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 

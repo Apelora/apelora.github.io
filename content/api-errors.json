@@ -1,5 +1,5 @@
 {
- "openapiSha256": "4fe9e7edf9d14166d3ad6d2ad1991d57ee88cf678715692af06f3ebc49278100",
+ "openapiSha256": "581eca1b5e6c2c0944d4873cc822bf5141144faefaf4e039dc719ad8efa70a6f",
  "operations": {
   "acknowledge_alert": {
    "400": [
@@ -991,6 +991,7 @@
     "not_found"
    ],
    "409": [
+    "confirmation_required",
     "incus_project_exists",
     "not_published",
     "operation_in_progress",
@@ -1548,9 +1549,11 @@
     "nothing_to_do",
     "operation_in_progress"
    ],
-   "503": [
-    "database_not_configured",
+   "502": [
     "incus_unreachable"
+   ],
+   "503": [
+    "database_not_configured"
    ]
   },
   "organizations": {
@@ -1745,7 +1748,6 @@
   "register_machine": {
    "400": [
     "invalid_request",
-    "provisioner_not_configured",
     "unknown_machine"
    ],
    "403": [
@@ -1757,7 +1759,8 @@
    ],
    "503": [
     "cluster_admin_not_configured",
-    "database_not_configured"
+    "database_not_configured",
+    "provisioner_not_configured"
    ]
   },
   "reject_request": {
@@ -1852,7 +1855,7 @@
     "mfa_required"
    ],
    "429": [
-    "too_many_requests"
+    "too_many_open_requests"
    ],
    "503": [
     "database_not_configured"

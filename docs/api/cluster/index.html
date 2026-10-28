@@ -95,13 +95,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;cluster_groups&quot;, {});</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:35.765298Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:20.138754Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -127,18 +127,18 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;list_join_tokens&quot;, {});</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:19.925363Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:03.380832Z&quot;
   },
   &quot;items&quot;: [
     {
       &quot;memberName&quot;: &quot;rack2-01&quot;,
-      &quot;expiresAt&quot;: &quot;2026-10-28T21:01:19.92229Z&quot;
+      &quot;expiresAt&quot;: &quot;2026-10-28T22:24:03.375925Z&quot;
     }
   ]
 }</code></pre>
@@ -162,17 +162,17 @@
   --data-raw '{&quot;memberName&quot;:&quot;rack2-01&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;create_join_token&quot;, { body: { memberName: &quot;rack2-01&quot; } });</code></pre>
-<p><strong>Response <code>201</code></strong> — Success.</p>
+<p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;memberName&quot;: &quot;rack2-01&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-28T21:01:19.92229Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-28T22:24:03.375925Z&quot;,
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
   &quot;warnings&quot;: []
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="delete-apiv1clusterjoin-tokensmember"><code>DELETE /api/v1/cluster/join-tokens/{member}</code></h3>
 <p>Withdraws a new member's approval: revokes its unused join token. Needs <code>manage-infrastructure</code>.</p>
 <p><strong>Operation ID:</strong> <code>revoke_join_token</code></p>
@@ -184,7 +184,7 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>await client.request(&quot;revoke_join_token&quot;, { params: { member: &quot;rack2-01&quot; } });</code></pre>
-<p><strong>Response <code>204</code></strong> — Success, with no body.</p>
+<p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1clustermembers"><code>GET /api/v1/cluster/members</code></h3>
@@ -197,13 +197,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;cluster_members&quot;, {});</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. Long lists are cut to their first items.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:19.885883Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:03.313107Z&quot;
   },
   &quot;clustered&quot;: true,
   &quot;members&quot;: [
@@ -309,7 +309,7 @@
   }
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>500</code></td><td><code>invalid_place</code>, <code>store_error</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1clustermembersmemberevacuate"><code>POST /api/v1/cluster/members/{member}/evacuate</code></h3>
 <p>Evacuates a cluster member through Incus after re-running the dry run: refused while anything blocks it. Needs <code>manage-infrastructure</code> and the admin identity; audited.</p>
 <p><strong>Operation ID:</strong> <code>evacuate_member</code></p>
@@ -330,7 +330,7 @@
   --data-raw '{&quot;confirm&quot;:&quot;mock-member-02&quot;,&quot;force&quot;:false}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;evacuate_member&quot;, { params: { member: &quot;mock-member-02&quot; }, body: { confirm: &quot;mock-member-02&quot;, force: false } });</code></pre>
-<p><strong>Response <code>202</code></strong> — Success.</p>
+<p><strong>Response <code>202</code></strong> — Accepted: the work is queued; the response says how to follow it..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -351,13 +351,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;preview_evacuation&quot;, { params: { member: &quot;mock-member-03&quot; } });</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:19.891388Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:03.321599Z&quot;
   },
   &quot;plan&quot;: {
     &quot;member&quot;: &quot;mock-member-03&quot;,
@@ -401,7 +401,7 @@
   --data-raw '{&quot;confirm&quot;:&quot;mock-member-01&quot;,&quot;poweredOff&quot;:true}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;confirm_fenced&quot;, { params: { member: &quot;mock-member-01&quot; }, body: { confirm: &quot;mock-member-01&quot;, poweredOff: true } });</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> (placeholder values that show the shape):</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -468,13 +468,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;preview_member_removal&quot;, { params: { member: &quot;mock-member-03&quot; } });</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:19.903739Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:03.34092Z&quot;
   },
   &quot;plan&quot;: {
     &quot;member&quot;: &quot;mock-member-03&quot;,
@@ -515,7 +515,7 @@
   --data-raw '{&quot;confirm&quot;:&quot;mock-member-03&quot;,&quot;force&quot;:false}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>await client.request(&quot;remove_member&quot;, { params: { member: &quot;mock-member-03&quot; }, body: { confirm: &quot;mock-member-03&quot;, force: false } });</code></pre>
-<p><strong>Response <code>204</code></strong> — Success, with no body.</p>
+<p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>removal_blocked</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1clustermembersmemberrestore"><code>POST /api/v1/cluster/members/{member}/restore</code></h3>
@@ -538,7 +538,7 @@
   --data-raw '{&quot;confirm&quot;:&quot;mock-member-02&quot;,&quot;force&quot;:false}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;restore_member&quot;, { params: { member: &quot;mock-member-02&quot; }, body: { confirm: &quot;mock-member-02&quot;, force: false } });</code></pre>
-<p><strong>Response <code>202</code></strong> — Success.</p>
+<p><strong>Response <code>202</code></strong> — Accepted: the work is queued; the response says how to follow it..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -558,13 +558,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;cluster_recovery&quot;, {});</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:19.937319Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:03.400079Z&quot;
   },
   &quot;items&quot;: []
 }</code></pre>
@@ -580,13 +580,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;cluster_settings&quot;, {});</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. Long lists are cut to their first items.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:19.935002Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:03.397009Z&quot;
   },
   &quot;identity&quot;: &quot;admin&quot;,
   &quot;items&quot;: [
@@ -631,7 +631,7 @@
   --data-raw '{&quot;changes&quot;:{&quot;cluster.join_token_expiry&quot;:&quot;3H&quot;},&quot;dryRun&quot;:true}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;change_cluster_settings&quot;, { body: { changes: { &quot;cluster.join_token_expiry&quot;: &quot;3H&quot; }, dryRun: true } });</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -670,7 +670,7 @@
   --data-raw '{&quot;action&quot;:&quot;start&quot;,&quot;confirm&quot;:&quot;upgrade&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;cluster_upgrade&quot;, { body: { action: &quot;start&quot;, confirm: &quot;upgrade&quot; } });</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> (placeholder values that show the shape):</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -682,7 +682,7 @@
   &quot;summary&quot;: &quot;example&quot;,
   &quot;member&quot;: &quot;example&quot;
 }</code></pre>
-<p><strong>Response <code>202</code></strong> — Success.</p>
+<p><strong>Response <code>202</code></strong> — Accepted: the work is queued; the response says how to follow it..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> (placeholder values that show the shape):</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -695,7 +695,7 @@
   &quot;member&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td><code>evacuation_blocked</code>, <code>no_upgrade</code>, <code>not_upgraded</code>, <code>upgrade_blocked</code>, <code>upgrade_in_progress</code>, <code>upgrade_step</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>evacuation_blocked</code>, <code>no_upgrade</code>, <code>not_upgraded</code>, <code>upgrade_blocked</code>, <code>upgrade_in_progress</code>, <code>upgrade_step</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1machines"><code>GET /api/v1/machines</code></h3>
 <p>Machines being enrolled, with their state derived from Incus. Needs <code>manage-infrastructure</code>.</p>
 <p><strong>Operation ID:</strong> <code>list_machines</code></p>
@@ -706,13 +706,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;list_machines&quot;, {});</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:35.873201Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:20.340661Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -731,12 +731,12 @@
       &quot;nextStep&quot;: &quot;None.&quot;,
       &quot;warnings&quot;: [],
       &quot;registeredBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;registeredAt&quot;: &quot;2026-10-28T20:01:19.946376Z&quot;,
+      &quot;registeredAt&quot;: &quot;2026-10-28T21:24:03.412827Z&quot;,
       &quot;approvedBy&quot;: null,
       &quot;approvedAt&quot;: null,
       &quot;approvalExpiresAt&quot;: null,
       &quot;admittedBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;admittedAt&quot;: &quot;2026-10-28T20:01:19.956901Z&quot;
+      &quot;admittedAt&quot;: &quot;2026-10-28T21:24:03.427874Z&quot;
     }
   ]
 }</code></pre>
@@ -762,7 +762,7 @@
   --data-raw '{&quot;name&quot;:&quot;rack2-01&quot;,&quot;description&quot;:&quot;Second rack, slot 1&quot;,&quot;provider&quot;:&quot;manual&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;register_machine&quot;, { body: { name: &quot;rack2-01&quot;, description: &quot;Second rack, slot 1&quot;, provider: &quot;manual&quot; } });</code></pre>
-<p><strong>Response <code>201</code></strong> — Success.</p>
+<p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -781,7 +781,7 @@
   &quot;nextStep&quot;: &quot;Install Incus on the server, then approve it.&quot;,
   &quot;warnings&quot;: [],
   &quot;registeredBy&quot;: &quot;token:docs-verifier&quot;,
-  &quot;registeredAt&quot;: &quot;2026-10-28T20:01:19.939687Z&quot;,
+  &quot;registeredAt&quot;: &quot;2026-10-28T21:24:03.40355Z&quot;,
   &quot;approvedBy&quot;: null,
   &quot;approvedAt&quot;: null,
   &quot;approvalExpiresAt&quot;: null,
@@ -789,7 +789,7 @@
   &quot;admittedAt&quot;: null
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code>, <code>provisioner_not_configured</code>, <code>unknown_machine</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code>, <code>unknown_machine</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="delete-apiv1machinesname"><code>DELETE /api/v1/machines/{name}</code></h3>
 <p>Forgets a machine that is not a cluster member (revoking an unused join token). Needs <code>manage-infrastructure</code>; audited.</p>
 <p><strong>Operation ID:</strong> <code>remove_machine</code></p>
@@ -801,7 +801,7 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>await client.request(&quot;remove_machine&quot;, { params: { name: &quot;rack2-01&quot; } });</code></pre>
-<p><strong>Response <code>204</code></strong> — Success, with no body.</p>
+<p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>still_a_member</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1machinesnameadmission"><code>GET /api/v1/machines/{name}/admission</code></h3>
@@ -815,13 +815,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;machine_admission&quot;, { params: { name: &quot;mock-member-03&quot; } });</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. Long lists are cut to their first items.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:19.952945Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:03.422845Z&quot;
   },
   &quot;name&quot;: &quot;mock-member-03&quot;,
   &quot;admissible&quot;: true,
@@ -854,13 +854,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;admit_machine&quot;, { params: { name: &quot;mock-member-03&quot; } });</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. Long lists are cut to their first items.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:19.956573Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:03.427213Z&quot;
   },
   &quot;name&quot;: &quot;mock-member-03&quot;,
   &quot;admissible&quot;: true,
@@ -892,7 +892,7 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>await client.request(&quot;withdraw_machine_approval&quot;, { params: { name: &quot;rack2-01&quot; } });</code></pre>
-<p><strong>Response <code>204</code></strong> — Success, with no body.</p>
+<p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td>an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>cluster_admin_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1machinesnameapprove"><code>POST /api/v1/machines/{name}/approve</code></h3>
@@ -907,14 +907,14 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;approve_machine&quot;, { params: { name: &quot;rack2-01&quot; } });</code></pre>
-<p><strong>Response <code>201</code></strong> — Success.</p>
+<p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;name&quot;: &quot;rack2-01&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-28T21:01:19.962882Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-28T22:24:03.438768Z&quot;,
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
-  &quot;enrolCommand&quot;: &quot;sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address &lt;this server's cluster address&gt;&quot;,
+  &quot;enrolCommand&quot;: &quot;sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address &lt;this server's cluster address&gt; --pool-size &lt;size of the local loop pool, such as 20GiB&gt;&quot;,
   &quot;warnings&quot;: []
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
@@ -929,13 +929,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;maas_machines&quot;, {});</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:35.900146Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:20.386293Z&quot;
   },
   &quot;configured&quot;: false,
   &quot;items&quot;: []
@@ -961,7 +961,7 @@
   --data-raw '{&quot;confirm&quot;:&quot;rack3-04&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;maas_commission&quot;, { params: { system_id: &quot;4y3h7n&quot; }, body: { confirm: &quot;rack3-04&quot; } });</code></pre>
-<p><strong>Response <code>202</code></strong> — Success.</p>
+<p><strong>Response <code>202</code></strong> — Accepted: the work is queued; the response says how to follow it..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> (placeholder values that show the shape):</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -970,7 +970,7 @@
   &quot;systemId&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>500</code></td><td><code>store_error</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1provisionersmaasmachinessystem_iddeploy"><code>POST /api/v1/provisioners/maas/machines/{system_id}/deploy</code></h3>
 <p>Installs an operating system. Needs <code>hardware.deploy</code> and the hostname typed again. <code>userData</code> is sent to MAAS and is not stored or written to the audit log. Audited.</p>
 <p><strong>Operation ID:</strong> <code>maas_deploy</code></p>
@@ -992,7 +992,7 @@
   --data-raw '{&quot;confirm&quot;:&quot;rack3-04&quot;,&quot;distroSeries&quot;:&quot;noble&quot;,&quot;userData&quot;:&quot;&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;maas_deploy&quot;, { params: { system_id: &quot;4y3h7n&quot; }, body: { confirm: &quot;rack3-04&quot;, distroSeries: &quot;noble&quot;, userData: &quot;&quot; } });</code></pre>
-<p><strong>Response <code>202</code></strong> — Success.</p>
+<p><strong>Response <code>202</code></strong> — Accepted: the work is queued; the response says how to follow it..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> (placeholder values that show the shape):</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -1001,7 +1001,7 @@
   &quot;systemId&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>500</code></td><td><code>store_error</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1provisionersmaasmachinessystem_idrelease"><code>POST /api/v1/provisioners/maas/machines/{system_id}/release</code></h3>
 <p>Returns the machine to MAAS's pool. Needs <code>hardware.deploy</code> and the hostname typed again. Disk erasure needs <code>hardware.delete</code> as well and is off unless asked. A secure wipe is not offered. Audited; MAAS is asked first.</p>
 <p><strong>Operation ID:</strong> <code>maas_release</code></p>
@@ -1022,7 +1022,7 @@
   --data-raw '{&quot;confirm&quot;:&quot;rack3-04&quot;,&quot;eraseDisks&quot;:true}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;maas_release&quot;, { params: { system_id: &quot;4y3h7n&quot; }, body: { confirm: &quot;rack3-04&quot;, eraseDisks: true } });</code></pre>
-<p><strong>Response <code>202</code></strong> — Success.</p>
+<p><strong>Response <code>202</code></strong> — Accepted: the work is queued; the response says how to follow it..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> (placeholder values that show the shape):</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -1031,7 +1031,7 @@
   &quot;systemId&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>500</code></td><td><code>store_error</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1provisionersmaasmachinessystem_idtest"><code>POST /api/v1/provisioners/maas/machines/{system_id}/test</code></h3>
 <p>Starts a hardware test run (burn-in) through MAAS. Needs <code>hardware.commission</code> and the hostname typed again. Only a machine that is <code>Ready</code>, <code>Broken</code> or <code>Failed testing</code>: one that is allocated or deployed (an Incus member, for one) is refused, so tests never load a running server. Audited with the test names; MAAS is asked first.</p>
 <p><strong>Operation ID:</strong> <code>maas_test</code></p>
@@ -1054,7 +1054,7 @@
   --data-raw '{&quot;confirm&quot;:&quot;rack3-04&quot;,&quot;scripts&quot;:[&quot;smartctl-validate&quot;]}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;maas_test&quot;, { params: { system_id: &quot;4y3h7n&quot; }, body: { confirm: &quot;rack3-04&quot;, scripts: [&quot;smartctl-validate&quot;] } });</code></pre>
-<p><strong>Response <code>202</code></strong> — Success.</p>
+<p><strong>Response <code>202</code></strong> — Accepted: the work is queued; the response says how to follow it..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> (placeholder values that show the shape):</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -1063,7 +1063,7 @@
   &quot;systemId&quot;: &quot;example&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>machine_in_use</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>machine_in_use</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>500</code></td><td><code>store_error</code></td></tr><tr><td><code>502</code></td><td><code>provisioner_unavailable</code>, an <code>incus_…</code> code</td></tr><tr><td><code>503</code></td><td><code>provisioner_not_configured</code>, <code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1sectors"><code>GET /api/v1/sectors</code></h3>
 <p>The sectors this control plane knows and whether each answers. Needs <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>sectors</code></p>
@@ -1074,13 +1074,13 @@
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;sectors&quot;, {});</code></pre>
-<p><strong>Response <code>200</code></strong> — Success.</p>
+<p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T20:01:19.911812Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T21:24:03.358479Z&quot;
   },
   &quot;items&quot;: [
     {
@@ -1107,13 +1107,13 @@
         &quot;APELORA_SECTOR_SITE_B_SERVER_CERT&quot;
       ],
       &quot;addedBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;addedAt&quot;: &quot;2026-10-28 20:01:19.905876 +00:00:00&quot;
+      &quot;addedAt&quot;: &quot;2026-10-28 21:24:03.347818 +00:00:00&quot;
     }
   ],
   &quot;note&quot;: &quot;Applications deploy to the home sector only. Registered sectors are read for their state and count towards the sites a second deployment could use; deploying to them is a later step.&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>500</code></td><td><code>invalid_place</code>, <code>store_error</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1sectors"><code>POST /api/v1/sectors</code></h3>
 <p>Registers another Incus cluster as a sector. Stores its name, site, address and the name of its credentials; the identity's files stay on the control plane. Needs <code>cluster.manage</code>.</p>
 <p><strong>Operation ID:</strong> <code>add_sector</code></p>
@@ -1135,7 +1135,7 @@
   --data-raw '{&quot;name&quot;:&quot;site-b&quot;,&quot;site&quot;:&quot;rotterdam&quot;,&quot;url&quot;:&quot;https://incus.site-b.example.invalid:8443&quot;,&quot;credentials&quot;:&quot;SITE_B&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;add_sector&quot;, { body /* the request body above */ });</code></pre>
-<p><strong>Response <code>201</code></strong> — Success.</p>
+<p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
@@ -1152,10 +1152,10 @@
     &quot;APELORA_SECTOR_SITE_B_SERVER_CERT&quot;
   ],
   &quot;addedBy&quot;: &quot;token:docs-verifier&quot;,
-  &quot;addedAt&quot;: &quot;2026-10-28 20:01:19.905876 +00:00:00&quot;
+  &quot;addedAt&quot;: &quot;2026-10-28 21:24:03.347818 +00:00:00&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code>, <code>invalid_sector</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td><code>sector_exists</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>no_database</code>, <code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code>, <code>invalid_sector</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td><code>sector_exists</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>500</code></td><td><code>invalid_place</code>, <code>internal</code></td></tr><tr><td><code>503</code></td><td><code>no_database</code>, <code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
 <h3 id="delete-apiv1sectorsname"><code>DELETE /api/v1/sectors/{name}</code></h3>
 <p>Forgets a registered sector. Nothing changes in its Incus. Needs <code>cluster.manage</code>.</p>
 <p><strong>Operation ID:</strong> <code>remove_sector</code></p>
@@ -1174,7 +1174,7 @@
   --data-raw '{&quot;confirm&quot;:&quot;site-b&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>await client.request(&quot;remove_sector&quot;, { params: { name: &quot;site-b&quot; }, body: { confirm: &quot;site-b&quot; } });</code></pre>
-<p><strong>Response <code>204</code></strong> — Success, with no body.</p>
+<p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>no_database</code>, <code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
         </div>

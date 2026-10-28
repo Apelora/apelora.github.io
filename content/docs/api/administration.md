@@ -43,7 +43,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/tokens" \
 const result = await client.request("tokens", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -53,13 +53,13 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "73f1d84a-be2b-40e5-81e5-8f189200398c",
+      "id": "e048beeb-4ddb-4c7c-909b-2e5edf6a9139",
       "name": "docs-verifier",
       "role": "fabric-admin",
-      "createdAt": "2026-10-28T20:01:16.596147Z",
-      "expiresAt": "2026-10-29T20:01:16.564639Z",
+      "createdAt": "2026-10-28T21:24:00.046009Z",
+      "expiresAt": "2026-10-29T21:24:00.01776Z",
       "revokedAt": null,
-      "lastUsedAt": "2026-10-28T20:01:19.630848Z"
+      "lastUsedAt": "2026-10-28T21:24:02.989842Z"
     }
   ]
 }
@@ -132,7 +132,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/tokens" \
 const result = await client.request("create_token", { body: { name: "monitoring", role: "operator", expiresInDays: 90 } });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -142,11 +142,11 @@ Content-Type: `application/json`.
 {
   "token": "<token, shown once>",
   "info": {
-    "id": "5e2d02b7-d8b1-40f0-bbfe-d4cb234f3ca0",
+    "id": "38e3b2ef-bcc1-4e99-b03e-4146575b9c54",
     "name": "monitoring",
     "role": "operator",
-    "createdAt": "2026-10-28T20:01:19.634773Z",
-    "expiresAt": "2027-01-26T20:01:19.634561Z",
+    "createdAt": "2026-10-28T21:24:02.99415Z",
+    "expiresAt": "2027-01-26T21:24:02.99453Z",
     "revokedAt": null,
     "lastUsedAt": null
   }
@@ -181,17 +181,17 @@ Revokes an API token; it stops working at once. Needs `manage-tokens`.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/tokens/5e2d02b7-d8b1-40f0-bbfe-d4cb234f3ca0" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/tokens/38e3b2ef-bcc1-4e99-b03e-4146575b9c54" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("revoke_token", { params: { id: "5e2d02b7-d8b1-40f0-bbfe-d4cb234f3ca0" } });
+await client.request("revoke_token", { params: { id: "38e3b2ef-bcc1-4e99-b03e-4146575b9c54" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 

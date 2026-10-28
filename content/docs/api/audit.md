@@ -63,7 +63,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit?action=application.&
 const result = await client.request("audit", { query: { action: "application.", outcome: "success", limit: 5 } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -74,30 +74,30 @@ Content-Type: `application/json`.
   "items": [
     {
       "id": 130,
-      "at": "2026-10-28T20:01:35.24932Z",
-      "actor": "user:68325b5f-5650-4daa-91e9-87673d9847dd",
+      "at": "2026-10-28T21:24:19.354692Z",
+      "actor": "user:6c57707e-01af-4d92-842e-6712151e369a",
       "actorType": "user",
       "actorName": "ada",
       "action": "session.request",
       "target": "instance:shop/shop-db-01",
       "outcome": "success",
       "scope": {
-        "application": "1fd1a7b8-9ab1-4301-a5d1-e5296d082924",
-        "organization": "a7b3710b-14ea-4c7a-b05c-48950892c576",
-        "project": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
+        "application": "5a291a1e-9ece-4dc7-91af-ef01835cb68b",
+        "organization": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
+        "project": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a"
       },
       "detail": {
-        "approval": "25f5e232-f814-4421-ab21-0ce8d36a410f",
+        "approval": "a39d69cc-13fe-4c4f-9552-5f8fed1729ed",
         "kind": "terminal",
         "name": "ada",
-        "requestId": "f11014f9-f9eb-4de8-b295-6bed9307adce",
-        "session": "30efcc0f-7355-4a30-aec9-3b83b1e62c75"
+        "requestId": "b2aa90d5-c354-472c-80ff-8f01b0a9efb5",
+        "session": "17ab06f7-bcf7-41b6-ad02-d64aba42145c"
       }
     },
     {
       "id": 129,
-      "at": "2026-10-28T20:01:35.231241Z",
-      "actor": "user:4b5de292-7305-4724-b550-188aaba3fa71",
+      "at": "2026-10-28T21:24:19.318959Z",
+      "actor": "user:c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd",
       "actorType": "user",
       "actorName": "grace",
       "action": "approval.grant",
@@ -107,10 +107,10 @@ Content-Type: `application/json`.
       "detail": {
         "action": "instance.console",
         "emergencyAccess": true,
-        "id": "25f5e232-f814-4421-ab21-0ce8d36a410f",
+        "id": "a39d69cc-13fe-4c4f-9552-5f8fed1729ed",
         "name": "grace",
-        "requestId": "02e4604f-c421-4f49-9e90-2821f354ec47",
-        "requester": "user:68325b5f-5650-4daa-91e9-87673d9847dd"
+        "requestId": "76c471c8-e8c8-4f98-b31d-a4bc3f69dac3",
+        "requester": "user:6c57707e-01af-4d92-842e-6712151e369a"
       }
     }
   ]
@@ -168,7 +168,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=jsonl"
 **With options** (`action`, `from`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-27T20%3A01%3A35Z" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-27T21%3A24%3A19Z" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: text/csv"
 ```
@@ -187,9 +187,9 @@ Content-Type: `text/csv`.
 
 ```text
 id,at,actor,actorName,actorType,action,target,outcome,requestId,scope,detail
-131,2026-10-28T20:01:35.288568Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,13c25bdd-2010-4c26-8f13-d46d7a39d784,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""13c25bdd-2010-4c26-8f13-d46d7a39d784"",""role"":""fabric-admin""}"
-130,2026-10-28T20:01:35.24932Z,user:68325b5f-5650-4daa-91e9-87673d9847dd,ada,user,session.request,instance:shop/shop-db-01,success,f11014f9-f9eb-4de8-b295-6bed9307adce,"{""application"":""1fd1a7b8-9ab1-4301-a5d1-e5296d082924"",""organization"":""a7b3710b-14ea-4c7a-b05c-48950892c576"",""project"":""d0b31e5b-5666-4c6b-bf96-cc43501df6ce""}","{""approval"":""25f5e232-f814-4421-ab21-0ce8d36a410f"",""kind"":""terminal"",""name"":""ada"",""requestId"":""f11014f9-f9eb-4de8-b295-6bed9307adce"",""session"":""30efcc0f-7355-4a30-aec9-3b83b1e62c75""}"
-129,2026-10-28T20:01:35.231241Z,user:4b5de292-7305-4724-b550-188aaba3fa71,grace,user,approval.grant,instance:shop/shop-db-01,success,02e4604f-c421-4f49-9e90-2821f354ec47,,"{""action"":""instance.console"",""emergencyAccess"":true,""id"":""25f5e232-f814-4421-ab21-0ce8d36a410f"",""name"":""grace"",""requestId"":""02e4604f-c421-4f49-9e90-2821f354ec47"",""requester"":""user:68325b5f-5650-4daa-91e9-87673d9847dd""}"
+131,2026-10-28T21:24:19.431124Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,0b2086c2-417e-44ad-9e0f-3b543806d067,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""0b2086c2-417e-44ad-9e0f-3b543806d067"",""role"":""fabric-admin""}"
+130,2026-10-28T21:24:19.354692Z,user:6c57707e-01af-4d92-842e-6712151e369a,ada,user,session.request,instance:shop/shop-db-01,success,b2aa90d5-c354-472c-80ff-8f01b0a9efb5,"{""application"":""5a291a1e-9ece-4dc7-91af-ef01835cb68b"",""organization"":""d57c15f8-d7d9-4ecd-b436-5b4ebad12de5"",""project"":""4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a""}","{""approval"":""a39d69cc-13fe-4c4f-9552-5f8fed1729ed"",""kind"":""terminal"",""name"":""ada"",""requestId"":""b2aa90d5-c354-472c-80ff-8f01b0a9efb5"",""session"":""17ab06f7-bcf7-41b6-ad02-d64aba42145c""}"
+129,2026-10-28T21:24:19.318959Z,user:c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd,grace,user,approval.grant,instance:shop/shop-db-01,success,76c471c8-e8c8-4f98-b31d-a4bc3f69dac3,,"{""action"":""instance.console"",""emergencyAccess"":true,""id"":""a39d69cc-13fe-4c4f-9552-5f8fed1729ed"",""name"":""grace"",""requestId"":""76c471c8-e8c8-4f98-b31d-a4bc3f69dac3"",""requester"":""user:6c57707e-01af-4d92-842e-6712151e369a""}"
 ```
 
 Content-Type: `application/x-ndjson`.
@@ -197,9 +197,9 @@ Content-Type: `application/x-ndjson`.
 **Example response** from a test installation; your IDs, names and times differ. The first 3 of 132 lines.
 
 ```text
-{"id":132,"at":"2026-10-28T20:01:35.297312Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"2a54ebb3-2c92-4f3d-95c9-c8ca2b7c72c7","role":"fabric-admin"}}
-{"id":131,"at":"2026-10-28T20:01:35.288568Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"13c25bdd-2010-4c26-8f13-d46d7a39d784","role":"fabric-admin"}}
-{"id":130,"at":"2026-10-28T20:01:35.24932Z","actor":"user:68325b5f-5650-4daa-91e9-87673d9847dd","actorType":"user","actorName":"ada","action":"session.request","target":"instance:shop/shop-db-01","outcome":"success","scope":{"application":"1fd1a7b8-9ab1-4301-a5d1-e5296d082924","organization":"a7b3710b-14ea-4c7a-b05c-48950892c576","project":"d0b31e5b-5666-4c6b-bf96-cc43501df6ce"},"detail":{"approval":"25f5e232-f814-4421-ab21-0ce8d36a410f","kind":"terminal","name":"ada","requestId":"f11014f9-f9eb-4de8-b295-6bed9307adce","session":"30efcc0f-7355-4a30-aec9-3b83b1e62c75"}}
+{"id":132,"at":"2026-10-28T21:24:19.445652Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"b64128fb-f6fa-4710-acce-6d1a6b3c1d69","role":"fabric-admin"}}
+{"id":131,"at":"2026-10-28T21:24:19.431124Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"0b2086c2-417e-44ad-9e0f-3b543806d067","role":"fabric-admin"}}
+{"id":130,"at":"2026-10-28T21:24:19.354692Z","actor":"user:6c57707e-01af-4d92-842e-6712151e369a","actorType":"user","actorName":"ada","action":"session.request","target":"instance:shop/shop-db-01","outcome":"success","scope":{"application":"5a291a1e-9ece-4dc7-91af-ef01835cb68b","organization":"d57c15f8-d7d9-4ecd-b436-5b4ebad12de5","project":"4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a"},"detail":{"approval":"a39d69cc-13fe-4c4f-9552-5f8fed1729ed","kind":"terminal","name":"ada","requestId":"b2aa90d5-c354-472c-80ff-8f01b0a9efb5","session":"17ab06f7-bcf7-41b6-ad02-d64aba42145c"}}
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.

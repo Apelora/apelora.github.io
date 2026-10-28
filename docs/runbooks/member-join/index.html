@@ -92,8 +92,10 @@ have) and an optional note, or <code>POST /api/v1/machines {&quot;name&quot;: &q
 approved</em>.</li><li><strong>Approve it:</strong> <em>Approve</em> (or <code>POST /api/v1/machines/&lt;name&gt;/approve</code>). The join token and the
 command to run are shown once; the token is single-use and expires
 (<code>cluster.join_token_expiry</code>, keep it at 1 hour or less). State: <em>Waiting to join</em>.</li><li><strong>Enrol the server:</strong> copy <code>scripts/enrol/enrol-member.sh</code> to it and run, as root,
-<code>bash enrol-member.sh --name &lt;name&gt; --address &lt;its cluster address&gt;</code> — add
-<code>--member-config &lt;file&gt;</code> for per-member storage settings and, with OVN,
+<code>bash enrol-member.sh --name &lt;name&gt; --address &lt;its cluster address&gt; --pool-size &lt;size&gt;</code>.
+<code>--pool-size 20GiB</code> is the sized loop pool named <code>local</code>: it answers <code>size</code> and an empty
+<code>source</code>, so Incus creates the loop file. A pool on a disk uses <code>--member-config &lt;file&gt;</code>
+instead (one YAML item per key; do not pass both). With OVN, add
 <code>--ovn-remote tcp:&lt;ovn-db&gt;:6642 --ovn-encap-ip &lt;its address&gt;</code>. Paste the token when asked
 (it is not echoed; pass it on standard input in automation — never on the command line). The
 script checks Incus ≥ 7.0 and kernel ≥ 6.12, configures the OVN controller, joins, and holds

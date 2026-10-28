@@ -56,7 +56,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/database-backups" \
 const result = await client.request("database_backups", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -117,7 +117,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/health" \
 const result = await client.request("health", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -134,7 +134,7 @@ Content-Type: `application/json`.
   "incus": {
     "connected": false
   },
-  "checkedAt": "2026-10-28T20:01:16.723681Z"
+  "checkedAt": "2026-10-28T21:24:00.170763Z"
 }
 ```
 
@@ -166,7 +166,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/health/components" \
 const result = await client.request("health_components", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -174,14 +174,14 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "checkedAt": "2026-10-28T20:01:35.784209Z",
+  "checkedAt": "2026-10-28T21:24:20.174854Z",
   "overall": "degraded",
   "controlPlane": {
     "state": "healthy",
     "version": "0.0.0",
     "apiVersion": "v1",
-    "startedAt": "2026-10-28T20:01:20.100646Z",
-    "uptimeSecs": 15,
+    "startedAt": "2026-10-28T21:24:03.617118Z",
+    "uptimeSecs": 16,
     "auth": "tokens",
     "provider": "mock",
     "reason": null,
@@ -189,7 +189,7 @@ Content-Type: `application/json`.
   },
   "database": {
     "state": "healthy",
-    "roundTripMs": 1,
+    "roundTripMs": 2.1,
     "schemaVersion": 36,
     "expectedSchemaVersion": 36,
     "reason": null,
@@ -202,9 +202,9 @@ Content-Type: `application/json`.
         "id": "docs-worker",
         "host": "unknown",
         "version": "0.0.0",
-        "startedAt": "2026-10-28T20:01:20.207172Z",
-        "lastSeen": "2026-10-28T20:01:35.209634Z",
-        "secondsSinceSeen": 0,
+        "startedAt": "2026-10-28T21:24:03.701213Z",
+        "lastSeen": "2026-10-28T21:24:18.706152Z",
+        "secondsSinceSeen": 1,
         "state": "running"
       }
     ],
@@ -295,7 +295,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/health/servers" \
 const result = await client.request("health_servers", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -305,7 +305,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T20:01:35.786264Z"
+    "observedAt": "2026-10-28T21:24:20.178325Z"
   },
   "clustered": true,
   "items": [
@@ -447,7 +447,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/image-mirrors" \
 const result = await client.request("image_mirrors", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -558,7 +558,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/me/password" \
 await client.request("change_password", { body: { current: "<current password>", new: "<new password>" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -568,6 +568,8 @@ await client.request("change_password", { body: { current: "<current password>",
 | `401` | `unauthenticated`, `invalid_token` |
 | `409` | `account_locked`, `not_a_local_account` |
 | `429` | `rate_limited` |
+| `500` | `internal` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/monitoring`
 
@@ -591,7 +593,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/monitoring" \
 const result = await client.request("monitoring", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -658,7 +660,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/settings" \
 const result = await client.request("effective_settings", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -731,10 +733,10 @@ Content-Type: `application/json`.
       "id": "docs-worker",
       "host": "unknown",
       "version": "0.0.0",
-      "lastSeen": "2026-10-28T20:01:35.209634Z"
+      "lastSeen": "2026-10-28T21:24:18.706152Z"
     }
   ],
-  "readAt": "2026-10-28T20:01:20.100646Z"
+  "readAt": "2026-10-28T21:24:03.617118Z"
 }
 ```
 
@@ -768,7 +770,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/sign-in" \
 const result = await client.request("sign_in_options", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -829,7 +831,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/sign-in/password" \
 const result = await client.request("sign_in_with_password", { body: { username: "ada", password: "<password>" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -838,7 +840,7 @@ Content-Type: `application/json`.
 ```json
 {
   "token": "<token, shown once>",
-  "expiresAt": "2026-10-29T04:01:17.366495Z",
+  "expiresAt": "2026-10-29T05:24:00.736531Z",
   "name": "Ada Lovelace"
 }
 ```
@@ -849,7 +851,9 @@ Content-Type: `application/json`.
 |---|---|
 | `400` | `directory_unavailable`, `invalid_request`, `local_accounts_disabled` |
 | `401` | `invalid_credentials`, `unauthenticated`, `invalid_token` |
+| `403` | `account_disabled` |
 | `429` | `rate_limited` |
+| `502` | `directory_entry_unreadable`, an `incus_…` code |
 | `503` | `directory_unreachable`, `database_not_configured` |
 
 ### `POST /api/v1/sign-in/setup`
@@ -890,7 +894,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/sign-in/setup" \
 await client.request("complete_password_setup", { body: { token: "<setup token from the setup link>", password: "<new password>" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -898,6 +902,7 @@ await client.request("complete_password_setup", { body: { token: "<setup token f
 |---|---|
 | `400` | `invalid_request`, `setup_invalid`, `weak_password` |
 | `429` | `rate_limited` |
+| `500` | `internal` |
 | `503` | `database_not_configured` |
 
 ### `POST /api/v1/sign-out`
@@ -923,7 +928,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/sign-out" \
 await client.request("sign_out", {});
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
@@ -931,6 +936,7 @@ await client.request("sign_out", {});
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/support-bundle`
 
@@ -968,15 +974,15 @@ tar -tf support-bundle.tar
 **Example contents:**
 
 ```text
-apelora-support-20261028-200135/manifest.json
-apelora-support-20261028-200135/versions.json
-apelora-support-20261028-200135/settings.json
-apelora-support-20261028-200135/health.json
-apelora-support-20261028-200135/preflight.json
-apelora-support-20261028-200135/jobs-failed.json
-apelora-support-20261028-200135/metrics.txt
-apelora-support-20261028-200135/logs/README.txt
-apelora-support-20261028-200135/README.txt
+apelora-support-20261028-212420/manifest.json
+apelora-support-20261028-212420/versions.json
+apelora-support-20261028-212420/settings.json
+apelora-support-20261028-212420/health.json
+apelora-support-20261028-212420/preflight.json
+apelora-support-20261028-212420/jobs-failed.json
+apelora-support-20261028-212420/metrics.txt
+apelora-support-20261028-212420/logs/README.txt
+apelora-support-20261028-212420/README.txt
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
@@ -1010,7 +1016,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/system" \
 const result = await client.request("system", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1063,7 +1069,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/whoami" \
 const result = await client.request("whoami", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -1109,6 +1115,7 @@ Content-Type: `application/json`.
 | Status | Codes |
 |---|---|
 | `401` | `unauthenticated` |
+| `403` | `forbidden`, `mfa_required` |
 | `429` | `rate_limited` |
 
 ### `GET /metrics`

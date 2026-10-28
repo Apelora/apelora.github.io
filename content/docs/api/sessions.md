@@ -48,7 +48,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/access" 
 const result = await client.request("application_access", { params: { name: "shop" } });
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -97,9 +97,12 @@ Content-Type: `application/json`.
 
 | Status | Codes |
 |---|---|
+| `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `POST /api/v1/applications/{name}/instances/{instance}/sessions`
 
@@ -148,7 +151,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/instanc
 const result = await client.request("open_session", { params: { name: "shop", instance: "shop-db-01" }, body: { kind: "terminal", cols: 120, rows: 32 } });
 ```
 
-**Response `201`** — Success.
+**Response `201`** — Created; the response describes what was created..
 
 Content-Type: `application/json`.
 
@@ -156,9 +159,9 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "30efcc0f-7355-4a30-aec9-3b83b1e62c75",
+  "id": "17ab06f7-bcf7-41b6-ad02-d64aba42145c",
   "ticket": "<one-time session ticket>",
-  "expiresAt": "2026-10-28T20:02:35.250235Z",
+  "expiresAt": "2026-10-28T21:25:19.356822Z",
   "connectPath": "/api/v1/sessions/connect",
   "protocol": "apelora.session.v1",
   "kind": "terminal",
@@ -179,6 +182,7 @@ Content-Type: `application/json`.
 | `404` | `not_found` |
 | `409` | `approval_invalid`, `approval_required`, `instance_state_unknown`, `session_unavailable` |
 | `429` | `too_many_sessions`, `rate_limited` |
+| `503` | `console_disabled`, `no_randomness`, `database_not_configured` |
 
 ### `GET /api/v1/sessions`
 
@@ -202,7 +206,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/sessions" \
 const result = await client.request("sessions", {});
 ```
 
-**Response `200`** — Success.
+**Response `200`** — Done; the response holds the result..
 
 Content-Type: `application/json`.
 
@@ -219,6 +223,7 @@ Content-Type: `application/json`.
 | Status | Codes |
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 | `429` | `rate_limited` |
 
 ### `DELETE /api/v1/sessions/{id}`
@@ -238,23 +243,25 @@ Ends a session now. Allowed for the person who has it and for whoever may operat
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/30efcc0f-7355-4a30-aec9-3b83b1e62c75" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/17ab06f7-bcf7-41b6-ad02-d64aba42145c" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("terminate_session", { params: { id: "30efcc0f-7355-4a30-aec9-3b83b1e62c75" } });
+await client.request("terminate_session", { params: { id: "17ab06f7-bcf7-41b6-ad02-d64aba42145c" } });
 ```
 
-**Response `204`** — Success, with no body.
+**Response `204`** — Done; nothing is returned., with no body.
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
 
 | Status | Codes |
 |---|---|
 | `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
 | `404` | `not_found` |
 | `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
