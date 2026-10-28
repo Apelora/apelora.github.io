@@ -80,7 +80,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:27.76983Z"
+    "observedAt": "2026-10-28T23:27:11.273398Z"
   },
   "items": [
     {
@@ -137,12 +137,12 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:11.601774Z"
+    "observedAt": "2026-10-28T23:26:50.883635Z"
   },
   "items": [
     {
       "memberName": "rack2-01",
-      "expiresAt": "2026-10-28T23:51:11.597173Z"
+      "expiresAt": "2026-10-29T00:26:50.872189Z"
     }
   ]
 }
@@ -205,7 +205,7 @@ Content-Type: `application/json`.
 ```json
 {
   "memberName": "rack2-01",
-  "expiresAt": "2026-10-28T23:51:11.597173Z",
+  "expiresAt": "2026-10-29T00:26:50.872189Z",
   "token": "<token, shown once>",
   "warnings": []
 }
@@ -296,7 +296,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:11.549663Z"
+    "observedAt": "2026-10-28T23:26:50.708546Z"
   },
   "clustered": true,
   "members": [
@@ -521,7 +521,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:11.556003Z"
+    "observedAt": "2026-10-28T23:26:50.730239Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -709,7 +709,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:11.573251Z"
+    "observedAt": "2026-10-28T23:26:50.783442Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -902,7 +902,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:11.62759Z"
+    "observedAt": "2026-10-28T23:26:50.936724Z"
   },
   "items": []
 }
@@ -949,7 +949,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:11.624809Z"
+    "observedAt": "2026-10-28T23:26:50.928806Z"
   },
   "identity": "admin",
   "items": [
@@ -1184,7 +1184,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:28.020053Z"
+    "observedAt": "2026-10-28T23:27:11.703874Z"
   },
   "items": [
     {
@@ -1203,12 +1203,12 @@ Content-Type: `application/json`.
       "nextStep": "None.",
       "warnings": [],
       "registeredBy": "token:docs-verifier",
-      "registeredAt": "2026-10-28T22:51:11.640555Z",
+      "registeredAt": "2026-10-28T23:26:50.972023Z",
       "approvedBy": null,
       "approvedAt": null,
       "approvalExpiresAt": null,
       "admittedBy": "token:docs-verifier",
-      "admittedAt": "2026-10-28T22:51:11.656473Z"
+      "admittedAt": "2026-10-28T23:26:51.011888Z"
     }
   ]
 }
@@ -1290,7 +1290,7 @@ Content-Type: `application/json`.
   "nextStep": "Install Incus on the server, then approve it.",
   "warnings": [],
   "registeredBy": "token:docs-verifier",
-  "registeredAt": "2026-10-28T22:51:11.630727Z",
+  "registeredAt": "2026-10-28T23:26:50.946071Z",
   "approvedBy": null,
   "approvedAt": null,
   "approvalExpiresAt": null,
@@ -1389,7 +1389,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:11.650996Z"
+    "observedAt": "2026-10-28T23:26:50.997249Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1461,7 +1461,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:11.655993Z"
+    "observedAt": "2026-10-28T23:26:51.009919Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1573,7 +1573,7 @@ Content-Type: `application/json`.
 ```json
 {
   "name": "rack2-01",
-  "expiresAt": "2026-10-28T23:51:11.667831Z",
+  "expiresAt": "2026-10-29T00:26:51.035352Z",
   "token": "<token, shown once>",
   "enrolCommand": "sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address <this server's cluster address> --pool-size <size of the local loop pool, such as 20GiB>",
   "warnings": []
@@ -1625,7 +1625,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:28.072835Z"
+    "observedAt": "2026-10-28T23:27:11.806574Z"
   },
   "configured": false,
   "items": []
@@ -1961,7 +1961,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:11.582994Z"
+    "observedAt": "2026-10-28T23:26:50.825176Z"
   },
   "items": [
     {
@@ -1988,7 +1988,7 @@ Content-Type: `application/json`.
         "APELORA_SECTOR_SITE_B_SERVER_CERT"
       ],
       "addedBy": "token:docs-verifier",
-      "addedAt": "2026-10-28 22:51:11.575429 +00:00:00"
+      "addedAt": "2026-10-28 23:26:50.792824 +00:00:00"
     }
   ],
   "note": "Applications deploy to the home sector only. Registered sectors are read for their state and count towards the sites a second deployment could use; deploying to them is a later step."
@@ -2069,7 +2069,7 @@ Content-Type: `application/json`.
     "APELORA_SECTOR_SITE_B_SERVER_CERT"
   ],
   "addedBy": "token:docs-verifier",
-  "addedAt": "2026-10-28 22:51:11.575429 +00:00:00"
+  "addedAt": "2026-10-28 23:26:50.792824 +00:00:00"
 }
 ```
 

@@ -53,13 +53,13 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "0a46132e-856f-4246-902b-2b6b224ef4e3",
+      "id": "e4cbf3b6-13b4-48e5-a3b7-1372bf90bd37",
       "name": "docs-verifier",
       "role": "fabric-admin",
-      "createdAt": "2026-10-28T22:51:07.095682Z",
-      "expiresAt": "2026-10-29T22:51:07.054997Z",
+      "createdAt": "2026-10-28T23:26:42.234541Z",
+      "expiresAt": "2026-10-29T23:26:42.183819Z",
       "revokedAt": null,
-      "lastUsedAt": "2026-10-28T22:51:11.132304Z"
+      "lastUsedAt": "2026-10-28T23:26:49.510582Z"
     }
   ]
 }
@@ -142,11 +142,11 @@ Content-Type: `application/json`.
 {
   "token": "<token, shown once>",
   "info": {
-    "id": "ed7afc1f-5a83-4ed0-9c75-877a6caa3b12",
+    "id": "f457dbc1-a9e4-4a26-9ecb-691033f991b7",
     "name": "monitoring",
     "role": "operator",
-    "createdAt": "2026-10-28T22:51:11.139461Z",
-    "expiresAt": "2027-01-26T22:51:11.139071Z",
+    "createdAt": "2026-10-28T23:26:49.535364Z",
+    "expiresAt": "2027-01-26T23:26:49.533328Z",
     "revokedAt": null,
     "lastUsedAt": null
   }
@@ -181,14 +181,14 @@ Revokes an API token; it stops working at once. Needs `manage-tokens`.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/tokens/ed7afc1f-5a83-4ed0-9c75-877a6caa3b12" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/tokens/f457dbc1-a9e4-4a26-9ecb-691033f991b7" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("revoke_token", { params: { id: "ed7afc1f-5a83-4ed0-9c75-877a6caa3b12" } });
+await client.request("revoke_token", { params: { id: "f457dbc1-a9e4-4a26-9ecb-691033f991b7" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.

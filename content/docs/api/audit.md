@@ -74,30 +74,30 @@ Content-Type: `application/json`.
   "items": [
     {
       "id": 130,
-      "at": "2026-10-28T22:51:26.983968Z",
-      "actor": "user:d3dea878-2d2a-4710-af99-6bf13728a161",
+      "at": "2026-10-28T23:27:10.140545Z",
+      "actor": "user:c9bef258-1dba-45cb-9d15-1a1231ded712",
       "actorType": "user",
       "actorName": "ada",
       "action": "session.request",
       "target": "instance:shop/shop-db-01",
       "outcome": "success",
       "scope": {
-        "application": "9c2b8220-029b-44ef-9ede-79269c0e316b",
-        "organization": "8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6",
-        "project": "0e64d3ef-1020-41d9-a96e-821b3b45cf04"
+        "application": "ba2bc39d-a895-44cf-88df-95f994325364",
+        "organization": "14c169c3-7c7f-4898-9428-a78d1da537fe",
+        "project": "deff5baa-28d1-4534-b980-108a88f9fa09"
       },
       "detail": {
-        "approval": "81678c81-dfdb-4e1e-be3c-955a4f04384d",
+        "approval": "34b33dd8-634d-4088-a3b0-0e503d6466c6",
         "kind": "terminal",
         "name": "ada",
-        "requestId": "3299c5c9-ad02-4252-89b8-94bdee62b338",
-        "session": "9db6075c-470f-4d3a-873e-0f203d4c86e9"
+        "requestId": "63493e0f-89a3-47b2-be74-1a0d960bdfcb",
+        "session": "2521f680-76da-4290-bbce-c6b8739ba349"
       }
     },
     {
       "id": 129,
-      "at": "2026-10-28T22:51:26.9424Z",
-      "actor": "user:0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368",
+      "at": "2026-10-28T23:27:10.022023Z",
+      "actor": "user:e99e9737-dc0f-47bf-ae49-3c27edc0b26a",
       "actorType": "user",
       "actorName": "grace",
       "action": "approval.grant",
@@ -107,10 +107,10 @@ Content-Type: `application/json`.
       "detail": {
         "action": "instance.console",
         "emergencyAccess": true,
-        "id": "81678c81-dfdb-4e1e-be3c-955a4f04384d",
+        "id": "34b33dd8-634d-4088-a3b0-0e503d6466c6",
         "name": "grace",
-        "requestId": "1c852951-c130-4ba4-935a-8f1c9a5c1dd2",
-        "requester": "user:d3dea878-2d2a-4710-af99-6bf13728a161"
+        "requestId": "4eb0dcb5-fe33-4ac1-9613-ae45ba8d18e2",
+        "requester": "user:c9bef258-1dba-45cb-9d15-1a1231ded712"
       }
     }
   ],
@@ -169,7 +169,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=jsonl"
 **With options** (`action`, `from`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-27T22%3A51%3A27Z" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-27T23%3A27%3A10Z" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: text/csv"
 ```
@@ -188,9 +188,9 @@ Content-Type: `text/csv`.
 
 ```text
 id,at,actor,actorName,actorType,action,target,outcome,requestId,scope,detail
-131,2026-10-28T22:51:27.054326Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,5adb3251-1d7d-4985-bef3-f90399ee0ae8,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""5adb3251-1d7d-4985-bef3-f90399ee0ae8"",""role"":""fabric-admin""}"
-130,2026-10-28T22:51:26.983968Z,user:d3dea878-2d2a-4710-af99-6bf13728a161,ada,user,session.request,instance:shop/shop-db-01,success,3299c5c9-ad02-4252-89b8-94bdee62b338,"{""application"":""9c2b8220-029b-44ef-9ede-79269c0e316b"",""organization"":""8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6"",""project"":""0e64d3ef-1020-41d9-a96e-821b3b45cf04""}","{""approval"":""81678c81-dfdb-4e1e-be3c-955a4f04384d"",""kind"":""terminal"",""name"":""ada"",""requestId"":""3299c5c9-ad02-4252-89b8-94bdee62b338"",""session"":""9db6075c-470f-4d3a-873e-0f203d4c86e9""}"
-129,2026-10-28T22:51:26.9424Z,user:0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368,grace,user,approval.grant,instance:shop/shop-db-01,success,1c852951-c130-4ba4-935a-8f1c9a5c1dd2,,"{""action"":""instance.console"",""emergencyAccess"":true,""id"":""81678c81-dfdb-4e1e-be3c-955a4f04384d"",""name"":""grace"",""requestId"":""1c852951-c130-4ba4-935a-8f1c9a5c1dd2"",""requester"":""user:d3dea878-2d2a-4710-af99-6bf13728a161""}"
+131,2026-10-28T23:27:10.307382Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,91d2e502-167a-4ed0-8037-0b3754fe6271,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""91d2e502-167a-4ed0-8037-0b3754fe6271"",""role"":""fabric-admin""}"
+130,2026-10-28T23:27:10.140545Z,user:c9bef258-1dba-45cb-9d15-1a1231ded712,ada,user,session.request,instance:shop/shop-db-01,success,63493e0f-89a3-47b2-be74-1a0d960bdfcb,"{""application"":""ba2bc39d-a895-44cf-88df-95f994325364"",""organization"":""14c169c3-7c7f-4898-9428-a78d1da537fe"",""project"":""deff5baa-28d1-4534-b980-108a88f9fa09""}","{""approval"":""34b33dd8-634d-4088-a3b0-0e503d6466c6"",""kind"":""terminal"",""name"":""ada"",""requestId"":""63493e0f-89a3-47b2-be74-1a0d960bdfcb"",""session"":""2521f680-76da-4290-bbce-c6b8739ba349""}"
+129,2026-10-28T23:27:10.022023Z,user:e99e9737-dc0f-47bf-ae49-3c27edc0b26a,grace,user,approval.grant,instance:shop/shop-db-01,success,4eb0dcb5-fe33-4ac1-9613-ae45ba8d18e2,,"{""action"":""instance.console"",""emergencyAccess"":true,""id"":""34b33dd8-634d-4088-a3b0-0e503d6466c6"",""name"":""grace"",""requestId"":""4eb0dcb5-fe33-4ac1-9613-ae45ba8d18e2"",""requester"":""user:c9bef258-1dba-45cb-9d15-1a1231ded712""}"
 ```
 
 Content-Type: `application/x-ndjson`.
@@ -198,9 +198,9 @@ Content-Type: `application/x-ndjson`.
 **Example response** from a test installation; your IDs, names and times differ. The first 3 of 132 lines.
 
 ```text
-{"id":132,"at":"2026-10-28T22:51:27.067501Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"5a7b1396-ea0e-47b7-a6a3-a1c7af79cee2","role":"fabric-admin"}}
-{"id":131,"at":"2026-10-28T22:51:27.054326Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"5adb3251-1d7d-4985-bef3-f90399ee0ae8","role":"fabric-admin"}}
-{"id":130,"at":"2026-10-28T22:51:26.983968Z","actor":"user:d3dea878-2d2a-4710-af99-6bf13728a161","actorType":"user","actorName":"ada","action":"session.request","target":"instance:shop/shop-db-01","outcome":"success","scope":{"application":"9c2b8220-029b-44ef-9ede-79269c0e316b","organization":"8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6","project":"0e64d3ef-1020-41d9-a96e-821b3b45cf04"},"detail":{"approval":"81678c81-dfdb-4e1e-be3c-955a4f04384d","kind":"terminal","name":"ada","requestId":"3299c5c9-ad02-4252-89b8-94bdee62b338","session":"9db6075c-470f-4d3a-873e-0f203d4c86e9"}}
+{"id":132,"at":"2026-10-28T23:27:10.341772Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"211306f9-2e7d-4f74-8335-9b09d2d841a1","role":"fabric-admin"}}
+{"id":131,"at":"2026-10-28T23:27:10.307382Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"91d2e502-167a-4ed0-8037-0b3754fe6271","role":"fabric-admin"}}
+{"id":130,"at":"2026-10-28T23:27:10.140545Z","actor":"user:c9bef258-1dba-45cb-9d15-1a1231ded712","actorType":"user","actorName":"ada","action":"session.request","target":"instance:shop/shop-db-01","outcome":"success","scope":{"application":"ba2bc39d-a895-44cf-88df-95f994325364","organization":"14c169c3-7c7f-4898-9428-a78d1da537fe","project":"deff5baa-28d1-4534-b980-108a88f9fa09"},"detail":{"approval":"34b33dd8-634d-4088-a3b0-0e503d6466c6","kind":"terminal","name":"ada","requestId":"63493e0f-89a3-47b2-be74-1a0d960bdfcb","session":"2521f680-76da-4290-bbce-c6b8739ba349"}}
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.

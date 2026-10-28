@@ -108,30 +108,30 @@
   &quot;items&quot;: [
     {
       &quot;id&quot;: 130,
-      &quot;at&quot;: &quot;2026-10-28T22:51:26.983968Z&quot;,
-      &quot;actor&quot;: &quot;user:d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
+      &quot;at&quot;: &quot;2026-10-28T23:27:10.140545Z&quot;,
+      &quot;actor&quot;: &quot;user:c9bef258-1dba-45cb-9d15-1a1231ded712&quot;,
       &quot;actorType&quot;: &quot;user&quot;,
       &quot;actorName&quot;: &quot;ada&quot;,
       &quot;action&quot;: &quot;session.request&quot;,
       &quot;target&quot;: &quot;instance:shop/shop-db-01&quot;,
       &quot;outcome&quot;: &quot;success&quot;,
       &quot;scope&quot;: {
-        &quot;application&quot;: &quot;9c2b8220-029b-44ef-9ede-79269c0e316b&quot;,
-        &quot;organization&quot;: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;,
-        &quot;project&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;
+        &quot;application&quot;: &quot;ba2bc39d-a895-44cf-88df-95f994325364&quot;,
+        &quot;organization&quot;: &quot;14c169c3-7c7f-4898-9428-a78d1da537fe&quot;,
+        &quot;project&quot;: &quot;deff5baa-28d1-4534-b980-108a88f9fa09&quot;
       },
       &quot;detail&quot;: {
-        &quot;approval&quot;: &quot;81678c81-dfdb-4e1e-be3c-955a4f04384d&quot;,
+        &quot;approval&quot;: &quot;34b33dd8-634d-4088-a3b0-0e503d6466c6&quot;,
         &quot;kind&quot;: &quot;terminal&quot;,
         &quot;name&quot;: &quot;ada&quot;,
-        &quot;requestId&quot;: &quot;3299c5c9-ad02-4252-89b8-94bdee62b338&quot;,
-        &quot;session&quot;: &quot;9db6075c-470f-4d3a-873e-0f203d4c86e9&quot;
+        &quot;requestId&quot;: &quot;63493e0f-89a3-47b2-be74-1a0d960bdfcb&quot;,
+        &quot;session&quot;: &quot;2521f680-76da-4290-bbce-c6b8739ba349&quot;
       }
     },
     {
       &quot;id&quot;: 129,
-      &quot;at&quot;: &quot;2026-10-28T22:51:26.9424Z&quot;,
-      &quot;actor&quot;: &quot;user:0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368&quot;,
+      &quot;at&quot;: &quot;2026-10-28T23:27:10.022023Z&quot;,
+      &quot;actor&quot;: &quot;user:e99e9737-dc0f-47bf-ae49-3c27edc0b26a&quot;,
       &quot;actorType&quot;: &quot;user&quot;,
       &quot;actorName&quot;: &quot;grace&quot;,
       &quot;action&quot;: &quot;approval.grant&quot;,
@@ -141,10 +141,10 @@
       &quot;detail&quot;: {
         &quot;action&quot;: &quot;instance.console&quot;,
         &quot;emergencyAccess&quot;: true,
-        &quot;id&quot;: &quot;81678c81-dfdb-4e1e-be3c-955a4f04384d&quot;,
+        &quot;id&quot;: &quot;34b33dd8-634d-4088-a3b0-0e503d6466c6&quot;,
         &quot;name&quot;: &quot;grace&quot;,
-        &quot;requestId&quot;: &quot;1c852951-c130-4ba4-935a-8f1c9a5c1dd2&quot;,
-        &quot;requester&quot;: &quot;user:d3dea878-2d2a-4710-af99-6bf13728a161&quot;
+        &quot;requestId&quot;: &quot;4eb0dcb5-fe33-4ac1-9613-ae45ba8d18e2&quot;,
+        &quot;requester&quot;: &quot;user:c9bef258-1dba-45cb-9d15-1a1231ded712&quot;
       }
     }
   ],
@@ -167,7 +167,7 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/x-ndjson&quot;</code></pre>
 <p><strong>With options</strong> (<code>action</code>, <code>from</code>):</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/audit/export?format=csv&amp;action=token.&amp;from=2026-10-27T22%3A51%3A27Z&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/audit/export?format=csv&amp;action=token.&amp;from=2026-10-27T23%3A27%3A10Z&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: text/csv&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
@@ -176,14 +176,14 @@
 <p>Content-Type: <code>text/csv</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. The first 4 of 132 lines.</p>
 <pre data-lang="text" tabindex="0"><code>id,at,actor,actorName,actorType,action,target,outcome,requestId,scope,detail
-131,2026-10-28T22:51:27.054326Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,5adb3251-1d7d-4985-bef3-f90399ee0ae8,,&quot;{&quot;&quot;filters&quot;&quot;:{},&quot;&quot;format&quot;&quot;:&quot;&quot;csv&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;5adb3251-1d7d-4985-bef3-f90399ee0ae8&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;}&quot;
-130,2026-10-28T22:51:26.983968Z,user:d3dea878-2d2a-4710-af99-6bf13728a161,ada,user,session.request,instance:shop/shop-db-01,success,3299c5c9-ad02-4252-89b8-94bdee62b338,&quot;{&quot;&quot;application&quot;&quot;:&quot;&quot;9c2b8220-029b-44ef-9ede-79269c0e316b&quot;&quot;,&quot;&quot;organization&quot;&quot;:&quot;&quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;&quot;,&quot;&quot;project&quot;&quot;:&quot;&quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;&quot;}&quot;,&quot;{&quot;&quot;approval&quot;&quot;:&quot;&quot;81678c81-dfdb-4e1e-be3c-955a4f04384d&quot;&quot;,&quot;&quot;kind&quot;&quot;:&quot;&quot;terminal&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;ada&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;3299c5c9-ad02-4252-89b8-94bdee62b338&quot;&quot;,&quot;&quot;session&quot;&quot;:&quot;&quot;9db6075c-470f-4d3a-873e-0f203d4c86e9&quot;&quot;}&quot;
-129,2026-10-28T22:51:26.9424Z,user:0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368,grace,user,approval.grant,instance:shop/shop-db-01,success,1c852951-c130-4ba4-935a-8f1c9a5c1dd2,,&quot;{&quot;&quot;action&quot;&quot;:&quot;&quot;instance.console&quot;&quot;,&quot;&quot;emergencyAccess&quot;&quot;:true,&quot;&quot;id&quot;&quot;:&quot;&quot;81678c81-dfdb-4e1e-be3c-955a4f04384d&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;grace&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;1c852951-c130-4ba4-935a-8f1c9a5c1dd2&quot;&quot;,&quot;&quot;requester&quot;&quot;:&quot;&quot;user:d3dea878-2d2a-4710-af99-6bf13728a161&quot;&quot;}&quot;</code></pre>
+131,2026-10-28T23:27:10.307382Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,91d2e502-167a-4ed0-8037-0b3754fe6271,,&quot;{&quot;&quot;filters&quot;&quot;:{},&quot;&quot;format&quot;&quot;:&quot;&quot;csv&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;docs-verifier&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;91d2e502-167a-4ed0-8037-0b3754fe6271&quot;&quot;,&quot;&quot;role&quot;&quot;:&quot;&quot;fabric-admin&quot;&quot;}&quot;
+130,2026-10-28T23:27:10.140545Z,user:c9bef258-1dba-45cb-9d15-1a1231ded712,ada,user,session.request,instance:shop/shop-db-01,success,63493e0f-89a3-47b2-be74-1a0d960bdfcb,&quot;{&quot;&quot;application&quot;&quot;:&quot;&quot;ba2bc39d-a895-44cf-88df-95f994325364&quot;&quot;,&quot;&quot;organization&quot;&quot;:&quot;&quot;14c169c3-7c7f-4898-9428-a78d1da537fe&quot;&quot;,&quot;&quot;project&quot;&quot;:&quot;&quot;deff5baa-28d1-4534-b980-108a88f9fa09&quot;&quot;}&quot;,&quot;{&quot;&quot;approval&quot;&quot;:&quot;&quot;34b33dd8-634d-4088-a3b0-0e503d6466c6&quot;&quot;,&quot;&quot;kind&quot;&quot;:&quot;&quot;terminal&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;ada&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;63493e0f-89a3-47b2-be74-1a0d960bdfcb&quot;&quot;,&quot;&quot;session&quot;&quot;:&quot;&quot;2521f680-76da-4290-bbce-c6b8739ba349&quot;&quot;}&quot;
+129,2026-10-28T23:27:10.022023Z,user:e99e9737-dc0f-47bf-ae49-3c27edc0b26a,grace,user,approval.grant,instance:shop/shop-db-01,success,4eb0dcb5-fe33-4ac1-9613-ae45ba8d18e2,,&quot;{&quot;&quot;action&quot;&quot;:&quot;&quot;instance.console&quot;&quot;,&quot;&quot;emergencyAccess&quot;&quot;:true,&quot;&quot;id&quot;&quot;:&quot;&quot;34b33dd8-634d-4088-a3b0-0e503d6466c6&quot;&quot;,&quot;&quot;name&quot;&quot;:&quot;&quot;grace&quot;&quot;,&quot;&quot;requestId&quot;&quot;:&quot;&quot;4eb0dcb5-fe33-4ac1-9613-ae45ba8d18e2&quot;&quot;,&quot;&quot;requester&quot;&quot;:&quot;&quot;user:c9bef258-1dba-45cb-9d15-1a1231ded712&quot;&quot;}&quot;</code></pre>
 <p>Content-Type: <code>application/x-ndjson</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. The first 3 of 132 lines.</p>
-<pre data-lang="text" tabindex="0"><code>{&quot;id&quot;:132,&quot;at&quot;:&quot;2026-10-28T22:51:27.067501Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;jsonl&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;5a7b1396-ea0e-47b7-a6a3-a1c7af79cee2&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
-{&quot;id&quot;:131,&quot;at&quot;:&quot;2026-10-28T22:51:27.054326Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;csv&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;5adb3251-1d7d-4985-bef3-f90399ee0ae8&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
-{&quot;id&quot;:130,&quot;at&quot;:&quot;2026-10-28T22:51:26.983968Z&quot;,&quot;actor&quot;:&quot;user:d3dea878-2d2a-4710-af99-6bf13728a161&quot;,&quot;actorType&quot;:&quot;user&quot;,&quot;actorName&quot;:&quot;ada&quot;,&quot;action&quot;:&quot;session.request&quot;,&quot;target&quot;:&quot;instance:shop/shop-db-01&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:{&quot;application&quot;:&quot;9c2b8220-029b-44ef-9ede-79269c0e316b&quot;,&quot;organization&quot;:&quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;,&quot;project&quot;:&quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;},&quot;detail&quot;:{&quot;approval&quot;:&quot;81678c81-dfdb-4e1e-be3c-955a4f04384d&quot;,&quot;kind&quot;:&quot;terminal&quot;,&quot;name&quot;:&quot;ada&quot;,&quot;requestId&quot;:&quot;3299c5c9-ad02-4252-89b8-94bdee62b338&quot;,&quot;session&quot;:&quot;9db6075c-470f-4d3a-873e-0f203d4c86e9&quot;}}</code></pre>
+<pre data-lang="text" tabindex="0"><code>{&quot;id&quot;:132,&quot;at&quot;:&quot;2026-10-28T23:27:10.341772Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;jsonl&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;211306f9-2e7d-4f74-8335-9b09d2d841a1&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
+{&quot;id&quot;:131,&quot;at&quot;:&quot;2026-10-28T23:27:10.307382Z&quot;,&quot;actor&quot;:&quot;token:docs-verifier&quot;,&quot;actorType&quot;:&quot;token&quot;,&quot;actorName&quot;:&quot;docs-verifier&quot;,&quot;action&quot;:&quot;audit.exported&quot;,&quot;target&quot;:&quot;audit&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:null,&quot;detail&quot;:{&quot;filters&quot;:{},&quot;format&quot;:&quot;csv&quot;,&quot;name&quot;:&quot;docs-verifier&quot;,&quot;requestId&quot;:&quot;91d2e502-167a-4ed0-8037-0b3754fe6271&quot;,&quot;role&quot;:&quot;fabric-admin&quot;}}
+{&quot;id&quot;:130,&quot;at&quot;:&quot;2026-10-28T23:27:10.140545Z&quot;,&quot;actor&quot;:&quot;user:c9bef258-1dba-45cb-9d15-1a1231ded712&quot;,&quot;actorType&quot;:&quot;user&quot;,&quot;actorName&quot;:&quot;ada&quot;,&quot;action&quot;:&quot;session.request&quot;,&quot;target&quot;:&quot;instance:shop/shop-db-01&quot;,&quot;outcome&quot;:&quot;success&quot;,&quot;scope&quot;:{&quot;application&quot;:&quot;ba2bc39d-a895-44cf-88df-95f994325364&quot;,&quot;organization&quot;:&quot;14c169c3-7c7f-4898-9428-a78d1da537fe&quot;,&quot;project&quot;:&quot;deff5baa-28d1-4534-b980-108a88f9fa09&quot;},&quot;detail&quot;:{&quot;approval&quot;:&quot;34b33dd8-634d-4088-a3b0-0e503d6466c6&quot;,&quot;kind&quot;:&quot;terminal&quot;,&quot;name&quot;:&quot;ada&quot;,&quot;requestId&quot;:&quot;63493e0f-89a3-47b2-be74-1a0d960bdfcb&quot;,&quot;session&quot;:&quot;2521f680-76da-4290-bbce-c6b8739ba349&quot;}}</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
         </div>

@@ -124,7 +124,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "7b14d8fe-8d76-4bad-9bc5-5662b84b6829",
+  "jobId": "a8407376-6874-4871-b0e8-eee6ccc57889",
   "created": true
 }
 ```
@@ -182,7 +182,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "2c4403c0-6a8f-4488-8b7f-0d0091de7718",
+  "jobId": "7185279f-0f37-4439-be42-90387c9c5f6b",
   "created": true
 }
 ```
@@ -244,7 +244,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T22:51:11.509436Z"
+    "observedAt": "2026-10-28T23:26:50.488645Z"
   },
   "plan": {
     "instance": "mock-web-01",
@@ -334,7 +334,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "308538d4-c3ac-4b7e-b2bf-124e82683a69",
+  "jobId": "3b55e3b3-9777-4d5d-8c75-ffbca2954983",
   "created": true
 }
 ```
@@ -407,7 +407,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "c0d7efb4-2f43-40c9-a103-ce2a53d9a8c8",
+  "jobId": "49a8ef9d-0647-4a24-aca3-54b89bf1f01c",
   "created": true
 }
 ```
@@ -472,7 +472,7 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "0b6fecca-a00a-4620-88fb-82992f587565",
+      "id": "2fd2f28c-1b95-42ea-96d0-e93e6b265cf6",
       "kind": "instance.create",
       "status": "pending",
       "attempts": 0,
@@ -480,7 +480,7 @@ Content-Type: `application/json`.
       "lastError": null,
       "incusOperation": null,
       "incusOperations": [],
-      "requestId": "c9a36689-eb71-481b-b147-1eeb0d992182",
+      "requestId": "61a2c794-bb69-44b8-92f8-b9d22d318604",
       "request": {
         "architectures": [
           "x86_64",
@@ -508,8 +508,8 @@ Content-Type: `application/json`.
         },
         "start": true
       },
-      "createdAt": "2026-10-28T22:51:11.326744Z",
-      "updatedAt": "2026-10-28T22:51:11.326744Z",
+      "createdAt": "2026-10-28T23:26:50.028242Z",
+      "updatedAt": "2026-10-28T23:26:50.028242Z",
       "queuedBy": "token:docs-verifier",
       "retryOf": null,
       "retriedBy": null,
@@ -527,7 +527,7 @@ Content-Type: `application/json`.
       }
     },
     {
-      "id": "78a30563-12a9-43d7-bb0a-46d56109db60",
+      "id": "549fc55a-b786-4704-884c-a3f2d1e542c8",
       "kind": "instance.create",
       "status": "pending",
       "attempts": 0,
@@ -535,7 +535,7 @@ Content-Type: `application/json`.
       "lastError": null,
       "incusOperation": null,
       "incusOperations": [],
-      "requestId": "c9a36689-eb71-481b-b147-1eeb0d992182",
+      "requestId": "61a2c794-bb69-44b8-92f8-b9d22d318604",
       "request": {
         "architectures": [
           "x86_64",
@@ -571,8 +571,8 @@ Content-Type: `application/json`.
           }
         ]
       },
-      "createdAt": "2026-10-28T22:51:11.326744Z",
-      "updatedAt": "2026-10-28T22:51:11.326744Z",
+      "createdAt": "2026-10-28T23:26:50.028242Z",
+      "updatedAt": "2026-10-28T23:26:50.028242Z",
       "queuedBy": "token:docs-verifier",
       "retryOf": null,
       "retriedBy": null,
@@ -619,7 +619,7 @@ A queued job and its progress. Needs `read-inventory`.
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs/0b6fecca-a00a-4620-88fb-82992f587565" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs/2fd2f28c-1b95-42ea-96d0-e93e6b265cf6" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -627,7 +627,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs/0b6fecca-a00a-4620-88
 **TypeScript:**
 
 ```ts
-const result = await client.request("job", { params: { id: "0b6fecca-a00a-4620-88fb-82992f587565" } });
+const result = await client.request("job", { params: { id: "2fd2f28c-1b95-42ea-96d0-e93e6b265cf6" } });
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -638,7 +638,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "0b6fecca-a00a-4620-88fb-82992f587565",
+  "id": "2fd2f28c-1b95-42ea-96d0-e93e6b265cf6",
   "kind": "instance.create",
   "status": "succeeded",
   "attempts": 1,
@@ -648,7 +648,7 @@ Content-Type: `application/json`.
   "incusOperations": [
     "00000000-0000-4000-8000-000000000002"
   ],
-  "requestId": "c9a36689-eb71-481b-b147-1eeb0d992182",
+  "requestId": "61a2c794-bb69-44b8-92f8-b9d22d318604",
   "request": {
     "architectures": [
       "x86_64",
@@ -676,8 +676,8 @@ Content-Type: `application/json`.
     },
     "start": true
   },
-  "createdAt": "2026-10-28T22:51:11.326744Z",
-  "updatedAt": "2026-10-28T22:51:11.913951Z",
+  "createdAt": "2026-10-28T23:26:50.028242Z",
+  "updatedAt": "2026-10-28T23:26:51.631175Z",
   "queuedBy": "token:docs-verifier",
   "retryOf": null,
   "retriedBy": null,
@@ -723,7 +723,7 @@ Cancels a job. A waiting job with nothing in flight is cancelled at once (`cance
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/jobs/beb9bb99-6128-4c64-90a7-e973acaa83b2/cancel" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/jobs/e39e0d32-8564-44b5-9b19-5f4916d08a15/cancel" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -731,7 +731,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/jobs/beb9bb99-6128-4c64-9
 **TypeScript:**
 
 ```ts
-const result = await client.request("cancel_job", { params: { id: "beb9bb99-6128-4c64-90a7-e973acaa83b2" } });
+const result = await client.request("cancel_job", { params: { id: "e39e0d32-8564-44b5-9b19-5f4916d08a15" } });
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -744,7 +744,7 @@ Content-Type: `application/json`.
 {
   "outcome": "cancelled",
   "job": {
-    "id": "beb9bb99-6128-4c64-90a7-e973acaa83b2",
+    "id": "e39e0d32-8564-44b5-9b19-5f4916d08a15",
     "kind": "instance.create",
     "status": "cancelled",
     "attempts": 0,
@@ -752,7 +752,7 @@ Content-Type: `application/json`.
     "lastError": null,
     "incusOperation": null,
     "incusOperations": [],
-    "requestId": "c9412e35-2316-4d50-9126-4f0594aac665",
+    "requestId": "98c2e367-24d5-4770-8526-5e59751984ca",
     "request": {
       "architectures": [
         "x86_64"
@@ -772,12 +772,12 @@ Content-Type: `application/json`.
       },
       "start": true
     },
-    "createdAt": "2026-10-28T22:51:11.453469Z",
-    "updatedAt": "2026-10-28T22:51:11.464536Z",
+    "createdAt": "2026-10-28T23:26:50.31165Z",
+    "updatedAt": "2026-10-28T23:26:50.343069Z",
     "queuedBy": "token:docs-verifier",
     "retryOf": null,
     "retriedBy": null,
-    "cancelRequestedAt": "2026-10-28T22:51:11.464536Z",
+    "cancelRequestedAt": "2026-10-28T23:26:50.343069Z",
     "cancelRequestedBy": "token:docs-verifier",
     "actions": {
       "retry": {
@@ -820,7 +820,7 @@ A job with its attempts (worker, timings, outcome, error and the Incus operation
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs/0b6fecca-a00a-4620-88fb-82992f587565/detail" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs/2fd2f28c-1b95-42ea-96d0-e93e6b265cf6/detail" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -828,7 +828,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/jobs/0b6fecca-a00a-4620-88
 **TypeScript:**
 
 ```ts
-const result = await client.request("job_detail", { params: { id: "0b6fecca-a00a-4620-88fb-82992f587565" } });
+const result = await client.request("job_detail", { params: { id: "2fd2f28c-1b95-42ea-96d0-e93e6b265cf6" } });
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -840,7 +840,7 @@ Content-Type: `application/json`.
 ```json
 {
   "job": {
-    "id": "0b6fecca-a00a-4620-88fb-82992f587565",
+    "id": "2fd2f28c-1b95-42ea-96d0-e93e6b265cf6",
     "kind": "instance.create",
     "status": "succeeded",
     "attempts": 1,
@@ -850,7 +850,7 @@ Content-Type: `application/json`.
     "incusOperations": [
       "00000000-0000-4000-8000-000000000002"
     ],
-    "requestId": "c9a36689-eb71-481b-b147-1eeb0d992182",
+    "requestId": "61a2c794-bb69-44b8-92f8-b9d22d318604",
     "request": {
       "architectures": [
         "x86_64",
@@ -878,8 +878,8 @@ Content-Type: `application/json`.
       },
       "start": true
     },
-    "createdAt": "2026-10-28T22:51:11.326744Z",
-    "updatedAt": "2026-10-28T22:51:11.913951Z",
+    "createdAt": "2026-10-28T23:26:50.028242Z",
+    "updatedAt": "2026-10-28T23:26:51.631175Z",
     "queuedBy": "token:docs-verifier",
     "retryOf": null,
     "retriedBy": null,
@@ -898,14 +898,14 @@ Content-Type: `application/json`.
   },
   "application": "shop",
   "target": "shop-prod/shop-web-01",
-  "startedAt": "2026-10-28T22:51:11.90101Z",
-  "finishedAt": "2026-10-28T22:51:11.913951Z",
+  "startedAt": "2026-10-28T23:26:51.535621Z",
+  "finishedAt": "2026-10-28T23:26:51.631175Z",
   "attempts": [
     {
       "attempt": 1,
       "worker": "docs-worker",
-      "startedAt": "2026-10-28T22:51:11.90101Z",
-      "endedAt": "2026-10-28T22:51:11.913951Z",
+      "startedAt": "2026-10-28T23:26:51.535621Z",
+      "endedAt": "2026-10-28T23:26:51.631175Z",
       "outcome": "succeeded",
       "error": null,
       "incusOperations": [
@@ -915,20 +915,20 @@ Content-Type: `application/json`.
   ],
   "linked": [
     {
-      "id": "78a30563-12a9-43d7-bb0a-46d56109db60",
+      "id": "549fc55a-b786-4704-884c-a3f2d1e542c8",
       "kind": "instance.create",
       "status": "succeeded",
       "relation": "same-request",
       "target": "shop-prod/shop-cache-01",
-      "createdAt": "2026-10-28T22:51:11.326744Z"
+      "createdAt": "2026-10-28T23:26:50.028242Z"
     },
     {
-      "id": "b0c09c26-c3a1-45fb-bdc3-92523f7da6f8",
+      "id": "78f29588-65a5-4735-b3db-16e4361d8ebd",
       "kind": "instance.create",
       "status": "succeeded",
       "relation": "same-request",
       "target": "shop-prod/shop-db-01",
-      "createdAt": "2026-10-28T22:51:11.326744Z"
+      "createdAt": "2026-10-28T23:26:50.028242Z"
     }
   ],
   "safePoints": "Only before the instance is created. Once it exists, its volumes are attached and it is started, so a cancelled create never leaves a half-built instance."
@@ -965,7 +965,7 @@ This request can change state. Check permissions, prerequisites and any required
 ```sh
 # Generate once per distinct change; keep this value when retrying.
 IDEMPOTENCY_KEY=$(uuidgen)
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/jobs/2da8baca-fde1-4600-ac8c-61115627b2fa/retry" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/jobs/2c06a8c4-5671-49b6-8420-b50e028ed1e8/retry" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY"
@@ -974,7 +974,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/jobs/2da8baca-fde1-4600-a
 **TypeScript:**
 
 ```ts
-const result = await client.request("retry_job", { params: { id: "2da8baca-fde1-4600-ac8c-61115627b2fa" }, idempotencyKey: newIdempotencyKey() });
+const result = await client.request("retry_job", { params: { id: "2c06a8c4-5671-49b6-8420-b50e028ed1e8" }, idempotencyKey: newIdempotencyKey() });
 ```
 
 **Response `202`** — Accepted: the work is queued; the response says how to follow it..
@@ -985,7 +985,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "2fa0ca4d-2c90-43b6-9943-9371db26f6df",
+  "jobId": "3ef0e04e-e208-4f24-abd9-6f5c40b267d9",
   "created": true
 }
 ```

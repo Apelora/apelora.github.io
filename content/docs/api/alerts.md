@@ -73,9 +73,9 @@ Content-Type: `application/json`.
       "threshold": 1,
       "comparison": "at-least",
       "unit": "failed jobs in 15 minutes",
-      "startedAt": "2026-10-28T22:51:16.962478Z",
-      "firedAt": "2026-10-28T22:51:16.962478Z",
-      "lastSeenAt": "2026-10-28T22:51:22.006473Z",
+      "startedAt": "2026-10-28T23:26:56.824151Z",
+      "firedAt": "2026-10-28T23:26:56.824151Z",
+      "lastSeenAt": "2026-10-28T23:27:07.196025Z",
       "resolvedAt": null,
       "clearingSince": null,
       "acknowledged": null,
@@ -91,10 +91,10 @@ Content-Type: `application/json`.
     "needsAttention": 1
   },
   "evaluator": {
-    "lastPassAt": "2026-10-28T22:51:22.006473Z",
+    "lastPassAt": "2026-10-28T23:27:07.196025Z",
     "everySecs": 5,
     "worker": "docs-worker",
-    "durationSecs": 0.039930125,
+    "durationSecs": 0.136330958,
     "stale": false,
     "message": "Evaluated every 5 s by docs-worker."
   },
@@ -181,15 +181,15 @@ Content-Type: `application/json`.
   "threshold": 1,
   "comparison": "at-least",
   "unit": "failed jobs in 15 minutes",
-  "startedAt": "2026-10-28T22:51:16.962478Z",
-  "firedAt": "2026-10-28T22:51:16.962478Z",
-  "lastSeenAt": "2026-10-28T22:51:22.006473Z",
+  "startedAt": "2026-10-28T23:26:56.824151Z",
+  "firedAt": "2026-10-28T23:26:56.824151Z",
+  "lastSeenAt": "2026-10-28T23:27:07.196025Z",
   "resolvedAt": null,
   "clearingSince": null,
   "acknowledged": {
     "by": "token:docs-verifier",
     "byName": "docs-verifier",
-    "at": "2026-10-28T22:51:26.838797Z",
+    "at": "2026-10-28T23:27:09.650977Z",
     "note": "Looking into the failed job"
   },
   "silencedBy": null,
@@ -241,7 +241,7 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "ba4f5a24-8488-496a-8e57-7acb351dc3cb",
+      "id": "a948c7f6-7876-49a1-a5b2-70258f9a63b4",
       "name": "On-call webhook",
       "kind": "webhook",
       "host": "hooks.example.invalid",
@@ -255,9 +255,9 @@ Content-Type: `application/json`.
         "lastError": null,
         "lastDeliveredAt": null
       },
-      "createdAt": "2026-10-28T22:51:11.688866Z",
+      "createdAt": "2026-10-28T23:26:51.119809Z",
       "createdBy": "token:docs-verifier",
-      "updatedAt": "2026-10-28T22:51:11.69589Z"
+      "updatedAt": "2026-10-28T23:26:51.145328Z"
     }
   ],
   "secretPrefix": "APELORA_ALERT_SECRET_",
@@ -337,7 +337,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "ba4f5a24-8488-496a-8e57-7acb351dc3cb",
+  "id": "a948c7f6-7876-49a1-a5b2-70258f9a63b4",
   "name": "On-call webhook",
   "kind": "webhook",
   "host": "hooks.example.invalid",
@@ -351,9 +351,9 @@ Content-Type: `application/json`.
     "lastError": null,
     "lastDeliveredAt": null
   },
-  "createdAt": "2026-10-28T22:51:11.688866Z",
+  "createdAt": "2026-10-28T23:26:51.119809Z",
   "createdBy": "token:docs-verifier",
-  "updatedAt": "2026-10-28T22:51:11.688866Z"
+  "updatedAt": "2026-10-28T23:26:51.119809Z"
 }
 ```
 
@@ -405,7 +405,7 @@ Changes a webhook channel. Needs `alert.configure`; audited as `alert.channel.up
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/ba4f5a24-8488-496a-8e57-7acb351dc3cb" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/a948c7f6-7876-49a1-a5b2-70258f9a63b4" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -415,7 +415,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/ba4f5a24-8
 **TypeScript:**
 
 ```ts
-const result = await client.request("update_alert_channel", { params: { id: "ba4f5a24-8488-496a-8e57-7acb351dc3cb" }, body /* the request body above */ });
+const result = await client.request("update_alert_channel", { params: { id: "a948c7f6-7876-49a1-a5b2-70258f9a63b4" }, body /* the request body above */ });
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -426,7 +426,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "ba4f5a24-8488-496a-8e57-7acb351dc3cb",
+  "id": "a948c7f6-7876-49a1-a5b2-70258f9a63b4",
   "name": "On-call webhook",
   "kind": "webhook",
   "host": "hooks.example.invalid",
@@ -440,9 +440,9 @@ Content-Type: `application/json`.
     "lastError": null,
     "lastDeliveredAt": null
   },
-  "createdAt": "2026-10-28T22:51:11.688866Z",
+  "createdAt": "2026-10-28T23:26:51.119809Z",
   "createdBy": "token:docs-verifier",
-  "updatedAt": "2026-10-28T22:51:11.69589Z"
+  "updatedAt": "2026-10-28T23:26:51.145328Z"
 }
 ```
 
@@ -475,14 +475,14 @@ Deletes a webhook channel; messages still waiting for it are dropped by the rela
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/channels/ba4f5a24-8488-496a-8e57-7acb351dc3cb" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/channels/a948c7f6-7876-49a1-a5b2-70258f9a63b4" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_alert_channel", { params: { id: "ba4f5a24-8488-496a-8e57-7acb351dc3cb" } });
+await client.request("delete_alert_channel", { params: { id: "a948c7f6-7876-49a1-a5b2-70258f9a63b4" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.
@@ -514,7 +514,7 @@ Queues a test notification for one channel through the same outbox path as real 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/ba4f5a24-8488-496a-8e57-7acb351dc3cb/test" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/a948c7f6-7876-49a1-a5b2-70258f9a63b4/test" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -522,7 +522,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/ba4f5a24-
 **TypeScript:**
 
 ```ts
-const result = await client.request("test_alert_channel", { params: { id: "ba4f5a24-8488-496a-8e57-7acb351dc3cb" } });
+const result = await client.request("test_alert_channel", { params: { id: "a948c7f6-7876-49a1-a5b2-70258f9a63b4" } });
 ```
 
 **Response `202`** — Accepted: the work is queued; the response says how to follow it..
@@ -663,7 +663,7 @@ Content-Type: `application/json`.
       "sourceState": "ok",
       "firing": 1,
       "runbook": "alerts.md#jobs-are-failing",
-      "updatedAt": "2026-10-28T22:51:11.71816Z",
+      "updatedAt": "2026-10-28T23:26:51.236548Z",
       "updatedBy": "token:docs-verifier"
     },
     {
@@ -797,7 +797,7 @@ Content-Type: `application/json`.
   "sourceState": "unknown",
   "firing": 0,
   "runbook": "alerts.md#jobs-are-failing",
-  "updatedAt": "2026-10-28T22:51:11.71816Z",
+  "updatedAt": "2026-10-28T23:26:51.236548Z",
   "updatedBy": "token:docs-verifier"
 }
 ```
@@ -864,12 +864,12 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "5331b076-8c52-43d2-ba5f-fb10e093e68e",
+  "id": "ddb79999-ee9f-4c5b-b1cd-6053e160f13c",
   "rule": "backup-age",
   "ruleTitle": "A backup is overdue",
   "subject": null,
-  "startsAt": "2026-10-28T22:51:11.730342Z",
-  "endsAt": "2026-10-29T00:51:11.730342Z",
+  "startsAt": "2026-10-28T23:26:51.29521Z",
+  "endsAt": "2026-10-29T01:26:51.29521Z",
   "note": "Backup pool maintenance tonight",
   "createdBy": "token:docs-verifier",
   "createdByName": "docs-verifier"
@@ -903,14 +903,14 @@ Ends a silence now. Needs `alert.respond`; audited as `alert.silence.end`. 404 w
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/silences/5331b076-8c52-43d2-ba5f-fb10e093e68e" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/silences/ddb79999-ee9f-4c5b-b1cd-6053e160f13c" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("end_alert_silence", { params: { id: "5331b076-8c52-43d2-ba5f-fb10e093e68e" } });
+await client.request("end_alert_silence", { params: { id: "ddb79999-ee9f-4c5b-b1cd-6053e160f13c" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.
