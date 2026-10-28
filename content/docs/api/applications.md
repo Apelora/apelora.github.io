@@ -98,19 +98,19 @@ Content-Type: `application/json`.
     {
       "name": "blog",
       "latestRevision": null,
-      "createdAt": "2026-10-26T18:15:01.145284Z",
-      "updatedAt": "2026-10-26T18:15:01.145284Z",
+      "createdAt": "2026-10-28T20:01:19.668284Z",
+      "updatedAt": "2026-10-28T20:01:19.668284Z",
       "description": "Company blog",
       "icon": "box",
       "project": {
-        "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+        "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
         "slug": "shop",
         "name": "Online shop",
-        "organizationId": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+        "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
         "organizationSlug": "acme"
       },
       "environment": {
-        "id": "4427a406-23ae-4618-b9b7-702744c64037",
+        "id": "a9f05f0b-3026-464e-9a00-ecfef23332d8",
         "slug": "staging",
         "name": "Staging",
         "kind": "staging",
@@ -127,7 +127,7 @@ Content-Type: `application/json`.
       },
       "deployment": {
         "status": "not-deployed",
-        "observedAt": "2026-10-26T18:15:01.201436Z",
+        "observedAt": "2026-10-28T20:01:19.754034Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": null,
@@ -167,19 +167,19 @@ Content-Type: `application/json`.
     {
       "name": "shop",
       "latestRevision": 1,
-      "createdAt": "2026-10-26T18:15:01.137685Z",
-      "updatedAt": "2026-10-26T18:15:01.160279Z",
+      "createdAt": "2026-10-28T20:01:19.65709Z",
+      "updatedAt": "2026-10-28T20:01:19.691626Z",
       "description": "Storefront, API and order database",
       "icon": "cart",
       "project": {
-        "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+        "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
         "slug": "shop",
         "name": "Online shop",
-        "organizationId": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+        "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
         "organizationSlug": "acme"
       },
       "environment": {
-        "id": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
+        "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
         "slug": "production",
         "name": "Production",
         "kind": "production",
@@ -192,11 +192,11 @@ Content-Type: `application/json`.
         "validationErrors": 0,
         "publishedVersion": 1,
         "hasUnpublishedChanges": false,
-        "updatedAt": "2026-10-26T18:15:01.160279Z"
+        "updatedAt": "2026-10-28T20:01:19.691626Z"
       },
       "deployment": {
         "status": "degraded",
-        "observedAt": "2026-10-26T18:15:01.201436Z",
+        "observedAt": "2026-10-28T20:01:19.754034Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": 1,
@@ -207,7 +207,7 @@ Content-Type: `application/json`.
           "healthy": 0,
           "unhealthy": 0
         },
-        "lastActivityAt": "2026-10-26T18:15:01.192859Z",
+        "lastActivityAt": "2026-10-28T20:01:19.739739Z",
         "operation": null
       },
       "actions": {
@@ -234,7 +234,7 @@ Content-Type: `application/json`.
       }
     }
   ],
-  "observedAt": "2026-10-26T18:15:01.201436Z",
+  "observedAt": "2026-10-28T20:01:19.754034Z",
   "stale": false
 }
 ```
@@ -269,7 +269,7 @@ Creates an application in an environment, optionally with its first draft. Needs
 ```json
 {
   "name": "shop",
-  "environmentId": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
+  "environmentId": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
   "description": "Storefront and order database",
   "icon": "cart"
 }
@@ -284,7 +284,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"shop","environmentId":"c00f82f1-05b2-4cd9-9184-c739925f51fe","description":"Storefront and order database","icon":"cart"}'
+  --data-raw '{"name":"shop","environmentId":"a24da9a4-2561-4cbb-876d-e4dd0db7bdf2","description":"Storefront and order database","icon":"cart"}'
 ```
 
 **TypeScript:**
@@ -303,19 +303,19 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-26T18:15:01.137685Z",
-  "updatedAt": "2026-10-26T18:15:01.137685Z",
+  "createdAt": "2026-10-28T20:01:19.65709Z",
+  "updatedAt": "2026-10-28T20:01:19.65709Z",
   "description": "Storefront and order database",
   "icon": "cart",
   "project": {
-    "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+    "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
     "slug": "shop",
     "name": "Online shop",
-    "organizationId": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+    "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
     "organizationSlug": "acme"
   },
   "environment": {
-    "id": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
+    "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
     "slug": "production",
     "name": "Production",
     "kind": "production",
@@ -332,7 +332,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-26T18:15:01.141775Z",
+    "observedAt": "2026-10-28T20:01:19.662962Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -418,19 +418,19 @@ Content-Type: `application/json`.
   "application": {
     "name": "shop",
     "latestRevision": 1,
-    "createdAt": "2026-10-26T18:15:01.137685Z",
-    "updatedAt": "2026-10-26T18:15:01.160279Z",
+    "createdAt": "2026-10-28T20:01:19.65709Z",
+    "updatedAt": "2026-10-28T20:01:19.691626Z",
     "description": "Storefront, API and order database",
     "icon": "cart",
     "project": {
-      "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+      "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
       "slug": "shop",
       "name": "Online shop",
-      "organizationId": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+      "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
       "organizationSlug": "acme"
     },
     "environment": {
-      "id": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
+      "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
       "slug": "production",
       "name": "Production",
       "kind": "production",
@@ -443,11 +443,11 @@ Content-Type: `application/json`.
       "validationErrors": 0,
       "publishedVersion": 1,
       "hasUnpublishedChanges": false,
-      "updatedAt": "2026-10-26T18:15:01.160279Z"
+      "updatedAt": "2026-10-28T20:01:19.691626Z"
     },
     "deployment": {
       "status": "degraded",
-      "observedAt": "2026-10-26T18:15:01.216654Z",
+      "observedAt": "2026-10-28T20:01:19.775834Z",
       "stale": false,
       "source": "mock",
       "deployedVersion": 1,
@@ -458,7 +458,7 @@ Content-Type: `application/json`.
         "healthy": 0,
         "unhealthy": 0
       },
-      "lastActivityAt": "2026-10-26T18:15:01.192859Z",
+      "lastActivityAt": "2026-10-28T20:01:19.739739Z",
       "operation": null
     },
     "actions": {
@@ -505,7 +505,7 @@ Content-Type: `application/json`.
       "label": "First release",
       "draftVersion": 1,
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-26T18:15:01.169472Z"
+      "createdAt": "2026-10-28T20:01:19.704029Z"
     }
   ],
   "operations": []
@@ -573,19 +573,19 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-26T18:15:01.137685Z",
-  "updatedAt": "2026-10-26T18:15:01.152615Z",
+  "createdAt": "2026-10-28T20:01:19.65709Z",
+  "updatedAt": "2026-10-28T20:01:19.679285Z",
   "description": "Storefront, API and order database",
   "icon": "cart",
   "project": {
-    "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+    "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
     "slug": "shop",
     "name": "Online shop",
-    "organizationId": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+    "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
     "organizationSlug": "acme"
   },
   "environment": {
-    "id": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
+    "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
     "slug": "production",
     "name": "Production",
     "kind": "production",
@@ -602,7 +602,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-26T18:15:01.155082Z",
+    "observedAt": "2026-10-28T20:01:19.683535Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -923,7 +923,7 @@ Content-Type: `application/json`.
       "scopes": [
         {
           "kind": "project",
-          "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+          "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
           "name": "Online shop",
           "dimensions": [
             {
@@ -950,13 +950,13 @@ Content-Type: `application/json`.
       "module": "web-01",
       "instance": "shop-web-01",
       "action": "create",
-      "jobId": "2863d778-40fd-4d1c-92ee-3459af992dbf"
+      "jobId": "f8fa77b2-23d5-4be7-9886-9dcbb34bde10"
     },
     {
       "module": "db-01",
       "instance": "shop-db-01",
       "action": "create",
-      "jobId": "e2e3a8fe-eed3-4b1a-ba1b-ee8fa991c43b"
+      "jobId": "cfc28cce-d36f-41c5-a9b5-53035d269f71"
     }
   ],
   "networkJob": null
@@ -970,7 +970,7 @@ Content-Type: `application/json`.
 | `400` | `invalid_request` |
 | `401` | `unauthenticated`, `invalid_token` |
 | `403` | `project_not_allowed`, `forbidden`, `mfa_required` |
-| `409` | `incus_project_exists`, `not_published`, `plan_conflict`, `project_mismatch`, `quota_exceeded`, `service_range_exhausted` |
+| `409` | `incus_project_exists`, `not_published`, `operation_in_progress`, `plan_conflict`, `project_mismatch`, `quota_exceeded`, `service_range_exhausted` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
 | `503` | `incus_project_not_ready`, `quota_unverifiable`, `database_not_configured` |
@@ -1024,7 +1024,7 @@ Content-Type: `application/json`.
   },
   "validationErrors": [],
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-26T18:15:01.160279Z"
+  "updatedAt": "2026-10-28T20:01:19.691626Z"
 }
 ```
 
@@ -1113,7 +1113,7 @@ Content-Type: `application/json`.
   },
   "validationErrors": [],
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-26T18:15:01.160279Z"
+  "updatedAt": "2026-10-28T20:01:19.691626Z"
 }
 ```
 
@@ -1164,7 +1164,7 @@ Content-Type: `application/json`.
   "items": [
     {
       "id": 77,
-      "at": "2026-10-26T18:15:01.192859Z",
+      "at": "2026-10-28T20:01:19.739739Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -1172,16 +1172,18 @@ Content-Type: `application/json`.
       "target": "shop-prod/shop",
       "outcome": "success",
       "scope": {
-        "application": "ff56d12a-2194-4f20-94e5-c224200179a8",
-        "organization": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
-        "project": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"
+        "application": "1fd1a7b8-9ab1-4301-a5d1-e5296d082924",
+        "organization": "a7b3710b-14ea-4c7a-b05c-48950892c576",
+        "project": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
       },
       "detail": {
         "create": 3,
         "keep": 0,
         "name": "docs-verifier",
+        "operation": null,
         "remove": 0,
-        "requestId": "528103d3-25a3-4dbe-ba9a-dfedd16ca9e6",
+        "replace": 0,
+        "requestId": "5fe43315-d8a0-4845-9872-d9af7f754f72",
         "resize": 0,
         "revision": 1,
         "role": "fabric-admin"
@@ -1189,7 +1191,7 @@ Content-Type: `application/json`.
     },
     {
       "id": 76,
-      "at": "2026-10-26T18:15:01.169472Z",
+      "at": "2026-10-28T20:01:19.704029Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -1197,14 +1199,14 @@ Content-Type: `application/json`.
       "target": "shop",
       "outcome": "success",
       "scope": {
-        "application": "ff56d12a-2194-4f20-94e5-c224200179a8",
-        "organization": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
-        "project": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"
+        "application": "1fd1a7b8-9ab1-4301-a5d1-e5296d082924",
+        "organization": "a7b3710b-14ea-4c7a-b05c-48950892c576",
+        "project": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
       },
       "detail": {
         "draftVersion": 1,
         "name": "docs-verifier",
-        "requestId": "0a270fba-85f1-4d08-99d2-93b5639b640f",
+        "requestId": "dbdda97b-ca17-4a3d-a68d-7e55471db20d",
         "revision": 1,
         "role": "fabric-admin"
       }
@@ -1258,7 +1260,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T18:15:01.627548Z"
+    "observedAt": "2026-10-28T20:01:20.389617Z"
   },
   "target": "mock-member-02",
   "items": [
@@ -1375,7 +1377,7 @@ Starts, shuts down (graceful), stops (immediate), restarts or migrates the appli
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `action` | one of `start`, `stop`, `shutdown`, `restart`, `migrate` | yes | — |
+| `action` | one of `start`, `stop`, `shutdown`, `restart`, `migrate`, `update` | yes | — |
 | `confirmDisruption` | boolean | no | Required to stop or restart an application that has single-instance or stateful modules: it acknowledges that their clients lose service meanwhile. |
 | `target` | string or null | no | The server to move the application to. Needed for `migrate`, ignored otherwise. |
 
@@ -1416,11 +1418,11 @@ Content-Type: `application/json`.
 ```json
 {
   "operation": {
-    "id": "99e72677-0285-49f7-8c67-daa74daa089d",
+    "id": "2270558f-0f9f-4ab7-9457-e1c795ffed81",
     "kind": "stop",
     "state": "pending",
     "requestedBy": "token:docs-verifier",
-    "createdAt": "2026-10-26T18:15:02.832173Z",
+    "createdAt": "2026-10-28T20:01:21.709086Z",
     "startedAt": null,
     "finishedAt": null,
     "error": null,
@@ -1491,7 +1493,7 @@ One operation with the progress of each phase and instance. Needs `application.v
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/99e72677-0285-49f7-8c67-daa74daa089d" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/2270558f-0f9f-4ab7-9457-e1c795ffed81" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -1499,7 +1501,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operatio
 **TypeScript:**
 
 ```ts
-const result = await client.request("application_operation", { params: { name: "shop", id: "99e72677-0285-49f7-8c67-daa74daa089d" } });
+const result = await client.request("application_operation", { params: { name: "shop", id: "2270558f-0f9f-4ab7-9457-e1c795ffed81" } });
 ```
 
 **Response `200`** — Success.
@@ -1510,13 +1512,13 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "99e72677-0285-49f7-8c67-daa74daa089d",
+  "id": "2270558f-0f9f-4ab7-9457-e1c795ffed81",
   "kind": "stop",
   "state": "succeeded",
   "requestedBy": "token:docs-verifier",
-  "createdAt": "2026-10-26T18:15:02.832173Z",
-  "startedAt": "2026-10-26T18:15:02.846475Z",
-  "finishedAt": "2026-10-26T18:15:08.930078Z",
+  "createdAt": "2026-10-28T20:01:21.709086Z",
+  "startedAt": "2026-10-28T20:01:21.730641Z",
+  "finishedAt": "2026-10-28T20:01:27.844151Z",
   "error": null,
   "phases": [
     {
@@ -1772,7 +1774,7 @@ Content-Type: `application/json`.
     "scopes": [
       {
         "kind": "project",
-        "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+        "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
         "name": "Online shop",
         "dimensions": [
           {
@@ -1889,7 +1891,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T18:15:01.636929Z"
+    "observedAt": "2026-10-28T20:01:20.417401Z"
   },
   "items": [
     {
@@ -1962,7 +1964,7 @@ Content-Type: `application/json`.
       "label": "First release",
       "draftVersion": 1,
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-26T18:15:01.169472Z"
+      "createdAt": "2026-10-28T20:01:19.704029Z"
     }
   ]
 }
@@ -2031,7 +2033,7 @@ Content-Type: `application/json`.
   "label": "First release",
   "draftVersion": 1,
   "createdBy": "token:docs-verifier",
-  "createdAt": "2026-10-26T18:15:01.169472Z"
+  "createdAt": "2026-10-28T20:01:19.704029Z"
 }
 ```
 
@@ -2141,7 +2143,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T18:15:01.646034Z"
+    "observedAt": "2026-10-28T20:01:20.437248Z"
   },
   "items": [
     {
@@ -2158,7 +2160,7 @@ Content-Type: `application/json`.
       "usedBy": [
         "shop-cache-01"
       ],
-      "createdAt": "2026-10-26T18:15:01.561953Z"
+      "createdAt": "2026-10-28T20:01:20.264785Z"
     },
     {
       "module": "db-01",
@@ -2174,7 +2176,7 @@ Content-Type: `application/json`.
       "usedBy": [
         "shop-db-01"
       ],
-      "createdAt": "2026-10-26T18:15:01.550693Z"
+      "createdAt": "2026-10-28T20:01:20.238455Z"
     }
   ]
 }
@@ -2339,7 +2341,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T18:15:02.804504Z"
+    "observedAt": "2026-10-28T20:01:21.660032Z"
   },
   "backupPool": "mock-local",
   "schedules": {
@@ -2358,21 +2360,21 @@ Content-Type: `application/json`.
   },
   "items": [
     {
-      "name": "shop-db-01-data-bk-20261026181501",
+      "name": "shop-db-01-data-bk-20261028200120",
       "pool": "mock-local",
       "member": "mock-member-02",
       "sizeMib": 20480,
-      "takenAt": "2026-10-26T18:15:01.678622Z",
+      "takenAt": "2026-10-28T20:01:20.513715Z",
       "scheduled": false,
       "beforeRestore": null,
       "present": true
     },
     {
-      "name": "shop-db-01-data-bk-20261026181502",
+      "name": "shop-db-01-data-bk-20261028200121",
       "pool": "mock-local",
       "member": "mock-member-02",
       "sizeMib": 20480,
-      "takenAt": "2026-10-26T18:15:02.790472Z",
+      "takenAt": "2026-10-28T20:01:21.636241Z",
       "scheduled": false,
       "beforeRestore": null,
       "present": true
@@ -2431,7 +2433,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "88b24109-1262-42cd-a1d8-12c35009833e",
+  "jobId": "bae76edd-87e9-45c6-a753-859401cf908b",
   "created": true
 }
 ```
@@ -2468,7 +2470,7 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 
 ```json
 {
-  "confirm": "shop-db-01-data-bk-20261026181502"
+  "confirm": "shop-db-01-data-bk-20261028200121"
 }
 ```
 
@@ -2477,16 +2479,16 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261026181502" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028200121" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"shop-db-01-data-bk-20261026181502"}'
+  --data-raw '{"confirm":"shop-db-01-data-bk-20261028200121"}'
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261026181502" }, body: { confirm: "shop-db-01-data-bk-20261026181502" } });
+await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028200121" }, body: { confirm: "shop-db-01-data-bk-20261028200121" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -2521,7 +2523,7 @@ Dry run of restoring the volume from one of its backups: what is replaced (data 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261026181501/restore" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028200120/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2529,7 +2531,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 **With options** (`safetyBackup`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261026181501/restore?safetyBackup=false" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028200120/restore?safetyBackup=false" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2537,7 +2539,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 **TypeScript:**
 
 ```ts
-const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261026181501" }, query: { safetyBackup: false } });
+const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028200120" }, query: { safetyBackup: false } });
 ```
 
 **Response `200`** — Success.
@@ -2550,19 +2552,19 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T18:15:02.810901Z"
+    "observedAt": "2026-10-28T20:01:21.670448Z"
   },
   "plan": {
     "volume": "shop-db-01-data",
     "pool": "mock-local",
     "member": "mock-member-01",
     "sizeMib": 20480,
-    "backup": "shop-db-01-data-bk-20261026181501",
+    "backup": "shop-db-01-data-bk-20261028200120",
     "backupPool": "mock-local",
     "backupMember": "mock-member-02",
-    "backupTakenAt": "2026-10-26T18:15:01.678622Z",
+    "backupTakenAt": "2026-10-28T20:01:20.513715Z",
     "snapshotsDeleted": [
-      "snap-20261026-181501"
+      "snap-20261028-200120"
     ],
     "usedBy": [
       "shop-db-01"
@@ -2576,7 +2578,7 @@ Content-Type: `application/json`.
     ],
     "steps": [
       "Copy the volume as it is now into pool mock-local (a safety backup, listed with the others)",
-      "Copy backup shop-db-01-data-bk-20261026181501 over volume shop-db-01-data on mock-member-01",
+      "Copy backup shop-db-01-data-bk-20261028200120 over volume shop-db-01-data on mock-member-01",
       "Incus deletes the volume's 1 snapshot while copying",
       "Leave shop-db-01 stopped: start it again once the data is checked"
     ]
@@ -2630,7 +2632,7 @@ This request can change state. Check permissions, prerequisites and any required
 ```sh
 # Generate once per distinct change; keep this value when retrying.
 IDEMPOTENCY_KEY=$(uuidgen)
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261026181501/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028200120/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
@@ -2641,7 +2643,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes
 **TypeScript:**
 
 ```ts
-const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261026181501" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
+const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028200120" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
 ```
 
 **Response `202`** — Success.
@@ -2652,7 +2654,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "c2539ce2-2344-4491-b38d-a8d0e56e938b",
+  "jobId": "80d0364a-7090-45a2-9e2a-203d32a4d7b9",
   "created": true
 }
 ```
@@ -2773,7 +2775,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T18:15:01.654394Z"
+    "observedAt": "2026-10-28T20:01:20.456137Z"
   },
   "items": []
 }
@@ -2826,7 +2828,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "name": "snap-20261026-181501",
+  "name": "snap-20261028-200120",
   "consistency": "crash-consistent"
 }
 ```
@@ -2861,14 +2863,14 @@ Deletes one snapshot of the volume. Needs `application.delete`; audited.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261026-181501" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261028-200120" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261026-181501" } });
+await client.request("delete_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261028-200120" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -2905,7 +2907,7 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 
 ```json
 {
-  "confirm": "snap-20261026-181501"
+  "confirm": "snap-20261028-200120"
 }
 ```
 
@@ -2914,16 +2916,16 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261026-181501/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261028-200120/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"snap-20261026-181501"}'
+  --data-raw '{"confirm":"snap-20261028-200120"}'
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("restore_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261026-181501" }, body: { confirm: "snap-20261026-181501" } });
+await client.request("restore_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261028-200120" }, body: { confirm: "snap-20261028-200120" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -2972,7 +2974,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T18:15:16.882984Z"
+    "observedAt": "2026-10-28T20:01:35.890458Z"
   },
   "incusError": null,
   "items": [
@@ -3048,7 +3050,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T18:15:01.650979Z"
+    "observedAt": "2026-10-28T20:01:20.448258Z"
   },
   "backupPool": "mock-local",
   "incusError": null,

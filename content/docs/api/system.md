@@ -134,7 +134,7 @@ Content-Type: `application/json`.
   "incus": {
     "connected": false
   },
-  "checkedAt": "2026-10-26T18:14:58.669005Z"
+  "checkedAt": "2026-10-28T20:01:16.723681Z"
 }
 ```
 
@@ -174,13 +174,13 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "checkedAt": "2026-10-26T18:15:16.806439Z",
+  "checkedAt": "2026-10-28T20:01:35.784209Z",
   "overall": "degraded",
   "controlPlane": {
     "state": "healthy",
     "version": "0.0.0",
     "apiVersion": "v1",
-    "startedAt": "2026-10-26T18:15:01.42459Z",
+    "startedAt": "2026-10-28T20:01:20.100646Z",
     "uptimeSecs": 15,
     "auth": "tokens",
     "provider": "mock",
@@ -189,9 +189,9 @@ Content-Type: `application/json`.
   },
   "database": {
     "state": "healthy",
-    "roundTripMs": 0.7,
-    "schemaVersion": 35,
-    "expectedSchemaVersion": 35,
+    "roundTripMs": 1,
+    "schemaVersion": 36,
+    "expectedSchemaVersion": 36,
     "reason": null,
     "nextStep": null
   },
@@ -202,8 +202,8 @@ Content-Type: `application/json`.
         "id": "docs-worker",
         "host": "unknown",
         "version": "0.0.0",
-        "startedAt": "2026-10-26T18:15:01.535732Z",
-        "lastSeen": "2026-10-26T18:15:16.539057Z",
+        "startedAt": "2026-10-28T20:01:20.207172Z",
+        "lastSeen": "2026-10-28T20:01:35.209634Z",
         "secondsSinceSeen": 0,
         "state": "running"
       }
@@ -305,7 +305,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T18:15:16.808125Z"
+    "observedAt": "2026-10-28T20:01:35.786264Z"
   },
   "clustered": true,
   "items": [
@@ -731,10 +731,10 @@ Content-Type: `application/json`.
       "id": "docs-worker",
       "host": "unknown",
       "version": "0.0.0",
-      "lastSeen": "2026-10-26T18:15:16.539057Z"
+      "lastSeen": "2026-10-28T20:01:35.209634Z"
     }
   ],
-  "readAt": "2026-10-26T18:15:01.42459Z"
+  "readAt": "2026-10-28T20:01:20.100646Z"
 }
 ```
 
@@ -838,7 +838,7 @@ Content-Type: `application/json`.
 ```json
 {
   "token": "<token, shown once>",
-  "expiresAt": "2026-10-27T02:14:59.186777Z",
+  "expiresAt": "2026-10-29T04:01:17.366495Z",
   "name": "Ada Lovelace"
 }
 ```
@@ -968,15 +968,15 @@ tar -tf support-bundle.tar
 **Example contents:**
 
 ```text
-apelora-support-20261026-181516/manifest.json
-apelora-support-20261026-181516/versions.json
-apelora-support-20261026-181516/settings.json
-apelora-support-20261026-181516/health.json
-apelora-support-20261026-181516/preflight.json
-apelora-support-20261026-181516/jobs-failed.json
-apelora-support-20261026-181516/metrics.txt
-apelora-support-20261026-181516/logs/README.txt
-apelora-support-20261026-181516/README.txt
+apelora-support-20261028-200135/manifest.json
+apelora-support-20261028-200135/versions.json
+apelora-support-20261028-200135/settings.json
+apelora-support-20261028-200135/health.json
+apelora-support-20261028-200135/preflight.json
+apelora-support-20261028-200135/jobs-failed.json
+apelora-support-20261028-200135/metrics.txt
+apelora-support-20261028-200135/logs/README.txt
+apelora-support-20261028-200135/README.txt
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.

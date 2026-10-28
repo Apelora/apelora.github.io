@@ -156,9 +156,9 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "8732e470-6d14-4fe1-80e9-8a99502e0a18",
+  "id": "30efcc0f-7355-4a30-aec9-3b83b1e62c75",
   "ticket": "<one-time session ticket>",
-  "expiresAt": "2026-10-26T18:16:16.361997Z",
+  "expiresAt": "2026-10-28T20:02:35.250235Z",
   "connectPath": "/api/v1/sessions/connect",
   "protocol": "apelora.session.v1",
   "kind": "terminal",
@@ -238,14 +238,14 @@ Ends a session now. Allowed for the person who has it and for whoever may operat
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/8732e470-6d14-4fe1-80e9-8a99502e0a18" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/30efcc0f-7355-4a30-aec9-3b83b1e62c75" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("terminate_session", { params: { id: "8732e470-6d14-4fe1-80e9-8a99502e0a18" } });
+await client.request("terminate_session", { params: { id: "30efcc0f-7355-4a30-aec9-3b83b1e62c75" } });
 ```
 
 **Response `204`** — Success, with no body.

@@ -1,5 +1,5 @@
 {
- "openapiSha256": "7f4913a240074c24f320cb69cc2919b22dee7140fef56033c2b6121aaf12f255",
+ "openapiSha256": "4fe9e7edf9d14166d3ad6d2ad1991d57ee88cf678715692af06f3ebc49278100",
  "operations": {
   "acknowledge_alert": {
    "400": [
@@ -993,6 +993,7 @@
    "409": [
     "incus_project_exists",
     "not_published",
+    "operation_in_progress",
     "plan_conflict",
     "project_mismatch",
     "quota_exceeded",

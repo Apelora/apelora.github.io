@@ -74,30 +74,30 @@ Content-Type: `application/json`.
   "items": [
     {
       "id": 130,
-      "at": "2026-10-26T18:15:16.361293Z",
-      "actor": "user:afb7ba87-5522-4d55-833a-138d795b7037",
+      "at": "2026-10-28T20:01:35.24932Z",
+      "actor": "user:68325b5f-5650-4daa-91e9-87673d9847dd",
       "actorType": "user",
       "actorName": "ada",
       "action": "session.request",
       "target": "instance:shop/shop-db-01",
       "outcome": "success",
       "scope": {
-        "application": "ff56d12a-2194-4f20-94e5-c224200179a8",
-        "organization": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
-        "project": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"
+        "application": "1fd1a7b8-9ab1-4301-a5d1-e5296d082924",
+        "organization": "a7b3710b-14ea-4c7a-b05c-48950892c576",
+        "project": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
       },
       "detail": {
-        "approval": "cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125",
+        "approval": "25f5e232-f814-4421-ab21-0ce8d36a410f",
         "kind": "terminal",
         "name": "ada",
-        "requestId": "8c4a35f4-3cdc-4baa-958d-90f271faef0c",
-        "session": "8732e470-6d14-4fe1-80e9-8a99502e0a18"
+        "requestId": "f11014f9-f9eb-4de8-b295-6bed9307adce",
+        "session": "30efcc0f-7355-4a30-aec9-3b83b1e62c75"
       }
     },
     {
       "id": 129,
-      "at": "2026-10-26T18:15:16.345876Z",
-      "actor": "user:e2617b76-d2e8-481e-8a91-b87eed87403a",
+      "at": "2026-10-28T20:01:35.231241Z",
+      "actor": "user:4b5de292-7305-4724-b550-188aaba3fa71",
       "actorType": "user",
       "actorName": "grace",
       "action": "approval.grant",
@@ -107,10 +107,10 @@ Content-Type: `application/json`.
       "detail": {
         "action": "instance.console",
         "emergencyAccess": true,
-        "id": "cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125",
+        "id": "25f5e232-f814-4421-ab21-0ce8d36a410f",
         "name": "grace",
-        "requestId": "46cc0647-bb6b-4e1a-939c-9e8449b0d755",
-        "requester": "user:afb7ba87-5522-4d55-833a-138d795b7037"
+        "requestId": "02e4604f-c421-4f49-9e90-2821f354ec47",
+        "requester": "user:68325b5f-5650-4daa-91e9-87673d9847dd"
       }
     }
   ]
@@ -168,7 +168,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=jsonl"
 **With options** (`action`, `from`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-25T18%3A15%3A16Z" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-27T20%3A01%3A35Z" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: text/csv"
 ```
@@ -187,9 +187,9 @@ Content-Type: `text/csv`.
 
 ```text
 id,at,actor,actorName,actorType,action,target,outcome,requestId,scope,detail
-131,2026-10-26T18:15:16.405626Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,74898f10-bbd7-44fb-af53-17a8ce27b151,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""74898f10-bbd7-44fb-af53-17a8ce27b151"",""role"":""fabric-admin""}"
-130,2026-10-26T18:15:16.361293Z,user:afb7ba87-5522-4d55-833a-138d795b7037,ada,user,session.request,instance:shop/shop-db-01,success,8c4a35f4-3cdc-4baa-958d-90f271faef0c,"{""application"":""ff56d12a-2194-4f20-94e5-c224200179a8"",""organization"":""e0a97f4d-0a7d-40f3-b19f-de3548b8eba8"",""project"":""ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063""}","{""approval"":""cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125"",""kind"":""terminal"",""name"":""ada"",""requestId"":""8c4a35f4-3cdc-4baa-958d-90f271faef0c"",""session"":""8732e470-6d14-4fe1-80e9-8a99502e0a18""}"
-129,2026-10-26T18:15:16.345876Z,user:e2617b76-d2e8-481e-8a91-b87eed87403a,grace,user,approval.grant,instance:shop/shop-db-01,success,46cc0647-bb6b-4e1a-939c-9e8449b0d755,,"{""action"":""instance.console"",""emergencyAccess"":true,""id"":""cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125"",""name"":""grace"",""requestId"":""46cc0647-bb6b-4e1a-939c-9e8449b0d755"",""requester"":""user:afb7ba87-5522-4d55-833a-138d795b7037""}"
+131,2026-10-28T20:01:35.288568Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,13c25bdd-2010-4c26-8f13-d46d7a39d784,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""13c25bdd-2010-4c26-8f13-d46d7a39d784"",""role"":""fabric-admin""}"
+130,2026-10-28T20:01:35.24932Z,user:68325b5f-5650-4daa-91e9-87673d9847dd,ada,user,session.request,instance:shop/shop-db-01,success,f11014f9-f9eb-4de8-b295-6bed9307adce,"{""application"":""1fd1a7b8-9ab1-4301-a5d1-e5296d082924"",""organization"":""a7b3710b-14ea-4c7a-b05c-48950892c576"",""project"":""d0b31e5b-5666-4c6b-bf96-cc43501df6ce""}","{""approval"":""25f5e232-f814-4421-ab21-0ce8d36a410f"",""kind"":""terminal"",""name"":""ada"",""requestId"":""f11014f9-f9eb-4de8-b295-6bed9307adce"",""session"":""30efcc0f-7355-4a30-aec9-3b83b1e62c75""}"
+129,2026-10-28T20:01:35.231241Z,user:4b5de292-7305-4724-b550-188aaba3fa71,grace,user,approval.grant,instance:shop/shop-db-01,success,02e4604f-c421-4f49-9e90-2821f354ec47,,"{""action"":""instance.console"",""emergencyAccess"":true,""id"":""25f5e232-f814-4421-ab21-0ce8d36a410f"",""name"":""grace"",""requestId"":""02e4604f-c421-4f49-9e90-2821f354ec47"",""requester"":""user:68325b5f-5650-4daa-91e9-87673d9847dd""}"
 ```
 
 Content-Type: `application/x-ndjson`.
@@ -197,9 +197,9 @@ Content-Type: `application/x-ndjson`.
 **Example response** from a test installation; your IDs, names and times differ. The first 3 of 132 lines.
 
 ```text
-{"id":132,"at":"2026-10-26T18:15:16.41456Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"9cb4795b-616f-4853-99de-a8a87a8bc767","role":"fabric-admin"}}
-{"id":131,"at":"2026-10-26T18:15:16.405626Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"74898f10-bbd7-44fb-af53-17a8ce27b151","role":"fabric-admin"}}
-{"id":130,"at":"2026-10-26T18:15:16.361293Z","actor":"user:afb7ba87-5522-4d55-833a-138d795b7037","actorType":"user","actorName":"ada","action":"session.request","target":"instance:shop/shop-db-01","outcome":"success","scope":{"application":"ff56d12a-2194-4f20-94e5-c224200179a8","organization":"e0a97f4d-0a7d-40f3-b19f-de3548b8eba8","project":"ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"},"detail":{"approval":"cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125","kind":"terminal","name":"ada","requestId":"8c4a35f4-3cdc-4baa-958d-90f271faef0c","session":"8732e470-6d14-4fe1-80e9-8a99502e0a18"}}
+{"id":132,"at":"2026-10-28T20:01:35.297312Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"2a54ebb3-2c92-4f3d-95c9-c8ca2b7c72c7","role":"fabric-admin"}}
+{"id":131,"at":"2026-10-28T20:01:35.288568Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"13c25bdd-2010-4c26-8f13-d46d7a39d784","role":"fabric-admin"}}
+{"id":130,"at":"2026-10-28T20:01:35.24932Z","actor":"user:68325b5f-5650-4daa-91e9-87673d9847dd","actorType":"user","actorName":"ada","action":"session.request","target":"instance:shop/shop-db-01","outcome":"success","scope":{"application":"1fd1a7b8-9ab1-4301-a5d1-e5296d082924","organization":"a7b3710b-14ea-4c7a-b05c-48950892c576","project":"d0b31e5b-5666-4c6b-bf96-cc43501df6ce"},"detail":{"approval":"25f5e232-f814-4421-ab21-0ce8d36a410f","kind":"terminal","name":"ada","requestId":"f11014f9-f9eb-4de8-b295-6bed9307adce","session":"30efcc0f-7355-4a30-aec9-3b83b1e62c75"}}
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.

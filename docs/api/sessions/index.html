@@ -162,9 +162,9 @@
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;8732e470-6d14-4fe1-80e9-8a99502e0a18&quot;,
+  &quot;id&quot;: &quot;30efcc0f-7355-4a30-aec9-3b83b1e62c75&quot;,
   &quot;ticket&quot;: &quot;&lt;one-time session ticket&gt;&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-26T18:16:16.361997Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-28T20:02:35.250235Z&quot;,
   &quot;connectPath&quot;: &quot;/api/v1/sessions/connect&quot;,
   &quot;protocol&quot;: &quot;apelora.session.v1&quot;,
   &quot;kind&quot;: &quot;terminal&quot;,
@@ -200,10 +200,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Session id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/sessions/8732e470-6d14-4fe1-80e9-8a99502e0a18&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/sessions/30efcc0f-7355-4a30-aec9-3b83b1e62c75&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;terminate_session&quot;, { params: { id: &quot;8732e470-6d14-4fe1-80e9-8a99502e0a18&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;terminate_session&quot;, { params: { id: &quot;30efcc0f-7355-4a30-aec9-3b83b1e62c75&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Success, with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>

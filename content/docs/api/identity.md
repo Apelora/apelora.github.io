@@ -116,15 +116,15 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "d6b04569-5a45-443a-b1b6-8f929aa6a6ae",
+      "id": "3aeaa6d3-aacd-4778-bcd6-f7bb88226c38",
       "action": "hardware.delete",
       "target": "machine:rack1-07",
       "requester": "token:docs-verifier",
       "approver": null,
       "state": "pending",
       "reason": "Retire the old storage server",
-      "createdAt": "2026-10-26T18:15:01.088115Z",
-      "expiresAt": "2026-10-27T18:15:01Z"
+      "createdAt": "2026-10-28T20:01:19.584944Z",
+      "expiresAt": "2026-10-29T20:01:19Z"
     }
   ]
 }
@@ -188,15 +188,15 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "d6b04569-5a45-443a-b1b6-8f929aa6a6ae",
+  "id": "3aeaa6d3-aacd-4778-bcd6-f7bb88226c38",
   "action": "hardware.delete",
   "target": "machine:rack1-07",
   "requester": "token:docs-verifier",
   "approver": null,
   "state": "pending",
   "reason": "Retire the old storage server",
-  "createdAt": "2026-10-26T18:15:01.088115Z",
-  "expiresAt": "2026-10-27T18:15:01Z"
+  "createdAt": "2026-10-28T20:01:19.584944Z",
+  "expiresAt": "2026-10-29T20:01:19Z"
 }
 ```
 
@@ -226,7 +226,7 @@ Approves a request made by someone else. Needs `approval.grant`, held by a signe
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/671f9c5d-b666-4308-8168-6f34991e9586/approve" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/88e232fc-49bd-4f3f-8f1b-7827cc57caaa/approve" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -234,7 +234,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/671f9c5d-b666-4
 **TypeScript:**
 
 ```ts
-const result = await client.request("approve_request", { params: { id: "671f9c5d-b666-4308-8168-6f34991e9586" } });
+const result = await client.request("approve_request", { params: { id: "88e232fc-49bd-4f3f-8f1b-7827cc57caaa" } });
 ```
 
 **Response `200`** — Success.
@@ -245,15 +245,15 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "671f9c5d-b666-4308-8168-6f34991e9586",
+  "id": "88e232fc-49bd-4f3f-8f1b-7827cc57caaa",
   "action": "token.create_admin",
   "target": "token:fabric-admin",
-  "requester": "user:e2617b76-d2e8-481e-8a91-b87eed87403a",
-  "approver": "user:afb7ba87-5522-4d55-833a-138d795b7037",
+  "requester": "user:4b5de292-7305-4724-b550-188aaba3fa71",
+  "approver": "user:68325b5f-5650-4daa-91e9-87673d9847dd",
   "state": "approved",
   "reason": "A second administrator token for the backup site",
-  "createdAt": "2026-10-26T18:15:01.111094Z",
-  "expiresAt": "2026-10-26T18:45:01Z"
+  "createdAt": "2026-10-28T20:01:19.618937Z",
+  "expiresAt": "2026-10-28T20:31:19Z"
 }
 ```
 
@@ -285,7 +285,7 @@ Withdraws your own pending request. Needs `approval.request`.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/be1d7004-b8db-4331-a2fe-77d3fc3abb5d/cancel" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/b7cc021b-4564-4da9-bff6-f0db2d042b9e/cancel" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -293,7 +293,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/be1d7004-b8db-4
 **TypeScript:**
 
 ```ts
-const result = await client.request("cancel_request", { params: { id: "be1d7004-b8db-4331-a2fe-77d3fc3abb5d" } });
+const result = await client.request("cancel_request", { params: { id: "b7cc021b-4564-4da9-bff6-f0db2d042b9e" } });
 ```
 
 **Response `200`** — Success.
@@ -304,15 +304,15 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "be1d7004-b8db-4331-a2fe-77d3fc3abb5d",
+  "id": "b7cc021b-4564-4da9-bff6-f0db2d042b9e",
   "action": "hardware.delete",
   "target": "machine:rack1-08",
   "requester": "token:docs-verifier",
   "approver": null,
   "state": "cancelled",
   "reason": "Retire the spare server",
-  "createdAt": "2026-10-26T18:15:01.100869Z",
-  "expiresAt": "2026-10-27T18:15:01Z"
+  "createdAt": "2026-10-28T20:01:19.604648Z",
+  "expiresAt": "2026-10-29T20:01:19Z"
 }
 ```
 
@@ -343,7 +343,7 @@ Rejects a request. Needs `approval.grant`, held by a signed-in person (API token
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/d6b04569-5a45-443a-b1b6-8f929aa6a6ae/reject" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/3aeaa6d3-aacd-4778-bcd6-f7bb88226c38/reject" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -351,7 +351,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/approvals/d6b04569-5a45-4
 **TypeScript:**
 
 ```ts
-const result = await client.request("reject_request", { params: { id: "d6b04569-5a45-443a-b1b6-8f929aa6a6ae" } });
+const result = await client.request("reject_request", { params: { id: "3aeaa6d3-aacd-4778-bcd6-f7bb88226c38" } });
 ```
 
 **Response `200`** — Success.
@@ -362,15 +362,15 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "d6b04569-5a45-443a-b1b6-8f929aa6a6ae",
+  "id": "3aeaa6d3-aacd-4778-bcd6-f7bb88226c38",
   "action": "hardware.delete",
   "target": "machine:rack1-07",
   "requester": "token:docs-verifier",
-  "approver": "user:afb7ba87-5522-4d55-833a-138d795b7037",
+  "approver": "user:68325b5f-5650-4daa-91e9-87673d9847dd",
   "state": "rejected",
   "reason": "Retire the old storage server",
-  "createdAt": "2026-10-26T18:15:01.088115Z",
-  "expiresAt": "2026-10-27T18:15:01Z"
+  "createdAt": "2026-10-28T20:01:19.584944Z",
+  "expiresAt": "2026-10-29T20:01:19Z"
 }
 ```
 
@@ -409,7 +409,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/assignments" \
 **With options** (`principalType`, `principalId`, `includeRevoked`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/assignments?principalType=group&principalId=39cae86d-e590-4106-9788-aa67e15225f6&includeRevoked=true" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/assignments?principalType=group&principalId=ec51df92-65b8-42f4-833b-cd0ec4edc303&includeRevoked=true" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -417,7 +417,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/assignments?princ
 **TypeScript:**
 
 ```ts
-const result = await client.request("assignments", { query: { principalType: "group", principalId: "39cae86d-e590-4106-9788-aa67e15225f6", includeRevoked: true } });
+const result = await client.request("assignments", { query: { principalType: "group", principalId: "ec51df92-65b8-42f4-833b-cd0ec4edc303", includeRevoked: true } });
 ```
 
 **Response `200`** — Success.
@@ -430,19 +430,19 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "3fcdf092-268f-4ffa-bfe6-44b2615d6ddd",
+      "id": "8001dc4f-af01-4e2b-a159-cb5883947cf9",
       "principal": {
         "type": "group",
-        "id": "39cae86d-e590-4106-9788-aa67e15225f6"
+        "id": "ec51df92-65b8-42f4-833b-cd0ec4edc303"
       },
       "role": {
         "type": "custom",
-        "id": "d170e0f7-1aa3-4264-9e5f-9ddf21619db2"
+        "id": "6c8ddacc-75c3-4037-84ac-858397d98033"
       },
       "roleName": "Release manager",
       "scope": {
         "type": "project",
-        "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"
+        "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
       },
       "conditions": {
         "requireMfa": false,
@@ -454,14 +454,14 @@ Content-Type: `application/json`.
       "expiresAt": null,
       "reason": "The shop team releases to production",
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-26T18:15:00.989304Z",
+      "createdAt": "2026-10-28T20:01:19.446685Z",
       "revokedAt": null
     },
     {
-      "id": "6d1d44dd-af63-4c9a-9606-60b894cd08e6",
+      "id": "6f4f0f10-9258-4502-bce0-9ca53fba9270",
       "principal": {
         "type": "user",
-        "id": "e2617b76-d2e8-481e-8a91-b87eed87403a"
+        "id": "4b5de292-7305-4724-b550-188aaba3fa71"
       },
       "role": {
         "type": "builtin",
@@ -478,7 +478,7 @@ Content-Type: `application/json`.
       "expiresAt": null,
       "reason": "Platform administrators of this installation",
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-26T18:14:59.997532Z",
+      "createdAt": "2026-10-28T20:01:18.31217Z",
       "revokedAt": null
     }
   ]
@@ -526,15 +526,15 @@ Grants a role to a person, group or automation identity at a scope. Needs `role.
 {
   "principal": {
     "type": "group",
-    "id": "39cae86d-e590-4106-9788-aa67e15225f6"
+    "id": "ec51df92-65b8-42f4-833b-cd0ec4edc303"
   },
   "role": {
     "type": "custom",
-    "id": "d170e0f7-1aa3-4264-9e5f-9ddf21619db2"
+    "id": "6c8ddacc-75c3-4037-84ac-858397d98033"
   },
   "scope": {
     "type": "project",
-    "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"
+    "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
   },
   "conditions": {
     "environments": [
@@ -555,7 +555,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/assignments" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"principal":{"type":"group","id":"39cae86d-e590-4106-9788-aa67e15225f6"},"role":{"type":"custom","id":"d170e0f7-1aa3-4264-9e5f-9ddf21619db2"},"scope":{"type":"project","id":"ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"},"conditions":{"environments":["production"],"requireMfa":false},"reason":"The shop team releases to production"}'
+  --data-raw '{"principal":{"type":"group","id":"ec51df92-65b8-42f4-833b-cd0ec4edc303"},"role":{"type":"custom","id":"6c8ddacc-75c3-4037-84ac-858397d98033"},"scope":{"type":"project","id":"d0b31e5b-5666-4c6b-bf96-cc43501df6ce"},"conditions":{"environments":["production"],"requireMfa":false},"reason":"The shop team releases to production"}'
 ```
 
 **TypeScript:**
@@ -572,19 +572,19 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "3fcdf092-268f-4ffa-bfe6-44b2615d6ddd",
+  "id": "8001dc4f-af01-4e2b-a159-cb5883947cf9",
   "principal": {
     "type": "group",
-    "id": "39cae86d-e590-4106-9788-aa67e15225f6"
+    "id": "ec51df92-65b8-42f4-833b-cd0ec4edc303"
   },
   "role": {
     "type": "custom",
-    "id": "d170e0f7-1aa3-4264-9e5f-9ddf21619db2"
+    "id": "6c8ddacc-75c3-4037-84ac-858397d98033"
   },
   "roleName": "Release manager",
   "scope": {
     "type": "project",
-    "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"
+    "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
   },
   "conditions": {
     "requireMfa": false,
@@ -596,7 +596,7 @@ Content-Type: `application/json`.
   "expiresAt": null,
   "reason": "The shop team releases to production",
   "createdBy": "token:docs-verifier",
-  "createdAt": "2026-10-26T18:15:00.989304Z",
+  "createdAt": "2026-10-28T20:01:19.446685Z",
   "revokedAt": null
 }
 ```
@@ -628,14 +628,14 @@ Revokes an assignment; the person loses it on their next request. Needs `role.as
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/assignments/3fcdf092-268f-4ffa-bfe6-44b2615d6ddd" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/assignments/8001dc4f-af01-4e2b-a159-cb5883947cf9" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("revoke_assignment", { params: { assignment: "3fcdf092-268f-4ffa-bfe6-44b2615d6ddd" } });
+await client.request("revoke_assignment", { params: { assignment: "8001dc4f-af01-4e2b-a159-cb5883947cf9" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -683,15 +683,15 @@ Shows what an assignment would give before it is saved: what the person can alre
 {
   "principal": {
     "type": "group",
-    "id": "39cae86d-e590-4106-9788-aa67e15225f6"
+    "id": "ec51df92-65b8-42f4-833b-cd0ec4edc303"
   },
   "role": {
     "type": "custom",
-    "id": "d170e0f7-1aa3-4264-9e5f-9ddf21619db2"
+    "id": "6c8ddacc-75c3-4037-84ac-858397d98033"
   },
   "scope": {
     "type": "project",
-    "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"
+    "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
   },
   "conditions": {
     "environments": [
@@ -712,7 +712,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/assignments/prev
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"principal":{"type":"group","id":"39cae86d-e590-4106-9788-aa67e15225f6"},"role":{"type":"custom","id":"d170e0f7-1aa3-4264-9e5f-9ddf21619db2"},"scope":{"type":"project","id":"ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"},"conditions":{"environments":["production"],"requireMfa":false},"reason":"The shop team releases to production"}'
+  --data-raw '{"principal":{"type":"group","id":"ec51df92-65b8-42f4-833b-cd0ec4edc303"},"role":{"type":"custom","id":"6c8ddacc-75c3-4037-84ac-858397d98033"},"scope":{"type":"project","id":"d0b31e5b-5666-4c6b-bf96-cc43501df6ce"},"conditions":{"environments":["production"],"requireMfa":false},"reason":"The shop team releases to production"}'
 ```
 
 **TypeScript:**
@@ -802,30 +802,30 @@ Content-Type: `application/json`.
   "items": [
     {
       "id": 130,
-      "at": "2026-10-26T18:15:16.361293Z",
-      "actor": "user:afb7ba87-5522-4d55-833a-138d795b7037",
+      "at": "2026-10-28T20:01:35.24932Z",
+      "actor": "user:68325b5f-5650-4daa-91e9-87673d9847dd",
       "actorType": "user",
       "actorName": "ada",
       "action": "session.request",
       "target": "instance:shop/shop-db-01",
       "outcome": "success",
       "scope": {
-        "application": "ff56d12a-2194-4f20-94e5-c224200179a8",
-        "organization": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
-        "project": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063"
+        "application": "1fd1a7b8-9ab1-4301-a5d1-e5296d082924",
+        "organization": "a7b3710b-14ea-4c7a-b05c-48950892c576",
+        "project": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce"
       },
       "detail": {
-        "approval": "cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125",
+        "approval": "25f5e232-f814-4421-ab21-0ce8d36a410f",
         "kind": "terminal",
         "name": "ada",
-        "requestId": "8c4a35f4-3cdc-4baa-958d-90f271faef0c",
-        "session": "8732e470-6d14-4fe1-80e9-8a99502e0a18"
+        "requestId": "f11014f9-f9eb-4de8-b295-6bed9307adce",
+        "session": "30efcc0f-7355-4a30-aec9-3b83b1e62c75"
       }
     },
     {
       "id": 129,
-      "at": "2026-10-26T18:15:16.345876Z",
-      "actor": "user:e2617b76-d2e8-481e-8a91-b87eed87403a",
+      "at": "2026-10-28T20:01:35.231241Z",
+      "actor": "user:4b5de292-7305-4724-b550-188aaba3fa71",
       "actorType": "user",
       "actorName": "grace",
       "action": "approval.grant",
@@ -835,10 +835,10 @@ Content-Type: `application/json`.
       "detail": {
         "action": "instance.console",
         "emergencyAccess": true,
-        "id": "cf2c7e7f-e1bb-49dd-a92c-9479eeaf5125",
+        "id": "25f5e232-f814-4421-ab21-0ce8d36a410f",
         "name": "grace",
-        "requestId": "46cc0647-bb6b-4e1a-939c-9e8449b0d755",
-        "requester": "user:afb7ba87-5522-4d55-833a-138d795b7037"
+        "requestId": "02e4604f-c421-4f49-9e90-2821f354ec47",
+        "requester": "user:68325b5f-5650-4daa-91e9-87673d9847dd"
       }
     }
   ]
@@ -873,7 +873,7 @@ Grants a person a platform role for a short time, with a recorded reason (break-
 
 ```json
 {
-  "userId": "e2617b76-d2e8-481e-8a91-b87eed87403a",
+  "userId": "4b5de292-7305-4724-b550-188aaba3fa71",
   "role": "fabric-administrator",
   "minutes": 30,
   "reason": "Restore access during the identity provider outage"
@@ -889,7 +889,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/emergency-access
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"userId":"e2617b76-d2e8-481e-8a91-b87eed87403a","role":"fabric-administrator","minutes":30,"reason":"Restore access during the identity provider outage"}'
+  --data-raw '{"userId":"4b5de292-7305-4724-b550-188aaba3fa71","role":"fabric-administrator","minutes":30,"reason":"Restore access during the identity provider outage"}'
 ```
 
 **TypeScript:**
@@ -906,10 +906,10 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "5511aa92-0566-42fb-a5fb-aa4fca3632c2",
+  "id": "8e8b157d-bff7-4e20-89d3-932b7327ee97",
   "principal": {
     "type": "user",
-    "id": "e2617b76-d2e8-481e-8a91-b87eed87403a"
+    "id": "4b5de292-7305-4724-b550-188aaba3fa71"
   },
   "role": {
     "type": "builtin",
@@ -923,10 +923,10 @@ Content-Type: `application/json`.
     "requireMfa": false
   },
   "kind": "emergency",
-  "expiresAt": "2026-10-26T18:45:01.019263Z",
+  "expiresAt": "2026-10-28T20:31:19.487466Z",
   "reason": "Restore access during the identity provider outage",
-  "createdBy": "user:afb7ba87-5522-4d55-833a-138d795b7037",
-  "createdAt": "2026-10-26T18:15:01.020501Z",
+  "createdBy": "user:68325b5f-5650-4daa-91e9-87673d9847dd",
+  "createdAt": "2026-10-28T20:01:19.488559Z",
   "revokedAt": null
 }
 ```
@@ -958,7 +958,7 @@ Creates or adopts the environment's Incus project now (idempotent): the restrict
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/environments/c00f82f1-05b2-4cd9-9184-c739925f51fe/incus-project" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/environments/a24da9a4-2561-4cbb-876d-e4dd0db7bdf2/incus-project" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -966,7 +966,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/environments/c00
 **TypeScript:**
 
 ```ts
-const result = await client.request("prepare_incus_project", { params: { id: "c00f82f1-05b2-4cd9-9184-c739925f51fe" } });
+const result = await client.request("prepare_incus_project", { params: { id: "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2" } });
 ```
 
 **Response `200`** — Success.
@@ -977,13 +977,13 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "environmentId": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
+  "environmentId": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
   "incusProject": "shop-prod",
   "state": "created",
   "detail": "Incus project shop-prod created by Apelora with the baseline restrictions",
   "findings": [],
   "limits": {
-    "environmentId": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
+    "environmentId": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
     "environment": "Production",
     "incusProject": "shop-prod",
     "result": "unchanged",
@@ -1036,8 +1036,8 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "39cae86d-e590-4106-9788-aa67e15225f6",
-      "organizationId": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+      "id": "ec51df92-65b8-42f4-833b-cd0ec4edc303",
+      "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
       "name": "shop-operators",
       "externalName": null,
       "externalSource": null,
@@ -1079,7 +1079,7 @@ Creates a group: an organisation's (needs `group.manage` there) or a platform gr
 {
   "name": "shop-operators",
   "description": "People who run the online shop",
-  "organizationId": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8"
+  "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576"
 }
 ```
 
@@ -1092,7 +1092,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/groups" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"shop-operators","description":"People who run the online shop","organizationId":"e0a97f4d-0a7d-40f3-b19f-de3548b8eba8"}'
+  --data-raw '{"name":"shop-operators","description":"People who run the online shop","organizationId":"a7b3710b-14ea-4c7a-b05c-48950892c576"}'
 ```
 
 **TypeScript:**
@@ -1109,8 +1109,8 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "39cae86d-e590-4106-9788-aa67e15225f6",
-  "organizationId": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+  "id": "ec51df92-65b8-42f4-833b-cd0ec4edc303",
+  "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
   "name": "shop-operators",
   "externalName": null,
   "externalSource": null,
@@ -1150,7 +1150,7 @@ Maps a platform group onto a group of an identity provider or directory, or sets
 
 ```json
 {
-  "source": "directory:0d57763e-9c3c-4b33-9ace-b2e0a1c5186d",
+  "source": "directory:185cff87-8956-47fd-9ef3-009c9d19d154",
   "name": "cn=admins,ou=groups,dc=acme,dc=example"
 }
 ```
@@ -1160,17 +1160,17 @@ Maps a platform group onto a group of an identity provider or directory, or sets
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/groups/5a7120b0-bb37-4ea1-96ff-5c841d6ebf4a/external" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/groups/73562c84-6705-4189-a9f3-2c83ce5c2389/external" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"source":"directory:0d57763e-9c3c-4b33-9ace-b2e0a1c5186d","name":"cn=admins,ou=groups,dc=acme,dc=example"}'
+  --data-raw '{"source":"directory:185cff87-8956-47fd-9ef3-009c9d19d154","name":"cn=admins,ou=groups,dc=acme,dc=example"}'
 ```
 
 **TypeScript:**
 
 ```ts
-const result = await client.request("set_group_external", { params: { group: "5a7120b0-bb37-4ea1-96ff-5c841d6ebf4a" }, body /* the request body above */ });
+const result = await client.request("set_group_external", { params: { group: "73562c84-6705-4189-a9f3-2c83ce5c2389" }, body /* the request body above */ });
 ```
 
 **Response `200`** — Success.
@@ -1181,11 +1181,11 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "5a7120b0-bb37-4ea1-96ff-5c841d6ebf4a",
+  "id": "73562c84-6705-4189-a9f3-2c83ce5c2389",
   "organizationId": null,
   "name": "head-office-admins",
   "externalName": "cn=admins,ou=groups,dc=acme,dc=example",
-  "externalSource": "directory:0d57763e-9c3c-4b33-9ace-b2e0a1c5186d",
+  "externalSource": "directory:185cff87-8956-47fd-9ef3-009c9d19d154",
   "needsSource": false,
   "description": "Administrators from the head office directory"
 }
@@ -1216,7 +1216,7 @@ Members of a group. Needs `user.view` or `group.manage` on the group's organisat
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/groups/39cae86d-e590-4106-9788-aa67e15225f6/members" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/groups/ec51df92-65b8-42f4-833b-cd0ec4edc303/members" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -1224,7 +1224,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/groups/39cae86d-e
 **TypeScript:**
 
 ```ts
-const result = await client.request("group_members", { params: { group: "39cae86d-e590-4106-9788-aa67e15225f6" } });
+const result = await client.request("group_members", { params: { group: "ec51df92-65b8-42f4-833b-cd0ec4edc303" } });
 ```
 
 **Response `200`** — Success.
@@ -1237,13 +1237,13 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "27ab33de-80ca-421f-a533-8b08e010893a",
+      "id": "525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7",
       "username": "lin",
       "email": "lin@example.org",
       "displayName": "Lin Chen",
       "issuer": "apelora:local",
-      "createdAt": "2026-10-26T18:14:59.592708Z",
-      "lastSeenAt": "2026-10-26T18:14:59.981013Z",
+      "createdAt": "2026-10-28T20:01:17.831252Z",
+      "lastSeenAt": "2026-10-28T20:01:18.291714Z",
       "disabled": false
     }
   ]
@@ -1276,14 +1276,14 @@ Adds a person to a group. Needs `group.manage`, and, since a member receives the
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/groups/39cae86d-e590-4106-9788-aa67e15225f6/members/27ab33de-80ca-421f-a533-8b08e010893a" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/groups/ec51df92-65b8-42f4-833b-cd0ec4edc303/members/525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("add_group_member", { params: { group: "39cae86d-e590-4106-9788-aa67e15225f6", user: "27ab33de-80ca-421f-a533-8b08e010893a" } });
+await client.request("add_group_member", { params: { group: "ec51df92-65b8-42f4-833b-cd0ec4edc303", user: "525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -1316,14 +1316,14 @@ Removes a person from a group; their access through it ends on their next reques
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/groups/39cae86d-e590-4106-9788-aa67e15225f6/members/27ab33de-80ca-421f-a533-8b08e010893a" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/groups/ec51df92-65b8-42f4-833b-cd0ec4edc303/members/525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("remove_group_member", { params: { group: "39cae86d-e590-4106-9788-aa67e15225f6", user: "27ab33de-80ca-421f-a533-8b08e010893a" } });
+await client.request("remove_group_member", { params: { group: "ec51df92-65b8-42f4-833b-cd0ec4edc303", user: "525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -1388,17 +1388,17 @@ Content-Type: `application/json`.
 ```json
 {
   "user": {
-    "id": "afb7ba87-5522-4d55-833a-138d795b7037",
+    "id": "68325b5f-5650-4daa-91e9-87673d9847dd",
     "username": "ada",
     "email": "ada@example.org",
     "displayName": "Ada Lovelace",
     "issuer": "apelora:local",
-    "createdAt": "2026-10-26T18:14:58.795401Z",
+    "createdAt": "2026-10-28T20:01:16.91366Z",
     "lastSeenAt": null,
     "disabled": false
   },
   "setupToken": "<setup token, shown once>",
-  "setupExpiresAt": "2026-10-27T18:14:58.795401Z"
+  "setupExpiresAt": "2026-10-29T20:01:16.91366Z"
 }
 ```
 
@@ -1429,7 +1429,7 @@ Takes a local account's password away, revokes every session of theirs and retur
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts/27ab33de-80ca-421f-a533-8b08e010893a/reset" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts/525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7/reset" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -1437,7 +1437,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/local-accounts/2
 **TypeScript:**
 
 ```ts
-const result = await client.request("reset_local_account", { params: { id: "27ab33de-80ca-421f-a533-8b08e010893a" } });
+const result = await client.request("reset_local_account", { params: { id: "525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7" } });
 ```
 
 **Response `200`** — Success.
@@ -1449,7 +1449,7 @@ Content-Type: `application/json`.
 ```json
 {
   "setupToken": "<setup token, shown once>",
-  "setupExpiresAt": "2026-10-27T18:15:00.008967Z"
+  "setupExpiresAt": "2026-10-29T20:01:18.328872Z"
 }
 ```
 
@@ -1495,17 +1495,17 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+      "id": "a7b3710b-14ea-4c7a-b05c-48950892c576",
       "slug": "acme",
       "name": "Acme Corporation",
-      "createdAt": "2026-10-26T18:14:58.706601Z",
+      "createdAt": "2026-10-28T20:01:16.769007Z",
       "disabled": false
     },
     {
       "id": "00000000-0000-0000-0000-000000000001",
       "slug": "default",
       "name": "Default",
-      "createdAt": "2026-10-26T18:14:58.417458Z",
+      "createdAt": "2026-10-28T20:01:16.4221Z",
       "disabled": false
     }
   ]
@@ -1569,10 +1569,10 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+  "id": "a7b3710b-14ea-4c7a-b05c-48950892c576",
   "slug": "acme",
   "name": "Acme Corporation",
-  "createdAt": "2026-10-26T18:14:58.706601Z",
+  "createdAt": "2026-10-28T20:01:16.769007Z",
   "disabled": false
 }
 ```
@@ -1618,7 +1618,7 @@ Creates a project in an organisation. Needs `project.create` on the organisation
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/organizations/e0a97f4d-0a7d-40f3-b19f-de3548b8eba8/projects" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/organizations/a7b3710b-14ea-4c7a-b05c-48950892c576/projects" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -1628,7 +1628,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/organizations/e0
 **TypeScript:**
 
 ```ts
-const result = await client.request("create_project", { params: { org: "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8" }, body: { slug: "shop", name: "Online shop" } });
+const result = await client.request("create_project", { params: { org: "a7b3710b-14ea-4c7a-b05c-48950892c576" }, body: { slug: "shop", name: "Online shop" } });
 ```
 
 **Response `201`** — Success.
@@ -1639,12 +1639,12 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
-  "organizationId": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+  "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
+  "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
   "organizationSlug": "acme",
   "slug": "shop",
   "name": "Online shop",
-  "createdAt": "2026-10-26T18:14:58.712224Z"
+  "createdAt": "2026-10-28T20:01:16.779405Z"
 }
 ```
 
@@ -1738,7 +1738,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/personal-tokens" 
 **With options** (`user`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/personal-tokens?user=afb7ba87-5522-4d55-833a-138d795b7037" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/personal-tokens?user=68325b5f-5650-4daa-91e9-87673d9847dd" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -1746,7 +1746,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/personal-tokens?u
 **TypeScript:**
 
 ```ts
-const result = await client.request("personal_tokens", { query: { user: "afb7ba87-5522-4d55-833a-138d795b7037" } });
+const result = await client.request("personal_tokens", { query: { user: "68325b5f-5650-4daa-91e9-87673d9847dd" } });
 ```
 
 **Response `200`** — Success.
@@ -1759,13 +1759,13 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "ffa332a0-d8f7-4071-b18b-3992b519c845",
+      "id": "90a5c1e4-b9af-425b-8253-d1712b8e6254",
       "name": "backup-script",
-      "userId": "afb7ba87-5522-4d55-833a-138d795b7037",
+      "userId": "68325b5f-5650-4daa-91e9-87673d9847dd",
       "owner": "ada",
       "state": "active",
-      "createdAt": "2026-10-26T18:15:00.501153Z",
-      "expiresAt": "2026-11-02T18:15:00.501153Z",
+      "createdAt": "2026-10-28T20:01:18.879797Z",
+      "expiresAt": "2026-11-04T20:01:18.879797Z",
       "lastUsedAt": null,
       "revokedAt": null,
       "revokedBy": null,
@@ -1774,17 +1774,17 @@ Content-Type: `application/json`.
       "current": false
     },
     {
-      "id": "93f5f469-69c7-44f8-b4c9-7079d77f9ed5",
+      "id": "d8718c7b-137a-4bf7-8bd3-93e4c8b863f8",
       "name": "laptop-cli",
-      "userId": "afb7ba87-5522-4d55-833a-138d795b7037",
+      "userId": "68325b5f-5650-4daa-91e9-87673d9847dd",
       "owner": "ada",
       "state": "active",
-      "createdAt": "2026-10-26T18:15:00.479493Z",
-      "expiresAt": "2026-11-25T18:15:00.479493Z",
+      "createdAt": "2026-10-28T20:01:18.863784Z",
+      "expiresAt": "2026-11-27T20:01:18.863784Z",
       "lastUsedAt": null,
       "revokedAt": null,
       "revokedBy": null,
-      "rotatedFrom": "3635c27f-e142-4c37-a01b-8f8c9e7c7b87",
+      "rotatedFrom": "efa8995a-e47e-4cde-8261-3b11ca06aaea",
       "successor": null,
       "current": false
     }
@@ -1819,14 +1819,14 @@ Revokes anyone's live personal token. Needs `token.manage` on the platform.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/personal-tokens/ffa332a0-d8f7-4071-b18b-3992b519c845" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/personal-tokens/90a5c1e4-b9af-425b-8253-d1712b8e6254" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("revoke_personal_token", { params: { id: "ffa332a0-d8f7-4071-b18b-3992b519c845" } });
+await client.request("revoke_personal_token", { params: { id: "90a5c1e4-b9af-425b-8253-d1712b8e6254" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -1873,7 +1873,7 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "8582ab4a-6b22-4473-860c-218898f119e9",
+      "id": "39287931-b7ce-4031-b032-4d0120c900d6",
       "name": "approve-machine-removal",
       "kind": "approval",
       "parameters": {
@@ -1883,7 +1883,7 @@ Content-Type: `application/json`.
       },
       "enabled": true,
       "updatedBy": "token:docs-verifier",
-      "updatedAt": "2026-10-26T18:15:01.037971Z"
+      "updatedAt": "2026-10-28T20:01:19.509018Z"
     }
   ]
 }
@@ -1953,7 +1953,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "8582ab4a-6b22-4473-860c-218898f119e9",
+  "id": "39287931-b7ce-4031-b032-4d0120c900d6",
   "name": "approve-machine-removal",
   "kind": "approval",
   "parameters": {
@@ -1963,7 +1963,7 @@ Content-Type: `application/json`.
   },
   "enabled": true,
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-26T18:15:01.037971Z"
+  "updatedAt": "2026-10-28T20:01:19.509018Z"
 }
 ```
 
@@ -1993,14 +1993,14 @@ Deletes a policy. Needs `access_policy.manage`.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/policies/8582ab4a-6b22-4473-860c-218898f119e9" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/policies/39287931-b7ce-4031-b032-4d0120c900d6" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_policy", { params: { id: "8582ab4a-6b22-4473-860c-218898f119e9" } });
+await client.request("delete_policy", { params: { id: "39287931-b7ce-4031-b032-4d0120c900d6" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -2037,7 +2037,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects" \
 **With options** (`organization`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects?organization=e0a97f4d-0a7d-40f3-b19f-de3548b8eba8" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects?organization=a7b3710b-14ea-4c7a-b05c-48950892c576" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2045,7 +2045,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects?organiza
 **TypeScript:**
 
 ```ts
-const result = await client.request("projects_list", { query: { organization: "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8" } });
+const result = await client.request("projects_list", { query: { organization: "a7b3710b-14ea-4c7a-b05c-48950892c576" } });
 ```
 
 **Response `200`** — Success.
@@ -2058,12 +2058,12 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
-      "organizationId": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+      "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
+      "organizationId": "a7b3710b-14ea-4c7a-b05c-48950892c576",
       "organizationSlug": "acme",
       "slug": "shop",
       "name": "Online shop",
-      "createdAt": "2026-10-26T18:14:58.712224Z"
+      "createdAt": "2026-10-28T20:01:16.779405Z"
     },
     {
       "id": "00000000-0000-0000-0000-000000000002",
@@ -2071,7 +2071,7 @@ Content-Type: `application/json`.
       "organizationSlug": "default",
       "slug": "default",
       "name": "Default",
-      "createdAt": "2026-10-26T18:14:58.417458Z"
+      "createdAt": "2026-10-28T20:01:16.4221Z"
     }
   ]
 }
@@ -2101,7 +2101,7 @@ Environments of a project. Needs `project.view` on it.
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects/ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063/environments" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects/d0b31e5b-5666-4c6b-bf96-cc43501df6ce/environments" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2109,7 +2109,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/projects/ae6cbd38
 **TypeScript:**
 
 ```ts
-const result = await client.request("environments", { params: { project: "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063" } });
+const result = await client.request("environments", { params: { project: "d0b31e5b-5666-4c6b-bf96-cc43501df6ce" } });
 ```
 
 **Response `200`** — Success.
@@ -2122,8 +2122,8 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
-      "projectId": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+      "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
+      "projectId": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
       "slug": "production",
       "name": "Production",
       "kind": "production",
@@ -2160,8 +2160,8 @@ Content-Type: `application/json`.
       "incusDetail": "Incus project shop-prod created by Apelora with the baseline restrictions"
     },
     {
-      "id": "4427a406-23ae-4618-b9b7-702744c64037",
-      "projectId": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+      "id": "a9f05f0b-3026-464e-9a00-ecfef23332d8",
+      "projectId": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
       "slug": "staging",
       "name": "Staging",
       "kind": "staging",
@@ -2245,7 +2245,7 @@ Creates an environment. The Incus project it maps to is derived from the names (
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/projects/ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063/environments" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/projects/d0b31e5b-5666-4c6b-bf96-cc43501df6ce/environments" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -2255,7 +2255,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/projects/ae6cbd3
 **TypeScript:**
 
 ```ts
-const result = await client.request("create_environment", { params: { project: "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063" }, body: { slug: "production", name: "Production", kind: "production", incusProject: "shop-prod" } });
+const result = await client.request("create_environment", { params: { project: "d0b31e5b-5666-4c6b-bf96-cc43501df6ce" }, body: { slug: "production", name: "Production", kind: "production", incusProject: "shop-prod" } });
 ```
 
 **Response `201`** — Success.
@@ -2266,8 +2266,8 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
-  "projectId": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+  "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
+  "projectId": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
   "slug": "production",
   "name": "Production",
   "kind": "production",
@@ -2331,7 +2331,7 @@ A scope's quota and use. Needs `organization.view` (organisation) or `project.vi
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/quotas/project/ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/quotas/project/d0b31e5b-5666-4c6b-bf96-cc43501df6ce" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2339,7 +2339,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/quotas/project/ae
 **TypeScript:**
 
 ```ts
-const result = await client.request("quota", { params: { scope: "project", id: "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063" } });
+const result = await client.request("quota", { params: { scope: "project", id: "d0b31e5b-5666-4c6b-bf96-cc43501df6ce" } });
 ```
 
 **Response `200`** — Success.
@@ -2351,7 +2351,7 @@ Content-Type: `application/json`.
 ```json
 {
   "kind": "project",
-  "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+  "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
   "name": "Online shop",
   "quota": {
     "instances": 20,
@@ -2373,7 +2373,7 @@ Content-Type: `application/json`.
   },
   "usageError": null,
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-26T18:14:58.760334Z",
+  "updatedAt": "2026-10-28T20:01:16.866779Z",
   "canSet": true
 }
 ```
@@ -2424,7 +2424,7 @@ Sets a scope's quota (all limits empty removes it), then mirrors the tightest ap
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/quotas/project/ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/quotas/project/d0b31e5b-5666-4c6b-bf96-cc43501df6ce" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -2434,7 +2434,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/quotas/project/ae
 **TypeScript:**
 
 ```ts
-const result = await client.request("set_quota", { params: { scope: "project", id: "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063" }, body: { cpu: 16, memoryGib: 64, diskGib: 500, instances: 20 } });
+const result = await client.request("set_quota", { params: { scope: "project", id: "d0b31e5b-5666-4c6b-bf96-cc43501df6ce" }, body: { cpu: 16, memoryGib: 64, diskGib: 500, instances: 20 } });
 ```
 
 **Response `200`** — Success.
@@ -2453,7 +2453,7 @@ Content-Type: `application/json`.
   },
   "environments": [
     {
-      "environmentId": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
+      "environmentId": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
       "environment": "Production",
       "incusProject": "shop-prod",
       "result": "applied",
@@ -2466,7 +2466,7 @@ Content-Type: `application/json`.
       "detail": "Incus enforces these limits"
     },
     {
-      "environmentId": "4427a406-23ae-4618-b9b7-702744c64037",
+      "environmentId": "a9f05f0b-3026-464e-9a00-ecfef23332d8",
       "environment": "Staging",
       "incusProject": "acme-shop-staging",
       "result": "applied",
@@ -2628,10 +2628,10 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "custom:d170e0f7-1aa3-4264-9e5f-9ddf21619db2",
+  "id": "custom:6c8ddacc-75c3-4037-84ac-858397d98033",
   "reference": {
     "type": "custom",
-    "id": "d170e0f7-1aa3-4264-9e5f-9ddf21619db2"
+    "id": "6c8ddacc-75c3-4037-84ac-858397d98033"
   },
   "name": "Release manager",
   "description": "Publishes and deploys application versions",
@@ -2678,14 +2678,14 @@ Deletes a custom role that no assignment uses. Needs `role.manage`.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/roles/47c13630-295d-42c2-a358-930c199ee10a" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/roles/726484d5-e244-461a-9ed3-5cf7c053690f" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_role", { params: { role: "47c13630-295d-42c2-a358-930c199ee10a" } });
+await client.request("delete_role", { params: { role: "726484d5-e244-461a-9ed3-5cf7c053690f" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -2732,7 +2732,7 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "d7b3f86f-2c65-4655-85bd-ddd3837756d9",
+      "id": "ec0a1d88-5703-4f32-b526-a586d6676ab1",
       "name": "ci-pipeline",
       "kind": "automation",
       "backend": "apelora",
@@ -2740,8 +2740,8 @@ Content-Type: `application/json`.
       "credentialRef": null,
       "restrictions": {},
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-26T18:15:01.025005Z",
-      "expiresAt": "2027-01-24T18:15:01.024835Z",
+      "createdAt": "2026-10-28T20:01:19.494136Z",
+      "expiresAt": "2027-01-26T20:01:19.494518Z",
       "disabled": false,
       "lastUsedAt": null,
       "apiAccess": true
@@ -2812,7 +2812,7 @@ Content-Type: `application/json`.
 {
   "token": "<token, shown once>",
   "identity": {
-    "id": "d7b3f86f-2c65-4655-85bd-ddd3837756d9",
+    "id": "ec0a1d88-5703-4f32-b526-a586d6676ab1",
     "name": "ci-pipeline",
     "kind": "automation",
     "backend": "apelora",
@@ -2820,8 +2820,8 @@ Content-Type: `application/json`.
     "credentialRef": null,
     "restrictions": {},
     "createdBy": "token:docs-verifier",
-    "createdAt": "2026-10-26T18:15:01.025005Z",
-    "expiresAt": "2027-01-24T18:15:01.024835Z",
+    "createdAt": "2026-10-28T20:01:19.494136Z",
+    "expiresAt": "2027-01-26T20:01:19.494518Z",
     "disabled": false,
     "lastUsedAt": null,
     "apiAccess": true
@@ -2856,14 +2856,14 @@ Disables a service identity at once. Needs `service_identity.manage`.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/service-identities/d7b3f86f-2c65-4655-85bd-ddd3837756d9/disable" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/service-identities/ec0a1d88-5703-4f32-b526-a586d6676ab1/disable" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("disable_service_identity", { params: { id: "d7b3f86f-2c65-4655-85bd-ddd3837756d9" } });
+await client.request("disable_service_identity", { params: { id: "ec0a1d88-5703-4f32-b526-a586d6676ab1" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -2894,14 +2894,14 @@ Re-enables a service identity. Needs `service_identity.manage`.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/service-identities/d7b3f86f-2c65-4655-85bd-ddd3837756d9/enable" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/service-identities/ec0a1d88-5703-4f32-b526-a586d6676ab1/enable" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("enable_service_identity", { params: { id: "d7b3f86f-2c65-4655-85bd-ddd3837756d9" } });
+await client.request("enable_service_identity", { params: { id: "ec0a1d88-5703-4f32-b526-a586d6676ab1" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -3123,7 +3123,7 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "0d57763e-9c3c-4b33-9ace-b2e0a1c5186d",
+      "id": "185cff87-8956-47fd-9ef3-009c9d19d154",
       "name": "Head office directory",
       "url": "ldaps://ldap.example.invalid",
       "startTls": false,
@@ -3223,7 +3223,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "0d57763e-9c3c-4b33-9ace-b2e0a1c5186d",
+  "id": "185cff87-8956-47fd-9ef3-009c9d19d154",
   "name": "Head office directory",
   "url": "ldaps://ldap.example.invalid",
   "startTls": false,
@@ -3308,7 +3308,7 @@ Changes a directory (including turning it off). Needs `platform.security.manage`
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/directories/0d57763e-9c3c-4b33-9ace-b2e0a1c5186d" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/directories/185cff87-8956-47fd-9ef3-009c9d19d154" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -3318,7 +3318,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/directori
 **TypeScript:**
 
 ```ts
-const result = await client.request("update_directory", { params: { id: "0d57763e-9c3c-4b33-9ace-b2e0a1c5186d" }, body /* the request body above */ });
+const result = await client.request("update_directory", { params: { id: "185cff87-8956-47fd-9ef3-009c9d19d154" }, body /* the request body above */ });
 ```
 
 **Response `200`** — Success.
@@ -3329,7 +3329,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "0d57763e-9c3c-4b33-9ace-b2e0a1c5186d",
+  "id": "185cff87-8956-47fd-9ef3-009c9d19d154",
   "name": "Head office directory",
   "url": "ldaps://ldap.example.invalid",
   "startTls": false,
@@ -3393,7 +3393,7 @@ Removes a directory: its people can no longer sign in with it; their accounts an
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-in/directories/0d57763e-9c3c-4b33-9ace-b2e0a1c5186d" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-in/directories/185cff87-8956-47fd-9ef3-009c9d19d154" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
   --data-raw '{"confirm":"Head office directory"}'
@@ -3402,7 +3402,7 @@ curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-in/direct
 **TypeScript:**
 
 ```ts
-await client.request("delete_directory", { params: { id: "0d57763e-9c3c-4b33-9ace-b2e0a1c5186d" }, body: { confirm: "Head office directory" } });
+await client.request("delete_directory", { params: { id: "185cff87-8956-47fd-9ef3-009c9d19d154" }, body: { confirm: "Head office directory" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -3634,7 +3634,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "b1ce6860-6d84-4a7c-b2e2-fddf74502996",
+  "id": "cbd2ca87-1353-4a0e-ab91-67ec55aac3b9",
   "source": "console",
   "name": "Company sign-in",
   "issuer": "https://login.example.invalid/realms/acme",
@@ -3725,7 +3725,7 @@ Changes a provider saved in the Console. Needs `platform.security.manage`; audit
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/providers/b1ce6860-6d84-4a7c-b2e2-fddf74502996" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/providers/cbd2ca87-1353-4a0e-ab91-67ec55aac3b9" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -3735,7 +3735,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/identity/sign-in/providers
 **TypeScript:**
 
 ```ts
-const result = await client.request("update_identity_provider", { params: { id: "b1ce6860-6d84-4a7c-b2e2-fddf74502996" }, body /* the request body above */ });
+const result = await client.request("update_identity_provider", { params: { id: "cbd2ca87-1353-4a0e-ab91-67ec55aac3b9" }, body /* the request body above */ });
 ```
 
 **Response `200`** — Success.
@@ -3746,7 +3746,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "b1ce6860-6d84-4a7c-b2e2-fddf74502996",
+  "id": "cbd2ca87-1353-4a0e-ab91-67ec55aac3b9",
   "source": "console",
   "name": "Company sign-in",
   "issuer": "https://login.example.invalid/realms/acme",
@@ -3816,7 +3816,7 @@ Removes a provider saved in the Console: people stop being able to sign in with 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-in/providers/b1ce6860-6d84-4a7c-b2e2-fddf74502996" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-in/providers/cbd2ca87-1353-4a0e-ab91-67ec55aac3b9" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
   --data-raw '{"confirm":"Company sign-in"}'
@@ -3825,7 +3825,7 @@ curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-in/provid
 **TypeScript:**
 
 ```ts
-await client.request("delete_identity_provider", { params: { id: "b1ce6860-6d84-4a7c-b2e2-fddf74502996" }, body: { confirm: "Company sign-in" } });
+await client.request("delete_identity_provider", { params: { id: "cbd2ca87-1353-4a0e-ab91-67ec55aac3b9" }, body: { confirm: "Company sign-in" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -3864,7 +3864,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/sign-ins" \
 **With options** (`user`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/sign-ins?user=afb7ba87-5522-4d55-833a-138d795b7037" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/sign-ins?user=68325b5f-5650-4daa-91e9-87673d9847dd" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -3872,7 +3872,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/identity/sign-ins?user=afb
 **TypeScript:**
 
 ```ts
-const result = await client.request("sign_ins", { query: { user: "afb7ba87-5522-4d55-833a-138d795b7037" } });
+const result = await client.request("sign_ins", { query: { user: "68325b5f-5650-4daa-91e9-87673d9847dd" } });
 ```
 
 **Response `200`** — Success.
@@ -3885,25 +3885,25 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "a63f099a-51c9-44d9-9925-aaffc26c03e3",
-      "userId": "afb7ba87-5522-4d55-833a-138d795b7037",
+      "id": "02a7876d-b8fd-4f41-bd1e-1f8b42cc115e",
+      "userId": "68325b5f-5650-4daa-91e9-87673d9847dd",
       "person": "ada",
       "method": "password",
-      "createdAt": "2026-10-26T18:14:59.186777Z",
-      "lastUsedAt": "2026-10-26T18:15:00.421064Z",
-      "expiresAt": "2026-10-27T02:14:59.186777Z",
-      "endsAt": "2026-10-26T19:15:00.421064Z",
+      "createdAt": "2026-10-28T20:01:17.366495Z",
+      "lastUsedAt": "2026-10-28T20:01:18.806918Z",
+      "expiresAt": "2026-10-29T04:01:17.366495Z",
+      "endsAt": "2026-10-28T21:01:18.806918Z",
       "current": false
     },
     {
-      "id": "1f61576f-34d1-412e-a4a1-946a5c01937e",
-      "userId": "afb7ba87-5522-4d55-833a-138d795b7037",
+      "id": "0d2e251e-5793-4b88-9b71-a27734445529",
+      "userId": "68325b5f-5650-4daa-91e9-87673d9847dd",
       "person": "ada",
       "method": "password",
-      "createdAt": "2026-10-26T18:15:00.415915Z",
-      "lastUsedAt": "2026-10-26T18:15:00.415915Z",
-      "expiresAt": "2026-10-27T02:15:00.415915Z",
-      "endsAt": "2026-10-26T19:15:00.415915Z",
+      "createdAt": "2026-10-28T20:01:18.799405Z",
+      "lastUsedAt": "2026-10-28T20:01:18.799405Z",
+      "expiresAt": "2026-10-29T04:01:18.799405Z",
+      "endsAt": "2026-10-28T21:01:18.799405Z",
       "current": false
     }
   ],
@@ -3939,14 +3939,14 @@ Ends anyone's session. Needs `user.manage` on the platform.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-ins/7776785d-1137-487f-a408-384455a9a623" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/identity/sign-ins/7a82cd42-3de1-424c-a29a-72ff33ec9a02" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("end_sign_in", { params: { id: "7776785d-1137-487f-a408-384455a9a623" } });
+await client.request("end_sign_in", { params: { id: "7a82cd42-3de1-424c-a29a-72ff33ec9a02" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -3993,7 +3993,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-26T18:14:58.781331Z"
+    "observedAt": "2026-10-28T20:01:16.894041Z"
   },
   "adminConfigured": true,
   "baseline": {
@@ -4025,7 +4025,7 @@ Content-Type: `application/json`.
   },
   "organizations": [
     {
-      "id": "e0a97f4d-0a7d-40f3-b19f-de3548b8eba8",
+      "id": "a7b3710b-14ea-4c7a-b05c-48950892c576",
       "slug": "acme",
       "name": "Acme Corporation",
       "quota": null,
@@ -4038,7 +4038,7 @@ Content-Type: `application/json`.
       "canSetQuota": true,
       "projects": [
         {
-          "id": "ae6cbd38-e2e7-4ff3-8ab6-e1e77216a063",
+          "id": "d0b31e5b-5666-4c6b-bf96-cc43501df6ce",
           "slug": "shop",
           "name": "Online shop",
           "quota": {
@@ -4056,14 +4056,14 @@ Content-Type: `application/json`.
           "canSetQuota": true,
           "environments": [
             {
-              "id": "c00f82f1-05b2-4cd9-9184-c739925f51fe",
+              "id": "a24da9a4-2561-4cbb-876d-e4dd0db7bdf2",
               "slug": "production",
               "name": "Production",
               "kind": "production",
               "incusProject": "shop-prod",
               "incusState": "created",
               "incusDetail": "Incus project shop-prod created by Apelora with the baseline restrictions",
-              "checkedAt": "2026-10-26T18:14:58.765951Z",
+              "checkedAt": "2026-10-28T20:01:16.874Z",
               "quota": null,
               "effective": {
                 "instances": 20,
@@ -4136,14 +4136,14 @@ Content-Type: `application/json`.
               "canPrepare": true
             },
             {
-              "id": "4427a406-23ae-4618-b9b7-702744c64037",
+              "id": "a9f05f0b-3026-464e-9a00-ecfef23332d8",
               "slug": "staging",
               "name": "Staging",
               "kind": "staging",
               "incusProject": "acme-shop-staging",
               "incusState": "created",
               "incusDetail": "Incus project acme-shop-staging created by Apelora with the baseline restrictions",
-              "checkedAt": "2026-10-26T18:14:58.76932Z",
+              "checkedAt": "2026-10-28T20:01:16.878391Z",
               "quota": null,
               "effective": {
                 "instances": 20,
@@ -4341,23 +4341,23 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "afb7ba87-5522-4d55-833a-138d795b7037",
+      "id": "68325b5f-5650-4daa-91e9-87673d9847dd",
       "username": "ada",
       "email": "ada@example.org",
       "displayName": "Ada Lovelace",
       "issuer": "apelora:local",
-      "createdAt": "2026-10-26T18:14:58.795401Z",
-      "lastSeenAt": "2026-10-26T18:14:59.186777Z",
+      "createdAt": "2026-10-28T20:01:16.91366Z",
+      "lastSeenAt": "2026-10-28T20:01:17.366495Z",
       "disabled": false
     },
     {
-      "id": "e2617b76-d2e8-481e-8a91-b87eed87403a",
+      "id": "4b5de292-7305-4724-b550-188aaba3fa71",
       "username": "grace",
       "email": "grace@example.org",
       "displayName": "Grace Hopper",
       "issuer": "apelora:local",
-      "createdAt": "2026-10-26T18:14:59.196048Z",
-      "lastSeenAt": "2026-10-26T18:14:59.58488Z",
+      "createdAt": "2026-10-28T20:01:17.374821Z",
+      "lastSeenAt": "2026-10-28T20:01:17.824643Z",
       "disabled": false
     }
   ]
@@ -4389,14 +4389,14 @@ Disables a person: their tokens and Apelora sessions stop working at once. Needs
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/users/27ab33de-80ca-421f-a533-8b08e010893a/disable" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/users/525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7/disable" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("disable_user", { params: { user: "27ab33de-80ca-421f-a533-8b08e010893a" } });
+await client.request("disable_user", { params: { user: "525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -4428,14 +4428,14 @@ Re-enables a person. Needs `user.manage`.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/users/27ab33de-80ca-421f-a533-8b08e010893a/enable" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/identity/users/525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7/enable" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("enable_user", { params: { user: "27ab33de-80ca-421f-a533-8b08e010893a" } });
+await client.request("enable_user", { params: { user: "525c1dee-ade8-4d4b-ab4f-ad0a9c4549d7" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -4485,13 +4485,13 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "afb7ba87-5522-4d55-833a-138d795b7037",
+      "id": "68325b5f-5650-4daa-91e9-87673d9847dd",
       "username": "ada",
       "email": "ada@example.org",
       "displayName": "Ada Lovelace",
       "issuer": "apelora:local",
-      "createdAt": "2026-10-26T18:14:58.795401Z",
-      "lastSeenAt": "2026-10-26T18:14:59.186777Z",
+      "createdAt": "2026-10-28T20:01:16.91366Z",
+      "lastSeenAt": "2026-10-28T20:01:17.366495Z",
       "disabled": false
     }
   ]
@@ -4539,25 +4539,25 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "a63f099a-51c9-44d9-9925-aaffc26c03e3",
-      "userId": "afb7ba87-5522-4d55-833a-138d795b7037",
+      "id": "02a7876d-b8fd-4f41-bd1e-1f8b42cc115e",
+      "userId": "68325b5f-5650-4daa-91e9-87673d9847dd",
       "person": "ada",
       "method": "password",
-      "createdAt": "2026-10-26T18:14:59.186777Z",
-      "lastUsedAt": "2026-10-26T18:15:00.421064Z",
-      "expiresAt": "2026-10-27T02:14:59.186777Z",
-      "endsAt": "2026-10-26T19:15:00.421064Z",
+      "createdAt": "2026-10-28T20:01:17.366495Z",
+      "lastUsedAt": "2026-10-28T20:01:18.806918Z",
+      "expiresAt": "2026-10-29T04:01:17.366495Z",
+      "endsAt": "2026-10-28T21:01:18.806918Z",
       "current": true
     },
     {
-      "id": "1f61576f-34d1-412e-a4a1-946a5c01937e",
-      "userId": "afb7ba87-5522-4d55-833a-138d795b7037",
+      "id": "0d2e251e-5793-4b88-9b71-a27734445529",
+      "userId": "68325b5f-5650-4daa-91e9-87673d9847dd",
       "person": "ada",
       "method": "password",
-      "createdAt": "2026-10-26T18:15:00.415915Z",
-      "lastUsedAt": "2026-10-26T18:15:00.415915Z",
-      "expiresAt": "2026-10-27T02:15:00.415915Z",
-      "endsAt": "2026-10-26T19:15:00.415915Z",
+      "createdAt": "2026-10-28T20:01:18.799405Z",
+      "lastUsedAt": "2026-10-28T20:01:18.799405Z",
+      "expiresAt": "2026-10-29T04:01:18.799405Z",
+      "endsAt": "2026-10-28T21:01:18.799405Z",
       "current": false
     }
   ],
@@ -4593,14 +4593,14 @@ Ends one of your sessions (signs that browser out). Another person's answers 404
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/me/sign-ins/1f61576f-34d1-412e-a4a1-946a5c01937e" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/me/sign-ins/0d2e251e-5793-4b88-9b71-a27734445529" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("end_my_sign_in", { params: { id: "1f61576f-34d1-412e-a4a1-946a5c01937e" } });
+await client.request("end_my_sign_in", { params: { id: "0d2e251e-5793-4b88-9b71-a27734445529" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -4647,13 +4647,13 @@ Content-Type: `application/json`.
 {
   "items": [
     {
-      "id": "3635c27f-e142-4c37-a01b-8f8c9e7c7b87",
+      "id": "efa8995a-e47e-4cde-8261-3b11ca06aaea",
       "name": "laptop-cli",
-      "userId": "afb7ba87-5522-4d55-833a-138d795b7037",
+      "userId": "68325b5f-5650-4daa-91e9-87673d9847dd",
       "owner": "ada",
       "state": "active",
-      "createdAt": "2026-10-26T18:15:00.45733Z",
-      "expiresAt": "2026-11-25T18:15:00.45733Z",
+      "createdAt": "2026-10-28T20:01:18.846463Z",
+      "expiresAt": "2026-11-27T20:01:18.846463Z",
       "lastUsedAt": null,
       "revokedAt": null,
       "revokedBy": null,
@@ -4725,13 +4725,13 @@ Content-Type: `application/json`.
 {
   "token": "<token, shown once>",
   "info": {
-    "id": "3635c27f-e142-4c37-a01b-8f8c9e7c7b87",
+    "id": "efa8995a-e47e-4cde-8261-3b11ca06aaea",
     "name": "laptop-cli",
-    "userId": "afb7ba87-5522-4d55-833a-138d795b7037",
+    "userId": "68325b5f-5650-4daa-91e9-87673d9847dd",
     "owner": "ada",
     "state": "active",
-    "createdAt": "2026-10-26T18:15:00.45733Z",
-    "expiresAt": "2026-11-25T18:15:00.45733Z",
+    "createdAt": "2026-10-28T20:01:18.846463Z",
+    "expiresAt": "2026-11-27T20:01:18.846463Z",
     "lastUsedAt": null,
     "revokedAt": null,
     "revokedBy": null,
@@ -4770,14 +4770,14 @@ Revokes one of your live tokens; it stops working at once. Another person's toke
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/me/tokens/93f5f469-69c7-44f8-b4c9-7079d77f9ed5" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/me/tokens/d8718c7b-137a-4bf7-8bd3-93e4c8b863f8" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("revoke_my_token", { params: { id: "93f5f469-69c7-44f8-b4c9-7079d77f9ed5" } });
+await client.request("revoke_my_token", { params: { id: "d8718c7b-137a-4bf7-8bd3-93e4c8b863f8" } });
 ```
 
 **Response `204`** — Success, with no body.
@@ -4823,7 +4823,7 @@ Rotates one of your live tokens: a successor with the same name (shown only in t
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/me/tokens/3635c27f-e142-4c37-a01b-8f8c9e7c7b87/rotate" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/me/tokens/efa8995a-e47e-4cde-8261-3b11ca06aaea/rotate" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -4833,7 +4833,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/me/tokens/3635c27f-e142-4
 **TypeScript:**
 
 ```ts
-const result = await client.request("rotate_my_token", { params: { id: "3635c27f-e142-4c37-a01b-8f8c9e7c7b87" }, body: { expiresInDays: 30, overlapMinutes: 60 } });
+const result = await client.request("rotate_my_token", { params: { id: "efa8995a-e47e-4cde-8261-3b11ca06aaea" }, body: { expiresInDays: 30, overlapMinutes: 60 } });
 ```
 
 **Response `201`** — Success.
@@ -4846,33 +4846,33 @@ Content-Type: `application/json`.
 {
   "token": "<token, shown once>",
   "info": {
-    "id": "93f5f469-69c7-44f8-b4c9-7079d77f9ed5",
+    "id": "d8718c7b-137a-4bf7-8bd3-93e4c8b863f8",
     "name": "laptop-cli",
-    "userId": "afb7ba87-5522-4d55-833a-138d795b7037",
+    "userId": "68325b5f-5650-4daa-91e9-87673d9847dd",
     "owner": "ada",
     "state": "active",
-    "createdAt": "2026-10-26T18:15:00.479493Z",
-    "expiresAt": "2026-11-25T18:15:00.479493Z",
+    "createdAt": "2026-10-28T20:01:18.863784Z",
+    "expiresAt": "2026-11-27T20:01:18.863784Z",
     "lastUsedAt": null,
     "revokedAt": null,
     "revokedBy": null,
-    "rotatedFrom": "3635c27f-e142-4c37-a01b-8f8c9e7c7b87",
+    "rotatedFrom": "efa8995a-e47e-4cde-8261-3b11ca06aaea",
     "successor": null,
     "current": false
   },
   "previous": {
-    "id": "3635c27f-e142-4c37-a01b-8f8c9e7c7b87",
+    "id": "efa8995a-e47e-4cde-8261-3b11ca06aaea",
     "name": "laptop-cli",
-    "userId": "afb7ba87-5522-4d55-833a-138d795b7037",
+    "userId": "68325b5f-5650-4daa-91e9-87673d9847dd",
     "owner": "ada",
     "state": "rotating",
-    "createdAt": "2026-10-26T18:15:00.45733Z",
-    "expiresAt": "2026-10-26T19:15:00.479493Z",
+    "createdAt": "2026-10-28T20:01:18.846463Z",
+    "expiresAt": "2026-10-28T21:01:18.863784Z",
     "lastUsedAt": null,
     "revokedAt": null,
     "revokedBy": null,
     "rotatedFrom": null,
-    "successor": "93f5f469-69c7-44f8-b4c9-7079d77f9ed5",
+    "successor": "d8718c7b-137a-4bf7-8bd3-93e4c8b863f8",
     "current": false
   }
 }
