@@ -80,10 +80,10 @@
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/api/">API</a></nav>
         <h1>System API</h1>
         <div class="prose">
-<p>Health and versions, signing in and out, passwords, settings, metrics and monitoring, image mirrors, database backups, support bundles and caller identity. This page lists 16 operations.</p>
+<p>Health and versions, signing in and out, passwords, settings, metrics and monitoring, image mirrors, database backups, support bundles and caller identity. This page lists 15 operations.</p>
 <p>Set variables in the <a href="/docs/api/overview/">API overview</a>. Download <a href="/assets/api/openapi.json">OpenAPI</a>.</p>
 <h2 id="operations">Operations</h2>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#get-apiv1database-backups"><code>GET /api/v1/database-backups</code></a></td><td>Whether Apelora's database is being backed up and a restore has been proven, from the records the scripts leave in <code>APELORA_DB_BACKUP_DIR</code>.</td></tr><tr><td><a href="#get-apiv1health"><code>GET /api/v1/health</code></a></td><td>Reports that the service answers, the inventory provider, the authentication mode and whether Incus is reachable.</td></tr><tr><td><a href="#get-apiv1healthcomponents"><code>GET /api/v1/health/components</code></a></td><td>The state of each part of this installation: control plane, database, deployment workers, job queue, Incus, networks, storage pools and identity providers.</td></tr><tr><td><a href="#get-apiv1healthservers"><code>GET /api/v1/health/servers</code></a></td><td>Each server's status, CPU, memory, storage and the instances on it, with warnings.</td></tr><tr><td><a href="#get-apiv1image-mirrors"><code>GET /api/v1/image-mirrors</code></a></td><td>Image mirrors: the configuration this control plane runs with (upstream → mirror pairs and whether only mirrors may be used; URLs, not secrets), whether each mirror answers (probed at most once a minute), and the image servers each deployable catalog class needs with whether it is covered.</td></tr><tr><td><a href="#put-apiv1mepassword"><code>PUT /api/v1/me/password</code></a></td><td>Changes the caller's own password (local accounts only).</td></tr><tr><td><a href="#get-apiv1monitoring"><code>GET /api/v1/monitoring</code></a></td><td>Where each metrics endpoint is, whether the caller may scrape, and the region, site and sector labels.</td></tr><tr><td><a href="#get-apiv1settings"><code>GET /api/v1/settings</code></a></td><td>The settings this control plane runs with: every setting the control plane and the worker read, the value when it may be shown (never a secret, a key or a certificate path), whether it is the default and where it came from; sign-in settings saved in the Console; the workers seen recently.</td></tr><tr><td><a href="#get-apiv1sign-in"><code>GET /api/v1/sign-in</code></a></td><td>How people can sign in to this control plane.</td></tr><tr><td><a href="#post-apiv1sign-inpassword"><code>POST /api/v1/sign-in/password</code></a></td><td>Signs a person in with a username and password and returns an Apelora session.</td></tr><tr><td><a href="#post-apiv1sign-insetup"><code>POST /api/v1/sign-in/setup</code></a></td><td>Sets a local account's password with its one-time setup link (24 hours, single use).</td></tr><tr><td><a href="#post-apiv1sign-out"><code>POST /api/v1/sign-out</code></a></td><td>Ends the Apelora session the request was made with.</td></tr><tr><td><a href="#get-apiv1support-bundle"><code>GET /api/v1/support-bundle</code></a></td><td>Downloads a support bundle (a tar file, streamed): manifest, versions, effective settings (secrets never included), health, preflight, jobs that failed in the last 24 hours with their attempts, a metrics snapshot and where to find logs.</td></tr><tr><td><a href="#get-apiv1system"><code>GET /api/v1/system</code></a></td><td>Versions of this control plane and the Incus release it is pinned to, and when the certificates Apelora uses to reach Incus expire, and Incus as observed now (running version, or the error that keeps it unreachable).</td></tr><tr><td><a href="#get-apiv1whoami"><code>GET /api/v1/whoami</code></a></td><td>Who is calling, with the role assignments and permissions in force.</td></tr><tr><td><a href="#get-metrics"><code>GET /metrics</code></a></td><td>Metrics of this control plane in the text exposition format (OpenMetrics when the <code>Accept</code> header asks for <code>application/openmetrics-text</code>).</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#get-apiv1database-backups"><code>GET /api/v1/database-backups</code></a></td><td>Whether Apelora's database is being backed up and a restore has been proven, from the records the scripts leave in <code>APELORA_DB_BACKUP_DIR</code>.</td></tr><tr><td><a href="#get-apiv1health"><code>GET /api/v1/health</code></a></td><td>Reports that the service answers, the inventory provider, the authentication mode and whether Incus is reachable.</td></tr><tr><td><a href="#get-apiv1healthcomponents"><code>GET /api/v1/health/components</code></a></td><td>The state of each part of this installation: control plane, database, deployment workers, job queue, Incus, networks, storage pools and identity providers.</td></tr><tr><td><a href="#get-apiv1healthservers"><code>GET /api/v1/health/servers</code></a></td><td>Each server's status, CPU, memory, storage and the instances on it, with warnings.</td></tr><tr><td><a href="#get-apiv1image-mirrors"><code>GET /api/v1/image-mirrors</code></a></td><td>Image mirrors: the configuration this control plane runs with (upstream → mirror pairs and whether only mirrors may be used; URLs, not secrets), whether each mirror answers (probed at most once a minute), and the image servers each deployable catalog class needs with whether it is covered.</td></tr><tr><td><a href="#get-apiv1monitoring"><code>GET /api/v1/monitoring</code></a></td><td>Where each metrics endpoint is, whether the caller may scrape, and the region, site and sector labels.</td></tr><tr><td><a href="#get-apiv1settings"><code>GET /api/v1/settings</code></a></td><td>The settings this control plane runs with: every setting the control plane and the worker read, the value when it may be shown (never a secret, a key or a certificate path), whether it is the default and where it came from; sign-in settings saved in the Console; the workers seen recently.</td></tr><tr><td><a href="#get-apiv1sign-in"><code>GET /api/v1/sign-in</code></a></td><td>How people can sign in to this control plane.</td></tr><tr><td><a href="#post-apiv1sign-inpassword"><code>POST /api/v1/sign-in/password</code></a></td><td>Signs a person in with a username and password and returns an Apelora session.</td></tr><tr><td><a href="#post-apiv1sign-insetup"><code>POST /api/v1/sign-in/setup</code></a></td><td>Sets a local account's password with its one-time setup link (24 hours, single use).</td></tr><tr><td><a href="#post-apiv1sign-out"><code>POST /api/v1/sign-out</code></a></td><td>Ends the Apelora session the request was made with.</td></tr><tr><td><a href="#get-apiv1support-bundle"><code>GET /api/v1/support-bundle</code></a></td><td>Downloads a support bundle (a tar file, streamed): manifest, versions, effective settings (secrets never included), health, preflight, jobs that failed in the last 24 hours with their attempts, a metrics snapshot and where to find logs.</td></tr><tr><td><a href="#get-apiv1system"><code>GET /api/v1/system</code></a></td><td>Versions of this control plane and the Incus release it is pinned to, and when the certificates Apelora uses to reach Incus expire, and Incus as observed now (running version, or the error that keeps it unreachable).</td></tr><tr><td><a href="#get-apiv1whoami"><code>GET /api/v1/whoami</code></a></td><td>Who is calling, with the role assignments and permissions in force.</td></tr><tr><td><a href="#get-metrics"><code>GET /metrics</code></a></td><td>Metrics of this control plane in the text exposition format (OpenMetrics when the <code>Accept</code> header asks for <code>application/openmetrics-text</code>).</td></tr></tbody></table></div>
 <h2 id="details">Details</h2>
 <h3 id="get-apiv1database-backups"><code>GET /api/v1/database-backups</code></h3>
 <p>Whether Apelora's database is being backed up and a restore has been proven, from the records the scripts leave in <code>APELORA_DB_BACKUP_DIR</code>. Needs <code>cluster.view</code>.</p>
@@ -145,7 +145,7 @@
   &quot;incus&quot;: {
     &quot;connected&quot;: false
   },
-  &quot;checkedAt&quot;: &quot;2026-10-28T21:24:00.170763Z&quot;
+  &quot;checkedAt&quot;: &quot;2026-10-28T22:51:07.248388Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
@@ -163,13 +163,13 @@
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;checkedAt&quot;: &quot;2026-10-28T21:24:20.174854Z&quot;,
+  &quot;checkedAt&quot;: &quot;2026-10-28T22:51:27.824749Z&quot;,
   &quot;overall&quot;: &quot;degraded&quot;,
   &quot;controlPlane&quot;: {
     &quot;state&quot;: &quot;healthy&quot;,
     &quot;version&quot;: &quot;0.0.0&quot;,
     &quot;apiVersion&quot;: &quot;v1&quot;,
-    &quot;startedAt&quot;: &quot;2026-10-28T21:24:03.617118Z&quot;,
+    &quot;startedAt&quot;: &quot;2026-10-28T22:51:11.799989Z&quot;,
     &quot;uptimeSecs&quot;: 16,
     &quot;auth&quot;: &quot;tokens&quot;,
     &quot;provider&quot;: &quot;mock&quot;,
@@ -178,7 +178,7 @@
   },
   &quot;database&quot;: {
     &quot;state&quot;: &quot;healthy&quot;,
-    &quot;roundTripMs&quot;: 2.1,
+    &quot;roundTripMs&quot;: 5,
     &quot;schemaVersion&quot;: 36,
     &quot;expectedSchemaVersion&quot;: 36,
     &quot;reason&quot;: null,
@@ -191,9 +191,9 @@
         &quot;id&quot;: &quot;docs-worker&quot;,
         &quot;host&quot;: &quot;unknown&quot;,
         &quot;version&quot;: &quot;0.0.0&quot;,
-        &quot;startedAt&quot;: &quot;2026-10-28T21:24:03.701213Z&quot;,
-        &quot;lastSeen&quot;: &quot;2026-10-28T21:24:18.706152Z&quot;,
-        &quot;secondsSinceSeen&quot;: 1,
+        &quot;startedAt&quot;: &quot;2026-10-28T22:51:11.873791Z&quot;,
+        &quot;lastSeen&quot;: &quot;2026-10-28T22:51:26.899435Z&quot;,
+        &quot;secondsSinceSeen&quot;: 0,
         &quot;state&quot;: &quot;running&quot;
       }
     ],
@@ -270,7 +270,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T21:24:20.178325Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T22:51:27.828814Z&quot;
   },
   &quot;clustered&quot;: true,
   &quot;items&quot;: [
@@ -451,27 +451,6 @@
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr></tbody></table></div>
-<h3 id="put-apiv1mepassword"><code>PUT /api/v1/me/password</code></h3>
-<p>Changes the caller's own password (local accounts only). Every other session of theirs is revoked; the one making the request stays. Counts towards the account's lock like a sign-in.</p>
-<p><strong>Operation ID:</strong> <code>change_password</code></p>
-<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
-<p><strong>Request body</strong> (JSON):</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>current</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>new</code></td><td>string</td><td>yes</td><td>—</td></tr></tbody></table></div>
-<pre data-lang="json" tabindex="0"><code>{
-  &quot;current&quot;: &quot;&lt;current password&gt;&quot;,
-  &quot;new&quot;: &quot;&lt;new password&gt;&quot;
-}</code></pre>
-<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
-<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/me/password&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;current&quot;:&quot;&lt;current password&gt;&quot;,&quot;new&quot;:&quot;&lt;new password&gt;&quot;}'</code></pre>
-<p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;change_password&quot;, { body: { current: &quot;&lt;current password&gt;&quot;, new: &quot;&lt;new password&gt;&quot; } });</code></pre>
-<p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
-<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code>, <code>weak_password</code>, <code>wrong_password</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>409</code></td><td><code>account_locked</code>, <code>not_a_local_account</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>500</code></td><td><code>internal</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1monitoring"><code>GET /api/v1/monitoring</code></h3>
 <p>Where each metrics endpoint is, whether the caller may scrape, and the region, site and sector labels. Needs <code>fabric.metrics.read</code> or <code>cluster.view</code>.</p>
 <p><strong>Operation ID:</strong> <code>monitoring</code></p>
@@ -594,10 +573,10 @@
       &quot;id&quot;: &quot;docs-worker&quot;,
       &quot;host&quot;: &quot;unknown&quot;,
       &quot;version&quot;: &quot;0.0.0&quot;,
-      &quot;lastSeen&quot;: &quot;2026-10-28T21:24:18.706152Z&quot;
+      &quot;lastSeen&quot;: &quot;2026-10-28T22:51:26.899435Z&quot;
     }
   ],
-  &quot;readAt&quot;: &quot;2026-10-28T21:24:03.617118Z&quot;
+  &quot;readAt&quot;: &quot;2026-10-28T22:51:11.799989Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code>, <code>store_unavailable</code></td></tr></tbody></table></div>
@@ -644,7 +623,7 @@
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-29T05:24:00.736531Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-29T06:51:08.08853Z&quot;,
   &quot;name&quot;: &quot;Ada Lovelace&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
@@ -698,15 +677,15 @@
 <p>Binary download; the command saves the response to a file. For a tar bundle, list the files after a successful download:</p>
 <pre data-lang="sh" tabindex="0"><code>tar -tf support-bundle.tar</code></pre>
 <p><strong>Example contents:</strong></p>
-<pre data-lang="text" tabindex="0"><code>apelora-support-20261028-212420/manifest.json
-apelora-support-20261028-212420/versions.json
-apelora-support-20261028-212420/settings.json
-apelora-support-20261028-212420/health.json
-apelora-support-20261028-212420/preflight.json
-apelora-support-20261028-212420/jobs-failed.json
-apelora-support-20261028-212420/metrics.txt
-apelora-support-20261028-212420/logs/README.txt
-apelora-support-20261028-212420/README.txt</code></pre>
+<pre data-lang="text" tabindex="0"><code>apelora-support-20261028-225128/manifest.json
+apelora-support-20261028-225128/versions.json
+apelora-support-20261028-225128/settings.json
+apelora-support-20261028-225128/health.json
+apelora-support-20261028-225128/preflight.json
+apelora-support-20261028-225128/jobs-failed.json
+apelora-support-20261028-225128/metrics.txt
+apelora-support-20261028-225128/logs/README.txt
+apelora-support-20261028-225128/README.txt</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1system"><code>GET /api/v1/system</code></h3>
@@ -727,7 +706,7 @@ apelora-support-20261028-212420/README.txt</code></pre>
   &quot;apiVersion&quot;: &quot;v1&quot;,
   &quot;incusPinned&quot;: &quot;v7.0.2&quot;,
   &quot;incusSeries&quot;: &quot;7.0&quot;,
-  &quot;incusTestedWith&quot;: &quot;&lt;how this release was tested with Incus&gt;&quot;,
+  &quot;incusTestedRelease&quot;: &quot;7.0.2&quot;,
   &quot;certificates&quot;: [],
   &quot;incus&quot;: {
     &quot;connected&quot;: false,
@@ -797,7 +776,7 @@ apelora-support-20261028-212420/README.txt</code></pre>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;metrics&quot;, {});</code></pre>
 <p><strong>Response <code>200</code></strong> — Metrics in the text exposition format.</p>
 <p>Content-Type: <code>text/plain</code>.</p>
-<p><strong>Example response</strong> from a test installation; your IDs, names and times differ. The first 15 of 1827 lines.</p>
+<p><strong>Example response</strong> from a test installation; your IDs, names and times differ. The first 15 of 1812 lines.</p>
 <pre data-lang="text" tabindex="0"><code># HELP apelora_build_info Always 1: which component, version and commit is running.
 # TYPE apelora_build_info gauge
 apelora_build_info{region=&quot;default&quot;,site=&quot;default&quot;,sector=&quot;default&quot;,component=&quot;control-plane&quot;,version=&quot;0.0.0&quot;,commit=&quot;unknown&quot;} 1
@@ -819,7 +798,7 @@ apelora_http_requests_total{region=&quot;default&quot;,site=&quot;default&quot;,
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/overview/"><span>Previous</span>Overview</a><a class="next" href="/docs/api/inventory/"><span>Next</span>Inventory</a></nav>
       </article>
-      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#get-apiv1database-backups">GET /api/v1/database-backups</a></li><li class="l3"><a href="#get-apiv1health">GET /api/v1/health</a></li><li class="l3"><a href="#get-apiv1healthcomponents">GET /api/v1/health/components</a></li><li class="l3"><a href="#get-apiv1healthservers">GET /api/v1/health/servers</a></li><li class="l3"><a href="#get-apiv1image-mirrors">GET /api/v1/image-mirrors</a></li><li class="l3"><a href="#put-apiv1mepassword">PUT /api/v1/me/password</a></li><li class="l3"><a href="#get-apiv1monitoring">GET /api/v1/monitoring</a></li><li class="l3"><a href="#get-apiv1settings">GET /api/v1/settings</a></li><li class="l3"><a href="#get-apiv1sign-in">GET /api/v1/sign-in</a></li><li class="l3"><a href="#post-apiv1sign-inpassword">POST /api/v1/sign-in/password</a></li><li class="l3"><a href="#post-apiv1sign-insetup">POST /api/v1/sign-in/setup</a></li><li class="l3"><a href="#post-apiv1sign-out">POST /api/v1/sign-out</a></li><li class="l3"><a href="#get-apiv1support-bundle">GET /api/v1/support-bundle</a></li><li class="l3"><a href="#get-apiv1system">GET /api/v1/system</a></li><li class="l3"><a href="#get-apiv1whoami">GET /api/v1/whoami</a></li><li class="l3"><a href="#get-metrics">GET /metrics</a></li></ul></nav>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#get-apiv1database-backups">GET /api/v1/database-backups</a></li><li class="l3"><a href="#get-apiv1health">GET /api/v1/health</a></li><li class="l3"><a href="#get-apiv1healthcomponents">GET /api/v1/health/components</a></li><li class="l3"><a href="#get-apiv1healthservers">GET /api/v1/health/servers</a></li><li class="l3"><a href="#get-apiv1image-mirrors">GET /api/v1/image-mirrors</a></li><li class="l3"><a href="#get-apiv1monitoring">GET /api/v1/monitoring</a></li><li class="l3"><a href="#get-apiv1settings">GET /api/v1/settings</a></li><li class="l3"><a href="#get-apiv1sign-in">GET /api/v1/sign-in</a></li><li class="l3"><a href="#post-apiv1sign-inpassword">POST /api/v1/sign-in/password</a></li><li class="l3"><a href="#post-apiv1sign-insetup">POST /api/v1/sign-in/setup</a></li><li class="l3"><a href="#post-apiv1sign-out">POST /api/v1/sign-out</a></li><li class="l3"><a href="#get-apiv1support-bundle">GET /api/v1/support-bundle</a></li><li class="l3"><a href="#get-apiv1system">GET /api/v1/system</a></li><li class="l3"><a href="#get-apiv1whoami">GET /api/v1/whoami</a></li><li class="l3"><a href="#get-metrics">GET /metrics</a></li></ul></nav>
     </div>
   </main>
   <footer class="site-footer">

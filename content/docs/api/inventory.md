@@ -7,7 +7,7 @@ label: Inventory
 source: packages/api-client/openapi.json
 summary: Servers, instances and logs, networks, storage, capacity and preflight.
 ---
-What exists in the cluster, as Incus reports it: servers and capacity, instances and their logs, Incus projects, networks, storage pools and volumes nobody owns, and preflight checks. This page lists 14 operations.
+What exists in the cluster, as Incus reports it: servers and capacity, instances and their logs, Incus projects, networks, storage pools and volumes nobody owns, and preflight checks. This page lists 15 operations.
 
 Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
@@ -23,12 +23,13 @@ Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/as
 | [`GET /api/v1/instances/{project}/{name}/logs`](#get-apiv1instancesprojectnamelogs) | The instance's log files as Incus lists them (names only). |
 | [`GET /api/v1/instances/{project}/{name}/logs/{file}`](#get-apiv1instancesprojectnamelogsfile) | The end of one of the instance's log files (`tailKib`, default 64, at most 1024). |
 | [`GET /api/v1/networks`](#get-apiv1networks) | Networks in all projects. |
+| [`GET /api/v1/networks/applications`](#get-apiv1networksapplications) | Each application the caller may view that has a recorded deployment: its network, the rules compiled from its design, its service and published addresses, and what Incus holds for each, with the differences. |
 | [`GET /api/v1/networks/settings`](#get-apiv1networkssettings) | The network settings in effect: Apelora's uplink and service range, each deploy project's network limits, and the uplink as Incus reports it (with the administrator identity, when configured), with what does not fit together. |
 | [`GET /api/v1/preflight`](#get-apiv1preflight) | Read-only readiness checks of the Incus server or cluster, of the projects Apelora deploys into, and of the image mirrors (whether each image server the catalog uses is mirrored and whether the mirrors answer). |
 | [`GET /api/v1/projects`](#get-apiv1projects) | Incus projects. |
-| [`GET /api/v1/storage-pools`](#get-apiv1storage-pools) | Storage pools. |
 | [`GET /api/v1/storage/orphans`](#get-apiv1storageorphans) | Custom volumes in Apelora's projects that no application volume or backup record refers to, in every pool, with their size. |
 | [`GET /api/v1/storage/pools`](#get-apiv1storagepools) | Storage pools with how full each is, per member and in total (read from each member's state, like the Health page). |
+| [`GET /api/v1/storage/volumes`](#get-apiv1storagevolumes) | Every application volume the caller may see, with what Incus reports, its schedules and how many backups it has. |
 
 ## Details
 
@@ -64,7 +65,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.131639Z"
+    "observedAt": "2026-10-28T22:51:27.761801Z"
   },
   "named": true,
   "volumePool": "mock-local",
@@ -154,7 +155,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.13549Z"
+    "observedAt": "2026-10-28T22:51:27.765858Z"
   },
   "server": {
     "apiVersion": "1.0",
@@ -246,7 +247,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.229575Z"
+    "observedAt": "2026-10-28T22:51:11.477831Z"
   },
   "items": [
     {
@@ -319,7 +320,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.233744Z"
+    "observedAt": "2026-10-28T22:51:11.488017Z"
   },
   "instance": {
     "name": "mock-web-01",
@@ -464,7 +465,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.247037Z"
+    "observedAt": "2026-10-28T22:51:11.501009Z"
   },
   "file": "console",
   "tailKib": 64,
@@ -525,7 +526,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.236737Z"
+    "observedAt": "2026-10-28T22:51:11.491656Z"
   },
   "files": [
     "lxc.log"
@@ -592,7 +593,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.239603Z"
+    "observedAt": "2026-10-28T22:51:11.49457Z"
   },
   "file": "lxc.log",
   "tailKib": 64,
@@ -648,7 +649,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.358818Z"
+    "observedAt": "2026-10-28T22:51:28.040733Z"
   },
   "items": [
     {
@@ -676,6 +677,83 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+
+### `GET /api/v1/networks/applications`
+
+Each application the caller may view that has a recorded deployment: its network, the rules compiled from its design, its service and published addresses, and what Incus holds for each, with the differences. Read-only. Needs `application.view` on each application.
+
+**Operation ID:** `application_networks`
+
+**Needs:** `application.view` on each application.
+
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks/applications" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("application_networks", {});
+```
+
+**Response `200`** — Done; the response holds the result..
+
+Content-Type: `application/json`.
+
+**Example response** from a test installation; your IDs, names and times differ.
+
+```json
+{
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-28T22:51:28.051683Z"
+  },
+  "incusError": null,
+  "items": [
+    {
+      "application": "shop",
+      "project": "shop-prod",
+      "revision": 1,
+      "enforced": false,
+      "network": "shop",
+      "uplink": null,
+      "serviceRange": null,
+      "networkObserved": null,
+      "connections": [
+        {
+          "from": "web-01",
+          "to": "db-01",
+          "transport": "tcp",
+          "port": 5432
+        },
+        {
+          "from": "web-01",
+          "to": "cache-01",
+          "transport": "tcp",
+          "port": 6379
+        }
+      ],
+      "published": [],
+      "modules": [],
+      "services": [],
+      "drift": []
+    }
+  ]
+}
+```
+
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 
 ### `GET /api/v1/networks/settings`
 
@@ -709,7 +787,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.376354Z"
+    "observedAt": "2026-10-28T22:51:28.059228Z"
   },
   "uplink": null,
   "serviceRange": null,
@@ -793,7 +871,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.379759Z"
+    "observedAt": "2026-10-28T22:51:28.064152Z"
   },
   "overall": "fail",
   "checks": [
@@ -826,7 +904,7 @@ Content-Type: `application/json`.
 
 Incus projects. Needs `read-inventory`.
 
-**Operation ID:** `projects`
+**Operation ID:** `incus_projects`
 
 **Needs:** `read-inventory`.
 
@@ -841,7 +919,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/projects" \
 **TypeScript:**
 
 ```ts
-const result = await client.request("projects", {});
+const result = await client.request("incus_projects", {});
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -854,7 +932,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.383512Z"
+    "observedAt": "2026-10-28T22:51:28.068798Z"
   },
   "items": [
     {
@@ -866,65 +944,6 @@ Content-Type: `application/json`.
       "name": "apelora",
       "description": "mock data",
       "restricted": true
-    }
-  ]
-}
-```
-
-**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
-
-| Status | Codes |
-|---|---|
-| `401` | `unauthenticated`, `invalid_token` |
-| `403` | `forbidden`, `mfa_required` |
-| `429` | `rate_limited` |
-| `502` | an `incus_…` code |
-
-### `GET /api/v1/storage-pools`
-
-Storage pools. Needs `read-inventory`.
-
-**Operation ID:** `storage_pools`
-
-**Needs:** `read-inventory`.
-
-**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
-
-```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage-pools" \
-  -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Accept: application/json"
-```
-
-**TypeScript:**
-
-```ts
-const result = await client.request("storage_pools", {});
-```
-
-**Response `200`** — Done; the response holds the result..
-
-Content-Type: `application/json`.
-
-**Example response** from a test installation; your IDs, names and times differ.
-
-```json
-{
-  "source": {
-    "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.409765Z"
-  },
-  "items": [
-    {
-      "name": "mock-local",
-      "driver": "zfs",
-      "status": "Created",
-      "description": "mock data",
-      "locations": [
-        "mock-member-01",
-        "mock-member-02",
-        "mock-member-03"
-      ]
     }
   ]
 }
@@ -971,7 +990,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.418505Z"
+    "observedAt": "2026-10-28T22:51:28.129281Z"
   },
   "projects": [
     "acme-shop-staging",
@@ -1025,7 +1044,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.421672Z"
+    "observedAt": "2026-10-28T22:51:28.13845Z"
   },
   "volumePool": "mock-local",
   "backupPool": "mock-local",
@@ -1067,4 +1086,96 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
+
+### `GET /api/v1/storage/volumes`
+
+Every application volume the caller may see, with what Incus reports, its schedules and how many backups it has. Read-only. Needs `application.view` on each application.
+
+**Operation ID:** `storage_volumes`
+
+**Needs:** `application.view` on each application.
+
+**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
+
+```sh
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/volumes" \
+  -H "Authorization: Bearer $APELORA_TOKEN" \
+  -H "Accept: application/json"
+```
+
+**TypeScript:**
+
+```ts
+const result = await client.request("storage_volumes", {});
+```
+
+**Response `200`** — Done; the response holds the result..
+
+Content-Type: `application/json`.
+
+**Example response** from a test installation; your IDs, names and times differ.
+
+```json
+{
+  "source": {
+    "provider": "mock",
+    "observedAt": "2026-10-28T22:51:12.137388Z"
+  },
+  "backupPool": "mock-local",
+  "incusError": null,
+  "items": [
+    {
+      "application": "shop",
+      "module": "cache-01",
+      "instance": "shop-cache-01",
+      "name": "cache",
+      "incusName": "shop-cache-01-cache",
+      "pool": "mock-local",
+      "member": "mock-member-01",
+      "sizeMib": 2048,
+      "class": "data-local",
+      "state": "attached",
+      "usedBy": [
+        "shop-cache-01"
+      ],
+      "schedules": {
+        "snapshots": null,
+        "backups": null
+      },
+      "backups": 0,
+      "lastBackupAt": null
+    },
+    {
+      "application": "shop",
+      "module": "db-01",
+      "instance": "shop-db-01",
+      "name": "data",
+      "incusName": "shop-db-01-data",
+      "pool": "mock-local",
+      "member": "mock-member-01",
+      "sizeMib": 10240,
+      "class": "data-local",
+      "state": "attached",
+      "usedBy": [
+        "shop-db-01"
+      ],
+      "schedules": {
+        "snapshots": null,
+        "backups": null
+      },
+      "backups": 0,
+      "lastBackupAt": null
+    }
+  ]
+}
+```
+
+**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
+
+| Status | Codes |
+|---|---|
+| `401` | `unauthenticated`, `invalid_token` |
+| `403` | `forbidden`, `mfa_required` |
+| `429` | `rate_limited` |
+| `503` | `database_not_configured` |
 

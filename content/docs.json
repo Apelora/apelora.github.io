@@ -414,7 +414,7 @@
       "description": "Also list revoked assignments.",
       "default": false
     },
-    "projects_list.organization": {
+    "projects.organization": {
       "description": "Only the projects of this organisation (its id)."
     }
   },

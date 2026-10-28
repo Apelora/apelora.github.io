@@ -91,7 +91,7 @@ or changed.</li></ol>
 <p>Delete a kept volume (its data and snapshots are gone for good):</p>
 <ol><li>Make sure nobody needs the data. Back it up first if unsure: on the volume's member,
 <code>incus storage volume export &lt;pool&gt; &lt;volume&gt; &lt;file&gt; --project &lt;project&gt; --target &lt;member&gt;</code>.</li><li>Fabric Console → Applications → Show details → <em>Delete…</em> next to the volume, type its name.
-Or: <code>DELETE /api/v1/applications/&lt;name&gt;/volumes/&lt;volume&gt;</code> with <code>{&quot;confirm&quot;: &quot;&lt;volume&gt;&quot;}</code>.
+Or: <code>DELETE /api/v1/applications/&lt;name&gt;/volumes/&lt;volume&gt;?confirm=&lt;volume&gt;</code>.
 It needs <code>application.delete</code> (and an approval where the policy asks for one); it is refused
 while an instance uses the volume, and audited as <code>application.volume.delete</code>.</li></ol>
 <p>Grow a volume that is filling up (it can stay in use):</p>
@@ -128,8 +128,8 @@ says first.</li><li>Leave <em>Take a safety backup of the current data first</em
 worthless or the backup pool has no room: it is the only way back from a mistaken restore.</li><li>Type the volume's name and choose <em>Restore volume</em>. The dialog follows the <code>volume.restore</code>
 job; Operations shows it too, with its attempts. Needs <code>application.operate</code> (and an approval
 where a policy asks for one).</li><li>Check the data, then start the module again.</li></ol>
-<p>API: <code>GET /api/v1/applications/&lt;name&gt;/volumes/&lt;volume&gt;/backups/&lt;backup&gt;/restore</code> (dry run,
-<code>?safetyBackup=false</code> to see it without the safety backup), then <code>POST</code> the same path with
+<p>API: <code>GET /api/v1/applications/&lt;name&gt;/volumes/&lt;volume&gt;/backups/&lt;backup&gt;/restoration</code> (dry run,
+<code>?safetyBackup=false</code> to see it without the safety backup), then <code>POST …/backups/&lt;backup&gt;/restore</code> with
 <code>{&quot;confirm&quot;: &quot;&lt;volume&gt;&quot;, &quot;safetyBackup&quot;: true}</code> and an <code>Idempotency-Key</code>.</p>
 <p>If the job fails:</p>
 <ul><li><em>nothing was changed: stop … first</em> — an instance using the volume runs (or was started while

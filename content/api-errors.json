@@ -1,5 +1,5 @@
 {
- "openapiSha256": "581eca1b5e6c2c0944d4873cc822bf5141144faefaf4e039dc719ad8efa70a6f",
+ "openapiSha256": "8a51d4b6abc6e9461bcaf7a4fd490f0b4eb11f1ea0978c89b920428f0927481e",
  "operations": {
   "acknowledge_alert": {
    "400": [
@@ -84,6 +84,9 @@
    ]
   },
   "alert_history": {
+   "400": [
+    "invalid_request"
+   ],
    "403": [
     "forbidden",
     "mfa_required"
@@ -285,6 +288,16 @@
     "database_not_configured"
    ]
   },
+  "approve_approval": {
+   "403": [
+    "approval_needs_a_person",
+    "forbidden",
+    "mfa_required"
+   ],
+   "503": [
+    "database_not_configured"
+   ]
+  },
   "approve_machine": {
    "400": [
     "invalid_request"
@@ -301,16 +314,6 @@
    ],
    "503": [
     "cluster_admin_not_configured",
-    "database_not_configured"
-   ]
-  },
-  "approve_request": {
-   "403": [
-    "approval_needs_a_person",
-    "forbidden",
-    "mfa_required"
-   ],
-   "503": [
     "database_not_configured"
    ]
   },
@@ -380,6 +383,11 @@
     "database_not_configured"
    ]
   },
+  "cancel_approval": {
+   "503": [
+    "database_not_configured"
+   ]
+  },
   "cancel_job": {
    "400": [
     "invalid_request"
@@ -395,11 +403,6 @@
    "409": [
     "job_finished"
    ],
-   "503": [
-    "database_not_configured"
-   ]
-  },
-  "cancel_request": {
    "503": [
     "database_not_configured"
    ]
@@ -497,31 +500,6 @@
   "cluster_settings": {
    "503": [
     "cluster_admin_not_configured"
-   ]
-  },
-  "cluster_upgrade": {
-   "400": [
-    "confirmation_mismatch",
-    "invalid_request"
-   ],
-   "403": [
-    "forbidden",
-    "mfa_required"
-   ],
-   "404": [
-    "not_found"
-   ],
-   "409": [
-    "evacuation_blocked",
-    "no_upgrade",
-    "not_upgraded",
-    "upgrade_blocked",
-    "upgrade_in_progress",
-    "upgrade_step"
-   ],
-   "503": [
-    "cluster_admin_not_configured",
-    "database_not_configured"
    ]
   },
   "complete_password_setup": {
@@ -1006,6 +984,12 @@
     "quota_unverifiable"
    ]
   },
+  "directories": {
+   "403": [
+    "forbidden",
+    "mfa_required"
+   ]
+  },
   "disable_service_identity": {
    "403": [
     "forbidden",
@@ -1071,6 +1055,18 @@
   "end_my_sign_in": {
    "403": [
     "people_only"
+   ],
+   "404": [
+    "not_found"
+   ],
+   "503": [
+    "database_not_configured"
+   ]
+  },
+  "end_remote_session": {
+   "403": [
+    "forbidden",
+    "mfa_required"
    ],
    "404": [
     "not_found"
@@ -1197,6 +1193,7 @@
    ]
   },
   "image_mirrors": {},
+  "incus_projects": {},
   "instance_console_log": {
    "400": [
     "invalid_request"
@@ -1295,25 +1292,13 @@
     "database_not_configured"
    ]
   },
-  "list_directories": {
-   "403": [
-    "forbidden",
-    "mfa_required"
-   ]
-  },
-  "list_join_tokens": {
+  "join_tokens": {
    "403": [
     "forbidden",
     "mfa_required"
    ],
    "503": [
     "cluster_admin_not_configured"
-   ]
-  },
-  "list_machines": {
-   "503": [
-    "cluster_admin_not_configured",
-    "database_not_configured"
    ]
   },
   "lookup_user": {
@@ -1428,17 +1413,7 @@
     "provisioner_not_configured"
    ]
   },
-  "machine_admission": {
-   "400": [
-    "invalid_request"
-   ],
-   "403": [
-    "forbidden",
-    "mfa_required"
-   ],
-   "409": [
-    "not_a_member"
-   ],
+  "machines": {
    "503": [
     "cluster_admin_not_configured",
     "database_not_configured"
@@ -1499,7 +1474,7 @@
    ]
   },
   "networks": {},
-  "open_session": {
+  "open_remote_session": {
    "400": [
     "invalid_request"
    ],
@@ -1679,6 +1654,22 @@
     "database_not_configured"
    ]
   },
+  "preview_machine_admission": {
+   "400": [
+    "invalid_request"
+   ],
+   "403": [
+    "forbidden",
+    "mfa_required"
+   ],
+   "409": [
+    "not_a_member"
+   ],
+   "503": [
+    "cluster_admin_not_configured",
+    "database_not_configured"
+   ]
+  },
   "preview_member_removal": {
    "400": [
     "invalid_request"
@@ -1702,8 +1693,7 @@
     "database_not_configured"
    ]
   },
-  "projects": {},
-  "projects_list": {
+  "projects": {
    "503": [
     "database_not_configured"
    ]
@@ -1763,7 +1753,7 @@
     "provisioner_not_configured"
    ]
   },
-  "reject_request": {
+  "reject_approval": {
    "403": [
     "approval_needs_a_person",
     "forbidden",
@@ -1771,6 +1761,12 @@
    ],
    "503": [
     "database_not_configured"
+   ]
+  },
+  "remote_sessions": {
+   "403": [
+    "forbidden",
+    "mfa_required"
    ]
   },
   "remove_group_member": {
@@ -2103,12 +2099,6 @@
     "database_not_configured"
    ]
   },
-  "sessions": {
-   "403": [
-    "forbidden",
-    "mfa_required"
-   ]
-  },
   "set_api_tokens": {
    "400": [
     "invalid_request"
@@ -2244,7 +2234,6 @@
     "mfa_required"
    ]
   },
-  "storage_pools": {},
   "storage_volumes": {
    "403": [
     "forbidden",
@@ -2287,18 +2276,6 @@
    "403": [
     "forbidden",
     "mfa_required"
-   ],
-   "503": [
-    "database_not_configured"
-   ]
-  },
-  "terminate_session": {
-   "403": [
-    "forbidden",
-    "mfa_required"
-   ],
-   "404": [
-    "not_found"
    ],
    "503": [
     "database_not_configured"
@@ -2412,6 +2389,31 @@
     "would_lock_out"
    ],
    "503": [
+    "database_not_configured"
+   ]
+  },
+  "upgrade_cluster": {
+   "400": [
+    "confirmation_mismatch",
+    "invalid_request"
+   ],
+   "403": [
+    "forbidden",
+    "mfa_required"
+   ],
+   "404": [
+    "not_found"
+   ],
+   "409": [
+    "evacuation_blocked",
+    "no_upgrade",
+    "not_upgraded",
+    "upgrade_blocked",
+    "upgrade_in_progress",
+    "upgrade_step"
+   ],
+   "503": [
+    "cluster_admin_not_configured",
     "database_not_configured"
    ]
   },

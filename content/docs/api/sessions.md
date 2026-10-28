@@ -108,7 +108,7 @@ Content-Type: `application/json`.
 
 Opens a session: checks the caller, the instance and the approval rule, and answers with a single-use ticket for the websocket. Needs `instance.console` (terminal, PowerShell) or `instance.desktop` (RDP) on the application; in production also an approval (`Apelora-Approval: <id>`) of `instance.console` on `instance:<application>/<instance>`.
 
-**Operation ID:** `open_session`
+**Operation ID:** `open_remote_session`
 
 **Needs:** `instance.console` (terminal, PowerShell) or `instance.desktop` (RDP) on the application; in production also an approval (`Apelora-Approval: <id>`) of `instance.console` on `instance:<application>/<instance>`.
 
@@ -148,7 +148,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/instanc
 **TypeScript:**
 
 ```ts
-const result = await client.request("open_session", { params: { name: "shop", instance: "shop-db-01" }, body: { kind: "terminal", cols: 120, rows: 32 } });
+const result = await client.request("open_remote_session", { params: { name: "shop", instance: "shop-db-01" }, body: { kind: "terminal", cols: 120, rows: 32 } });
 ```
 
 **Response `201`** — Created; the response describes what was created..
@@ -159,9 +159,9 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "17ab06f7-bcf7-41b6-ad02-d64aba42145c",
+  "id": "9db6075c-470f-4d3a-873e-0f203d4c86e9",
   "ticket": "<one-time session ticket>",
-  "expiresAt": "2026-10-28T21:25:19.356822Z",
+  "expiresAt": "2026-10-28T22:52:26.985842Z",
   "connectPath": "/api/v1/sessions/connect",
   "protocol": "apelora.session.v1",
   "kind": "terminal",
@@ -188,7 +188,7 @@ Content-Type: `application/json`.
 
 Open sessions the caller started, and those on applications they may operate.
 
-**Operation ID:** `sessions`
+**Operation ID:** `remote_sessions`
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
@@ -203,7 +203,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/sessions" \
 **TypeScript:**
 
 ```ts
-const result = await client.request("sessions", {});
+const result = await client.request("remote_sessions", {});
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -230,7 +230,7 @@ Content-Type: `application/json`.
 
 Ends a session now. Allowed for the person who has it and for whoever may operate its application. Anything else answers 404.
 
-**Operation ID:** `terminate_session`
+**Operation ID:** `end_remote_session`
 
 **Needs:** a signed-in caller; the server decides what that caller may see.
 
@@ -243,14 +243,14 @@ Ends a session now. Allowed for the person who has it and for whoever may operat
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/17ab06f7-bcf7-41b6-ad02-d64aba42145c" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sessions/9db6075c-470f-4d3a-873e-0f203d4c86e9" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("terminate_session", { params: { id: "17ab06f7-bcf7-41b6-ad02-d64aba42145c" } });
+await client.request("end_remote_session", { params: { id: "9db6075c-470f-4d3a-873e-0f203d4c86e9" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.

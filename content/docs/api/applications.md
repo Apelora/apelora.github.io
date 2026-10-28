@@ -7,7 +7,7 @@ label: Applications
 source: packages/api-client/openapi.json
 summary: Applications, drafts, versions, plans, deployments, operations and volumes.
 ---
-Applications: drafts and published versions, planning and deploying a version, start, shut down, stop, restart and migrate, status and events, networks, and volumes with their snapshots, backups and schedules. This page lists 34 operations.
+Applications: drafts and published versions, planning and deploying a version, start, shut down, stop, restart and migrate, status and events, networks, and volumes with their snapshots, backups and schedules. This page lists 32 operations.
 
 Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
@@ -40,15 +40,13 @@ Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/as
 | [`GET /api/v1/applications/{name}/volumes/{volume}/backups`](#get-apiv1applicationsnamevolumesvolumebackups) | The volume's backups, oldest first, whether each still exists, and its schedules. |
 | [`POST /api/v1/applications/{name}/volumes/{volume}/backups`](#post-apiv1applicationsnamevolumesvolumebackups) | Backs the volume up now: a copy, through a short-lived snapshot, into the backup pool on another member. |
 | [`DELETE /api/v1/applications/{name}/volumes/{volume}/backups/{backup}`](#delete-apiv1applicationsnamevolumesvolumebackupsbackup) | Deletes one backup copy. |
-| [`GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`](#get-apiv1applicationsnamevolumesvolumebackupsbackuprestore) | Dry run of restoring the volume from one of its backups: what is replaced (data written since the backup, the volume's snapshots), which instances must be stopped, where the safety backup goes, and the steps. |
+| [`GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restoration`](#get-apiv1applicationsnamevolumesvolumebackupsbackuprestoration) | Dry run of restoring the volume from one of its backups: what is replaced (data written since the backup, the volume's snapshots), which instances must be stopped, where the safety backup goes, and the steps. |
 | [`POST /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`](#post-apiv1applicationsnamevolumesvolumebackupsbackuprestore) | Restores the volume from one of its backups, after the dry run passes again and the volume's name is typed: a safety backup of the current data first (unless declined), then the backup is copied over the volume. |
 | [`PUT /api/v1/applications/{name}/volumes/{volume}/schedules`](#put-apiv1applicationsnamevolumesvolumeschedules) | Sets or turns off the volume's snapshot and backup schedules. |
 | [`GET /api/v1/applications/{name}/volumes/{volume}/snapshots`](#get-apiv1applicationsnamevolumesvolumesnapshots) | The volume's snapshots, oldest first. |
 | [`POST /api/v1/applications/{name}/volumes/{volume}/snapshots`](#post-apiv1applicationsnamevolumesvolumesnapshots) | Takes a snapshot of the volume, named after the time (`snap-YYYYMMDD-HHMMSS`). |
 | [`DELETE /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}`](#delete-apiv1applicationsnamevolumesvolumesnapshotssnapshot) | Deletes one snapshot of the volume. |
 | [`POST /api/v1/applications/{name}/volumes/{volume}/snapshots/{snapshot}/restore`](#post-apiv1applicationsnamevolumesvolumesnapshotssnapshotrestore) | Puts the volume back to a snapshot: everything written since is lost. |
-| [`GET /api/v1/networks/applications`](#get-apiv1networksapplications) | Each application the caller may view that has a recorded deployment: its network, the rules compiled from its design, its service and published addresses, and what Incus holds for each, with the differences. |
-| [`GET /api/v1/storage/volumes`](#get-apiv1storagevolumes) | Every application volume the caller may see, with what Incus reports, its schedules and how many backups it has. |
 
 ## Details
 
@@ -98,19 +96,19 @@ Content-Type: `application/json`.
     {
       "name": "blog",
       "latestRevision": null,
-      "createdAt": "2026-10-28T21:24:03.030067Z",
-      "updatedAt": "2026-10-28T21:24:03.030067Z",
+      "createdAt": "2026-10-28T22:51:11.19994Z",
+      "updatedAt": "2026-10-28T22:51:11.19994Z",
       "description": "Company blog",
       "icon": "box",
       "project": {
-        "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
+        "id": "0e64d3ef-1020-41d9-a96e-821b3b45cf04",
         "slug": "shop",
         "name": "Online shop",
-        "organizationId": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
+        "organizationId": "8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6",
         "organizationSlug": "acme"
       },
       "environment": {
-        "id": "a1a9633b-c3fb-4339-aa65-ce10c30dd297",
+        "id": "b882f5f5-ed9e-40cf-8a05-aaf83ddef3f3",
         "slug": "staging",
         "name": "Staging",
         "kind": "staging",
@@ -127,7 +125,7 @@ Content-Type: `application/json`.
       },
       "deployment": {
         "status": "not-deployed",
-        "observedAt": "2026-10-28T21:24:03.14298Z",
+        "observedAt": "2026-10-28T22:51:11.349611Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": null,
@@ -167,19 +165,19 @@ Content-Type: `application/json`.
     {
       "name": "shop",
       "latestRevision": 1,
-      "createdAt": "2026-10-28T21:24:03.017318Z",
-      "updatedAt": "2026-10-28T21:24:03.06761Z",
+      "createdAt": "2026-10-28T22:51:11.18079Z",
+      "updatedAt": "2026-10-28T22:51:11.238124Z",
       "description": "Storefront, API and order database",
       "icon": "cart",
       "project": {
-        "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
+        "id": "0e64d3ef-1020-41d9-a96e-821b3b45cf04",
         "slug": "shop",
         "name": "Online shop",
-        "organizationId": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
+        "organizationId": "8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6",
         "organizationSlug": "acme"
       },
       "environment": {
-        "id": "276b703c-f198-472d-ae04-59bf969979dd",
+        "id": "de3e069e-2e1c-419a-996a-63bd3a4c13f2",
         "slug": "production",
         "name": "Production",
         "kind": "production",
@@ -192,11 +190,11 @@ Content-Type: `application/json`.
         "validationErrors": 0,
         "publishedVersion": 1,
         "hasUnpublishedChanges": false,
-        "updatedAt": "2026-10-28T21:24:03.06761Z"
+        "updatedAt": "2026-10-28T22:51:11.238124Z"
       },
       "deployment": {
         "status": "degraded",
-        "observedAt": "2026-10-28T21:24:03.14298Z",
+        "observedAt": "2026-10-28T22:51:11.349611Z",
         "stale": false,
         "source": "mock",
         "deployedVersion": 1,
@@ -207,7 +205,7 @@ Content-Type: `application/json`.
           "healthy": 0,
           "unhealthy": 0
         },
-        "lastActivityAt": "2026-10-28T21:24:03.128046Z",
+        "lastActivityAt": "2026-10-28T22:51:11.326744Z",
         "operation": null
       },
       "actions": {
@@ -234,7 +232,7 @@ Content-Type: `application/json`.
       }
     }
   ],
-  "observedAt": "2026-10-28T21:24:03.14298Z",
+  "observedAt": "2026-10-28T22:51:11.349611Z",
   "stale": false
 }
 ```
@@ -269,7 +267,7 @@ Creates an application in an environment, optionally with its first draft. Needs
 ```json
 {
   "name": "shop",
-  "environmentId": "276b703c-f198-472d-ae04-59bf969979dd",
+  "environmentId": "de3e069e-2e1c-419a-996a-63bd3a4c13f2",
   "description": "Storefront and order database",
   "icon": "cart"
 }
@@ -284,7 +282,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
-  --data-raw '{"name":"shop","environmentId":"276b703c-f198-472d-ae04-59bf969979dd","description":"Storefront and order database","icon":"cart"}'
+  --data-raw '{"name":"shop","environmentId":"de3e069e-2e1c-419a-996a-63bd3a4c13f2","description":"Storefront and order database","icon":"cart"}'
 ```
 
 **TypeScript:**
@@ -303,19 +301,19 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-28T21:24:03.017318Z",
-  "updatedAt": "2026-10-28T21:24:03.017318Z",
+  "createdAt": "2026-10-28T22:51:11.18079Z",
+  "updatedAt": "2026-10-28T22:51:11.18079Z",
   "description": "Storefront and order database",
   "icon": "cart",
   "project": {
-    "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
+    "id": "0e64d3ef-1020-41d9-a96e-821b3b45cf04",
     "slug": "shop",
     "name": "Online shop",
-    "organizationId": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
+    "organizationId": "8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6",
     "organizationSlug": "acme"
   },
   "environment": {
-    "id": "276b703c-f198-472d-ae04-59bf969979dd",
+    "id": "de3e069e-2e1c-419a-996a-63bd3a4c13f2",
     "slug": "production",
     "name": "Production",
     "kind": "production",
@@ -332,7 +330,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-28T21:24:03.02433Z",
+    "observedAt": "2026-10-28T22:51:11.191055Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -420,19 +418,19 @@ Content-Type: `application/json`.
   "application": {
     "name": "shop",
     "latestRevision": 1,
-    "createdAt": "2026-10-28T21:24:03.017318Z",
-    "updatedAt": "2026-10-28T21:24:03.06761Z",
+    "createdAt": "2026-10-28T22:51:11.18079Z",
+    "updatedAt": "2026-10-28T22:51:11.238124Z",
     "description": "Storefront, API and order database",
     "icon": "cart",
     "project": {
-      "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
+      "id": "0e64d3ef-1020-41d9-a96e-821b3b45cf04",
       "slug": "shop",
       "name": "Online shop",
-      "organizationId": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
+      "organizationId": "8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6",
       "organizationSlug": "acme"
     },
     "environment": {
-      "id": "276b703c-f198-472d-ae04-59bf969979dd",
+      "id": "de3e069e-2e1c-419a-996a-63bd3a4c13f2",
       "slug": "production",
       "name": "Production",
       "kind": "production",
@@ -445,11 +443,11 @@ Content-Type: `application/json`.
       "validationErrors": 0,
       "publishedVersion": 1,
       "hasUnpublishedChanges": false,
-      "updatedAt": "2026-10-28T21:24:03.06761Z"
+      "updatedAt": "2026-10-28T22:51:11.238124Z"
     },
     "deployment": {
       "status": "degraded",
-      "observedAt": "2026-10-28T21:24:03.1653Z",
+      "observedAt": "2026-10-28T22:51:11.384999Z",
       "stale": false,
       "source": "mock",
       "deployedVersion": 1,
@@ -460,7 +458,7 @@ Content-Type: `application/json`.
         "healthy": 0,
         "unhealthy": 0
       },
-      "lastActivityAt": "2026-10-28T21:24:03.128046Z",
+      "lastActivityAt": "2026-10-28T22:51:11.326744Z",
       "operation": null
     },
     "actions": {
@@ -507,7 +505,7 @@ Content-Type: `application/json`.
       "label": "First release",
       "draftVersion": 1,
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-28T21:24:03.087711Z"
+      "createdAt": "2026-10-28T22:51:11.263789Z"
     }
   ],
   "operations": []
@@ -578,19 +576,19 @@ Content-Type: `application/json`.
 {
   "name": "shop",
   "latestRevision": null,
-  "createdAt": "2026-10-28T21:24:03.017318Z",
-  "updatedAt": "2026-10-28T21:24:03.048096Z",
+  "createdAt": "2026-10-28T22:51:11.18079Z",
+  "updatedAt": "2026-10-28T22:51:11.217236Z",
   "description": "Storefront, API and order database",
   "icon": "cart",
   "project": {
-    "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
+    "id": "0e64d3ef-1020-41d9-a96e-821b3b45cf04",
     "slug": "shop",
     "name": "Online shop",
-    "organizationId": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
+    "organizationId": "8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6",
     "organizationSlug": "acme"
   },
   "environment": {
-    "id": "276b703c-f198-472d-ae04-59bf969979dd",
+    "id": "de3e069e-2e1c-419a-996a-63bd3a4c13f2",
     "slug": "production",
     "name": "Production",
     "kind": "production",
@@ -607,7 +605,7 @@ Content-Type: `application/json`.
   },
   "deployment": {
     "status": "not-deployed",
-    "observedAt": "2026-10-28T21:24:03.05469Z",
+    "observedAt": "2026-10-28T22:51:11.224302Z",
     "stale": false,
     "source": "mock",
     "deployedVersion": null,
@@ -932,7 +930,7 @@ Content-Type: `application/json`.
       "scopes": [
         {
           "kind": "project",
-          "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
+          "id": "0e64d3ef-1020-41d9-a96e-821b3b45cf04",
           "name": "Online shop",
           "dimensions": [
             {
@@ -959,13 +957,13 @@ Content-Type: `application/json`.
       "module": "web-01",
       "instance": "shop-web-01",
       "action": "create",
-      "jobId": "6e71ff9c-3a65-4bbb-bf0a-312ae83f1018"
+      "jobId": "0b6fecca-a00a-4620-88fb-82992f587565"
     },
     {
       "module": "db-01",
       "instance": "shop-db-01",
       "action": "create",
-      "jobId": "788123e8-0480-48f6-bac6-18ae2b975259"
+      "jobId": "b0c09c26-c3a1-45fb-bdc3-92523f7da6f8"
     }
   ],
   "networkJob": null
@@ -1034,7 +1032,7 @@ Content-Type: `application/json`.
   },
   "validationErrors": [],
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-28T21:24:03.06761Z"
+  "updatedAt": "2026-10-28T22:51:11.238124Z"
 }
 ```
 
@@ -1126,7 +1124,7 @@ Content-Type: `application/json`.
   },
   "validationErrors": [],
   "updatedBy": "token:docs-verifier",
-  "updatedAt": "2026-10-28T21:24:03.06761Z"
+  "updatedAt": "2026-10-28T22:51:11.238124Z"
 }
 ```
 
@@ -1179,7 +1177,7 @@ Content-Type: `application/json`.
   "items": [
     {
       "id": 77,
-      "at": "2026-10-28T21:24:03.128046Z",
+      "at": "2026-10-28T22:51:11.326744Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -1187,9 +1185,9 @@ Content-Type: `application/json`.
       "target": "shop-prod/shop",
       "outcome": "success",
       "scope": {
-        "application": "5a291a1e-9ece-4dc7-91af-ef01835cb68b",
-        "organization": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
-        "project": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a"
+        "application": "9c2b8220-029b-44ef-9ede-79269c0e316b",
+        "organization": "8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6",
+        "project": "0e64d3ef-1020-41d9-a96e-821b3b45cf04"
       },
       "detail": {
         "confirmedDisruption": false,
@@ -1200,7 +1198,7 @@ Content-Type: `application/json`.
         "rebuild": 0,
         "remove": 0,
         "replace": 0,
-        "requestId": "d43cdec6-0cea-4914-9276-d9276d913d38",
+        "requestId": "c9a36689-eb71-481b-b147-1eeb0d992182",
         "resize": 0,
         "revision": 1,
         "role": "fabric-admin"
@@ -1208,7 +1206,7 @@ Content-Type: `application/json`.
     },
     {
       "id": 76,
-      "at": "2026-10-28T21:24:03.087711Z",
+      "at": "2026-10-28T22:51:11.263789Z",
       "actor": "token:docs-verifier",
       "actorType": "token",
       "actorName": "docs-verifier",
@@ -1216,19 +1214,20 @@ Content-Type: `application/json`.
       "target": "shop",
       "outcome": "success",
       "scope": {
-        "application": "5a291a1e-9ece-4dc7-91af-ef01835cb68b",
-        "organization": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
-        "project": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a"
+        "application": "9c2b8220-029b-44ef-9ede-79269c0e316b",
+        "organization": "8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6",
+        "project": "0e64d3ef-1020-41d9-a96e-821b3b45cf04"
       },
       "detail": {
         "draftVersion": 1,
         "name": "docs-verifier",
-        "requestId": "62f71448-f8e4-4454-a46a-d674d9ad8ad3",
+        "requestId": "c44e594e-a71b-40a6-840f-3e5f7e157c0a",
         "revision": 1,
         "role": "fabric-admin"
       }
     }
-  ]
+  ],
+  "next": null
 }
 ```
 
@@ -1280,7 +1279,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:04.396874Z"
+    "observedAt": "2026-10-28T22:51:12.090113Z"
   },
   "target": "mock-member-02",
   "items": [
@@ -1442,11 +1441,11 @@ Content-Type: `application/json`.
 ```json
 {
   "operation": {
-    "id": "c8e66146-5c93-4a2b-9c83-4e33ca21be69",
+    "id": "97236714-2811-4ce3-89df-d3136f27778c",
     "kind": "stop",
     "state": "pending",
     "requestedBy": "token:docs-verifier",
-    "createdAt": "2026-10-28T21:24:05.744495Z",
+    "createdAt": "2026-10-28T22:51:13.373726Z",
     "startedAt": null,
     "finishedAt": null,
     "error": null,
@@ -1518,7 +1517,7 @@ One operation with the progress of each phase and instance. Needs `application.v
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/c8e66146-5c93-4a2b-9c83-4e33ca21be69" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operations/97236714-2811-4ce3-89df-d3136f27778c" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -1526,7 +1525,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/operatio
 **TypeScript:**
 
 ```ts
-const result = await client.request("application_operation", { params: { name: "shop", id: "c8e66146-5c93-4a2b-9c83-4e33ca21be69" } });
+const result = await client.request("application_operation", { params: { name: "shop", id: "97236714-2811-4ce3-89df-d3136f27778c" } });
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -1537,13 +1536,13 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "c8e66146-5c93-4a2b-9c83-4e33ca21be69",
+  "id": "97236714-2811-4ce3-89df-d3136f27778c",
   "kind": "stop",
   "state": "succeeded",
   "requestedBy": "token:docs-verifier",
-  "createdAt": "2026-10-28T21:24:05.744495Z",
-  "startedAt": "2026-10-28T21:24:05.768382Z",
-  "finishedAt": "2026-10-28T21:24:11.878457Z",
+  "createdAt": "2026-10-28T22:51:13.373726Z",
+  "startedAt": "2026-10-28T22:51:13.394273Z",
+  "finishedAt": "2026-10-28T22:51:19.461131Z",
   "error": null,
   "phases": [
     {
@@ -1802,7 +1801,7 @@ Content-Type: `application/json`.
     "scopes": [
       {
         "kind": "project",
-        "id": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a",
+        "id": "0e64d3ef-1020-41d9-a96e-821b3b45cf04",
         "name": "Online shop",
         "dimensions": [
           {
@@ -1924,7 +1923,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:04.423354Z"
+    "observedAt": "2026-10-28T22:51:12.109708Z"
   },
   "items": [
     {
@@ -1998,7 +1997,7 @@ Content-Type: `application/json`.
       "label": "First release",
       "draftVersion": 1,
       "createdBy": "token:docs-verifier",
-      "createdAt": "2026-10-28T21:24:03.087711Z"
+      "createdAt": "2026-10-28T22:51:11.263789Z"
     }
   ]
 }
@@ -2070,7 +2069,7 @@ Content-Type: `application/json`.
   "label": "First release",
   "draftVersion": 1,
   "createdBy": "token:docs-verifier",
-  "createdAt": "2026-10-28T21:24:03.087711Z"
+  "createdAt": "2026-10-28T22:51:11.263789Z"
 }
 ```
 
@@ -2185,7 +2184,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:04.444688Z"
+    "observedAt": "2026-10-28T22:51:12.128158Z"
   },
   "items": [
     {
@@ -2202,7 +2201,7 @@ Content-Type: `application/json`.
       "usedBy": [
         "shop-cache-01"
       ],
-      "createdAt": "2026-10-28T21:24:03.763397Z"
+      "createdAt": "2026-10-28T22:51:11.944694Z"
     },
     {
       "module": "db-01",
@@ -2218,7 +2217,7 @@ Content-Type: `application/json`.
       "usedBy": [
         "shop-db-01"
       ],
-      "createdAt": "2026-10-28T21:24:03.736406Z"
+      "createdAt": "2026-10-28T22:51:11.9279Z"
     }
   ]
 }
@@ -2305,34 +2304,21 @@ Deletes one of the application's volumes and its snapshots, for good. The volume
 |---|---|---|---|---|---|
 | `name` | path | string | yes | — | Application name |
 | `volume` | path | string | yes | — | The volume's Incus name |
-
-**Request body** (JSON):
-
-| Field | Type | Required | Meaning |
-|---|---|---|---|
-| `confirm` | string | yes | The volume's Incus name again, typed by the person deleting it. |
-
-```json
-{
-  "confirm": "shop-cache-01-cache"
-}
-```
+| `confirm` | query | string | yes | — | The volume's Incus name again, typed by the person deleting it. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-cache-01-cache" \
-  -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"shop-cache-01-cache"}'
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-cache-01-cache?confirm=shop-cache-01-cache" \
+  -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_application_volume", { params: { name: "shop", volume: "shop-cache-01-cache" }, body: { confirm: "shop-cache-01-cache" } });
+await client.request("delete_application_volume", { params: { name: "shop", volume: "shop-cache-01-cache" }, query: { confirm: "shop-cache-01-cache" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.
@@ -2387,7 +2373,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:05.689549Z"
+    "observedAt": "2026-10-28T22:51:13.335404Z"
   },
   "backupPool": "mock-local",
   "schedules": {
@@ -2406,21 +2392,21 @@ Content-Type: `application/json`.
   },
   "items": [
     {
-      "name": "shop-db-01-data-bk-20261028212404",
+      "name": "shop-db-01-data-bk-20261028225112",
       "pool": "mock-local",
       "member": "mock-member-02",
       "sizeMib": 20480,
-      "takenAt": "2026-10-28T21:24:04.534961Z",
+      "takenAt": "2026-10-28T22:51:12.200598Z",
       "scheduled": false,
       "beforeRestore": null,
       "present": true
     },
     {
-      "name": "shop-db-01-data-bk-20261028212405",
+      "name": "shop-db-01-data-bk-20261028225113",
       "pool": "mock-local",
       "member": "mock-member-02",
       "sizeMib": 20480,
-      "takenAt": "2026-10-28T21:24:05.654166Z",
+      "takenAt": "2026-10-28T22:51:13.315815Z",
       "scheduled": false,
       "beforeRestore": null,
       "present": true
@@ -2481,7 +2467,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "da1286c4-4e34-4b63-9c31-34a75c04b5ef",
+  "jobId": "e62191b3-e0f0-41c2-9599-e4e8fad7c1ad",
   "created": true
 }
 ```
@@ -2511,34 +2497,21 @@ Deletes one backup copy. The volume it was taken from is left as it is. The back
 | `name` | path | string | yes | — | Application name. |
 | `volume` | path | string | yes | — | The volume's Incus name. |
 | `backup` | path | string | yes | — | The backup's Incus name. |
-
-**Request body** (JSON):
-
-| Field | Type | Required | Meaning |
-|---|---|---|---|
-| `confirm` | string | yes | The backup's Incus name again, typed by the person deleting it. |
-
-```json
-{
-  "confirm": "shop-db-01-data-bk-20261028212405"
-}
-```
+| `confirm` | query | string | yes | — | The backup's Incus name again, typed by the person deleting it. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028212405" \
-  -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"shop-db-01-data-bk-20261028212405"}'
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028225113?confirm=shop-db-01-data-bk-20261028225113" \
+  -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028212405" }, body: { confirm: "shop-db-01-data-bk-20261028212405" } });
+await client.request("delete_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028225113" }, query: { confirm: "shop-db-01-data-bk-20261028225113" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.
@@ -2556,7 +2529,7 @@ await client.request("delete_volume_backup", { params: { name: "shop", volume: "
 | `502` | an `incus_…` code |
 | `503` | `database_not_configured` |
 
-### `GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore`
+### `GET /api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restoration`
 
 Dry run of restoring the volume from one of its backups: what is replaced (data written since the backup, the volume's snapshots), which instances must be stopped, where the safety backup goes, and the steps. Changes nothing. Needs `application.operate`.
 
@@ -2574,7 +2547,7 @@ Dry run of restoring the volume from one of its backups: what is replaced (data 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028212404/restore" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028225112/restoration" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2582,7 +2555,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 **With options** (`safetyBackup`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028212404/restore?safetyBackup=false" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028225112/restoration?safetyBackup=false" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -2590,7 +2563,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/applications/shop/volumes/
 **TypeScript:**
 
 ```ts
-const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028212404" }, query: { safetyBackup: false } });
+const result = await client.request("preview_volume_restore", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028225112" }, query: { safetyBackup: false } });
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -2603,19 +2576,19 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:05.700715Z"
+    "observedAt": "2026-10-28T22:51:13.342654Z"
   },
   "plan": {
     "volume": "shop-db-01-data",
     "pool": "mock-local",
     "member": "mock-member-01",
     "sizeMib": 20480,
-    "backup": "shop-db-01-data-bk-20261028212404",
+    "backup": "shop-db-01-data-bk-20261028225112",
     "backupPool": "mock-local",
     "backupMember": "mock-member-02",
-    "backupTakenAt": "2026-10-28T21:24:04.534961Z",
+    "backupTakenAt": "2026-10-28T22:51:12.200598Z",
     "snapshotsDeleted": [
-      "snap-20261028-212404"
+      "snap-20261028-225112"
     ],
     "usedBy": [
       "shop-db-01"
@@ -2629,7 +2602,7 @@ Content-Type: `application/json`.
     ],
     "steps": [
       "Copy the volume as it is now into pool mock-local (a safety backup, listed with the others)",
-      "Copy backup shop-db-01-data-bk-20261028212404 over volume shop-db-01-data on mock-member-01",
+      "Copy backup shop-db-01-data-bk-20261028225112 over volume shop-db-01-data on mock-member-01",
       "Incus deletes the volume's 1 snapshot while copying",
       "Leave shop-db-01 stopped: start it again once the data is checked"
     ]
@@ -2685,7 +2658,7 @@ This request can change state. Check permissions, prerequisites and any required
 ```sh
 # Generate once per distinct change; keep this value when retrying.
 IDEMPOTENCY_KEY=$(uuidgen)
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028212404/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/backups/shop-db-01-data-bk-20261028225112/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Idempotency-Key: $IDEMPOTENCY_KEY" \
@@ -2696,7 +2669,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes
 **TypeScript:**
 
 ```ts
-const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028212404" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
+const result = await client.request("restore_volume_backup", { params: { name: "shop", volume: "shop-db-01-data", backup: "shop-db-01-data-bk-20261028225112" }, body: { confirm: "shop-db-01-data", safetyBackup: true }, idempotencyKey: newIdempotencyKey() });
 ```
 
 **Response `202`** — Accepted: the work is queued; the response says how to follow it..
@@ -2707,7 +2680,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "jobId": "3b7dae79-b0d0-4bb5-8d05-5b814238ce09",
+  "jobId": "c6ed9663-6429-424e-9c20-de3ad3859ab6",
   "created": true
 }
 ```
@@ -2830,7 +2803,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:04.466848Z"
+    "observedAt": "2026-10-28T22:51:12.144285Z"
   },
   "items": []
 }
@@ -2885,7 +2858,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "name": "snap-20261028-212404",
+  "name": "snap-20261028-225112",
   "consistency": "crash-consistent"
 }
 ```
@@ -2922,14 +2895,14 @@ Deletes one snapshot of the volume. Needs `application.delete`; audited.
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261028-212404" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261028-225112" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261028-212404" } });
+await client.request("delete_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261028-225112" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.
@@ -2968,7 +2941,7 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 
 ```json
 {
-  "confirm": "snap-20261028-212404"
+  "confirm": "snap-20261028-225112"
 }
 ```
 
@@ -2977,16 +2950,16 @@ Puts the volume back to a snapshot: everything written since is lost. The snapsh
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261028-212404/restore" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/applications/shop/volumes/shop-db-01-data/snapshots/snap-20261028-225112/restore" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"snap-20261028-212404"}'
+  --data-raw '{"confirm":"snap-20261028-225112"}'
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("restore_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261028-212404" }, body: { confirm: "snap-20261028-212404" } });
+await client.request("restore_volume_snapshot", { params: { name: "shop", volume: "shop-db-01-data", snapshot: "snap-20261028-225112" }, body: { confirm: "snap-20261028-225112" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.
@@ -3002,174 +2975,5 @@ await client.request("restore_volume_snapshot", { params: { name: "shop", volume
 | `409` | `approval_invalid`, `approval_required`, `volume_in_use`, `volume_missing` |
 | `429` | `rate_limited` |
 | `502` | an `incus_…` code |
-| `503` | `database_not_configured` |
-
-### `GET /api/v1/networks/applications`
-
-Each application the caller may view that has a recorded deployment: its network, the rules compiled from its design, its service and published addresses, and what Incus holds for each, with the differences. Read-only. Needs `application.view` on each application.
-
-**Operation ID:** `application_networks`
-
-**Needs:** `application.view` on each application.
-
-**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
-
-```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/networks/applications" \
-  -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Accept: application/json"
-```
-
-**TypeScript:**
-
-```ts
-const result = await client.request("application_networks", {});
-```
-
-**Response `200`** — Done; the response holds the result..
-
-Content-Type: `application/json`.
-
-**Example response** from a test installation; your IDs, names and times differ.
-
-```json
-{
-  "source": {
-    "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.367566Z"
-  },
-  "incusError": null,
-  "items": [
-    {
-      "application": "shop",
-      "project": "shop-prod",
-      "revision": 1,
-      "enforced": false,
-      "network": "shop",
-      "uplink": null,
-      "serviceRange": null,
-      "networkObserved": null,
-      "connections": [
-        {
-          "from": "web-01",
-          "to": "db-01",
-          "transport": "tcp",
-          "port": 5432
-        },
-        {
-          "from": "web-01",
-          "to": "cache-01",
-          "transport": "tcp",
-          "port": 6379
-        }
-      ],
-      "published": [],
-      "modules": [],
-      "services": [],
-      "drift": []
-    }
-  ]
-}
-```
-
-**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
-
-| Status | Codes |
-|---|---|
-| `401` | `unauthenticated`, `invalid_token` |
-| `403` | `forbidden`, `mfa_required` |
-| `429` | `rate_limited` |
-| `503` | `database_not_configured` |
-
-### `GET /api/v1/storage/volumes`
-
-Every application volume the caller may see, with what Incus reports, its schedules and how many backups it has. Read-only. Needs `application.view` on each application.
-
-**Operation ID:** `storage_volumes`
-
-**Needs:** `application.view` on each application.
-
-**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
-
-```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/storage/volumes" \
-  -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Accept: application/json"
-```
-
-**TypeScript:**
-
-```ts
-const result = await client.request("storage_volumes", {});
-```
-
-**Response `200`** — Done; the response holds the result..
-
-Content-Type: `application/json`.
-
-**Example response** from a test installation; your IDs, names and times differ.
-
-```json
-{
-  "source": {
-    "provider": "mock",
-    "observedAt": "2026-10-28T21:24:04.457612Z"
-  },
-  "backupPool": "mock-local",
-  "incusError": null,
-  "items": [
-    {
-      "application": "shop",
-      "module": "cache-01",
-      "instance": "shop-cache-01",
-      "name": "cache",
-      "incusName": "shop-cache-01-cache",
-      "pool": "mock-local",
-      "member": "mock-member-01",
-      "sizeMib": 2048,
-      "class": "data-local",
-      "state": "attached",
-      "usedBy": [
-        "shop-cache-01"
-      ],
-      "schedules": {
-        "snapshots": null,
-        "backups": null
-      },
-      "backups": 0,
-      "lastBackupAt": null
-    },
-    {
-      "application": "shop",
-      "module": "db-01",
-      "instance": "shop-db-01",
-      "name": "data",
-      "incusName": "shop-db-01-data",
-      "pool": "mock-local",
-      "member": "mock-member-01",
-      "sizeMib": 10240,
-      "class": "data-local",
-      "state": "attached",
-      "usedBy": [
-        "shop-db-01"
-      ],
-      "schedules": {
-        "snapshots": null,
-        "backups": null
-      },
-      "backups": 0,
-      "lastBackupAt": null
-    }
-  ]
-}
-```
-
-**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
-
-| Status | Codes |
-|---|---|
-| `401` | `unauthenticated`, `invalid_token` |
-| `403` | `forbidden`, `mfa_required` |
-| `429` | `rate_limited` |
 | `503` | `database_not_configured` |
 

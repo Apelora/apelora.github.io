@@ -80,6 +80,8 @@ export function apiPages(api, tagInfo = {}, verified = {}, options = {}) {
 
   function stringExample(s, name) {
     const n = name.toLowerCase();
+    // A paging cursor: the `next` a previous page answered.
+    if (n === "after") return "41";
     if (s.format === "uuid" || /(^|[^a-z])id$/.test(n) && n.length > 2) return "00000000-0000-4000-8000-000000000001";
     if (s.format === "date-time" || /(at|time)$/.test(n)) return "2026-01-01T09:00:00Z";
     if (s.format === "uri" || /url$/.test(n)) return "https://example.org";
@@ -299,9 +301,7 @@ export function apiPages(api, tagInfo = {}, verified = {}, options = {}) {
       const media = isExport ? (withOptions?.mediaType ?? "text/csv") : mediaTypes[0] ?? null;
       const headerLines = headers.map((h) => `${h.name}: ${h.name === "Apelora-Approval" ? "$APPROVAL_ID" : "<value>"}`);
       md += `**With options** (${names.map(code).join(", ")}):\n\n${command(media, address, headerLines, withOptions?.requestBody ?? bodyExample)}`;
-      const paging = queryParams.find((p) => p.name === "after") ? "after" : queryParams.find((p) => p.name === "before") && !isExport ? "before" : null;
-      if (paging === "after") md += "**Next page:** repeat the request with `after` set to the response's `next`. The last page has no `next`.\n\n";
-      if (paging === "before") md += "**Next page:** repeat the request with `before` set to the `id` of the last item. A page shorter than `limit` is the last one.\n\n";
+      if (queryParams.find((p) => p.name === "after") && !isExport) md += "**Next page:** repeat the request with `after` set to the response's `next`. The last page has no `next`.\n\n";
     }
 
     // One line with the generated TypeScript client.

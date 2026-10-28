@@ -63,16 +63,14 @@ PLACEHOLDERS = {
     "password": "<password>",
     "current": "<current password>",
     "new": "<new password>",
-    # The product's own test record (evidence label and date): not reader material.
-    "incusTestedWith": "<how this release was tested with Incus>",
 }
 # Values that only say where this run happened (temporary directories), with what the pages show.
 LOCAL = {}
 # Why an operation keeps placeholder output: for the maintainers (README), never on reader pages.
 UNAVAILABLE = {
-    "terminate_session": "ends a connected session; the recorder opens one but does not connect a terminal to it (404 not_found)",
+    "end_remote_session": "ends a connected session; the recorder opens one but does not connect a terminal to it (404 not_found)",
     "remove_member": "needs a member without instances; the mock keeps a member's instances on it when it is evacuated (409 removal_blocked)",
-    "cluster_upgrade": "needs members that report their Incus release, a real cluster (409 upgrade_blocked)",
+    "upgrade_cluster": "needs members that report their Incus release, a real cluster (409 upgrade_blocked)",
     "confirm_fenced": "needs a failed member and fencing evidence, a real cluster (409 member_not_offline)",
     "check_identity_provider": "needs a reachable OpenID Connect provider",
     "maas_commission": "needs a MAAS server (503 provisioner_not_configured)",
@@ -109,7 +107,7 @@ def remember_secrets(value):
     """Collect credentials from a response so that a later scrub can never miss one."""
     if isinstance(value, dict):
         for key, item in value.items():
-            if key in PLACEHOLDERS and key != "incusTestedWith" and isinstance(item, str) and item:
+            if key in PLACEHOLDERS and isinstance(item, str) and item:
                 SECRETS.add(item)
             remember_secrets(item)
     elif isinstance(value, list):
@@ -360,12 +358,12 @@ def scenario(api, start_worker):
         nonlocal org, project, production, staging
         org = call("create_organization", body={"slug": "acme", "name": "Acme Corporation"}, expect=201)
         project = call("create_project", params={"org": org["id"]}, body={"slug": "shop", "name": "Online shop"}, expect=201)
-        production = call("create_environment", params={"project": project["id"]}, body={"slug": "production", "name": "Production", "kind": "production", "incusProject": "shop-prod"}, expect=201)
-        staging = call("create_environment", params={"project": project["id"]}, body={"slug": "staging", "name": "Staging", "kind": "staging"}, expect=201, record=False)
-        call("environments", params={"project": project["id"]}, expect=200)
+        production = call("create_environment", params={"projectId": project["id"]}, body={"slug": "production", "name": "Production", "kind": "production", "incusProject": "shop-prod"}, expect=201)
+        staging = call("create_environment", params={"projectId": project["id"]}, body={"slug": "staging", "name": "Staging", "kind": "staging"}, expect=201, record=False)
+        call("environments", params={"projectId": project["id"]}, expect=200)
         call("organizations", expect=200)
-        call("projects_list", expect=200)
-        call("projects_list", query={"organization": org["id"]}, variant="options", expect=200)
+        call("projects", expect=200)
+        call("projects", query={"organization": org["id"]}, variant="options", expect=200)
         call("prepare_incus_project", params={"id": production["id"]}, expect=200)
         call("set_quota", params={"scope": "project", "id": project["id"]}, body={"cpu": 16, "memoryGib": 64, "diskGib": 500, "instances": 20}, expect=200)
         call("quota", params={"scope": "project", "id": project["id"]}, expect=200)
@@ -472,18 +470,18 @@ def scenario(api, start_worker):
             call("update_identity_provider", params={"id": provider["id"]}, body={"name": "Company sign-in", "issuer": "https://login.example.invalid/realms/acme",
                                                                                   "audiences": ["apelora"], "clientId": "apelora-console", "scopes": ["openid", "profile", "email", "groups"],
                                                                                   "groupsClaim": "groups", "enabled": False}, expect=200)
-            call("delete_identity_provider", params={"id": provider["id"]}, body={"confirm": "Company sign-in"}, expect=204)
+            call("delete_identity_provider", params={"id": provider["id"]}, query={"confirm": "Company sign-in"}, expect=204)
         directory_body = {"name": "Head office directory", "url": "ldaps://ldap.example.invalid", "bindTemplate": "uid={username},ou=people,dc=acme,dc=example",
                           "baseDn": "dc=acme,dc=example", "groupBaseDn": "ou=groups,dc=acme,dc=example", "enabled": False}
         directory = call("create_directory", body=directory_body, expect=201)
-        call("list_directories", expect=200)
+        call("directories", expect=200)
         if directory and directory.get("id"):
             call("update_directory", params={"id": directory["id"]}, body={**directory_body, "startTls": False, "emailAttribute": "mail"}, expect=200)
             # A group whose members come from this directory: named by its full DN there.
             mapped = call("create_group", body={"name": "head-office-admins", "description": "Administrators from the head office directory"}, record=False, expect=201)
             call("set_group_external", params={"group": mapped["id"]},
                  body={"source": f"directory:{directory['id']}", "name": "cn=admins,ou=groups,dc=acme,dc=example"}, expect=200)
-            call("delete_directory", params={"id": directory["id"]}, body={"confirm": "Head office directory"}, expect=204)
+            call("delete_directory", params={"id": directory["id"]}, query={"confirm": "Head office directory"}, expect=204)
 
     @section
     def s06_approvals():
@@ -491,12 +489,12 @@ def scenario(api, start_worker):
         nonlocal admin_token
         pending = call("request_approval", body={"action": "hardware.delete", "target": "machine:rack1-07", "reason": "Retire the old storage server"}, expect=201)
         call("approvals", expect=200)
-        call("reject_request", token="ada", params={"id": pending["id"]}, expect=200)
+        call("reject_approval", token="ada", params={"id": pending["id"]}, expect=200)
         withdrawn = call("request_approval", body={"action": "hardware.delete", "target": "machine:rack1-08", "reason": "Retire the spare server"}, record=False, expect=201)
-        call("cancel_request", params={"id": withdrawn["id"]}, expect=200)
+        call("cancel_approval", params={"id": withdrawn["id"]}, expect=200)
         # A fabric-admin token needs a second person: Grace asks, Ada approves, Grace uses it.
         admin_token = call("request_approval", token="grace", body={"action": "token.create_admin", "target": "token:fabric-admin", "reason": "A second administrator token for the backup site"}, record=False, expect=201)
-        call("approve_request", token="ada", params={"id": admin_token["id"]}, expect=200)
+        call("approve_approval", token="ada", params={"id": admin_token["id"]}, expect=200)
 
     @section
     def s07_api_tokens():
@@ -572,11 +570,11 @@ def scenario(api, start_worker):
         # missing its identity and nothing is contacted (the address is in .invalid as well).
         call("add_sector", body={"name": "site-b", "site": "rotterdam", "url": "https://incus.site-b.example.invalid:8443", "credentials": "SITE_B"}, expect=201)
         call("sectors", expect=200)
-        call("remove_sector", params={"name": "site-b"}, body={"confirm": "site-b"}, expect=204)
+        call("remove_sector", params={"name": "site-b"}, query={"confirm": "site-b"}, expect=204)
         # The fixture cluster does not report its members' Incus releases, so an upgrade cannot start.
-        call("cluster_upgrade", body={"action": "start", "confirm": "upgrade"}, expect=409)
+        call("upgrade_cluster", body={"action": "start", "confirm": "upgrade"}, expect=409)
         joined = call("create_join_token", body={"memberName": "rack2-01"}, expect=201)
-        call("list_join_tokens", expect=200)
+        call("join_tokens", expect=200)
         call("revoke_join_token", params={"member": "rack2-01"}, expect=204)
         call("change_cluster_settings", body={"changes": {"cluster.join_token_expiry": "3H"}, "dryRun": True}, expect=200)
         call("change_cluster_settings", body={"changes": {"cluster.join_token_expiry": "3H"}, "dryRun": False}, record=False, expect=200)
@@ -588,7 +586,7 @@ def scenario(api, start_worker):
         """machines (enrolment)"""
         call("register_machine", body={"name": "rack2-01", "description": "Second rack, slot 1", "provider": "manual"}, expect=201)
         call("register_machine", body={"name": "mock-member-03", "description": "First rack, slot 3", "provider": "manual"}, record=False, expect=201)
-        call("machine_admission", params={"name": "mock-member-03"}, expect=200)
+        call("preview_machine_admission", params={"name": "mock-member-03"}, expect=200)
         call("admit_machine", params={"name": "mock-member-03"}, expect=200)
         call("approve_machine", params={"name": "rack2-01"}, expect=201)
         call("withdraw_machine_approval", params={"name": "rack2-01"}, expect=204)
@@ -659,13 +657,13 @@ def scenario(api, start_worker):
         # Restoring a backup replaces the volume, its snapshots with it.
         restoring = call("restore_volume_backup", params={"name": "shop", "volume": v, "backup": kept}, body={"confirm": v, "safetyBackup": True}, headers=idem(), expect=202)
         wait_for(lambda: api.call("job", params={"id": restoring["jobId"]}, record=False, quiet=True)["status"] in {"succeeded", "failed"}, 90)
-        call("delete_volume_backup", params={"name": "shop", "volume": v, "backup": removed}, body={"confirm": removed}, expect=204)
+        call("delete_volume_backup", params={"name": "shop", "volume": v, "backup": removed}, query={"confirm": removed}, expect=204)
         operate("start", record=False)
         # A volume is deleted only once no instance uses it: the cache module's instance goes first.
-        call("delete_application_volume", params={"name": "shop", "volume": spare}, body={"confirm": spare}, record=False, expect=409, error_example=True)
+        call("delete_application_volume", params={"name": "shop", "volume": spare}, query={"confirm": spare}, record=False, expect=409, error_example=True)
         gone = call("delete_instance", params={"project": "shop-prod", "name": "shop-cache-01"}, headers=idem(), record=False, expect=202)
         wait_for(lambda: api.call("job", params={"id": gone["jobId"]}, record=False, quiet=True)["status"] in {"succeeded", "failed"}, 60)
-        call("delete_application_volume", params={"name": "shop", "volume": spare}, body={"confirm": spare}, expect=204)
+        call("delete_application_volume", params={"name": "shop", "volume": spare}, query={"confirm": spare}, expect=204)
         # Moving a module Apelora created to another member, with a short stop.
         call("preview_instance_move", params={"project": "shop-prod", "name": "shop-web-01"}, query={"target": "mock-member-03", "allowStop": True}, record=False, expect=200)
         call("move_instance", params={"project": "shop-prod", "name": "shop-web-01"}, body={"target": "mock-member-03", "confirm": "shop-web-01", "allowStop": True}, headers=idem(), expect=202)
@@ -675,7 +673,7 @@ def scenario(api, start_worker):
         call("alerts", expect=200)
         history = call("alert_history", expect=200)
         if history and history["items"]:
-            call("alert_history", query={"limit": 1, "before": history["items"][0]["id"] + 1}, variant="options", expect=200)
+            call("alert_history", query={"limit": 1, "after": str(history["items"][0]["id"] + 1)}, variant="options", expect=200)
         if alert:
             call("acknowledge_alert", params={"id": alert["id"]}, body={"note": "Looking into the failed job"}, expect=200)
         call("delete_alert_channel", params={"id": channel["id"]}, expect=204)
@@ -685,14 +683,14 @@ def scenario(api, start_worker):
     def s15_sessions_into_modules():
         """sessions into modules"""
         call("application_access", params={"name": "shop"}, expect=200)
-        call("sessions", expect=200)
+        call("remote_sessions", expect=200)
         # A terminal into a production module needs another person's approval: Ada asks, Grace approves.
         asked = call("request_approval", token="ada", body={"action": "instance.console", "target": "instance:shop/shop-db-01", "reason": "Check the order database's disk use"}, record=False, expect=201)
-        call("approve_request", token="grace", params={"id": asked["id"]}, record=False, expect=200)
-        opened = call("open_session", token="ada", params={"name": "shop", "instance": "shop-db-01"}, body={"kind": "terminal", "cols": 120, "rows": 32},
+        call("approve_approval", token="grace", params={"id": asked["id"]}, record=False, expect=200)
+        opened = call("open_remote_session", token="ada", params={"name": "shop", "instance": "shop-db-01"}, body={"kind": "terminal", "cols": 120, "rows": 32},
                       headers={"apelora-approval": asked["id"]}, expect=201)
         # Only a connected session can be ended: this one was opened, never connected.
-        call("terminate_session", token="ada", params={"id": opened["id"]}, expect=404)
+        call("end_remote_session", token="ada", params={"id": opened["id"]}, expect=404)
         call("application_operation", params={"name": "shop", "id": str(uuid.uuid4())}, expect=404)
 
     @section
@@ -721,7 +719,7 @@ def scenario(api, start_worker):
         call("check_directory", body={"settings": {"name": "Head office directory", "url": "ldaps://ldap.example.invalid", "bindTemplate": "uid={username},ou=people,dc=acme,dc=example"},
                                       "username": "ada", "password": "<password>"}, expect=(200, 400, 502))
         for action, extra in (("commission", {}), ("deploy", {"distroSeries": "noble", "userData": ""}), ("release", {"eraseDisks": True}), ("test", {"scripts": ["smartctl-validate"]})):
-            call(f"maas_{action}", params={"system_id": "4y3h7n"}, body={"confirm": "rack3-04", **extra}, expect=503)
+            call(f"maas_{action}", params={"systemId": "4y3h7n"}, body={"confirm": "rack3-04", **extra}, expect=503)
 
     @section
     def s19_member_removal():

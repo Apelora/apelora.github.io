@@ -97,15 +97,15 @@ test("optional query parameters get a second request, defaults, allowed values a
   const parameters = [
     { name: "status", in: "query", schema: { type: "string", enum: ["pending", "failed"] }, description: "Only jobs in this state." },
     { name: "limit", in: "query", schema: { type: "integer" }, description: "Jobs per page, 1 to 200 (default 100)." },
-    { name: "before", in: "query", schema: { type: "integer" }, description: "Paging: the id of the last item." },
+    { name: "after", in: "query", schema: { type: "string" }, description: "Paging: the `next` of the previous page." },
   ];
   const md = page({ parameters });
   assert.match(md, /\| `status` \| query \| one of `pending`, `failed` \| no \| — \|/);
   assert.match(md, /\| `limit` \| query \| integer \| no \| `100` \|/);
-  assert.match(md, /\*\*With options\*\* \(`status`, `limit`, `before`\)/);
-  assert.match(md, /things\?status=pending&limit=1&before=1"/);
-  assert.match(md, /\*\*Next page:\*\* repeat the request with `before`/);
-  assert.match(md, /```ts\nconst result = await client\.request\("things", \{ query: \{ status: "pending", limit: 1, before: 1 \} \}\);\n```/);
+  assert.match(md, /\*\*With options\*\* \(`status`, `limit`, `after`\)/);
+  assert.match(md, /things\?status=pending&limit=1&after=41"/);
+  assert.match(md, /\*\*Next page:\*\* repeat the request with `after` set to the response's `next`/);
+  assert.match(md, /```ts\nconst result = await client\.request\("things", \{ query: \{ status: "pending", limit: 1, after: "41" \} \}\);\n```/);
   // A recorded call with options supplies its real values.
   const verified = { responses: [{ operationId: "things", variant: "options", status: 200, mediaType: "application/json", path: "/api/v1/things?status=failed", query: { status: "failed" }, body: { ok: true } }] };
   const recorded = apiPages(document({ parameters }), {}, verified)[0].md;

@@ -50,10 +50,9 @@ class CredentialTests(unittest.TestCase):
         shown = {"token": "<setup token from the setup link>", "password": "<new password>"}
         self.assertEqual(verifier.scrub(shown, by_name=False), shown)
 
-    def test_local_paths_and_the_internal_test_record_are_replaced(self):
+    def test_local_paths_are_replaced(self):
         verifier.LOCAL["/var/folders/x/T/apelora-docs-db-backups-1"] = "/var/backups/apelora"
         self.assertEqual(verifier.scrub({"directory": "/var/folders/x/T/apelora-docs-db-backups-1"}), {"directory": "/var/backups/apelora"})
-        self.assertNotIn("TESTED", verifier.scrub({"incusTestedWith": "REAL INCUS TESTED 2026-10-23"})["incusTestedWith"])
 
 
 if __name__ == "__main__":

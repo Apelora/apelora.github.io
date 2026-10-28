@@ -38,10 +38,10 @@ Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/as
 | [`DELETE /api/v1/machines/{name}/approval`](#delete-apiv1machinesnameapproval) | Withdraws an approval: revokes the machine's unused join token. |
 | [`POST /api/v1/machines/{name}/approve`](#post-apiv1machinesnameapprove) | Approves a machine: asks Incus for its single-use join token, returned only in this response with the command to run on the server. |
 | [`GET /api/v1/provisioners/maas/machines`](#get-apiv1provisionersmaasmachines) | The machines MAAS manages, with the Apelora machine and Incus member each became. |
-| [`POST /api/v1/provisioners/maas/machines/{system_id}/commission`](#post-apiv1provisionersmaasmachinessystem_idcommission) | Starts commissioning. |
-| [`POST /api/v1/provisioners/maas/machines/{system_id}/deploy`](#post-apiv1provisionersmaasmachinessystem_iddeploy) | Installs an operating system. |
-| [`POST /api/v1/provisioners/maas/machines/{system_id}/release`](#post-apiv1provisionersmaasmachinessystem_idrelease) | Returns the machine to MAAS's pool. |
-| [`POST /api/v1/provisioners/maas/machines/{system_id}/test`](#post-apiv1provisionersmaasmachinessystem_idtest) | Starts a hardware test run (burn-in) through MAAS. |
+| [`POST /api/v1/provisioners/maas/machines/{systemId}/commission`](#post-apiv1provisionersmaasmachinessystemidcommission) | Starts commissioning. |
+| [`POST /api/v1/provisioners/maas/machines/{systemId}/deploy`](#post-apiv1provisionersmaasmachinessystemiddeploy) | Installs an operating system. |
+| [`POST /api/v1/provisioners/maas/machines/{systemId}/release`](#post-apiv1provisionersmaasmachinessystemidrelease) | Returns the machine to MAAS's pool. |
+| [`POST /api/v1/provisioners/maas/machines/{systemId}/test`](#post-apiv1provisionersmaasmachinessystemidtest) | Starts a hardware test run (burn-in) through MAAS. |
 | [`GET /api/v1/sectors`](#get-apiv1sectors) | The sectors this control plane knows and whether each answers. |
 | [`POST /api/v1/sectors`](#post-apiv1sectors) | Registers another Incus cluster as a sector. |
 | [`DELETE /api/v1/sectors/{name}`](#delete-apiv1sectorsname) | Forgets a registered sector. |
@@ -80,7 +80,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.138754Z"
+    "observedAt": "2026-10-28T22:51:27.76983Z"
   },
   "items": [
     {
@@ -109,7 +109,7 @@ Content-Type: `application/json`.
 
 Join tokens waiting to be used (no secrets). Needs `manage-infrastructure`.
 
-**Operation ID:** `list_join_tokens`
+**Operation ID:** `join_tokens`
 
 **Needs:** `manage-infrastructure`.
 
@@ -124,7 +124,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/cluster/join-tokens" \
 **TypeScript:**
 
 ```ts
-const result = await client.request("list_join_tokens", {});
+const result = await client.request("join_tokens", {});
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -137,12 +137,12 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.380832Z"
+    "observedAt": "2026-10-28T22:51:11.601774Z"
   },
   "items": [
     {
       "memberName": "rack2-01",
-      "expiresAt": "2026-10-28T22:24:03.375925Z"
+      "expiresAt": "2026-10-28T23:51:11.597173Z"
     }
   ]
 }
@@ -205,7 +205,7 @@ Content-Type: `application/json`.
 ```json
 {
   "memberName": "rack2-01",
-  "expiresAt": "2026-10-28T22:24:03.375925Z",
+  "expiresAt": "2026-10-28T23:51:11.597173Z",
   "token": "<token, shown once>",
   "warnings": []
 }
@@ -296,7 +296,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.313107Z"
+    "observedAt": "2026-10-28T22:51:11.549663Z"
   },
   "clustered": true,
   "members": [
@@ -521,7 +521,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.321599Z"
+    "observedAt": "2026-10-28T22:51:11.556003Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -709,7 +709,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.34092Z"
+    "observedAt": "2026-10-28T22:51:11.573251Z"
   },
   "plan": {
     "member": "mock-member-03",
@@ -902,7 +902,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.400079Z"
+    "observedAt": "2026-10-28T22:51:11.62759Z"
   },
   "items": []
 }
@@ -949,7 +949,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.397009Z"
+    "observedAt": "2026-10-28T22:51:11.624809Z"
   },
   "identity": "admin",
   "items": [
@@ -1066,7 +1066,7 @@ Content-Type: `application/json`.
 
 One step of the rolling upgrade. Apelora evacuates and restores. It does not install Incus: `upgraded` records that the package was upgraded on the server. Needs `cluster.evacuate`.
 
-**Operation ID:** `cluster_upgrade`
+**Operation ID:** `upgrade_cluster`
 
 **Needs:** `cluster.evacuate`.
 
@@ -1100,7 +1100,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/cluster/upgrade" \
 **TypeScript:**
 
 ```ts
-const result = await client.request("cluster_upgrade", { body: { action: "start", confirm: "upgrade" } });
+const result = await client.request("upgrade_cluster", { body: { action: "start", confirm: "upgrade" } });
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -1156,7 +1156,7 @@ Content-Type: `application/json`.
 
 Machines being enrolled, with their state derived from Incus. Needs `manage-infrastructure`.
 
-**Operation ID:** `list_machines`
+**Operation ID:** `machines`
 
 **Needs:** `manage-infrastructure`.
 
@@ -1171,7 +1171,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/machines" \
 **TypeScript:**
 
 ```ts
-const result = await client.request("list_machines", {});
+const result = await client.request("machines", {});
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -1184,7 +1184,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.340661Z"
+    "observedAt": "2026-10-28T22:51:28.020053Z"
   },
   "items": [
     {
@@ -1203,12 +1203,12 @@ Content-Type: `application/json`.
       "nextStep": "None.",
       "warnings": [],
       "registeredBy": "token:docs-verifier",
-      "registeredAt": "2026-10-28T21:24:03.412827Z",
+      "registeredAt": "2026-10-28T22:51:11.640555Z",
       "approvedBy": null,
       "approvedAt": null,
       "approvalExpiresAt": null,
       "admittedBy": "token:docs-verifier",
-      "admittedAt": "2026-10-28T21:24:03.427874Z"
+      "admittedAt": "2026-10-28T22:51:11.656473Z"
     }
   ]
 }
@@ -1290,7 +1290,7 @@ Content-Type: `application/json`.
   "nextStep": "Install Incus on the server, then approve it.",
   "warnings": [],
   "registeredBy": "token:docs-verifier",
-  "registeredAt": "2026-10-28T21:24:03.40355Z",
+  "registeredAt": "2026-10-28T22:51:11.630727Z",
   "approvedBy": null,
   "approvedAt": null,
   "approvalExpiresAt": null,
@@ -1357,7 +1357,7 @@ await client.request("remove_machine", { params: { name: "rack2-01" } });
 
 The admission checks for a joined machine (dry run; changes nothing). Needs `manage-infrastructure`.
 
-**Operation ID:** `machine_admission`
+**Operation ID:** `preview_machine_admission`
 
 **Needs:** `manage-infrastructure`.
 
@@ -1376,7 +1376,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/machines/mock-member-03/ad
 **TypeScript:**
 
 ```ts
-const result = await client.request("machine_admission", { params: { name: "mock-member-03" } });
+const result = await client.request("preview_machine_admission", { params: { name: "mock-member-03" } });
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -1389,7 +1389,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.422845Z"
+    "observedAt": "2026-10-28T22:51:11.650996Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1461,7 +1461,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.427213Z"
+    "observedAt": "2026-10-28T22:51:11.655993Z"
   },
   "name": "mock-member-03",
   "admissible": true,
@@ -1573,7 +1573,7 @@ Content-Type: `application/json`.
 ```json
 {
   "name": "rack2-01",
-  "expiresAt": "2026-10-28T22:24:03.438768Z",
+  "expiresAt": "2026-10-28T23:51:11.667831Z",
   "token": "<token, shown once>",
   "enrolCommand": "sudo bash scripts/enrol/enrol-member.sh --name rack2-01 --address <this server's cluster address> --pool-size <size of the local loop pool, such as 20GiB>",
   "warnings": []
@@ -1625,7 +1625,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.386293Z"
+    "observedAt": "2026-10-28T22:51:28.072835Z"
   },
   "configured": false,
   "items": []
@@ -1642,7 +1642,7 @@ Content-Type: `application/json`.
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `database_not_configured`, `store_unavailable` |
 
-### `POST /api/v1/provisioners/maas/machines/{system_id}/commission`
+### `POST /api/v1/provisioners/maas/machines/{systemId}/commission`
 
 Starts commissioning. Needs `hardware.commission` and the hostname typed again. The cloud-init of a later deploy is not part of this. Audited; MAAS is asked first.
 
@@ -1652,7 +1652,7 @@ Starts commissioning. Needs `hardware.commission` and the hostname typed again. 
 
 | Parameter | In | Type | Required | Default | Meaning |
 |---|---|---|---|---|---|
-| `system_id` | path | string | yes | — | MAAS system id |
+| `systemId` | path | string | yes | — | MAAS system id |
 
 **Request body** (JSON):
 
@@ -1681,7 +1681,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 **TypeScript:**
 
 ```ts
-const result = await client.request("maas_commission", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04" } });
+const result = await client.request("maas_commission", { params: { systemId: "4y3h7n" }, body: { confirm: "rack3-04" } });
 ```
 
 **Response `202`** — Accepted: the work is queued; the response says how to follow it..
@@ -1711,7 +1711,7 @@ Content-Type: `application/json`.
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 
-### `POST /api/v1/provisioners/maas/machines/{system_id}/deploy`
+### `POST /api/v1/provisioners/maas/machines/{systemId}/deploy`
 
 Installs an operating system. Needs `hardware.deploy` and the hostname typed again. `userData` is sent to MAAS and is not stored or written to the audit log. Audited.
 
@@ -1721,7 +1721,7 @@ Installs an operating system. Needs `hardware.deploy` and the hostname typed aga
 
 | Parameter | In | Type | Required | Default | Meaning |
 |---|---|---|---|---|---|
-| `system_id` | path | string | yes | — | MAAS system id |
+| `systemId` | path | string | yes | — | MAAS system id |
 
 **Request body** (JSON):
 
@@ -1754,7 +1754,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 **TypeScript:**
 
 ```ts
-const result = await client.request("maas_deploy", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04", distroSeries: "noble", userData: "" } });
+const result = await client.request("maas_deploy", { params: { systemId: "4y3h7n" }, body: { confirm: "rack3-04", distroSeries: "noble", userData: "" } });
 ```
 
 **Response `202`** — Accepted: the work is queued; the response says how to follow it..
@@ -1784,7 +1784,7 @@ Content-Type: `application/json`.
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 
-### `POST /api/v1/provisioners/maas/machines/{system_id}/release`
+### `POST /api/v1/provisioners/maas/machines/{systemId}/release`
 
 Returns the machine to MAAS's pool. Needs `hardware.deploy` and the hostname typed again. Disk erasure needs `hardware.delete` as well and is off unless asked. A secure wipe is not offered. Audited; MAAS is asked first.
 
@@ -1794,7 +1794,7 @@ Returns the machine to MAAS's pool. Needs `hardware.deploy` and the hostname typ
 
 | Parameter | In | Type | Required | Default | Meaning |
 |---|---|---|---|---|---|
-| `system_id` | path | string | yes | — | MAAS system id |
+| `systemId` | path | string | yes | — | MAAS system id |
 
 **Request body** (JSON):
 
@@ -1825,7 +1825,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 **TypeScript:**
 
 ```ts
-const result = await client.request("maas_release", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04", eraseDisks: true } });
+const result = await client.request("maas_release", { params: { systemId: "4y3h7n" }, body: { confirm: "rack3-04", eraseDisks: true } });
 ```
 
 **Response `202`** — Accepted: the work is queued; the response says how to follow it..
@@ -1855,7 +1855,7 @@ Content-Type: `application/json`.
 | `502` | `provisioner_unavailable`, an `incus_…` code |
 | `503` | `provisioner_not_configured`, `database_not_configured` |
 
-### `POST /api/v1/provisioners/maas/machines/{system_id}/test`
+### `POST /api/v1/provisioners/maas/machines/{systemId}/test`
 
 Starts a hardware test run (burn-in) through MAAS. Needs `hardware.commission` and the hostname typed again. Only a machine that is `Ready`, `Broken` or `Failed testing`: one that is allocated or deployed (an Incus member, for one) is refused, so tests never load a running server. Audited with the test names; MAAS is asked first.
 
@@ -1865,7 +1865,7 @@ Starts a hardware test run (burn-in) through MAAS. Needs `hardware.commission` a
 
 | Parameter | In | Type | Required | Default | Meaning |
 |---|---|---|---|---|---|
-| `system_id` | path | string | yes | — | MAAS system id |
+| `systemId` | path | string | yes | — | MAAS system id |
 
 **Request body** (JSON):
 
@@ -1898,7 +1898,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/provisioners/maas/machine
 **TypeScript:**
 
 ```ts
-const result = await client.request("maas_test", { params: { system_id: "4y3h7n" }, body: { confirm: "rack3-04", scripts: ["smartctl-validate"] } });
+const result = await client.request("maas_test", { params: { systemId: "4y3h7n" }, body: { confirm: "rack3-04", scripts: ["smartctl-validate"] } });
 ```
 
 **Response `202`** — Accepted: the work is queued; the response says how to follow it..
@@ -1961,7 +1961,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:03.358479Z"
+    "observedAt": "2026-10-28T22:51:11.582994Z"
   },
   "items": [
     {
@@ -1988,7 +1988,7 @@ Content-Type: `application/json`.
         "APELORA_SECTOR_SITE_B_SERVER_CERT"
       ],
       "addedBy": "token:docs-verifier",
-      "addedAt": "2026-10-28 21:24:03.347818 +00:00:00"
+      "addedAt": "2026-10-28 22:51:11.575429 +00:00:00"
     }
   ],
   "note": "Applications deploy to the home sector only. Registered sectors are read for their state and count towards the sites a second deployment could use; deploying to them is a later step."
@@ -2069,7 +2069,7 @@ Content-Type: `application/json`.
     "APELORA_SECTOR_SITE_B_SERVER_CERT"
   ],
   "addedBy": "token:docs-verifier",
-  "addedAt": "2026-10-28 21:24:03.347818 +00:00:00"
+  "addedAt": "2026-10-28 22:51:11.575429 +00:00:00"
 }
 ```
 
@@ -2096,34 +2096,21 @@ Forgets a registered sector. Nothing changes in its Incus. Needs `cluster.manage
 | Parameter | In | Type | Required | Default | Meaning |
 |---|---|---|---|---|---|
 | `name` | path | string | yes | — | Sector name |
-
-**Request body** (JSON):
-
-| Field | Type | Required | Meaning |
-|---|---|---|---|
-| `confirm` | string | yes | The sector's name, typed again. |
-
-```json
-{
-  "confirm": "site-b"
-}
-```
+| `confirm` | query | string | yes | — | The sector's name, typed again. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sectors/site-b" \
-  -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Content-Type: application/json" \
-  --data-raw '{"confirm":"site-b"}'
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/sectors/site-b?confirm=site-b" \
+  -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("remove_sector", { params: { name: "site-b" }, body: { confirm: "site-b" } });
+await client.request("remove_sector", { params: { name: "site-b" }, query: { confirm: "site-b" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.

@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Apelora control plane API",
-    "description": "Inventory, audit and identity for an Apelora fabric. Inventory responses name their source (mock or Incus) and when they were observed.",
+    "description": "Inventory, audit and identity for an Apelora fabric. Inventory responses name their source (mock or Incus) and when they were observed.\n\nConventions: a list answers `items`; a paged list also answers `next` while older entries remain, which the next request passes as `after`. Something created at once answers 201 with it, something queued answers 202 with how to follow it (a job or an operation), and a change or removal with nothing to return answers 204. A removal that needs a name typed again takes it as the `confirm` query parameter. A check that changes nothing has a noun path (`…/evacuation`, `…/migration`, `…/restoration`). `Idempotency-Key` makes a request that queues work safe to repeat; other requests ignore it. An error answers `error.code` and `error.message`; each code has one status.",
     "license": {
       "name": "AGPL-3.0-only",
       "identifier": "AGPL-3.0-only"
@@ -554,17 +554,16 @@
         "tags": [
           "alerts"
         ],
-        "summary": "Resolved alerts, newest first, paged by `before`. Kept 90 days. Needs `cluster.view`.",
+        "summary": "Resolved alerts, newest first, paged with `after` and `next`. Kept 90 days. Needs `cluster.view`.",
         "operationId": "alert_history",
         "parameters": [
           {
-            "name": "before",
+            "name": "after",
             "in": "query",
-            "description": "Only alerts with a smaller id (the last one of the previous page).",
+            "description": "Paging: the `next` of the previous page.",
             "required": false,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           },
           {
@@ -2176,7 +2175,7 @@
           "sessions"
         ],
         "summary": "Opens a session: checks the caller, the instance and the approval rule, and answers with a\nsingle-use ticket for the websocket. Needs `instance.console` (terminal, PowerShell) or\n`instance.desktop` (RDP) on the application; in production also an approval\n(`Apelora-Approval: <id>`) of `instance.console` on `instance:<application>/<instance>`.",
-        "operationId": "open_session",
+        "operationId": "open_remote_session",
         "parameters": [
           {
             "name": "name",
@@ -3578,18 +3577,17 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "confirm",
+            "in": "query",
+            "description": "The volume's Incus name again, typed by the person deleting it.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConfirmVolume"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "204": {
             "description": "Done; nothing is returned."
@@ -4087,18 +4085,17 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "confirm",
+            "in": "query",
+            "description": "The backup's Incus name again, typed by the person deleting it.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConfirmBackup"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "204": {
             "description": "Done; nothing is returned."
@@ -4194,7 +4191,7 @@
         }
       }
     },
-    "/api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore": {
+    "/api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restoration": {
       "get": {
         "tags": [
           "applications"
@@ -4329,7 +4326,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/v1/applications/{name}/volumes/{volume}/backups/{backup}/restore": {
       "post": {
         "tags": [
           "applications"
@@ -5281,7 +5280,7 @@
           "identity"
         ],
         "summary": "Approves a request made by someone else. Needs `approval.grant`, held by a signed-in person: API\ntokens are refused (`approval_needs_a_person`). The approval is good for 30 minutes, once.",
-        "operationId": "approve_request",
+        "operationId": "approve_approval",
         "parameters": [
           {
             "name": "id",
@@ -5392,7 +5391,7 @@
           "identity"
         ],
         "summary": "Withdraws your own pending request. Needs `approval.request`.",
-        "operationId": "cancel_request",
+        "operationId": "cancel_approval",
         "parameters": [
           {
             "name": "id",
@@ -5493,7 +5492,7 @@
           "identity"
         ],
         "summary": "Rejects a request. Needs `approval.grant`, held by a signed-in person (API tokens are refused).",
-        "operationId": "reject_request",
+        "operationId": "reject_approval",
         "parameters": [
           {
             "name": "id",
@@ -5593,7 +5592,7 @@
         "tags": [
           "audit"
         ],
-        "summary": "Audit events the caller may read, newest first, filtered by actor, target, action prefix,\noutcome and time, and paged with `before`. Needs `audit.read` (platform-wide, or limited to\nthe events of the caller's organisations, projects and applications) and a database.",
+        "summary": "Audit events the caller may read, newest first, filtered by actor, target, action prefix,\noutcome and time, and paged with `after` and `next`. Needs `audit.read` (platform-wide, or limited to\nthe events of the caller's organisations, projects and applications) and a database.",
         "operationId": "audit",
         "parameters": [
           {
@@ -5651,13 +5650,12 @@
             }
           },
           {
-            "name": "before",
+            "name": "after",
             "in": "query",
-            "description": "Only events older than this id (paging: the id of the last event of the previous page).",
+            "description": "Paging: the `next` of the previous page.",
             "required": false,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           },
           {
@@ -5806,13 +5804,12 @@
             }
           },
           {
-            "name": "before",
+            "name": "after",
             "in": "query",
-            "description": "Only events older than this id (paging: the id of the last event of the previous page).",
+            "description": "Paging: the `next` of the previous page.",
             "required": false,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           },
           {
@@ -6125,7 +6122,7 @@
           "cluster"
         ],
         "summary": "Join tokens waiting to be used (no secrets). Needs `manage-infrastructure`.",
-        "operationId": "list_join_tokens",
+        "operationId": "join_tokens",
         "responses": {
           "200": {
             "description": "Done; the response holds the result.",
@@ -7461,7 +7458,7 @@
           "cluster"
         ],
         "summary": "One step of the rolling upgrade. Apelora evacuates and restores. It does not install Incus:\n`upgraded` records that the package was upgraded on the server. Needs `cluster.evacuate`.",
-        "operationId": "cluster_upgrade",
+        "operationId": "upgrade_cluster",
         "requestBody": {
           "content": {
             "application/json": {
@@ -8290,13 +8287,12 @@
             }
           },
           {
-            "name": "before",
+            "name": "after",
             "in": "query",
-            "description": "Only events older than this id (paging: the id of the last event of the previous page).",
+            "description": "Paging: the `next` of the previous page.",
             "required": false,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
             }
           },
           {
@@ -10143,7 +10139,7 @@
           "identity"
         ],
         "summary": "Projects the caller may see, optionally of one organisation. Needs `project.view`.",
-        "operationId": "projects_list",
+        "operationId": "projects",
         "parameters": [
           {
             "name": "organization",
@@ -10220,7 +10216,7 @@
         }
       }
     },
-    "/api/v1/identity/projects/{project}/environments": {
+    "/api/v1/identity/projects/{projectId}/environments": {
       "get": {
         "tags": [
           "identity"
@@ -10229,9 +10225,9 @@
         "operationId": "environments",
         "parameters": [
           {
-            "name": "project",
+            "name": "projectId",
             "in": "path",
-            "description": "Project id",
+            "description": "Apelora project id",
             "required": true,
             "schema": {
               "type": "string",
@@ -10318,9 +10314,9 @@
         "operationId": "create_environment",
         "parameters": [
           {
-            "name": "project",
+            "name": "projectId",
             "in": "path",
-            "description": "Project id",
+            "description": "Apelora project id",
             "required": true,
             "schema": {
               "type": "string",
@@ -11505,7 +11501,7 @@
           "identity"
         ],
         "summary": "The directories people sign in with, each checked with a TLS connection now. Needs\n`platform.security.manage`.",
-        "operationId": "list_directories",
+        "operationId": "directories",
         "responses": {
           "200": {
             "description": "Done; the response holds the result.",
@@ -11880,18 +11876,17 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "name": "confirm",
+            "in": "query",
+            "description": "The directory's name again.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConfirmDirectory"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "204": {
             "description": "Done; nothing is returned."
@@ -12311,18 +12306,17 @@
               "type": "string",
               "format": "uuid"
             }
+          },
+          {
+            "name": "confirm",
+            "in": "query",
+            "description": "The provider's name again.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConfirmProvider"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "204": {
             "description": "Done; nothing is returned."
@@ -14816,7 +14810,7 @@
           "cluster"
         ],
         "summary": "Machines being enrolled, with their state derived from Incus. Needs `manage-infrastructure`.",
-        "operationId": "list_machines",
+        "operationId": "machines",
         "responses": {
           "200": {
             "description": "Done; the response holds the result.",
@@ -15115,7 +15109,7 @@
           "cluster"
         ],
         "summary": "The admission checks for a joined machine (dry run; changes nothing). Needs\n`manage-infrastructure`.",
-        "operationId": "machine_admission",
+        "operationId": "preview_machine_admission",
         "parameters": [
           {
             "name": "name",
@@ -15575,7 +15569,7 @@
     "/api/v1/me/password": {
       "put": {
         "tags": [
-          "system"
+          "identity"
         ],
         "summary": "Changes the caller's own password (local accounts only). Every other session of theirs is\nrevoked; the one making the request stays. Counts towards the account's lock like a sign-in.",
         "operationId": "change_password",
@@ -16311,7 +16305,7 @@
     "/api/v1/networks/applications": {
       "get": {
         "tags": [
-          "applications"
+          "inventory"
         ],
         "summary": "Each application the caller may view that has a recorded deployment: its network, the\nrules compiled from its design, its service and published addresses, and what Incus holds\nfor each, with the differences. Read-only. Needs `application.view` on each application.",
         "operationId": "application_networks",
@@ -16521,7 +16515,7 @@
           "inventory"
         ],
         "summary": "Incus projects. Needs `read-inventory`.",
-        "operationId": "projects",
+        "operationId": "incus_projects",
         "responses": {
           "200": {
             "description": "Done; the response holds the result.",
@@ -16663,7 +16657,7 @@
         }
       }
     },
-    "/api/v1/provisioners/maas/machines/{system_id}/commission": {
+    "/api/v1/provisioners/maas/machines/{systemId}/commission": {
       "post": {
         "tags": [
           "cluster"
@@ -16672,7 +16666,7 @@
         "operationId": "maas_commission",
         "parameters": [
           {
-            "name": "system_id",
+            "name": "systemId",
             "in": "path",
             "description": "MAAS system id",
             "required": true,
@@ -16793,7 +16787,7 @@
         }
       }
     },
-    "/api/v1/provisioners/maas/machines/{system_id}/deploy": {
+    "/api/v1/provisioners/maas/machines/{systemId}/deploy": {
       "post": {
         "tags": [
           "cluster"
@@ -16802,7 +16796,7 @@
         "operationId": "maas_deploy",
         "parameters": [
           {
-            "name": "system_id",
+            "name": "systemId",
             "in": "path",
             "description": "MAAS system id",
             "required": true,
@@ -16923,7 +16917,7 @@
         }
       }
     },
-    "/api/v1/provisioners/maas/machines/{system_id}/release": {
+    "/api/v1/provisioners/maas/machines/{systemId}/release": {
       "post": {
         "tags": [
           "cluster"
@@ -16932,7 +16926,7 @@
         "operationId": "maas_release",
         "parameters": [
           {
-            "name": "system_id",
+            "name": "systemId",
             "in": "path",
             "description": "MAAS system id",
             "required": true,
@@ -17053,7 +17047,7 @@
         }
       }
     },
-    "/api/v1/provisioners/maas/machines/{system_id}/test": {
+    "/api/v1/provisioners/maas/machines/{systemId}/test": {
       "post": {
         "tags": [
           "cluster"
@@ -17062,7 +17056,7 @@
         "operationId": "maas_test",
         "parameters": [
           {
-            "name": "system_id",
+            "name": "systemId",
             "in": "path",
             "description": "MAAS system id",
             "required": true,
@@ -17385,18 +17379,17 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "confirm",
+            "in": "query",
+            "description": "The sector's name, typed again.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RemoveSector"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "204": {
             "description": "Done; nothing is returned."
@@ -17478,7 +17471,7 @@
           "sessions"
         ],
         "summary": "Open sessions the caller started, and those on applications they may operate.",
-        "operationId": "sessions",
+        "operationId": "remote_sessions",
         "responses": {
           "200": {
             "description": "Done; the response holds the result.",
@@ -17537,7 +17530,7 @@
           "sessions"
         ],
         "summary": "Ends a session now. Allowed for the person who has it and for whoever may operate its\napplication. Anything else answers 404.",
-        "operationId": "terminate_session",
+        "operationId": "end_remote_session",
         "parameters": [
           {
             "name": "id",
@@ -17939,75 +17932,6 @@
         }
       }
     },
-    "/api/v1/storage-pools": {
-      "get": {
-        "tags": [
-          "inventory"
-        ],
-        "summary": "Storage pools. Needs `read-inventory`.",
-        "operationId": "storage_pools",
-        "responses": {
-          "200": {
-            "description": "Done; the response holds the result.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StoragePoolList"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Not signed in: no token, or one that is unknown, expired or revoked.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorBody"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "The caller may not do this.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorBody"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too many requests from this address or caller; retry after `Retry-After` seconds.",
-            "headers": {
-              "Retry-After": {
-                "schema": {
-                  "type": "integer"
-                },
-                "description": "Seconds to wait before trying again."
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorBody"
-                }
-              }
-            }
-          },
-          "502": {
-            "description": "A service Apelora relies on (Incus, an identity provider, a provisioner) refused or did not answer.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorBody"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/storage/orphans": {
       "get": {
         "tags": [
@@ -18159,7 +18083,7 @@
     "/api/v1/storage/volumes": {
       "get": {
         "tags": [
-          "applications"
+          "inventory"
         ],
         "summary": "Every application volume the caller may see, with what Incus reports, its schedules and\nhow many backups it has. Read-only. Needs `application.view` on each application.",
         "operationId": "storage_volumes",
@@ -19097,7 +19021,7 @@
       "AlertChannelList": {
         "type": "object",
         "required": [
-          "channels",
+          "items",
           "secretPrefix",
           "actions"
         ],
@@ -19105,7 +19029,7 @@
           "actions": {
             "$ref": "#/components/schemas/AlertActions"
           },
-          "channels": {
+          "items": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AlertChannel"
@@ -19267,6 +19191,13 @@
             "items": {
               "$ref": "#/components/schemas/AlertItem"
             }
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass this as `after` for the next, older page; absent on the last page."
           }
         }
       },
@@ -19506,14 +19437,14 @@
       "AlertRuleList": {
         "type": "object",
         "required": [
-          "rules",
+          "items",
           "actions"
         ],
         "properties": {
           "actions": {
             "$ref": "#/components/schemas/AlertActions"
           },
-          "rules": {
+          "items": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AlertRuleItem"
@@ -20139,6 +20070,13 @@
             "items": {
               "$ref": "#/components/schemas/AuditItem"
             }
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass this as `after` for the next, older page; absent on the last page."
           }
         }
       },
@@ -21167,30 +21105,6 @@
           }
         }
       },
-      "ConfirmBackup": {
-        "type": "object",
-        "required": [
-          "confirm"
-        ],
-        "properties": {
-          "confirm": {
-            "type": "string",
-            "description": "The backup's Incus name again, typed by the person deleting it."
-          }
-        }
-      },
-      "ConfirmDirectory": {
-        "type": "object",
-        "required": [
-          "confirm"
-        ],
-        "properties": {
-          "confirm": {
-            "type": "string",
-            "description": "The directory's name again."
-          }
-        }
-      },
       "ConfirmMember": {
         "type": "object",
         "required": [
@@ -21207,18 +21121,6 @@
           }
         }
       },
-      "ConfirmProvider": {
-        "type": "object",
-        "required": [
-          "confirm"
-        ],
-        "properties": {
-          "confirm": {
-            "type": "string",
-            "description": "The provider's name again."
-          }
-        }
-      },
       "ConfirmSnapshot": {
         "type": "object",
         "required": [
@@ -21228,18 +21130,6 @@
           "confirm": {
             "type": "string",
             "description": "The snapshot's name again, typed by the person restoring it."
-          }
-        }
-      },
-      "ConfirmVolume": {
-        "type": "object",
-        "required": [
-          "confirm"
-        ],
-        "properties": {
-          "confirm": {
-            "type": "string",
-            "description": "The volume's Incus name again, typed by the person deleting it."
           }
         }
       },
@@ -28709,18 +28599,6 @@
           }
         }
       },
-      "RemoveSector": {
-        "type": "object",
-        "required": [
-          "confirm"
-        ],
-        "properties": {
-          "confirm": {
-            "type": "string",
-            "description": "The sector's name, typed again."
-          }
-        }
-      },
       "ReplicaSummary": {
         "type": "object",
         "required": [
@@ -28889,7 +28767,7 @@
       "RoleDto": {
         "type": "object",
         "required": [
-          "id",
+          "key",
           "reference",
           "name",
           "description",
@@ -28904,9 +28782,9 @@
           "description": {
             "type": "string"
           },
-          "id": {
+          "key": {
             "type": "string",
-            "description": "`builtin:<key>` or `custom:<uuid>`."
+            "description": "Unique among roles (`builtin:<key>` or `custom:<uuid>`), for keeping lists and links\napart. Assignments and the other role operations take `reference` (a custom role's bare\nid), never this key."
           },
           "name": {
             "type": "string"
@@ -28918,7 +28796,8 @@
             }
           },
           "reference": {
-            "$ref": "#/components/schemas/RoleRef"
+            "$ref": "#/components/schemas/RoleRef",
+            "description": "The role to name in assignments, grants and deletion."
           },
           "scopes": {
             "type": "array",
@@ -30014,54 +29893,6 @@
           }
         }
       },
-      "StoragePool": {
-        "type": "object",
-        "required": [
-          "name",
-          "driver",
-          "status",
-          "description"
-        ],
-        "properties": {
-          "description": {
-            "type": "string"
-          },
-          "driver": {
-            "type": "string"
-          },
-          "locations": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Cluster members it is created on; empty when unknown."
-          },
-          "name": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string"
-          }
-        }
-      },
-      "StoragePoolList": {
-        "type": "object",
-        "required": [
-          "source",
-          "items"
-        ],
-        "properties": {
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/StoragePool"
-            }
-          },
-          "source": {
-            "$ref": "#/components/schemas/Source"
-          }
-        }
-      },
       "StoragePoolReport": {
         "type": "object",
         "required": [
@@ -30275,7 +30106,7 @@
           "apiVersion",
           "incusPinned",
           "incusSeries",
-          "incusTestedWith",
+          "incusTestedRelease",
           "certificates",
           "incus"
         ],
@@ -30302,9 +30133,9 @@
             "type": "string",
             "description": "Incus LTS series the pin follows, e.g. \"7.0\"."
           },
-          "incusTestedWith": {
+          "incusTestedRelease": {
             "type": "string",
-            "description": "Evidence recorded for the pin."
+            "description": "The Incus release this version of Apelora was last tested with, e.g. \"7.0.2\"; empty\nwhen none is recorded."
           },
           "version": {
             "type": "string"

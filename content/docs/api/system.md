@@ -7,7 +7,7 @@ label: System
 source: packages/api-client/openapi.json
 summary: Health, versions, sign-in, settings, metrics, who am I.
 ---
-Health and versions, signing in and out, passwords, settings, metrics and monitoring, image mirrors, database backups, support bundles and caller identity. This page lists 16 operations.
+Health and versions, signing in and out, passwords, settings, metrics and monitoring, image mirrors, database backups, support bundles and caller identity. This page lists 15 operations.
 
 Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/assets/api/openapi.json).
 
@@ -20,7 +20,6 @@ Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/as
 | [`GET /api/v1/health/components`](#get-apiv1healthcomponents) | The state of each part of this installation: control plane, database, deployment workers, job queue, Incus, networks, storage pools and identity providers. |
 | [`GET /api/v1/health/servers`](#get-apiv1healthservers) | Each server's status, CPU, memory, storage and the instances on it, with warnings. |
 | [`GET /api/v1/image-mirrors`](#get-apiv1image-mirrors) | Image mirrors: the configuration this control plane runs with (upstream → mirror pairs and whether only mirrors may be used; URLs, not secrets), whether each mirror answers (probed at most once a minute), and the image servers each deployable catalog class needs with whether it is covered. |
-| [`PUT /api/v1/me/password`](#put-apiv1mepassword) | Changes the caller's own password (local accounts only). |
 | [`GET /api/v1/monitoring`](#get-apiv1monitoring) | Where each metrics endpoint is, whether the caller may scrape, and the region, site and sector labels. |
 | [`GET /api/v1/settings`](#get-apiv1settings) | The settings this control plane runs with: every setting the control plane and the worker read, the value when it may be shown (never a secret, a key or a certificate path), whether it is the default and where it came from; sign-in settings saved in the Console; the workers seen recently. |
 | [`GET /api/v1/sign-in`](#get-apiv1sign-in) | How people can sign in to this control plane. |
@@ -134,7 +133,7 @@ Content-Type: `application/json`.
   "incus": {
     "connected": false
   },
-  "checkedAt": "2026-10-28T21:24:00.170763Z"
+  "checkedAt": "2026-10-28T22:51:07.248388Z"
 }
 ```
 
@@ -174,13 +173,13 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "checkedAt": "2026-10-28T21:24:20.174854Z",
+  "checkedAt": "2026-10-28T22:51:27.824749Z",
   "overall": "degraded",
   "controlPlane": {
     "state": "healthy",
     "version": "0.0.0",
     "apiVersion": "v1",
-    "startedAt": "2026-10-28T21:24:03.617118Z",
+    "startedAt": "2026-10-28T22:51:11.799989Z",
     "uptimeSecs": 16,
     "auth": "tokens",
     "provider": "mock",
@@ -189,7 +188,7 @@ Content-Type: `application/json`.
   },
   "database": {
     "state": "healthy",
-    "roundTripMs": 2.1,
+    "roundTripMs": 5,
     "schemaVersion": 36,
     "expectedSchemaVersion": 36,
     "reason": null,
@@ -202,9 +201,9 @@ Content-Type: `application/json`.
         "id": "docs-worker",
         "host": "unknown",
         "version": "0.0.0",
-        "startedAt": "2026-10-28T21:24:03.701213Z",
-        "lastSeen": "2026-10-28T21:24:18.706152Z",
-        "secondsSinceSeen": 1,
+        "startedAt": "2026-10-28T22:51:11.873791Z",
+        "lastSeen": "2026-10-28T22:51:26.899435Z",
+        "secondsSinceSeen": 0,
         "state": "running"
       }
     ],
@@ -305,7 +304,7 @@ Content-Type: `application/json`.
 {
   "source": {
     "provider": "mock",
-    "observedAt": "2026-10-28T21:24:20.178325Z"
+    "observedAt": "2026-10-28T22:51:27.828814Z"
   },
   "clustered": true,
   "items": [
@@ -519,58 +518,6 @@ Content-Type: `application/json`.
 | `403` | `forbidden`, `mfa_required` |
 | `429` | `rate_limited` |
 
-### `PUT /api/v1/me/password`
-
-Changes the caller's own password (local accounts only). Every other session of theirs is revoked; the one making the request stays. Counts towards the account's lock like a sign-in.
-
-**Operation ID:** `change_password`
-
-**Needs:** a signed-in caller; the server decides what that caller may see.
-
-**Request body** (JSON):
-
-| Field | Type | Required | Meaning |
-|---|---|---|---|
-| `current` | string | yes | — |
-| `new` | string | yes | — |
-
-```json
-{
-  "current": "<current password>",
-  "new": "<new password>"
-}
-```
-
-**Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
-
-This request can change state. Check permissions, prerequisites and any required approval before running it.
-
-```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/me/password" \
-  -H "Authorization: Bearer $APELORA_TOKEN" \
-  -H "Content-Type: application/json" \
-  --data-raw '{"current":"<current password>","new":"<new password>"}'
-```
-
-**TypeScript:**
-
-```ts
-await client.request("change_password", { body: { current: "<current password>", new: "<new password>" } });
-```
-
-**Response `204`** — Done; nothing is returned., with no body.
-
-**Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
-
-| Status | Codes |
-|---|---|
-| `400` | `invalid_request`, `weak_password`, `wrong_password` |
-| `401` | `unauthenticated`, `invalid_token` |
-| `409` | `account_locked`, `not_a_local_account` |
-| `429` | `rate_limited` |
-| `500` | `internal` |
-| `503` | `database_not_configured` |
-
 ### `GET /api/v1/monitoring`
 
 Where each metrics endpoint is, whether the caller may scrape, and the region, site and sector labels. Needs `fabric.metrics.read` or `cluster.view`.
@@ -733,10 +680,10 @@ Content-Type: `application/json`.
       "id": "docs-worker",
       "host": "unknown",
       "version": "0.0.0",
-      "lastSeen": "2026-10-28T21:24:18.706152Z"
+      "lastSeen": "2026-10-28T22:51:26.899435Z"
     }
   ],
-  "readAt": "2026-10-28T21:24:03.617118Z"
+  "readAt": "2026-10-28T22:51:11.799989Z"
 }
 ```
 
@@ -840,7 +787,7 @@ Content-Type: `application/json`.
 ```json
 {
   "token": "<token, shown once>",
-  "expiresAt": "2026-10-29T05:24:00.736531Z",
+  "expiresAt": "2026-10-29T06:51:08.08853Z",
   "name": "Ada Lovelace"
 }
 ```
@@ -974,15 +921,15 @@ tar -tf support-bundle.tar
 **Example contents:**
 
 ```text
-apelora-support-20261028-212420/manifest.json
-apelora-support-20261028-212420/versions.json
-apelora-support-20261028-212420/settings.json
-apelora-support-20261028-212420/health.json
-apelora-support-20261028-212420/preflight.json
-apelora-support-20261028-212420/jobs-failed.json
-apelora-support-20261028-212420/metrics.txt
-apelora-support-20261028-212420/logs/README.txt
-apelora-support-20261028-212420/README.txt
+apelora-support-20261028-225128/manifest.json
+apelora-support-20261028-225128/versions.json
+apelora-support-20261028-225128/settings.json
+apelora-support-20261028-225128/health.json
+apelora-support-20261028-225128/preflight.json
+apelora-support-20261028-225128/jobs-failed.json
+apelora-support-20261028-225128/metrics.txt
+apelora-support-20261028-225128/logs/README.txt
+apelora-support-20261028-225128/README.txt
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.
@@ -1028,7 +975,7 @@ Content-Type: `application/json`.
   "apiVersion": "v1",
   "incusPinned": "v7.0.2",
   "incusSeries": "7.0",
-  "incusTestedWith": "<how this release was tested with Incus>",
+  "incusTestedRelease": "7.0.2",
   "certificates": [],
   "incus": {
     "connected": false,
@@ -1144,7 +1091,7 @@ const result = await client.request("metrics", {});
 
 Content-Type: `text/plain`.
 
-**Example response** from a test installation; your IDs, names and times differ. The first 15 of 1827 lines.
+**Example response** from a test installation; your IDs, names and times differ. The first 15 of 1812 lines.
 
 ```text
 # HELP apelora_build_info Always 1: which component, version and commit is running.

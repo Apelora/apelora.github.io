@@ -15,14 +15,14 @@ Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/as
 
 | Operation | What it does |
 |---|---|
-| [`GET /api/v1/audit`](#get-apiv1audit) | Audit events the caller may read, newest first, filtered by actor, target, action prefix, outcome and time, and paged with `before`. |
+| [`GET /api/v1/audit`](#get-apiv1audit) | Audit events the caller may read, newest first, filtered by actor, target, action prefix, outcome and time, and paged with `after` and `next`. |
 | [`GET /api/v1/audit/export`](#get-apiv1auditexport) | Exports the audit events the caller may read, with the same filters as the list (`limit` does not apply), newest first, as CSV or JSON lines. |
 
 ## Details
 
 ### `GET /api/v1/audit`
 
-Audit events the caller may read, newest first, filtered by actor, target, action prefix, outcome and time, and paged with `before`. Needs `audit.read` (platform-wide, or limited to the events of the caller's organisations, projects and applications) and a database.
+Audit events the caller may read, newest first, filtered by actor, target, action prefix, outcome and time, and paged with `after` and `next`. Needs `audit.read` (platform-wide, or limited to the events of the caller's organisations, projects and applications) and a database.
 
 **Operation ID:** `audit`
 
@@ -36,7 +36,7 @@ Audit events the caller may read, newest first, filtered by actor, target, actio
 | `outcome` | query | string | no | — | `success`, `denied` or `failed`. |
 | `from` | query | string | no | — | RFC 3339: events at or after this time. |
 | `to` | query | string | no | — | RFC 3339: events before this time. |
-| `before` | query | integer | no | — | Only events older than this id (paging: the id of the last event of the previous page). |
+| `after` | query | string | no | — | Paging: the `next` of the previous page. |
 | `limit` | query | integer | no | `100` | Events per page, 1 to 500 (default 100). Not used by the export. |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
@@ -55,7 +55,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit?action=application.&
   -H "Accept: application/json"
 ```
 
-**Next page:** repeat the request with `before` set to the `id` of the last item. A page shorter than `limit` is the last one.
+**Next page:** repeat the request with `after` set to the response's `next`. The last page has no `next`.
 
 **TypeScript:**
 
@@ -74,30 +74,30 @@ Content-Type: `application/json`.
   "items": [
     {
       "id": 130,
-      "at": "2026-10-28T21:24:19.354692Z",
-      "actor": "user:6c57707e-01af-4d92-842e-6712151e369a",
+      "at": "2026-10-28T22:51:26.983968Z",
+      "actor": "user:d3dea878-2d2a-4710-af99-6bf13728a161",
       "actorType": "user",
       "actorName": "ada",
       "action": "session.request",
       "target": "instance:shop/shop-db-01",
       "outcome": "success",
       "scope": {
-        "application": "5a291a1e-9ece-4dc7-91af-ef01835cb68b",
-        "organization": "d57c15f8-d7d9-4ecd-b436-5b4ebad12de5",
-        "project": "4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a"
+        "application": "9c2b8220-029b-44ef-9ede-79269c0e316b",
+        "organization": "8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6",
+        "project": "0e64d3ef-1020-41d9-a96e-821b3b45cf04"
       },
       "detail": {
-        "approval": "a39d69cc-13fe-4c4f-9552-5f8fed1729ed",
+        "approval": "81678c81-dfdb-4e1e-be3c-955a4f04384d",
         "kind": "terminal",
         "name": "ada",
-        "requestId": "b2aa90d5-c354-472c-80ff-8f01b0a9efb5",
-        "session": "17ab06f7-bcf7-41b6-ad02-d64aba42145c"
+        "requestId": "3299c5c9-ad02-4252-89b8-94bdee62b338",
+        "session": "9db6075c-470f-4d3a-873e-0f203d4c86e9"
       }
     },
     {
       "id": 129,
-      "at": "2026-10-28T21:24:19.318959Z",
-      "actor": "user:c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd",
+      "at": "2026-10-28T22:51:26.9424Z",
+      "actor": "user:0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368",
       "actorType": "user",
       "actorName": "grace",
       "action": "approval.grant",
@@ -107,13 +107,14 @@ Content-Type: `application/json`.
       "detail": {
         "action": "instance.console",
         "emergencyAccess": true,
-        "id": "a39d69cc-13fe-4c4f-9552-5f8fed1729ed",
+        "id": "81678c81-dfdb-4e1e-be3c-955a4f04384d",
         "name": "grace",
-        "requestId": "76c471c8-e8c8-4f98-b31d-a4bc3f69dac3",
-        "requester": "user:6c57707e-01af-4d92-842e-6712151e369a"
+        "requestId": "1c852951-c130-4ba4-935a-8f1c9a5c1dd2",
+        "requester": "user:d3dea878-2d2a-4710-af99-6bf13728a161"
       }
     }
-  ]
+  ],
+  "next": "31"
 }
 ```
 
@@ -143,7 +144,7 @@ Exports the audit events the caller may read, with the same filters as the list 
 | `outcome` | query | string | no | — | `success`, `denied` or `failed`. |
 | `from` | query | string | no | — | RFC 3339: events at or after this time. |
 | `to` | query | string | no | — | RFC 3339: events before this time. |
-| `before` | query | integer | no | — | Only events older than this id (paging: the id of the last event of the previous page). |
+| `after` | query | string | no | — | Paging: the `next` of the previous page. |
 | `limit` | query | integer | no | `100` | Events per page, 1 to 500 (default 100). Not used by the export. |
 | `format` | query | string | no | `jsonl` | `csv` or `jsonl` (one JSON object per line, as the list returns them). Default `jsonl`. |
 
@@ -168,7 +169,7 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=jsonl"
 **With options** (`action`, `from`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-27T21%3A24%3A19Z" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/audit/export?format=csv&action=token.&from=2026-10-27T22%3A51%3A27Z" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: text/csv"
 ```
@@ -187,9 +188,9 @@ Content-Type: `text/csv`.
 
 ```text
 id,at,actor,actorName,actorType,action,target,outcome,requestId,scope,detail
-131,2026-10-28T21:24:19.431124Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,0b2086c2-417e-44ad-9e0f-3b543806d067,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""0b2086c2-417e-44ad-9e0f-3b543806d067"",""role"":""fabric-admin""}"
-130,2026-10-28T21:24:19.354692Z,user:6c57707e-01af-4d92-842e-6712151e369a,ada,user,session.request,instance:shop/shop-db-01,success,b2aa90d5-c354-472c-80ff-8f01b0a9efb5,"{""application"":""5a291a1e-9ece-4dc7-91af-ef01835cb68b"",""organization"":""d57c15f8-d7d9-4ecd-b436-5b4ebad12de5"",""project"":""4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a""}","{""approval"":""a39d69cc-13fe-4c4f-9552-5f8fed1729ed"",""kind"":""terminal"",""name"":""ada"",""requestId"":""b2aa90d5-c354-472c-80ff-8f01b0a9efb5"",""session"":""17ab06f7-bcf7-41b6-ad02-d64aba42145c""}"
-129,2026-10-28T21:24:19.318959Z,user:c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd,grace,user,approval.grant,instance:shop/shop-db-01,success,76c471c8-e8c8-4f98-b31d-a4bc3f69dac3,,"{""action"":""instance.console"",""emergencyAccess"":true,""id"":""a39d69cc-13fe-4c4f-9552-5f8fed1729ed"",""name"":""grace"",""requestId"":""76c471c8-e8c8-4f98-b31d-a4bc3f69dac3"",""requester"":""user:6c57707e-01af-4d92-842e-6712151e369a""}"
+131,2026-10-28T22:51:27.054326Z,token:docs-verifier,docs-verifier,token,audit.exported,audit,success,5adb3251-1d7d-4985-bef3-f90399ee0ae8,,"{""filters"":{},""format"":""csv"",""name"":""docs-verifier"",""requestId"":""5adb3251-1d7d-4985-bef3-f90399ee0ae8"",""role"":""fabric-admin""}"
+130,2026-10-28T22:51:26.983968Z,user:d3dea878-2d2a-4710-af99-6bf13728a161,ada,user,session.request,instance:shop/shop-db-01,success,3299c5c9-ad02-4252-89b8-94bdee62b338,"{""application"":""9c2b8220-029b-44ef-9ede-79269c0e316b"",""organization"":""8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6"",""project"":""0e64d3ef-1020-41d9-a96e-821b3b45cf04""}","{""approval"":""81678c81-dfdb-4e1e-be3c-955a4f04384d"",""kind"":""terminal"",""name"":""ada"",""requestId"":""3299c5c9-ad02-4252-89b8-94bdee62b338"",""session"":""9db6075c-470f-4d3a-873e-0f203d4c86e9""}"
+129,2026-10-28T22:51:26.9424Z,user:0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368,grace,user,approval.grant,instance:shop/shop-db-01,success,1c852951-c130-4ba4-935a-8f1c9a5c1dd2,,"{""action"":""instance.console"",""emergencyAccess"":true,""id"":""81678c81-dfdb-4e1e-be3c-955a4f04384d"",""name"":""grace"",""requestId"":""1c852951-c130-4ba4-935a-8f1c9a5c1dd2"",""requester"":""user:d3dea878-2d2a-4710-af99-6bf13728a161""}"
 ```
 
 Content-Type: `application/x-ndjson`.
@@ -197,9 +198,9 @@ Content-Type: `application/x-ndjson`.
 **Example response** from a test installation; your IDs, names and times differ. The first 3 of 132 lines.
 
 ```text
-{"id":132,"at":"2026-10-28T21:24:19.445652Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"b64128fb-f6fa-4710-acce-6d1a6b3c1d69","role":"fabric-admin"}}
-{"id":131,"at":"2026-10-28T21:24:19.431124Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"0b2086c2-417e-44ad-9e0f-3b543806d067","role":"fabric-admin"}}
-{"id":130,"at":"2026-10-28T21:24:19.354692Z","actor":"user:6c57707e-01af-4d92-842e-6712151e369a","actorType":"user","actorName":"ada","action":"session.request","target":"instance:shop/shop-db-01","outcome":"success","scope":{"application":"5a291a1e-9ece-4dc7-91af-ef01835cb68b","organization":"d57c15f8-d7d9-4ecd-b436-5b4ebad12de5","project":"4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a"},"detail":{"approval":"a39d69cc-13fe-4c4f-9552-5f8fed1729ed","kind":"terminal","name":"ada","requestId":"b2aa90d5-c354-472c-80ff-8f01b0a9efb5","session":"17ab06f7-bcf7-41b6-ad02-d64aba42145c"}}
+{"id":132,"at":"2026-10-28T22:51:27.067501Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"jsonl","name":"docs-verifier","requestId":"5a7b1396-ea0e-47b7-a6a3-a1c7af79cee2","role":"fabric-admin"}}
+{"id":131,"at":"2026-10-28T22:51:27.054326Z","actor":"token:docs-verifier","actorType":"token","actorName":"docs-verifier","action":"audit.exported","target":"audit","outcome":"success","scope":null,"detail":{"filters":{},"format":"csv","name":"docs-verifier","requestId":"5adb3251-1d7d-4985-bef3-f90399ee0ae8","role":"fabric-admin"}}
+{"id":130,"at":"2026-10-28T22:51:26.983968Z","actor":"user:d3dea878-2d2a-4710-af99-6bf13728a161","actorType":"user","actorName":"ada","action":"session.request","target":"instance:shop/shop-db-01","outcome":"success","scope":{"application":"9c2b8220-029b-44ef-9ede-79269c0e316b","organization":"8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6","project":"0e64d3ef-1020-41d9-a96e-821b3b45cf04"},"detail":{"approval":"81678c81-dfdb-4e1e-be3c-955a4f04384d","kind":"terminal","name":"ada","requestId":"3299c5c9-ad02-4252-89b8-94bdee62b338","session":"9db6075c-470f-4d3a-873e-0f203d4c86e9"}}
 ```
 
 **Errors.** The body is `{"error": {"code": …, "message": …}}`; see [error codes](/docs/api/overview/#error-codes) for the codes every operation shares.

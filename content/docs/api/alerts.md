@@ -22,7 +22,7 @@ Set variables in the [API overview](/docs/api/overview/). Download [OpenAPI](/as
 | [`PUT /api/v1/alerts/channels/{id}`](#put-apiv1alertschannelsid) | Changes a webhook channel. |
 | [`DELETE /api/v1/alerts/channels/{id}`](#delete-apiv1alertschannelsid) | Deletes a webhook channel; messages still waiting for it are dropped by the relay. |
 | [`POST /api/v1/alerts/channels/{id}/test`](#post-apiv1alertschannelsidtest) | Queues a test notification for one channel through the same outbox path as real alerts; the channel's delivery state shows the outcome within seconds. |
-| [`GET /api/v1/alerts/history`](#get-apiv1alertshistory) | Resolved alerts, newest first, paged by `before`. |
+| [`GET /api/v1/alerts/history`](#get-apiv1alertshistory) | Resolved alerts, newest first, paged with `after` and `next`. |
 | [`GET /api/v1/alerts/rules`](#get-apiv1alertsrules) | The built-in rules with their parameters in force, their defaults and what the evaluator's last pass said about each source. |
 | [`PUT /api/v1/alerts/rules/{rule}`](#put-apiv1alertsrulesrule) | Changes a rule's parameters (on or off, threshold within the rule's bounds, duration up to a day, severity). |
 | [`POST /api/v1/alerts/silences`](#post-apiv1alertssilences) | Silences a rule (every subject, or one) for `minutes` from now: no notification is sent for its alerts that fire or resolve meanwhile. |
@@ -73,9 +73,9 @@ Content-Type: `application/json`.
       "threshold": 1,
       "comparison": "at-least",
       "unit": "failed jobs in 15 minutes",
-      "startedAt": "2026-10-28T21:24:08.805105Z",
-      "firedAt": "2026-10-28T21:24:08.805105Z",
-      "lastSeenAt": "2026-10-28T21:24:18.908483Z",
+      "startedAt": "2026-10-28T22:51:16.962478Z",
+      "firedAt": "2026-10-28T22:51:16.962478Z",
+      "lastSeenAt": "2026-10-28T22:51:22.006473Z",
       "resolvedAt": null,
       "clearingSince": null,
       "acknowledged": null,
@@ -91,10 +91,10 @@ Content-Type: `application/json`.
     "needsAttention": 1
   },
   "evaluator": {
-    "lastPassAt": "2026-10-28T21:24:18.908483Z",
+    "lastPassAt": "2026-10-28T22:51:22.006473Z",
     "everySecs": 5,
     "worker": "docs-worker",
-    "durationSecs": 0.046453167,
+    "durationSecs": 0.039930125,
     "stale": false,
     "message": "Evaluated every 5 s by docs-worker."
   },
@@ -181,15 +181,15 @@ Content-Type: `application/json`.
   "threshold": 1,
   "comparison": "at-least",
   "unit": "failed jobs in 15 minutes",
-  "startedAt": "2026-10-28T21:24:08.805105Z",
-  "firedAt": "2026-10-28T21:24:08.805105Z",
-  "lastSeenAt": "2026-10-28T21:24:18.908483Z",
+  "startedAt": "2026-10-28T22:51:16.962478Z",
+  "firedAt": "2026-10-28T22:51:16.962478Z",
+  "lastSeenAt": "2026-10-28T22:51:22.006473Z",
   "resolvedAt": null,
   "clearingSince": null,
   "acknowledged": {
     "by": "token:docs-verifier",
     "byName": "docs-verifier",
-    "at": "2026-10-28T21:24:19.213851Z",
+    "at": "2026-10-28T22:51:26.838797Z",
     "note": "Looking into the failed job"
   },
   "silencedBy": null,
@@ -239,9 +239,9 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "channels": [
+  "items": [
     {
-      "id": "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34",
+      "id": "ba4f5a24-8488-496a-8e57-7acb351dc3cb",
       "name": "On-call webhook",
       "kind": "webhook",
       "host": "hooks.example.invalid",
@@ -255,9 +255,9 @@ Content-Type: `application/json`.
         "lastError": null,
         "lastDeliveredAt": null
       },
-      "createdAt": "2026-10-28T21:24:03.466763Z",
+      "createdAt": "2026-10-28T22:51:11.688866Z",
       "createdBy": "token:docs-verifier",
-      "updatedAt": "2026-10-28T21:24:03.476897Z"
+      "updatedAt": "2026-10-28T22:51:11.69589Z"
     }
   ],
   "secretPrefix": "APELORA_ALERT_SECRET_",
@@ -337,7 +337,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34",
+  "id": "ba4f5a24-8488-496a-8e57-7acb351dc3cb",
   "name": "On-call webhook",
   "kind": "webhook",
   "host": "hooks.example.invalid",
@@ -351,9 +351,9 @@ Content-Type: `application/json`.
     "lastError": null,
     "lastDeliveredAt": null
   },
-  "createdAt": "2026-10-28T21:24:03.466763Z",
+  "createdAt": "2026-10-28T22:51:11.688866Z",
   "createdBy": "token:docs-verifier",
-  "updatedAt": "2026-10-28T21:24:03.466763Z"
+  "updatedAt": "2026-10-28T22:51:11.688866Z"
 }
 ```
 
@@ -405,7 +405,7 @@ Changes a webhook channel. Needs `alert.configure`; audited as `alert.channel.up
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/0fe817a4-32f1-4fc0-b08a-5e3fb625cc34" \
+curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/ba4f5a24-8488-496a-8e57-7acb351dc3cb" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
@@ -415,7 +415,7 @@ curl --fail-with-body -sS -X PUT "$APELORA_URL/api/v1/alerts/channels/0fe817a4-3
 **TypeScript:**
 
 ```ts
-const result = await client.request("update_alert_channel", { params: { id: "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34" }, body /* the request body above */ });
+const result = await client.request("update_alert_channel", { params: { id: "ba4f5a24-8488-496a-8e57-7acb351dc3cb" }, body /* the request body above */ });
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -426,7 +426,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34",
+  "id": "ba4f5a24-8488-496a-8e57-7acb351dc3cb",
   "name": "On-call webhook",
   "kind": "webhook",
   "host": "hooks.example.invalid",
@@ -440,9 +440,9 @@ Content-Type: `application/json`.
     "lastError": null,
     "lastDeliveredAt": null
   },
-  "createdAt": "2026-10-28T21:24:03.466763Z",
+  "createdAt": "2026-10-28T22:51:11.688866Z",
   "createdBy": "token:docs-verifier",
-  "updatedAt": "2026-10-28T21:24:03.476897Z"
+  "updatedAt": "2026-10-28T22:51:11.69589Z"
 }
 ```
 
@@ -475,14 +475,14 @@ Deletes a webhook channel; messages still waiting for it are dropped by the rela
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/channels/0fe817a4-32f1-4fc0-b08a-5e3fb625cc34" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/channels/ba4f5a24-8488-496a-8e57-7acb351dc3cb" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("delete_alert_channel", { params: { id: "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34" } });
+await client.request("delete_alert_channel", { params: { id: "ba4f5a24-8488-496a-8e57-7acb351dc3cb" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.
@@ -514,7 +514,7 @@ Queues a test notification for one channel through the same outbox path as real 
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/0fe817a4-32f1-4fc0-b08a-5e3fb625cc34/test" \
+curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/ba4f5a24-8488-496a-8e57-7acb351dc3cb/test" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
@@ -522,7 +522,7 @@ curl --fail-with-body -sS -X POST "$APELORA_URL/api/v1/alerts/channels/0fe817a4-
 **TypeScript:**
 
 ```ts
-const result = await client.request("test_alert_channel", { params: { id: "0fe817a4-32f1-4fc0-b08a-5e3fb625cc34" } });
+const result = await client.request("test_alert_channel", { params: { id: "ba4f5a24-8488-496a-8e57-7acb351dc3cb" } });
 ```
 
 **Response `202`** — Accepted: the work is queued; the response says how to follow it..
@@ -550,7 +550,7 @@ Content-Type: `application/json`.
 
 ### `GET /api/v1/alerts/history`
 
-Resolved alerts, newest first, paged by `before`. Kept 90 days. Needs `cluster.view`.
+Resolved alerts, newest first, paged with `after` and `next`. Kept 90 days. Needs `cluster.view`.
 
 **Operation ID:** `alert_history`
 
@@ -558,7 +558,7 @@ Resolved alerts, newest first, paged by `before`. Kept 90 days. Needs `cluster.v
 
 | Parameter | In | Type | Required | Default | Meaning |
 |---|---|---|---|---|---|
-| `before` | query | integer | no | — | Only alerts with a smaller id (the last one of the previous page). |
+| `after` | query | string | no | — | Paging: the `next` of the previous page. |
 | `limit` | query | integer | no | `50` | 1 to 200 (default 50). |
 
 **Example request.** Replace sample names, IDs and body values with resources and settings from your installation.
@@ -569,20 +569,20 @@ curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/history" \
   -H "Accept: application/json"
 ```
 
-**With options** (`before`, `limit`):
+**With options** (`after`, `limit`):
 
 ```sh
-curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/history?before=1&limit=1" \
+curl --fail-with-body -sS -X GET "$APELORA_URL/api/v1/alerts/history?after=41&limit=1" \
   -H "Authorization: Bearer $APELORA_TOKEN" \
   -H "Accept: application/json"
 ```
 
-**Next page:** repeat the request with `before` set to the `id` of the last item. A page shorter than `limit` is the last one.
+**Next page:** repeat the request with `after` set to the response's `next`. The last page has no `next`.
 
 **TypeScript:**
 
 ```ts
-const result = await client.request("alert_history", { query: { before: 1, limit: 1 } });
+const result = await client.request("alert_history", { query: { after: "41", limit: 1 } });
 ```
 
 **Response `200`** — Done; the response holds the result..
@@ -593,7 +593,8 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "items": []
+  "items": [],
+  "next": null
 }
 ```
 
@@ -636,7 +637,7 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "rules": [
+  "items": [
     {
       "id": "job-failures",
       "title": "Jobs are failing",
@@ -662,7 +663,7 @@ Content-Type: `application/json`.
       "sourceState": "ok",
       "firing": 1,
       "runbook": "alerts.md#jobs-are-failing",
-      "updatedAt": "2026-10-28T21:24:03.508051Z",
+      "updatedAt": "2026-10-28T22:51:11.71816Z",
       "updatedBy": "token:docs-verifier"
     },
     {
@@ -796,7 +797,7 @@ Content-Type: `application/json`.
   "sourceState": "unknown",
   "firing": 0,
   "runbook": "alerts.md#jobs-are-failing",
-  "updatedAt": "2026-10-28T21:24:03.508051Z",
+  "updatedAt": "2026-10-28T22:51:11.71816Z",
   "updatedBy": "token:docs-verifier"
 }
 ```
@@ -863,12 +864,12 @@ Content-Type: `application/json`.
 
 ```json
 {
-  "id": "697b8f1b-4955-4729-87bd-0440dc471b0c",
+  "id": "5331b076-8c52-43d2-ba5f-fb10e093e68e",
   "rule": "backup-age",
   "ruleTitle": "A backup is overdue",
   "subject": null,
-  "startsAt": "2026-10-28T21:24:03.531169Z",
-  "endsAt": "2026-10-28T23:24:03.531169Z",
+  "startsAt": "2026-10-28T22:51:11.730342Z",
+  "endsAt": "2026-10-29T00:51:11.730342Z",
   "note": "Backup pool maintenance tonight",
   "createdBy": "token:docs-verifier",
   "createdByName": "docs-verifier"
@@ -902,14 +903,14 @@ Ends a silence now. Needs `alert.respond`; audited as `alert.silence.end`. 404 w
 This request can change state. Check permissions, prerequisites and any required approval before running it.
 
 ```sh
-curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/silences/697b8f1b-4955-4729-87bd-0440dc471b0c" \
+curl --fail-with-body -sS -X DELETE "$APELORA_URL/api/v1/alerts/silences/5331b076-8c52-43d2-ba5f-fb10e093e68e" \
   -H "Authorization: Bearer $APELORA_TOKEN"
 ```
 
 **TypeScript:**
 
 ```ts
-await client.request("end_alert_silence", { params: { id: "697b8f1b-4955-4729-87bd-0440dc471b0c" } });
+await client.request("end_alert_silence", { params: { id: "5331b076-8c52-43d2-ba5f-fb10e093e68e" } });
 ```
 
 **Response `204`** — Done; nothing is returned., with no body.

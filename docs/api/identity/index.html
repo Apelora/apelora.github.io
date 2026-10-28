@@ -80,10 +80,10 @@
         <nav class="crumbs" aria-label="Breadcrumb"><a href="/docs/">Documentation</a><span aria-hidden="true">/</span><a href="/docs/api/">API</a></nav>
         <h1>Identity and access API</h1>
         <div class="prose">
-<p>Identity and access: organisations, projects, people, groups, roles and assignments, approvals, service identities, tokens and sign-in methods. This page lists 66 operations.</p>
+<p>Identity and access: organisations, projects, people, groups, roles and assignments, approvals, service identities, tokens and sign-in methods. This page lists 67 operations.</p>
 <p>Set variables in the <a href="/docs/api/overview/">API overview</a>. Download <a href="/assets/api/openapi.json">OpenAPI</a>.</p>
 <h2 id="operations">Operations</h2>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#get-apiv1approvals"><code>GET /api/v1/approvals</code></a></td><td>Requests and approvals: your own, plus every open one if you may approve.</td></tr><tr><td><a href="#post-apiv1approvals"><code>POST /api/v1/approvals</code></a></td><td>Asks for approval of one risky action on one target.</td></tr><tr><td><a href="#post-apiv1approvalsidapprove"><code>POST /api/v1/approvals/{id}/approve</code></a></td><td>Approves a request made by someone else.</td></tr><tr><td><a href="#post-apiv1approvalsidcancel"><code>POST /api/v1/approvals/{id}/cancel</code></a></td><td>Withdraws your own pending request.</td></tr><tr><td><a href="#post-apiv1approvalsidreject"><code>POST /api/v1/approvals/{id}/reject</code></a></td><td>Rejects a request.</td></tr><tr><td><a href="#get-apiv1identityassignments"><code>GET /api/v1/identity/assignments</code></a></td><td>Role assignments in the caller's scopes.</td></tr><tr><td><a href="#post-apiv1identityassignments"><code>POST /api/v1/identity/assignments</code></a></td><td>Grants a role to a person, group or automation identity at a scope.</td></tr><tr><td><a href="#delete-apiv1identityassignmentsassignment"><code>DELETE /api/v1/identity/assignments/{assignment}</code></a></td><td>Revokes an assignment; the person loses it on their next request.</td></tr><tr><td><a href="#post-apiv1identityassignmentspreview"><code>POST /api/v1/identity/assignments/preview</code></a></td><td>Shows what an assignment would give before it is saved: what the person can already do at the scope, what they could do afterwards, which permissions would be inert, and whether you may save it.</td></tr><tr><td><a href="#get-apiv1identityaudit"><code>GET /api/v1/identity/audit</code></a></td><td>Audit history the caller may read: the same filters and paging as <code>GET /api/v1/audit</code>.</td></tr><tr><td><a href="#post-apiv1identityemergency-access"><code>POST /api/v1/identity/emergency-access</code></a></td><td>Grants a person a platform role for a short time, with a recorded reason (break-glass).</td></tr><tr><td><a href="#post-apiv1identityenvironmentsidincus-project"><code>POST /api/v1/identity/environments/{id}/incus-project</code></a></td><td>Creates or adopts the environment's Incus project now (idempotent): the restricted project with its default profile, granted to the deploy identity, then the quotas mirrored.</td></tr><tr><td><a href="#get-apiv1identitygroups"><code>GET /api/v1/identity/groups</code></a></td><td>Groups the caller may see.</td></tr><tr><td><a href="#post-apiv1identitygroups"><code>POST /api/v1/identity/groups</code></a></td><td>Creates a group: an organisation's (needs <code>group.manage</code> there) or a platform group (platform <code>group.manage</code>).</td></tr><tr><td><a href="#put-apiv1identitygroupsgroupexternal"><code>PUT /api/v1/identity/groups/{group}/external</code></a></td><td>Maps a platform group onto a group of an identity provider or directory, or sets the source of a mapping made before sources were recorded (<code>needsSource</code>).</td></tr><tr><td><a href="#get-apiv1identitygroupsgroupmembers"><code>GET /api/v1/identity/groups/{group}/members</code></a></td><td>Members of a group.</td></tr><tr><td><a href="#put-apiv1identitygroupsgroupmembersuser"><code>PUT /api/v1/identity/groups/{group}/members/{user}</code></a></td><td>Adds a person to a group.</td></tr><tr><td><a href="#delete-apiv1identitygroupsgroupmembersuser"><code>DELETE /api/v1/identity/groups/{group}/members/{user}</code></a></td><td>Removes a person from a group; their access through it ends on their next request.</td></tr><tr><td><a href="#post-apiv1identitylocal-accounts"><code>POST /api/v1/identity/local-accounts</code></a></td><td>Creates a local account and returns its one-time setup link, valid for 24 hours.</td></tr><tr><td><a href="#post-apiv1identitylocal-accountsidreset"><code>POST /api/v1/identity/local-accounts/{id}/reset</code></a></td><td>Takes a local account's password away, revokes every session of theirs and returns a new one-time setup link (24 hours).</td></tr><tr><td><a href="#get-apiv1identityorganizations"><code>GET /api/v1/identity/organizations</code></a></td><td>Organisations the caller may see.</td></tr><tr><td><a href="#post-apiv1identityorganizations"><code>POST /api/v1/identity/organizations</code></a></td><td>Creates an organisation.</td></tr><tr><td><a href="#post-apiv1identityorganizationsorgprojects"><code>POST /api/v1/identity/organizations/{org}/projects</code></a></td><td>Creates a project in an organisation.</td></tr><tr><td><a href="#get-apiv1identitypermissions"><code>GET /api/v1/identity/permissions</code></a></td><td>Every permission, its class and the narrowest scope at which a grant takes effect.</td></tr><tr><td><a href="#get-apiv1identitypersonal-tokens"><code>GET /api/v1/identity/personal-tokens</code></a></td><td>Everyone's personal tokens (or one person's), live ones and those that ended in the last 30 days.</td></tr><tr><td><a href="#delete-apiv1identitypersonal-tokensid"><code>DELETE /api/v1/identity/personal-tokens/{id}</code></a></td><td>Revokes anyone's live personal token.</td></tr><tr><td><a href="#get-apiv1identitypolicies"><code>GET /api/v1/identity/policies</code></a></td><td>Access policies (MFA and approval rules).</td></tr><tr><td><a href="#put-apiv1identitypolicies"><code>PUT /api/v1/identity/policies</code></a></td><td>Creates or updates a policy by name.</td></tr><tr><td><a href="#delete-apiv1identitypoliciesid"><code>DELETE /api/v1/identity/policies/{id}</code></a></td><td>Deletes a policy.</td></tr><tr><td><a href="#get-apiv1identityprojects"><code>GET /api/v1/identity/projects</code></a></td><td>Projects the caller may see, optionally of one organisation.</td></tr><tr><td><a href="#get-apiv1identityprojectsprojectenvironments"><code>GET /api/v1/identity/projects/{project}/environments</code></a></td><td>Environments of a project.</td></tr><tr><td><a href="#post-apiv1identityprojectsprojectenvironments"><code>POST /api/v1/identity/projects/{project}/environments</code></a></td><td>Creates an environment.</td></tr><tr><td><a href="#get-apiv1identityquotasscopeid"><code>GET /api/v1/identity/quotas/{scope}/{id}</code></a></td><td>A scope's quota and use.</td></tr><tr><td><a href="#put-apiv1identityquotasscopeid"><code>PUT /api/v1/identity/quotas/{scope}/{id}</code></a></td><td>Sets a scope's quota (all limits empty removes it), then mirrors the tightest applicable quota onto every environment beneath it.</td></tr><tr><td><a href="#get-apiv1identityroles"><code>GET /api/v1/identity/roles</code></a></td><td>The predefined and custom roles with their permissions.</td></tr><tr><td><a href="#post-apiv1identityroles"><code>POST /api/v1/identity/roles</code></a></td><td>Defines a custom role from explicit permissions.</td></tr><tr><td><a href="#delete-apiv1identityrolesrole"><code>DELETE /api/v1/identity/roles/{role}</code></a></td><td>Deletes a custom role that no assignment uses.</td></tr><tr><td><a href="#get-apiv1identityservice-identities"><code>GET /api/v1/identity/service-identities</code></a></td><td>Registered service identities (the credentials Apelora uses for Incus and MAAS, and automation identities that call this API).</td></tr><tr><td><a href="#post-apiv1identityservice-identities"><code>POST /api/v1/identity/service-identities</code></a></td><td>Registers a service identity.</td></tr><tr><td><a href="#post-apiv1identityservice-identitiesiddisable"><code>POST /api/v1/identity/service-identities/{id}/disable</code></a></td><td>Disables a service identity at once.</td></tr><tr><td><a href="#post-apiv1identityservice-identitiesidenable"><code>POST /api/v1/identity/service-identities/{id}/enable</code></a></td><td>Re-enables a service identity.</td></tr><tr><td><a href="#get-apiv1identitysign-in"><code>GET /api/v1/identity/sign-in</code></a></td><td>Sign-in settings: identity providers (saved and from the environment), whether API tokens are accepted, and local accounts.</td></tr><tr><td><a href="#put-apiv1identitysign-inapi-tokens"><code>PUT /api/v1/identity/sign-in/api-tokens</code></a></td><td>Turns API tokens on or off.</td></tr><tr><td><a href="#post-apiv1identitysign-incheck"><code>POST /api/v1/identity/sign-in/check</code></a></td><td>Reads a provider's discovery document and key set, without saving anything: what an administrator checks before saving.</td></tr><tr><td><a href="#get-apiv1identitysign-indirectories"><code>GET /api/v1/identity/sign-in/directories</code></a></td><td>The directories people sign in with, each checked with a TLS connection now.</td></tr><tr><td><a href="#post-apiv1identitysign-indirectories"><code>POST /api/v1/identity/sign-in/directories</code></a></td><td>Adds a directory; it is offered on the sign-in page at once when enabled.</td></tr><tr><td><a href="#put-apiv1identitysign-indirectoriesid"><code>PUT /api/v1/identity/sign-in/directories/{id}</code></a></td><td>Changes a directory (including turning it off).</td></tr><tr><td><a href="#delete-apiv1identitysign-indirectoriesid"><code>DELETE /api/v1/identity/sign-in/directories/{id}</code></a></td><td>Removes a directory: its people can no longer sign in with it; their accounts and roles in Apelora stay.</td></tr><tr><td><a href="#post-apiv1identitysign-indirectoriescheck"><code>POST /api/v1/identity/sign-in/directories/check</code></a></td><td>Connects with TLS, binds as a test person and reads their entry and groups, without saving anything.</td></tr><tr><td><a href="#put-apiv1identitysign-inlocal-accounts"><code>PUT /api/v1/identity/sign-in/local-accounts</code></a></td><td>Turns sign-in with local accounts on or off.</td></tr><tr><td><a href="#post-apiv1identitysign-inproviders"><code>POST /api/v1/identity/sign-in/providers</code></a></td><td>Adds an identity provider; it is checked and applied at once.</td></tr><tr><td><a href="#put-apiv1identitysign-inprovidersid"><code>PUT /api/v1/identity/sign-in/providers/{id}</code></a></td><td>Changes a provider saved in the Console.</td></tr><tr><td><a href="#delete-apiv1identitysign-inprovidersid"><code>DELETE /api/v1/identity/sign-in/providers/{id}</code></a></td><td>Removes a provider saved in the Console: people stop being able to sign in with it.</td></tr><tr><td><a href="#get-apiv1identitysign-ins"><code>GET /api/v1/identity/sign-ins</code></a></td><td>Everyone's Apelora sessions open now (or one person's).</td></tr><tr><td><a href="#delete-apiv1identitysign-insid"><code>DELETE /api/v1/identity/sign-ins/{id}</code></a></td><td>Ends anyone's session.</td></tr><tr><td><a href="#get-apiv1identitytenancy"><code>GET /api/v1/identity/tenancy</code></a></td><td>Organisations, projects and environments the caller can see, with quotas, use and each environment's Incus project as Incus reports it.</td></tr><tr><td><a href="#get-apiv1identityusers"><code>GET /api/v1/identity/users</code></a></td><td>People who have signed in, as far as the caller may see them: everyone for a platform administrator, otherwise those with a role in the caller's scopes.</td></tr><tr><td><a href="#post-apiv1identityusersuserdisable"><code>POST /api/v1/identity/users/{user}/disable</code></a></td><td>Disables a person: their tokens and Apelora sessions stop working at once.</td></tr><tr><td><a href="#post-apiv1identityusersuserenable"><code>POST /api/v1/identity/users/{user}/enable</code></a></td><td>Re-enables a person.</td></tr><tr><td><a href="#get-apiv1identityuserslookup"><code>GET /api/v1/identity/users/lookup</code></a></td><td>Finds one person by exact user name or e-mail so a role can be given to them.</td></tr><tr><td><a href="#get-apiv1mesign-ins"><code>GET /api/v1/me/sign-ins</code></a></td><td>Your Apelora sessions open now (password and directory sign-ins), most recently used first.</td></tr><tr><td><a href="#delete-apiv1mesign-insid"><code>DELETE /api/v1/me/sign-ins/{id}</code></a></td><td>Ends one of your sessions (signs that browser out).</td></tr><tr><td><a href="#get-apiv1metokens"><code>GET /api/v1/me/tokens</code></a></td><td>Your personal tokens (live ones, and those that ended in the last 30 days), newest first.</td></tr><tr><td><a href="#post-apiv1metokens"><code>POST /api/v1/me/tokens</code></a></td><td>Creates a personal token, shown only in this response.</td></tr><tr><td><a href="#delete-apiv1metokensid"><code>DELETE /api/v1/me/tokens/{id}</code></a></td><td>Revokes one of your live tokens; it stops working at once.</td></tr><tr><td><a href="#post-apiv1metokensidrotate"><code>POST /api/v1/me/tokens/{id}/rotate</code></a></td><td>Rotates one of your live tokens: a successor with the same name (shown only in this response), and the old token keeps working for the overlap (0–1440 minutes, 60 by default), then expires.</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Operation</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><a href="#get-apiv1approvals"><code>GET /api/v1/approvals</code></a></td><td>Requests and approvals: your own, plus every open one if you may approve.</td></tr><tr><td><a href="#post-apiv1approvals"><code>POST /api/v1/approvals</code></a></td><td>Asks for approval of one risky action on one target.</td></tr><tr><td><a href="#post-apiv1approvalsidapprove"><code>POST /api/v1/approvals/{id}/approve</code></a></td><td>Approves a request made by someone else.</td></tr><tr><td><a href="#post-apiv1approvalsidcancel"><code>POST /api/v1/approvals/{id}/cancel</code></a></td><td>Withdraws your own pending request.</td></tr><tr><td><a href="#post-apiv1approvalsidreject"><code>POST /api/v1/approvals/{id}/reject</code></a></td><td>Rejects a request.</td></tr><tr><td><a href="#get-apiv1identityassignments"><code>GET /api/v1/identity/assignments</code></a></td><td>Role assignments in the caller's scopes.</td></tr><tr><td><a href="#post-apiv1identityassignments"><code>POST /api/v1/identity/assignments</code></a></td><td>Grants a role to a person, group or automation identity at a scope.</td></tr><tr><td><a href="#delete-apiv1identityassignmentsassignment"><code>DELETE /api/v1/identity/assignments/{assignment}</code></a></td><td>Revokes an assignment; the person loses it on their next request.</td></tr><tr><td><a href="#post-apiv1identityassignmentspreview"><code>POST /api/v1/identity/assignments/preview</code></a></td><td>Shows what an assignment would give before it is saved: what the person can already do at the scope, what they could do afterwards, which permissions would be inert, and whether you may save it.</td></tr><tr><td><a href="#get-apiv1identityaudit"><code>GET /api/v1/identity/audit</code></a></td><td>Audit history the caller may read: the same filters and paging as <code>GET /api/v1/audit</code>.</td></tr><tr><td><a href="#post-apiv1identityemergency-access"><code>POST /api/v1/identity/emergency-access</code></a></td><td>Grants a person a platform role for a short time, with a recorded reason (break-glass).</td></tr><tr><td><a href="#post-apiv1identityenvironmentsidincus-project"><code>POST /api/v1/identity/environments/{id}/incus-project</code></a></td><td>Creates or adopts the environment's Incus project now (idempotent): the restricted project with its default profile, granted to the deploy identity, then the quotas mirrored.</td></tr><tr><td><a href="#get-apiv1identitygroups"><code>GET /api/v1/identity/groups</code></a></td><td>Groups the caller may see.</td></tr><tr><td><a href="#post-apiv1identitygroups"><code>POST /api/v1/identity/groups</code></a></td><td>Creates a group: an organisation's (needs <code>group.manage</code> there) or a platform group (platform <code>group.manage</code>).</td></tr><tr><td><a href="#put-apiv1identitygroupsgroupexternal"><code>PUT /api/v1/identity/groups/{group}/external</code></a></td><td>Maps a platform group onto a group of an identity provider or directory, or sets the source of a mapping made before sources were recorded (<code>needsSource</code>).</td></tr><tr><td><a href="#get-apiv1identitygroupsgroupmembers"><code>GET /api/v1/identity/groups/{group}/members</code></a></td><td>Members of a group.</td></tr><tr><td><a href="#put-apiv1identitygroupsgroupmembersuser"><code>PUT /api/v1/identity/groups/{group}/members/{user}</code></a></td><td>Adds a person to a group.</td></tr><tr><td><a href="#delete-apiv1identitygroupsgroupmembersuser"><code>DELETE /api/v1/identity/groups/{group}/members/{user}</code></a></td><td>Removes a person from a group; their access through it ends on their next request.</td></tr><tr><td><a href="#post-apiv1identitylocal-accounts"><code>POST /api/v1/identity/local-accounts</code></a></td><td>Creates a local account and returns its one-time setup link, valid for 24 hours.</td></tr><tr><td><a href="#post-apiv1identitylocal-accountsidreset"><code>POST /api/v1/identity/local-accounts/{id}/reset</code></a></td><td>Takes a local account's password away, revokes every session of theirs and returns a new one-time setup link (24 hours).</td></tr><tr><td><a href="#get-apiv1identityorganizations"><code>GET /api/v1/identity/organizations</code></a></td><td>Organisations the caller may see.</td></tr><tr><td><a href="#post-apiv1identityorganizations"><code>POST /api/v1/identity/organizations</code></a></td><td>Creates an organisation.</td></tr><tr><td><a href="#post-apiv1identityorganizationsorgprojects"><code>POST /api/v1/identity/organizations/{org}/projects</code></a></td><td>Creates a project in an organisation.</td></tr><tr><td><a href="#get-apiv1identitypermissions"><code>GET /api/v1/identity/permissions</code></a></td><td>Every permission, its class and the narrowest scope at which a grant takes effect.</td></tr><tr><td><a href="#get-apiv1identitypersonal-tokens"><code>GET /api/v1/identity/personal-tokens</code></a></td><td>Everyone's personal tokens (or one person's), live ones and those that ended in the last 30 days.</td></tr><tr><td><a href="#delete-apiv1identitypersonal-tokensid"><code>DELETE /api/v1/identity/personal-tokens/{id}</code></a></td><td>Revokes anyone's live personal token.</td></tr><tr><td><a href="#get-apiv1identitypolicies"><code>GET /api/v1/identity/policies</code></a></td><td>Access policies (MFA and approval rules).</td></tr><tr><td><a href="#put-apiv1identitypolicies"><code>PUT /api/v1/identity/policies</code></a></td><td>Creates or updates a policy by name.</td></tr><tr><td><a href="#delete-apiv1identitypoliciesid"><code>DELETE /api/v1/identity/policies/{id}</code></a></td><td>Deletes a policy.</td></tr><tr><td><a href="#get-apiv1identityprojects"><code>GET /api/v1/identity/projects</code></a></td><td>Projects the caller may see, optionally of one organisation.</td></tr><tr><td><a href="#get-apiv1identityprojectsprojectidenvironments"><code>GET /api/v1/identity/projects/{projectId}/environments</code></a></td><td>Environments of a project.</td></tr><tr><td><a href="#post-apiv1identityprojectsprojectidenvironments"><code>POST /api/v1/identity/projects/{projectId}/environments</code></a></td><td>Creates an environment.</td></tr><tr><td><a href="#get-apiv1identityquotasscopeid"><code>GET /api/v1/identity/quotas/{scope}/{id}</code></a></td><td>A scope's quota and use.</td></tr><tr><td><a href="#put-apiv1identityquotasscopeid"><code>PUT /api/v1/identity/quotas/{scope}/{id}</code></a></td><td>Sets a scope's quota (all limits empty removes it), then mirrors the tightest applicable quota onto every environment beneath it.</td></tr><tr><td><a href="#get-apiv1identityroles"><code>GET /api/v1/identity/roles</code></a></td><td>The predefined and custom roles with their permissions.</td></tr><tr><td><a href="#post-apiv1identityroles"><code>POST /api/v1/identity/roles</code></a></td><td>Defines a custom role from explicit permissions.</td></tr><tr><td><a href="#delete-apiv1identityrolesrole"><code>DELETE /api/v1/identity/roles/{role}</code></a></td><td>Deletes a custom role that no assignment uses.</td></tr><tr><td><a href="#get-apiv1identityservice-identities"><code>GET /api/v1/identity/service-identities</code></a></td><td>Registered service identities (the credentials Apelora uses for Incus and MAAS, and automation identities that call this API).</td></tr><tr><td><a href="#post-apiv1identityservice-identities"><code>POST /api/v1/identity/service-identities</code></a></td><td>Registers a service identity.</td></tr><tr><td><a href="#post-apiv1identityservice-identitiesiddisable"><code>POST /api/v1/identity/service-identities/{id}/disable</code></a></td><td>Disables a service identity at once.</td></tr><tr><td><a href="#post-apiv1identityservice-identitiesidenable"><code>POST /api/v1/identity/service-identities/{id}/enable</code></a></td><td>Re-enables a service identity.</td></tr><tr><td><a href="#get-apiv1identitysign-in"><code>GET /api/v1/identity/sign-in</code></a></td><td>Sign-in settings: identity providers (saved and from the environment), whether API tokens are accepted, and local accounts.</td></tr><tr><td><a href="#put-apiv1identitysign-inapi-tokens"><code>PUT /api/v1/identity/sign-in/api-tokens</code></a></td><td>Turns API tokens on or off.</td></tr><tr><td><a href="#post-apiv1identitysign-incheck"><code>POST /api/v1/identity/sign-in/check</code></a></td><td>Reads a provider's discovery document and key set, without saving anything: what an administrator checks before saving.</td></tr><tr><td><a href="#get-apiv1identitysign-indirectories"><code>GET /api/v1/identity/sign-in/directories</code></a></td><td>The directories people sign in with, each checked with a TLS connection now.</td></tr><tr><td><a href="#post-apiv1identitysign-indirectories"><code>POST /api/v1/identity/sign-in/directories</code></a></td><td>Adds a directory; it is offered on the sign-in page at once when enabled.</td></tr><tr><td><a href="#put-apiv1identitysign-indirectoriesid"><code>PUT /api/v1/identity/sign-in/directories/{id}</code></a></td><td>Changes a directory (including turning it off).</td></tr><tr><td><a href="#delete-apiv1identitysign-indirectoriesid"><code>DELETE /api/v1/identity/sign-in/directories/{id}</code></a></td><td>Removes a directory: its people can no longer sign in with it; their accounts and roles in Apelora stay.</td></tr><tr><td><a href="#post-apiv1identitysign-indirectoriescheck"><code>POST /api/v1/identity/sign-in/directories/check</code></a></td><td>Connects with TLS, binds as a test person and reads their entry and groups, without saving anything.</td></tr><tr><td><a href="#put-apiv1identitysign-inlocal-accounts"><code>PUT /api/v1/identity/sign-in/local-accounts</code></a></td><td>Turns sign-in with local accounts on or off.</td></tr><tr><td><a href="#post-apiv1identitysign-inproviders"><code>POST /api/v1/identity/sign-in/providers</code></a></td><td>Adds an identity provider; it is checked and applied at once.</td></tr><tr><td><a href="#put-apiv1identitysign-inprovidersid"><code>PUT /api/v1/identity/sign-in/providers/{id}</code></a></td><td>Changes a provider saved in the Console.</td></tr><tr><td><a href="#delete-apiv1identitysign-inprovidersid"><code>DELETE /api/v1/identity/sign-in/providers/{id}</code></a></td><td>Removes a provider saved in the Console: people stop being able to sign in with it.</td></tr><tr><td><a href="#get-apiv1identitysign-ins"><code>GET /api/v1/identity/sign-ins</code></a></td><td>Everyone's Apelora sessions open now (or one person's).</td></tr><tr><td><a href="#delete-apiv1identitysign-insid"><code>DELETE /api/v1/identity/sign-ins/{id}</code></a></td><td>Ends anyone's session.</td></tr><tr><td><a href="#get-apiv1identitytenancy"><code>GET /api/v1/identity/tenancy</code></a></td><td>Organisations, projects and environments the caller can see, with quotas, use and each environment's Incus project as Incus reports it.</td></tr><tr><td><a href="#get-apiv1identityusers"><code>GET /api/v1/identity/users</code></a></td><td>People who have signed in, as far as the caller may see them: everyone for a platform administrator, otherwise those with a role in the caller's scopes.</td></tr><tr><td><a href="#post-apiv1identityusersuserdisable"><code>POST /api/v1/identity/users/{user}/disable</code></a></td><td>Disables a person: their tokens and Apelora sessions stop working at once.</td></tr><tr><td><a href="#post-apiv1identityusersuserenable"><code>POST /api/v1/identity/users/{user}/enable</code></a></td><td>Re-enables a person.</td></tr><tr><td><a href="#get-apiv1identityuserslookup"><code>GET /api/v1/identity/users/lookup</code></a></td><td>Finds one person by exact user name or e-mail so a role can be given to them.</td></tr><tr><td><a href="#put-apiv1mepassword"><code>PUT /api/v1/me/password</code></a></td><td>Changes the caller's own password (local accounts only).</td></tr><tr><td><a href="#get-apiv1mesign-ins"><code>GET /api/v1/me/sign-ins</code></a></td><td>Your Apelora sessions open now (password and directory sign-ins), most recently used first.</td></tr><tr><td><a href="#delete-apiv1mesign-insid"><code>DELETE /api/v1/me/sign-ins/{id}</code></a></td><td>Ends one of your sessions (signs that browser out).</td></tr><tr><td><a href="#get-apiv1metokens"><code>GET /api/v1/me/tokens</code></a></td><td>Your personal tokens (live ones, and those that ended in the last 30 days), newest first.</td></tr><tr><td><a href="#post-apiv1metokens"><code>POST /api/v1/me/tokens</code></a></td><td>Creates a personal token, shown only in this response.</td></tr><tr><td><a href="#delete-apiv1metokensid"><code>DELETE /api/v1/me/tokens/{id}</code></a></td><td>Revokes one of your live tokens; it stops working at once.</td></tr><tr><td><a href="#post-apiv1metokensidrotate"><code>POST /api/v1/me/tokens/{id}/rotate</code></a></td><td>Rotates one of your live tokens: a successor with the same name (shown only in this response), and the old token keeps working for the overlap (0–1440 minutes, 60 by default), then expires.</td></tr></tbody></table></div>
 <h2 id="details">Details</h2>
 <h3 id="get-apiv1approvals"><code>GET /api/v1/approvals</code></h3>
 <p>Requests and approvals: your own, plus every open one if you may approve. Needs <code>approval.request</code> or <code>approval.grant</code>.</p>
@@ -101,15 +101,15 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;122100eb-555e-44a5-aeb4-719d7e49aba1&quot;,
+      &quot;id&quot;: &quot;3f0e6881-139b-4f25-8c54-990d759f0376&quot;,
       &quot;action&quot;: &quot;hardware.delete&quot;,
       &quot;target&quot;: &quot;machine:rack1-07&quot;,
       &quot;requester&quot;: &quot;token:docs-verifier&quot;,
       &quot;approver&quot;: null,
       &quot;state&quot;: &quot;pending&quot;,
       &quot;reason&quot;: &quot;Retire the old storage server&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.942122Z&quot;,
-      &quot;expiresAt&quot;: &quot;2026-10-29T21:24:02Z&quot;
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:11.034316Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-10-29T22:51:11Z&quot;
     }
   ]
 }</code></pre>
@@ -139,99 +139,99 @@
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;122100eb-555e-44a5-aeb4-719d7e49aba1&quot;,
+  &quot;id&quot;: &quot;3f0e6881-139b-4f25-8c54-990d759f0376&quot;,
   &quot;action&quot;: &quot;hardware.delete&quot;,
   &quot;target&quot;: &quot;machine:rack1-07&quot;,
   &quot;requester&quot;: &quot;token:docs-verifier&quot;,
   &quot;approver&quot;: null,
   &quot;state&quot;: &quot;pending&quot;,
   &quot;reason&quot;: &quot;Retire the old storage server&quot;,
-  &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.942122Z&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-29T21:24:02Z&quot;
+  &quot;createdAt&quot;: &quot;2026-10-28T22:51:11.034316Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-29T22:51:11Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>too_many_open_requests</code>, <code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1approvalsidapprove"><code>POST /api/v1/approvals/{id}/approve</code></h3>
 <p>Approves a request made by someone else. Needs <code>approval.grant</code>, held by a signed-in person: API tokens are refused (<code>approval_needs_a_person</code>). The approval is good for 30 minutes, once.</p>
-<p><strong>Operation ID:</strong> <code>approve_request</code></p>
+<p><strong>Operation ID:</strong> <code>approve_approval</code></p>
 <p><strong>Needs:</strong> <code>approval.grant</code>, held by a signed-in person: API tokens are refused (<code>approval_needs_a_person</code>).</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Approval id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/approvals/2741e4c0-049c-4650-a3d8-4d6c455281ce/approve&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/approvals/cbb1f69c-5f23-472b-a041-9e5dcee80d0a/approve&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;approve_request&quot;, { params: { id: &quot;2741e4c0-049c-4650-a3d8-4d6c455281ce&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;approve_approval&quot;, { params: { id: &quot;cbb1f69c-5f23-472b-a041-9e5dcee80d0a&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;2741e4c0-049c-4650-a3d8-4d6c455281ce&quot;,
+  &quot;id&quot;: &quot;cbb1f69c-5f23-472b-a041-9e5dcee80d0a&quot;,
   &quot;action&quot;: &quot;token.create_admin&quot;,
   &quot;target&quot;: &quot;token:fabric-admin&quot;,
-  &quot;requester&quot;: &quot;user:c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd&quot;,
-  &quot;approver&quot;: &quot;user:6c57707e-01af-4d92-842e-6712151e369a&quot;,
+  &quot;requester&quot;: &quot;user:0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368&quot;,
+  &quot;approver&quot;: &quot;user:d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
   &quot;state&quot;: &quot;approved&quot;,
   &quot;reason&quot;: &quot;A second administrator token for the backup site&quot;,
-  &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.977227Z&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-28T21:54:02Z&quot;
+  &quot;createdAt&quot;: &quot;2026-10-28T22:51:11.101077Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-28T23:21:11Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>approval_needs_a_person</code>, <code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td>—</td></tr><tr><td><code>410</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1approvalsidcancel"><code>POST /api/v1/approvals/{id}/cancel</code></h3>
 <p>Withdraws your own pending request. Needs <code>approval.request</code>.</p>
-<p><strong>Operation ID:</strong> <code>cancel_request</code></p>
+<p><strong>Operation ID:</strong> <code>cancel_approval</code></p>
 <p><strong>Needs:</strong> <code>approval.request</code>.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Approval id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/approvals/b540ded6-d300-48b8-a511-087d11bb1bdf/cancel&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/approvals/fc5f28e0-1770-404f-9330-c68510037426/cancel&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;cancel_request&quot;, { params: { id: &quot;b540ded6-d300-48b8-a511-087d11bb1bdf&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;cancel_approval&quot;, { params: { id: &quot;fc5f28e0-1770-404f-9330-c68510037426&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;b540ded6-d300-48b8-a511-087d11bb1bdf&quot;,
+  &quot;id&quot;: &quot;fc5f28e0-1770-404f-9330-c68510037426&quot;,
   &quot;action&quot;: &quot;hardware.delete&quot;,
   &quot;target&quot;: &quot;machine:rack1-08&quot;,
   &quot;requester&quot;: &quot;token:docs-verifier&quot;,
   &quot;approver&quot;: null,
   &quot;state&quot;: &quot;cancelled&quot;,
   &quot;reason&quot;: &quot;Retire the spare server&quot;,
-  &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.962636Z&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-29T21:24:02Z&quot;
+  &quot;createdAt&quot;: &quot;2026-10-28T22:51:11.067753Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-29T22:51:11Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="post-apiv1approvalsidreject"><code>POST /api/v1/approvals/{id}/reject</code></h3>
 <p>Rejects a request. Needs <code>approval.grant</code>, held by a signed-in person (API tokens are refused).</p>
-<p><strong>Operation ID:</strong> <code>reject_request</code></p>
+<p><strong>Operation ID:</strong> <code>reject_approval</code></p>
 <p><strong>Needs:</strong> <code>approval.grant</code>, held by a signed-in person (API tokens are refused).</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Approval id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/approvals/122100eb-555e-44a5-aeb4-719d7e49aba1/reject&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/approvals/3f0e6881-139b-4f25-8c54-990d759f0376/reject&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;reject_request&quot;, { params: { id: &quot;122100eb-555e-44a5-aeb4-719d7e49aba1&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;reject_approval&quot;, { params: { id: &quot;3f0e6881-139b-4f25-8c54-990d759f0376&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;122100eb-555e-44a5-aeb4-719d7e49aba1&quot;,
+  &quot;id&quot;: &quot;3f0e6881-139b-4f25-8c54-990d759f0376&quot;,
   &quot;action&quot;: &quot;hardware.delete&quot;,
   &quot;target&quot;: &quot;machine:rack1-07&quot;,
   &quot;requester&quot;: &quot;token:docs-verifier&quot;,
-  &quot;approver&quot;: &quot;user:6c57707e-01af-4d92-842e-6712151e369a&quot;,
+  &quot;approver&quot;: &quot;user:d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
   &quot;state&quot;: &quot;rejected&quot;,
   &quot;reason&quot;: &quot;Retire the old storage server&quot;,
-  &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.942122Z&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-29T21:24:02Z&quot;
+  &quot;createdAt&quot;: &quot;2026-10-28T22:51:11.034316Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-29T22:51:11Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>approval_needs_a_person</code>, <code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -245,30 +245,30 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>With options</strong> (<code>principalType</code>, <code>principalId</code>, <code>includeRevoked</code>):</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/assignments?principalType=group&amp;principalId=0fd2714f-7dc1-479d-9855-6e0801d8d4e1&amp;includeRevoked=true&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/assignments?principalType=group&amp;principalId=a2b15f61-19ea-415f-a979-fc5fdbd20f64&amp;includeRevoked=true&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;assignments&quot;, { query: { principalType: &quot;group&quot;, principalId: &quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;, includeRevoked: true } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;assignments&quot;, { query: { principalType: &quot;group&quot;, principalId: &quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;, includeRevoked: true } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. Long lists are cut to their first items.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;dce1551b-5292-4ed4-bd77-5ee65223e2db&quot;,
+      &quot;id&quot;: &quot;4a91af5a-d8b9-4195-a130-73d54f574927&quot;,
       &quot;principal&quot;: {
         &quot;type&quot;: &quot;group&quot;,
-        &quot;id&quot;: &quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;
+        &quot;id&quot;: &quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;
       },
       &quot;role&quot;: {
         &quot;type&quot;: &quot;custom&quot;,
-        &quot;id&quot;: &quot;8a1c93f8-1b1f-445e-856a-51696b92823f&quot;
+        &quot;id&quot;: &quot;2fad0e1f-d140-4d43-8a19-9cba72ab2a06&quot;
       },
       &quot;roleName&quot;: &quot;Release manager&quot;,
       &quot;scope&quot;: {
         &quot;type&quot;: &quot;project&quot;,
-        &quot;id&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;
+        &quot;id&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;
       },
       &quot;conditions&quot;: {
         &quot;requireMfa&quot;: false,
@@ -280,14 +280,14 @@
       &quot;expiresAt&quot;: null,
       &quot;reason&quot;: &quot;The shop team releases to production&quot;,
       &quot;createdBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.802548Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.792356Z&quot;,
       &quot;revokedAt&quot;: null
     },
     {
-      &quot;id&quot;: &quot;04f8f03d-51a4-467c-9714-ddac9d877dec&quot;,
+      &quot;id&quot;: &quot;7aa818ce-592d-4f8f-a5c6-539fd760f8ad&quot;,
       &quot;principal&quot;: {
         &quot;type&quot;: &quot;user&quot;,
-        &quot;id&quot;: &quot;c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd&quot;
+        &quot;id&quot;: &quot;0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368&quot;
       },
       &quot;role&quot;: {
         &quot;type&quot;: &quot;builtin&quot;,
@@ -304,7 +304,7 @@
       &quot;expiresAt&quot;: null,
       &quot;reason&quot;: &quot;Platform administrators of this installation&quot;,
       &quot;createdBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:01.679398Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:09.293064Z&quot;,
       &quot;revokedAt&quot;: null
     }
   ]
@@ -320,15 +320,15 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;principal&quot;: {
     &quot;type&quot;: &quot;group&quot;,
-    &quot;id&quot;: &quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;
+    &quot;id&quot;: &quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;
   },
   &quot;role&quot;: {
     &quot;type&quot;: &quot;custom&quot;,
-    &quot;id&quot;: &quot;8a1c93f8-1b1f-445e-856a-51696b92823f&quot;
+    &quot;id&quot;: &quot;2fad0e1f-d140-4d43-8a19-9cba72ab2a06&quot;
   },
   &quot;scope&quot;: {
     &quot;type&quot;: &quot;project&quot;,
-    &quot;id&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;
+    &quot;id&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;
   },
   &quot;conditions&quot;: {
     &quot;environments&quot;: [
@@ -344,26 +344,26 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;principal&quot;:{&quot;type&quot;:&quot;group&quot;,&quot;id&quot;:&quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;},&quot;role&quot;:{&quot;type&quot;:&quot;custom&quot;,&quot;id&quot;:&quot;8a1c93f8-1b1f-445e-856a-51696b92823f&quot;},&quot;scope&quot;:{&quot;type&quot;:&quot;project&quot;,&quot;id&quot;:&quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;},&quot;conditions&quot;:{&quot;environments&quot;:[&quot;production&quot;],&quot;requireMfa&quot;:false},&quot;reason&quot;:&quot;The shop team releases to production&quot;}'</code></pre>
+  --data-raw '{&quot;principal&quot;:{&quot;type&quot;:&quot;group&quot;,&quot;id&quot;:&quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;},&quot;role&quot;:{&quot;type&quot;:&quot;custom&quot;,&quot;id&quot;:&quot;2fad0e1f-d140-4d43-8a19-9cba72ab2a06&quot;},&quot;scope&quot;:{&quot;type&quot;:&quot;project&quot;,&quot;id&quot;:&quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;},&quot;conditions&quot;:{&quot;environments&quot;:[&quot;production&quot;],&quot;requireMfa&quot;:false},&quot;reason&quot;:&quot;The shop team releases to production&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;create_assignment&quot;, { body /* the request body above */ });</code></pre>
 <p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;dce1551b-5292-4ed4-bd77-5ee65223e2db&quot;,
+  &quot;id&quot;: &quot;4a91af5a-d8b9-4195-a130-73d54f574927&quot;,
   &quot;principal&quot;: {
     &quot;type&quot;: &quot;group&quot;,
-    &quot;id&quot;: &quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;
+    &quot;id&quot;: &quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;
   },
   &quot;role&quot;: {
     &quot;type&quot;: &quot;custom&quot;,
-    &quot;id&quot;: &quot;8a1c93f8-1b1f-445e-856a-51696b92823f&quot;
+    &quot;id&quot;: &quot;2fad0e1f-d140-4d43-8a19-9cba72ab2a06&quot;
   },
   &quot;roleName&quot;: &quot;Release manager&quot;,
   &quot;scope&quot;: {
     &quot;type&quot;: &quot;project&quot;,
-    &quot;id&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;
+    &quot;id&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;
   },
   &quot;conditions&quot;: {
     &quot;requireMfa&quot;: false,
@@ -375,7 +375,7 @@
   &quot;expiresAt&quot;: null,
   &quot;reason&quot;: &quot;The shop team releases to production&quot;,
   &quot;createdBy&quot;: &quot;token:docs-verifier&quot;,
-  &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.802548Z&quot;,
+  &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.792356Z&quot;,
   &quot;revokedAt&quot;: null
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
@@ -387,10 +387,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>assignment</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Assignment id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/assignments/dce1551b-5292-4ed4-bd77-5ee65223e2db&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/assignments/4a91af5a-d8b9-4195-a130-73d54f574927&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;revoke_assignment&quot;, { params: { assignment: &quot;dce1551b-5292-4ed4-bd77-5ee65223e2db&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;revoke_assignment&quot;, { params: { assignment: &quot;4a91af5a-d8b9-4195-a130-73d54f574927&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>revocation_refused</code>, <code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>last_super_admin</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -403,15 +403,15 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;principal&quot;: {
     &quot;type&quot;: &quot;group&quot;,
-    &quot;id&quot;: &quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;
+    &quot;id&quot;: &quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;
   },
   &quot;role&quot;: {
     &quot;type&quot;: &quot;custom&quot;,
-    &quot;id&quot;: &quot;8a1c93f8-1b1f-445e-856a-51696b92823f&quot;
+    &quot;id&quot;: &quot;2fad0e1f-d140-4d43-8a19-9cba72ab2a06&quot;
   },
   &quot;scope&quot;: {
     &quot;type&quot;: &quot;project&quot;,
-    &quot;id&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;
+    &quot;id&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;
   },
   &quot;conditions&quot;: {
     &quot;environments&quot;: [
@@ -427,7 +427,7 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;principal&quot;:{&quot;type&quot;:&quot;group&quot;,&quot;id&quot;:&quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;},&quot;role&quot;:{&quot;type&quot;:&quot;custom&quot;,&quot;id&quot;:&quot;8a1c93f8-1b1f-445e-856a-51696b92823f&quot;},&quot;scope&quot;:{&quot;type&quot;:&quot;project&quot;,&quot;id&quot;:&quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;},&quot;conditions&quot;:{&quot;environments&quot;:[&quot;production&quot;],&quot;requireMfa&quot;:false},&quot;reason&quot;:&quot;The shop team releases to production&quot;}'</code></pre>
+  --data-raw '{&quot;principal&quot;:{&quot;type&quot;:&quot;group&quot;,&quot;id&quot;:&quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;},&quot;role&quot;:{&quot;type&quot;:&quot;custom&quot;,&quot;id&quot;:&quot;2fad0e1f-d140-4d43-8a19-9cba72ab2a06&quot;},&quot;scope&quot;:{&quot;type&quot;:&quot;project&quot;,&quot;id&quot;:&quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;},&quot;conditions&quot;:{&quot;environments&quot;:[&quot;production&quot;],&quot;requireMfa&quot;:false},&quot;reason&quot;:&quot;The shop team releases to production&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;preview_assignment&quot;, { body /* the request body above */ });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
@@ -448,7 +448,7 @@
 <p>Audit history the caller may read: the same filters and paging as <code>GET /api/v1/audit</code>. Needs <code>audit.read</code>.</p>
 <p><strong>Operation ID:</strong> <code>identity_audit</code></p>
 <p><strong>Needs:</strong> <code>audit.read</code>.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>actor</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>Who acted: their stable id (<code>user:&lt;uuid&gt;</code>, <code>service:&lt;uuid&gt;</code>, <code>token:&lt;name&gt;</code>) or, ignoring case, the name they had when they acted.</td></tr><tr><td><code>target</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>What was acted on, exactly as recorded (e.g. <code>local-account:ada</code> or a group's name).</td></tr><tr><td><code>action</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>Only actions starting with this, e.g. <code>role.</code> or <code>emergency_access.</code>.</td></tr><tr><td><code>outcome</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td><code>success</code>, <code>denied</code> or <code>failed</code>.</td></tr><tr><td><code>from</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>RFC 3339: events at or after this time.</td></tr><tr><td><code>to</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>RFC 3339: events before this time.</td></tr><tr><td><code>before</code></td><td>query</td><td>integer</td><td>no</td><td>—</td><td>Only events older than this id (paging: the id of the last event of the previous page).</td></tr><tr><td><code>limit</code></td><td>query</td><td>integer</td><td>no</td><td><code>100</code></td><td>Events per page, 1 to 500 (default 100). Not used by the export.</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>actor</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>Who acted: their stable id (<code>user:&lt;uuid&gt;</code>, <code>service:&lt;uuid&gt;</code>, <code>token:&lt;name&gt;</code>) or, ignoring case, the name they had when they acted.</td></tr><tr><td><code>target</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>What was acted on, exactly as recorded (e.g. <code>local-account:ada</code> or a group's name).</td></tr><tr><td><code>action</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>Only actions starting with this, e.g. <code>role.</code> or <code>emergency_access.</code>.</td></tr><tr><td><code>outcome</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td><code>success</code>, <code>denied</code> or <code>failed</code>.</td></tr><tr><td><code>from</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>RFC 3339: events at or after this time.</td></tr><tr><td><code>to</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>RFC 3339: events before this time.</td></tr><tr><td><code>after</code></td><td>query</td><td>string</td><td>no</td><td>—</td><td>Paging: the <code>next</code> of the previous page.</td></tr><tr><td><code>limit</code></td><td>query</td><td>integer</td><td>no</td><td><code>100</code></td><td>Events per page, 1 to 500 (default 100). Not used by the export.</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/audit&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
@@ -457,7 +457,7 @@
 <pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/audit?action=role.&amp;limit=5&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
-<p><strong>Next page:</strong> repeat the request with <code>before</code> set to the <code>id</code> of the last item. A page shorter than <code>limit</code> is the last one.</p>
+<p><strong>Next page:</strong> repeat the request with <code>after</code> set to the response's <code>next</code>. The last page has no <code>next</code>.</p>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;identity_audit&quot;, { query: { action: &quot;role.&quot;, limit: 5 } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
@@ -467,30 +467,30 @@
   &quot;items&quot;: [
     {
       &quot;id&quot;: 130,
-      &quot;at&quot;: &quot;2026-10-28T21:24:19.354692Z&quot;,
-      &quot;actor&quot;: &quot;user:6c57707e-01af-4d92-842e-6712151e369a&quot;,
+      &quot;at&quot;: &quot;2026-10-28T22:51:26.983968Z&quot;,
+      &quot;actor&quot;: &quot;user:d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
       &quot;actorType&quot;: &quot;user&quot;,
       &quot;actorName&quot;: &quot;ada&quot;,
       &quot;action&quot;: &quot;session.request&quot;,
       &quot;target&quot;: &quot;instance:shop/shop-db-01&quot;,
       &quot;outcome&quot;: &quot;success&quot;,
       &quot;scope&quot;: {
-        &quot;application&quot;: &quot;5a291a1e-9ece-4dc7-91af-ef01835cb68b&quot;,
-        &quot;organization&quot;: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot;,
-        &quot;project&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;
+        &quot;application&quot;: &quot;9c2b8220-029b-44ef-9ede-79269c0e316b&quot;,
+        &quot;organization&quot;: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;,
+        &quot;project&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;
       },
       &quot;detail&quot;: {
-        &quot;approval&quot;: &quot;a39d69cc-13fe-4c4f-9552-5f8fed1729ed&quot;,
+        &quot;approval&quot;: &quot;81678c81-dfdb-4e1e-be3c-955a4f04384d&quot;,
         &quot;kind&quot;: &quot;terminal&quot;,
         &quot;name&quot;: &quot;ada&quot;,
-        &quot;requestId&quot;: &quot;b2aa90d5-c354-472c-80ff-8f01b0a9efb5&quot;,
-        &quot;session&quot;: &quot;17ab06f7-bcf7-41b6-ad02-d64aba42145c&quot;
+        &quot;requestId&quot;: &quot;3299c5c9-ad02-4252-89b8-94bdee62b338&quot;,
+        &quot;session&quot;: &quot;9db6075c-470f-4d3a-873e-0f203d4c86e9&quot;
       }
     },
     {
       &quot;id&quot;: 129,
-      &quot;at&quot;: &quot;2026-10-28T21:24:19.318959Z&quot;,
-      &quot;actor&quot;: &quot;user:c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd&quot;,
+      &quot;at&quot;: &quot;2026-10-28T22:51:26.9424Z&quot;,
+      &quot;actor&quot;: &quot;user:0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368&quot;,
       &quot;actorType&quot;: &quot;user&quot;,
       &quot;actorName&quot;: &quot;grace&quot;,
       &quot;action&quot;: &quot;approval.grant&quot;,
@@ -500,13 +500,14 @@
       &quot;detail&quot;: {
         &quot;action&quot;: &quot;instance.console&quot;,
         &quot;emergencyAccess&quot;: true,
-        &quot;id&quot;: &quot;a39d69cc-13fe-4c4f-9552-5f8fed1729ed&quot;,
+        &quot;id&quot;: &quot;81678c81-dfdb-4e1e-be3c-955a4f04384d&quot;,
         &quot;name&quot;: &quot;grace&quot;,
-        &quot;requestId&quot;: &quot;76c471c8-e8c8-4f98-b31d-a4bc3f69dac3&quot;,
-        &quot;requester&quot;: &quot;user:6c57707e-01af-4d92-842e-6712151e369a&quot;
+        &quot;requestId&quot;: &quot;1c852951-c130-4ba4-935a-8f1c9a5c1dd2&quot;,
+        &quot;requester&quot;: &quot;user:d3dea878-2d2a-4710-af99-6bf13728a161&quot;
       }
     }
-  ]
+  ],
+  &quot;next&quot;: &quot;31&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -517,7 +518,7 @@
 <p><strong>Request body</strong> (JSON):</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>minutes</code></td><td>integer</td><td>yes</td><td>5–240 minutes.</td></tr><tr><td><code>reason</code></td><td>string</td><td>yes</td><td>Why; at least 10 characters. Recorded in the audit trail.</td></tr><tr><td><code>role</code></td><td>string</td><td>yes</td><td>A predefined role key, e.g. <code>fabric-administrator</code>.</td></tr><tr><td><code>userId</code></td><td>string (uuid)</td><td>yes</td><td>—</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;userId&quot;: &quot;c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd&quot;,
+  &quot;userId&quot;: &quot;0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368&quot;,
   &quot;role&quot;: &quot;fabric-administrator&quot;,
   &quot;minutes&quot;: 30,
   &quot;reason&quot;: &quot;Restore access during the identity provider outage&quot;
@@ -528,17 +529,17 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;userId&quot;:&quot;c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd&quot;,&quot;role&quot;:&quot;fabric-administrator&quot;,&quot;minutes&quot;:30,&quot;reason&quot;:&quot;Restore access during the identity provider outage&quot;}'</code></pre>
+  --data-raw '{&quot;userId&quot;:&quot;0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368&quot;,&quot;role&quot;:&quot;fabric-administrator&quot;,&quot;minutes&quot;:30,&quot;reason&quot;:&quot;Restore access during the identity provider outage&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;grant_emergency_access&quot;, { body /* the request body above */ });</code></pre>
 <p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;314e5e95-e2cb-4133-9a24-7e57df39a97c&quot;,
+  &quot;id&quot;: &quot;d3c0fbb1-897f-447b-b9e1-7b67328c93be&quot;,
   &quot;principal&quot;: {
     &quot;type&quot;: &quot;user&quot;,
-    &quot;id&quot;: &quot;c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd&quot;
+    &quot;id&quot;: &quot;0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368&quot;
   },
   &quot;role&quot;: {
     &quot;type&quot;: &quot;builtin&quot;,
@@ -552,10 +553,10 @@
     &quot;requireMfa&quot;: false
   },
   &quot;kind&quot;: &quot;emergency&quot;,
-  &quot;expiresAt&quot;: &quot;2026-10-28T21:54:02.843923Z&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-28T23:21:10.867143Z&quot;,
   &quot;reason&quot;: &quot;Restore access during the identity provider outage&quot;,
-  &quot;createdBy&quot;: &quot;user:6c57707e-01af-4d92-842e-6712151e369a&quot;,
-  &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.84456Z&quot;,
+  &quot;createdBy&quot;: &quot;user:d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
+  &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.869599Z&quot;,
   &quot;revokedAt&quot;: null
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
@@ -567,22 +568,22 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Environment id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/environments/276b703c-f198-472d-ae04-59bf969979dd/incus-project&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/environments/de3e069e-2e1c-419a-996a-63bd3a4c13f2/incus-project&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;prepare_incus_project&quot;, { params: { id: &quot;276b703c-f198-472d-ae04-59bf969979dd&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;prepare_incus_project&quot;, { params: { id: &quot;de3e069e-2e1c-419a-996a-63bd3a4c13f2&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;environmentId&quot;: &quot;276b703c-f198-472d-ae04-59bf969979dd&quot;,
+  &quot;environmentId&quot;: &quot;de3e069e-2e1c-419a-996a-63bd3a4c13f2&quot;,
   &quot;incusProject&quot;: &quot;shop-prod&quot;,
   &quot;state&quot;: &quot;created&quot;,
   &quot;detail&quot;: &quot;Incus project shop-prod created by Apelora with the baseline restrictions&quot;,
   &quot;findings&quot;: [],
   &quot;limits&quot;: {
-    &quot;environmentId&quot;: &quot;276b703c-f198-472d-ae04-59bf969979dd&quot;,
+    &quot;environmentId&quot;: &quot;de3e069e-2e1c-419a-996a-63bd3a4c13f2&quot;,
     &quot;environment&quot;: &quot;Production&quot;,
     &quot;incusProject&quot;: &quot;shop-prod&quot;,
     &quot;result&quot;: &quot;unchanged&quot;,
@@ -608,8 +609,8 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;,
-      &quot;organizationId&quot;: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot;,
+      &quot;id&quot;: &quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;,
+      &quot;organizationId&quot;: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;,
       &quot;name&quot;: &quot;shop-operators&quot;,
       &quot;externalName&quot;: null,
       &quot;externalSource&quot;: null,
@@ -630,7 +631,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;name&quot;: &quot;shop-operators&quot;,
   &quot;description&quot;: &quot;People who run the online shop&quot;,
-  &quot;organizationId&quot;: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot;
+  &quot;organizationId&quot;: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
@@ -638,15 +639,15 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;name&quot;:&quot;shop-operators&quot;,&quot;description&quot;:&quot;People who run the online shop&quot;,&quot;organizationId&quot;:&quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot;}'</code></pre>
+  --data-raw '{&quot;name&quot;:&quot;shop-operators&quot;,&quot;description&quot;:&quot;People who run the online shop&quot;,&quot;organizationId&quot;:&quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
 <pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;create_group&quot;, { body /* the request body above */ });</code></pre>
 <p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;,
-  &quot;organizationId&quot;: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot;,
+  &quot;id&quot;: &quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;,
+  &quot;organizationId&quot;: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;,
   &quot;name&quot;: &quot;shop-operators&quot;,
   &quot;externalName&quot;: null,
   &quot;externalSource&quot;: null,
@@ -663,27 +664,27 @@
 <p><strong>Request body</strong> (JSON):</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>name</code></td><td>string</td><td>yes</td><td>The group's name in the source's tokens; for a directory, the group's full DN.</td></tr><tr><td><code>source</code></td><td>string</td><td>yes</td><td>One of the <code>sources</code> the group list names.</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;source&quot;: &quot;directory:a969ba32-027a-4ba5-810f-df73bbeb3366&quot;,
+  &quot;source&quot;: &quot;directory:c5922738-ce68-4d09-8cc2-3a6c50f7f2ed&quot;,
   &quot;name&quot;: &quot;cn=admins,ou=groups,dc=acme,dc=example&quot;
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/identity/groups/45f05423-fe55-4c15-b07c-5aaa23c31a8a/external&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/identity/groups/7c7adc7f-8bcc-4c81-9632-c9743fb046a2/external&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;source&quot;:&quot;directory:a969ba32-027a-4ba5-810f-df73bbeb3366&quot;,&quot;name&quot;:&quot;cn=admins,ou=groups,dc=acme,dc=example&quot;}'</code></pre>
+  --data-raw '{&quot;source&quot;:&quot;directory:c5922738-ce68-4d09-8cc2-3a6c50f7f2ed&quot;,&quot;name&quot;:&quot;cn=admins,ou=groups,dc=acme,dc=example&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;set_group_external&quot;, { params: { group: &quot;45f05423-fe55-4c15-b07c-5aaa23c31a8a&quot; }, body /* the request body above */ });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;set_group_external&quot;, { params: { group: &quot;7c7adc7f-8bcc-4c81-9632-c9743fb046a2&quot; }, body /* the request body above */ });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;45f05423-fe55-4c15-b07c-5aaa23c31a8a&quot;,
+  &quot;id&quot;: &quot;7c7adc7f-8bcc-4c81-9632-c9743fb046a2&quot;,
   &quot;organizationId&quot;: null,
   &quot;name&quot;: &quot;head-office-admins&quot;,
   &quot;externalName&quot;: &quot;cn=admins,ou=groups,dc=acme,dc=example&quot;,
-  &quot;externalSource&quot;: &quot;directory:a969ba32-027a-4ba5-810f-df73bbeb3366&quot;,
+  &quot;externalSource&quot;: &quot;directory:c5922738-ce68-4d09-8cc2-3a6c50f7f2ed&quot;,
   &quot;needsSource&quot;: false,
   &quot;description&quot;: &quot;Administrators from the head office directory&quot;
 }</code></pre>
@@ -695,24 +696,24 @@
 <p><strong>Needs:</strong> <code>user.view</code> or <code>group.manage</code> on the group's organisation.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>group</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Group id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/groups/0fd2714f-7dc1-479d-9855-6e0801d8d4e1/members&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/groups/a2b15f61-19ea-415f-a979-fc5fdbd20f64/members&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;group_members&quot;, { params: { group: &quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;group_members&quot;, { params: { group: &quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;289e97a9-0518-4909-8934-41d745a956e0&quot;,
+      &quot;id&quot;: &quot;e887c0b4-a67e-421d-840e-fac41b20a2c3&quot;,
       &quot;username&quot;: &quot;lin&quot;,
       &quot;email&quot;: &quot;lin@example.org&quot;,
       &quot;displayName&quot;: &quot;Lin Chen&quot;,
       &quot;issuer&quot;: &quot;apelora:local&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:01.190322Z&quot;,
-      &quot;lastSeenAt&quot;: &quot;2026-10-28T21:24:01.660941Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:08.673079Z&quot;,
+      &quot;lastSeenAt&quot;: &quot;2026-10-28T22:51:09.256954Z&quot;,
       &quot;disabled&quot;: false
     }
   ]
@@ -726,10 +727,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>group</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Group id</td></tr><tr><td><code>user</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>User id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/identity/groups/0fd2714f-7dc1-479d-9855-6e0801d8d4e1/members/289e97a9-0518-4909-8934-41d745a956e0&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/identity/groups/a2b15f61-19ea-415f-a979-fc5fdbd20f64/members/e887c0b4-a67e-421d-840e-fac41b20a2c3&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;add_group_member&quot;, { params: { group: &quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;, user: &quot;289e97a9-0518-4909-8934-41d745a956e0&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;add_group_member&quot;, { params: { group: &quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;, user: &quot;e887c0b4-a67e-421d-840e-fac41b20a2c3&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>membership_refused</code>, <code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>last_super_admin</code>, <code>managed_by_provider</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -740,10 +741,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>group</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Group id</td></tr><tr><td><code>user</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>User id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/groups/0fd2714f-7dc1-479d-9855-6e0801d8d4e1/members/289e97a9-0518-4909-8934-41d745a956e0&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/groups/a2b15f61-19ea-415f-a979-fc5fdbd20f64/members/e887c0b4-a67e-421d-840e-fac41b20a2c3&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;remove_group_member&quot;, { params: { group: &quot;0fd2714f-7dc1-479d-9855-6e0801d8d4e1&quot;, user: &quot;289e97a9-0518-4909-8934-41d745a956e0&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;remove_group_member&quot;, { params: { group: &quot;a2b15f61-19ea-415f-a979-fc5fdbd20f64&quot;, user: &quot;e887c0b4-a67e-421d-840e-fac41b20a2c3&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>membership_refused</code>, <code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>last_super_admin</code>, <code>managed_by_provider</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -772,17 +773,17 @@
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;user&quot;: {
-    &quot;id&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+    &quot;id&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
     &quot;username&quot;: &quot;ada&quot;,
     &quot;email&quot;: &quot;ada@example.org&quot;,
     &quot;displayName&quot;: &quot;Ada Lovelace&quot;,
     &quot;issuer&quot;: &quot;apelora:local&quot;,
-    &quot;createdAt&quot;: &quot;2026-10-28T21:24:00.325977Z&quot;,
+    &quot;createdAt&quot;: &quot;2026-10-28T22:51:07.549787Z&quot;,
     &quot;lastSeenAt&quot;: null,
     &quot;disabled&quot;: false
   },
   &quot;setupToken&quot;: &quot;&lt;setup token, shown once&gt;&quot;,
-  &quot;setupExpiresAt&quot;: &quot;2026-10-29T21:24:00.325977Z&quot;
+  &quot;setupExpiresAt&quot;: &quot;2026-10-29T22:51:07.549787Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>username_taken</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -793,17 +794,17 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>User id of the local account</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/local-accounts/289e97a9-0518-4909-8934-41d745a956e0/reset&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/local-accounts/e887c0b4-a67e-421d-840e-fac41b20a2c3/reset&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;reset_local_account&quot;, { params: { id: &quot;289e97a9-0518-4909-8934-41d745a956e0&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;reset_local_account&quot;, { params: { id: &quot;e887c0b4-a67e-421d-840e-fac41b20a2c3&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;setupToken&quot;: &quot;&lt;setup token, shown once&gt;&quot;,
-  &quot;setupExpiresAt&quot;: &quot;2026-10-29T21:24:01.692833Z&quot;
+  &quot;setupExpiresAt&quot;: &quot;2026-10-29T22:51:09.32073Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>self_reset</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -823,17 +824,17 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot;,
+      &quot;id&quot;: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;,
       &quot;slug&quot;: &quot;acme&quot;,
       &quot;name&quot;: &quot;Acme Corporation&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:00.21595Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:07.317215Z&quot;,
       &quot;disabled&quot;: false
     },
     {
       &quot;id&quot;: &quot;00000000-0000-0000-0000-000000000001&quot;,
       &quot;slug&quot;: &quot;default&quot;,
       &quot;name&quot;: &quot;Default&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:23:59.877616Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:06.853679Z&quot;,
       &quot;disabled&quot;: false
     }
   ]
@@ -863,10 +864,10 @@
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot;,
+  &quot;id&quot;: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;,
   &quot;slug&quot;: &quot;acme&quot;,
   &quot;name&quot;: &quot;Acme Corporation&quot;,
-  &quot;createdAt&quot;: &quot;2026-10-28T21:24:00.21595Z&quot;,
+  &quot;createdAt&quot;: &quot;2026-10-28T22:51:07.317215Z&quot;,
   &quot;disabled&quot;: false
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
@@ -884,23 +885,23 @@
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/organizations/d57c15f8-d7d9-4ecd-b436-5b4ebad12de5/projects&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/organizations/8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6/projects&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
   --data-raw '{&quot;slug&quot;:&quot;shop&quot;,&quot;name&quot;:&quot;Online shop&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;create_project&quot;, { params: { org: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot; }, body: { slug: &quot;shop&quot;, name: &quot;Online shop&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;create_project&quot;, { params: { org: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot; }, body: { slug: &quot;shop&quot;, name: &quot;Online shop&quot; } });</code></pre>
 <p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;,
-  &quot;organizationId&quot;: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot;,
+  &quot;id&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;,
+  &quot;organizationId&quot;: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;,
   &quot;organizationSlug&quot;: &quot;acme&quot;,
   &quot;slug&quot;: &quot;shop&quot;,
   &quot;name&quot;: &quot;Online shop&quot;,
-  &quot;createdAt&quot;: &quot;2026-10-28T21:24:00.222725Z&quot;
+  &quot;createdAt&quot;: &quot;2026-10-28T22:51:07.332165Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -947,24 +948,24 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>With options</strong> (<code>user</code>):</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/personal-tokens?user=6c57707e-01af-4d92-842e-6712151e369a&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/personal-tokens?user=d3dea878-2d2a-4710-af99-6bf13728a161&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;personal_tokens&quot;, { query: { user: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;personal_tokens&quot;, { query: { user: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. Long lists are cut to their first items.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;a8356ca1-117e-4ecc-9f56-8a75953416f3&quot;,
+      &quot;id&quot;: &quot;d53ab77a-449a-4b49-90a3-a4b5f5fe9008&quot;,
       &quot;name&quot;: &quot;backup-script&quot;,
-      &quot;userId&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+      &quot;userId&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
       &quot;owner&quot;: &quot;ada&quot;,
       &quot;state&quot;: &quot;active&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.245108Z&quot;,
-      &quot;expiresAt&quot;: &quot;2026-11-04T21:24:02.245108Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.074237Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-11-04T22:51:10.074237Z&quot;,
       &quot;lastUsedAt&quot;: null,
       &quot;revokedAt&quot;: null,
       &quot;revokedBy&quot;: null,
@@ -973,17 +974,17 @@
       &quot;current&quot;: false
     },
     {
-      &quot;id&quot;: &quot;9478257a-5e5c-4bb6-ac2b-846824ebdd6a&quot;,
+      &quot;id&quot;: &quot;d9e95662-a865-4644-9e94-6dba8e7643f3&quot;,
       &quot;name&quot;: &quot;laptop-cli&quot;,
-      &quot;userId&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+      &quot;userId&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
       &quot;owner&quot;: &quot;ada&quot;,
       &quot;state&quot;: &quot;active&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.231391Z&quot;,
-      &quot;expiresAt&quot;: &quot;2026-11-27T21:24:02.231391Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.045863Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-11-27T22:51:10.045863Z&quot;,
       &quot;lastUsedAt&quot;: null,
       &quot;revokedAt&quot;: null,
       &quot;revokedBy&quot;: null,
-      &quot;rotatedFrom&quot;: &quot;b8fd01af-5c2b-4bb4-9321-8805e4d3e74b&quot;,
+      &quot;rotatedFrom&quot;: &quot;2c903790-e932-4823-9eaa-a0a0f25bd3f2&quot;,
       &quot;successor&quot;: null,
       &quot;current&quot;: false
     }
@@ -999,10 +1000,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Token id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/personal-tokens/a8356ca1-117e-4ecc-9f56-8a75953416f3&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/personal-tokens/d53ab77a-449a-4b49-90a3-a4b5f5fe9008&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;revoke_personal_token&quot;, { params: { id: &quot;a8356ca1-117e-4ecc-9f56-8a75953416f3&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;revoke_personal_token&quot;, { params: { id: &quot;d53ab77a-449a-4b49-90a3-a4b5f5fe9008&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -1022,7 +1023,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;5a12e629-565d-4e3d-a24e-dd92142ec894&quot;,
+      &quot;id&quot;: &quot;b0b5f935-bbc2-4a1a-bf9f-aa2073211c9f&quot;,
       &quot;name&quot;: &quot;approve-machine-removal&quot;,
       &quot;kind&quot;: &quot;approval&quot;,
       &quot;parameters&quot;: {
@@ -1032,7 +1033,7 @@
       },
       &quot;enabled&quot;: true,
       &quot;updatedBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;updatedAt&quot;: &quot;2026-10-28T21:24:02.869331Z&quot;
+      &quot;updatedAt&quot;: &quot;2026-10-28T22:51:10.906818Z&quot;
     }
   ]
 }</code></pre>
@@ -1067,7 +1068,7 @@
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;5a12e629-565d-4e3d-a24e-dd92142ec894&quot;,
+  &quot;id&quot;: &quot;b0b5f935-bbc2-4a1a-bf9f-aa2073211c9f&quot;,
   &quot;name&quot;: &quot;approve-machine-removal&quot;,
   &quot;kind&quot;: &quot;approval&quot;,
   &quot;parameters&quot;: {
@@ -1077,7 +1078,7 @@
   },
   &quot;enabled&quot;: true,
   &quot;updatedBy&quot;: &quot;token:docs-verifier&quot;,
-  &quot;updatedAt&quot;: &quot;2026-10-28T21:24:02.869331Z&quot;
+  &quot;updatedAt&quot;: &quot;2026-10-28T22:51:10.906818Z&quot;
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -1088,16 +1089,16 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Policy id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/policies/5a12e629-565d-4e3d-a24e-dd92142ec894&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/policies/b0b5f935-bbc2-4a1a-bf9f-aa2073211c9f&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;delete_policy&quot;, { params: { id: &quot;5a12e629-565d-4e3d-a24e-dd92142ec894&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;delete_policy&quot;, { params: { id: &quot;b0b5f935-bbc2-4a1a-bf9f-aa2073211c9f&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1identityprojects"><code>GET /api/v1/identity/projects</code></h3>
 <p>Projects the caller may see, optionally of one organisation. Needs <code>project.view</code>.</p>
-<p><strong>Operation ID:</strong> <code>projects_list</code></p>
+<p><strong>Operation ID:</strong> <code>projects</code></p>
 <p><strong>Needs:</strong> <code>project.view</code>.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>organization</code></td><td>query</td><td>string (uuid)</td><td>no</td><td>—</td><td>Only the projects of this organisation (its id).</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
@@ -1105,23 +1106,23 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>With options</strong> (<code>organization</code>):</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/projects?organization=d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/projects?organization=8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;projects_list&quot;, { query: { organization: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;projects&quot;, { query: { organization: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;,
-      &quot;organizationId&quot;: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot;,
+      &quot;id&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;,
+      &quot;organizationId&quot;: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;,
       &quot;organizationSlug&quot;: &quot;acme&quot;,
       &quot;slug&quot;: &quot;shop&quot;,
       &quot;name&quot;: &quot;Online shop&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:00.222725Z&quot;
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:07.332165Z&quot;
     },
     {
       &quot;id&quot;: &quot;00000000-0000-0000-0000-000000000002&quot;,
@@ -1129,31 +1130,31 @@
       &quot;organizationSlug&quot;: &quot;default&quot;,
       &quot;slug&quot;: &quot;default&quot;,
       &quot;name&quot;: &quot;Default&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:23:59.877616Z&quot;
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:06.853679Z&quot;
     }
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
-<h3 id="get-apiv1identityprojectsprojectenvironments"><code>GET /api/v1/identity/projects/{project}/environments</code></h3>
+<h3 id="get-apiv1identityprojectsprojectidenvironments"><code>GET /api/v1/identity/projects/{projectId}/environments</code></h3>
 <p>Environments of a project. Needs <code>project.view</code> on it.</p>
 <p><strong>Operation ID:</strong> <code>environments</code></p>
 <p><strong>Needs:</strong> <code>project.view</code> on it.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Project id</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>projectId</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Apelora project id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/projects/4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a/environments&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/projects/0e64d3ef-1020-41d9-a96e-821b3b45cf04/environments&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;environments&quot;, { params: { project: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;environments&quot;, { params: { projectId: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;276b703c-f198-472d-ae04-59bf969979dd&quot;,
-      &quot;projectId&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;,
+      &quot;id&quot;: &quot;de3e069e-2e1c-419a-996a-63bd3a4c13f2&quot;,
+      &quot;projectId&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;,
       &quot;slug&quot;: &quot;production&quot;,
       &quot;name&quot;: &quot;Production&quot;,
       &quot;kind&quot;: &quot;production&quot;,
@@ -1190,8 +1191,8 @@
       &quot;incusDetail&quot;: &quot;Incus project shop-prod created by Apelora with the baseline restrictions&quot;
     },
     {
-      &quot;id&quot;: &quot;a1a9633b-c3fb-4339-aa65-ce10c30dd297&quot;,
-      &quot;projectId&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;,
+      &quot;id&quot;: &quot;b882f5f5-ed9e-40cf-8a05-aaf83ddef3f3&quot;,
+      &quot;projectId&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;,
       &quot;slug&quot;: &quot;staging&quot;,
       &quot;name&quot;: &quot;Staging&quot;,
       &quot;kind&quot;: &quot;staging&quot;,
@@ -1231,11 +1232,11 @@
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
-<h3 id="post-apiv1identityprojectsprojectenvironments"><code>POST /api/v1/identity/projects/{project}/environments</code></h3>
+<h3 id="post-apiv1identityprojectsprojectidenvironments"><code>POST /api/v1/identity/projects/{projectId}/environments</code></h3>
 <p>Creates an environment. The Incus project it maps to is derived from the names (tenants cannot choose it); platform administrators (<code>cluster.manage</code>) may map an existing one. When the derived project already exists and Apelora did not create it for this environment, nothing is created: 409 <code>incus_project_exists</code>. Needs <code>environment.manage</code>.</p>
 <p><strong>Operation ID:</strong> <code>create_environment</code></p>
 <p><strong>Needs:</strong> <code>environment.manage</code>.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>project</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Project id</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>projectId</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Apelora project id</td></tr></tbody></table></div>
 <p><strong>Request body</strong> (JSON):</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>incusProject</code></td><td>string or null</td><td>no</td><td>Platform administrators only: map an existing Incus project instead of the derived name. Only a project named here can be adopted; one that carries another environment's marker never is.</td></tr><tr><td><code>kind</code></td><td>one of <code>production</code>, <code>staging</code>, <code>development</code>, <code>other</code></td><td>yes</td><td>Kind of environment; policies such as &quot;production needs MFA&quot; refer to it.</td></tr><tr><td><code>name</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>slug</code></td><td>string</td><td>yes</td><td>—</td></tr></tbody></table></div>
 <pre data-lang="json" tabindex="0"><code>{
@@ -1246,19 +1247,19 @@
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/projects/4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a/environments&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/projects/0e64d3ef-1020-41d9-a96e-821b3b45cf04/environments&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
   --data-raw '{&quot;slug&quot;:&quot;production&quot;,&quot;name&quot;:&quot;Production&quot;,&quot;kind&quot;:&quot;production&quot;,&quot;incusProject&quot;:&quot;shop-prod&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;create_environment&quot;, { params: { project: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot; }, body: { slug: &quot;production&quot;, name: &quot;Production&quot;, kind: &quot;production&quot;, incusProject: &quot;shop-prod&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;create_environment&quot;, { params: { projectId: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot; }, body: { slug: &quot;production&quot;, name: &quot;Production&quot;, kind: &quot;production&quot;, incusProject: &quot;shop-prod&quot; } });</code></pre>
 <p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;276b703c-f198-472d-ae04-59bf969979dd&quot;,
-  &quot;projectId&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;,
+  &quot;id&quot;: &quot;de3e069e-2e1c-419a-996a-63bd3a4c13f2&quot;,
+  &quot;projectId&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;,
   &quot;slug&quot;: &quot;production&quot;,
   &quot;name&quot;: &quot;Production&quot;,
   &quot;kind&quot;: &quot;production&quot;,
@@ -1302,17 +1303,17 @@
 <p><strong>Needs:</strong> <code>organization.view</code> (organisation) or <code>project.view</code> (project, environment) on it, or <code>quota.manage</code>.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>scope</code></td><td>path</td><td>string</td><td>yes</td><td>—</td><td>organization, project or environment</td></tr><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Its id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/quotas/project/4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/quotas/project/0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;quota&quot;, { params: { scope: &quot;project&quot;, id: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;quota&quot;, { params: { scope: &quot;project&quot;, id: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;kind&quot;: &quot;project&quot;,
-  &quot;id&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;,
+  &quot;id&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;,
   &quot;name&quot;: &quot;Online shop&quot;,
   &quot;quota&quot;: {
     &quot;instances&quot;: 20,
@@ -1334,7 +1335,7 @@
   },
   &quot;usageError&quot;: null,
   &quot;updatedBy&quot;: &quot;token:docs-verifier&quot;,
-  &quot;updatedAt&quot;: &quot;2026-10-28T21:24:00.284166Z&quot;,
+  &quot;updatedAt&quot;: &quot;2026-10-28T22:51:07.447721Z&quot;,
   &quot;canSet&quot;: true
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
@@ -1354,13 +1355,13 @@
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/identity/quotas/project/4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/identity/quotas/project/0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
   --data-raw '{&quot;cpu&quot;:16,&quot;memoryGib&quot;:64,&quot;diskGib&quot;:500,&quot;instances&quot;:20}'</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;set_quota&quot;, { params: { scope: &quot;project&quot;, id: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot; }, body: { cpu: 16, memoryGib: 64, diskGib: 500, instances: 20 } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;set_quota&quot;, { params: { scope: &quot;project&quot;, id: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot; }, body: { cpu: 16, memoryGib: 64, diskGib: 500, instances: 20 } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
@@ -1373,7 +1374,7 @@
   },
   &quot;environments&quot;: [
     {
-      &quot;environmentId&quot;: &quot;276b703c-f198-472d-ae04-59bf969979dd&quot;,
+      &quot;environmentId&quot;: &quot;de3e069e-2e1c-419a-996a-63bd3a4c13f2&quot;,
       &quot;environment&quot;: &quot;Production&quot;,
       &quot;incusProject&quot;: &quot;shop-prod&quot;,
       &quot;result&quot;: &quot;applied&quot;,
@@ -1386,7 +1387,7 @@
       &quot;detail&quot;: &quot;Incus enforces these limits&quot;
     },
     {
-      &quot;environmentId&quot;: &quot;a1a9633b-c3fb-4339-aa65-ce10c30dd297&quot;,
+      &quot;environmentId&quot;: &quot;b882f5f5-ed9e-40cf-8a05-aaf83ddef3f3&quot;,
       &quot;environment&quot;: &quot;Staging&quot;,
       &quot;incusProject&quot;: &quot;acme-shop-staging&quot;,
       &quot;result&quot;: &quot;applied&quot;,
@@ -1418,7 +1419,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;builtin:platform-super-admin&quot;,
+      &quot;key&quot;: &quot;builtin:platform-super-admin&quot;,
       &quot;reference&quot;: {
         &quot;type&quot;: &quot;builtin&quot;,
         &quot;key&quot;: &quot;platform-super-admin&quot;
@@ -1437,7 +1438,7 @@
       ]
     },
     {
-      &quot;id&quot;: &quot;builtin:fabric-administrator&quot;,
+      &quot;key&quot;: &quot;builtin:fabric-administrator&quot;,
       &quot;reference&quot;: {
         &quot;type&quot;: &quot;builtin&quot;,
         &quot;key&quot;: &quot;fabric-administrator&quot;
@@ -1488,10 +1489,10 @@
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;custom:8a1c93f8-1b1f-445e-856a-51696b92823f&quot;,
+  &quot;key&quot;: &quot;custom:2fad0e1f-d140-4d43-8a19-9cba72ab2a06&quot;,
   &quot;reference&quot;: {
     &quot;type&quot;: &quot;custom&quot;,
-    &quot;id&quot;: &quot;8a1c93f8-1b1f-445e-856a-51696b92823f&quot;
+    &quot;id&quot;: &quot;2fad0e1f-d140-4d43-8a19-9cba72ab2a06&quot;
   },
   &quot;name&quot;: &quot;Release manager&quot;,
   &quot;description&quot;: &quot;Publishes and deploys application versions&quot;,
@@ -1518,10 +1519,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>role</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Custom role id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/roles/4ac8cf16-e75f-41f0-85ed-f64fa8045d04&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/roles/37754b19-03d5-42df-b177-dcdb2ba380a0&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;delete_role&quot;, { params: { role: &quot;4ac8cf16-e75f-41f0-85ed-f64fa8045d04&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;delete_role&quot;, { params: { role: &quot;37754b19-03d5-42df-b177-dcdb2ba380a0&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -1541,7 +1542,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;16b86f44-8431-41f9-a46e-cabdbe8d1fb2&quot;,
+      &quot;id&quot;: &quot;f7a07221-2ddc-457a-b51e-f0d4c5e1a836&quot;,
       &quot;name&quot;: &quot;ci-pipeline&quot;,
       &quot;kind&quot;: &quot;automation&quot;,
       &quot;backend&quot;: &quot;apelora&quot;,
@@ -1549,8 +1550,8 @@
       &quot;credentialRef&quot;: null,
       &quot;restrictions&quot;: {},
       &quot;createdBy&quot;: &quot;token:docs-verifier&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.851708Z&quot;,
-      &quot;expiresAt&quot;: &quot;2027-01-26T21:24:02.852024Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.87889Z&quot;,
+      &quot;expiresAt&quot;: &quot;2027-01-26T22:51:10.878582Z&quot;,
       &quot;disabled&quot;: false,
       &quot;lastUsedAt&quot;: null,
       &quot;apiAccess&quot;: true
@@ -1585,7 +1586,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
   &quot;identity&quot;: {
-    &quot;id&quot;: &quot;16b86f44-8431-41f9-a46e-cabdbe8d1fb2&quot;,
+    &quot;id&quot;: &quot;f7a07221-2ddc-457a-b51e-f0d4c5e1a836&quot;,
     &quot;name&quot;: &quot;ci-pipeline&quot;,
     &quot;kind&quot;: &quot;automation&quot;,
     &quot;backend&quot;: &quot;apelora&quot;,
@@ -1593,8 +1594,8 @@
     &quot;credentialRef&quot;: null,
     &quot;restrictions&quot;: {},
     &quot;createdBy&quot;: &quot;token:docs-verifier&quot;,
-    &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.851708Z&quot;,
-    &quot;expiresAt&quot;: &quot;2027-01-26T21:24:02.852024Z&quot;,
+    &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.87889Z&quot;,
+    &quot;expiresAt&quot;: &quot;2027-01-26T22:51:10.878582Z&quot;,
     &quot;disabled&quot;: false,
     &quot;lastUsedAt&quot;: null,
     &quot;apiAccess&quot;: true
@@ -1609,10 +1610,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Service identity id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/service-identities/16b86f44-8431-41f9-a46e-cabdbe8d1fb2/disable&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/service-identities/f7a07221-2ddc-457a-b51e-f0d4c5e1a836/disable&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;disable_service_identity&quot;, { params: { id: &quot;16b86f44-8431-41f9-a46e-cabdbe8d1fb2&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;disable_service_identity&quot;, { params: { id: &quot;f7a07221-2ddc-457a-b51e-f0d4c5e1a836&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -1623,10 +1624,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Service identity id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/service-identities/16b86f44-8431-41f9-a46e-cabdbe8d1fb2/enable&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/service-identities/f7a07221-2ddc-457a-b51e-f0d4c5e1a836/enable&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;enable_service_identity&quot;, { params: { id: &quot;16b86f44-8431-41f9-a46e-cabdbe8d1fb2&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;enable_service_identity&quot;, { params: { id: &quot;f7a07221-2ddc-457a-b51e-f0d4c5e1a836&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -1716,21 +1717,21 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>502</code></td><td><code>provider_unreachable</code>, an <code>incus_…</code> code</td></tr></tbody></table></div>
 <h3 id="get-apiv1identitysign-indirectories"><code>GET /api/v1/identity/sign-in/directories</code></h3>
 <p>The directories people sign in with, each checked with a TLS connection now. Needs <code>platform.security.manage</code>.</p>
-<p><strong>Operation ID:</strong> <code>list_directories</code></p>
+<p><strong>Operation ID:</strong> <code>directories</code></p>
 <p><strong>Needs:</strong> <code>platform.security.manage</code>.</p>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/sign-in/directories&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;list_directories&quot;, {});</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;directories&quot;, {});</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;a969ba32-027a-4ba5-810f-df73bbeb3366&quot;,
+      &quot;id&quot;: &quot;c5922738-ce68-4d09-8cc2-3a6c50f7f2ed&quot;,
       &quot;name&quot;: &quot;Head office directory&quot;,
       &quot;url&quot;: &quot;ldaps://ldap.example.invalid&quot;,
       &quot;startTls&quot;: false,
@@ -1783,7 +1784,7 @@
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;a969ba32-027a-4ba5-810f-df73bbeb3366&quot;,
+  &quot;id&quot;: &quot;c5922738-ce68-4d09-8cc2-3a6c50f7f2ed&quot;,
   &quot;name&quot;: &quot;Head office directory&quot;,
   &quot;url&quot;: &quot;ldaps://ldap.example.invalid&quot;,
   &quot;startTls&quot;: false,
@@ -1826,18 +1827,18 @@
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/identity/sign-in/directories/a969ba32-027a-4ba5-810f-df73bbeb3366&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/identity/sign-in/directories/c5922738-ce68-4d09-8cc2-3a6c50f7f2ed&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
   --data-raw '{&quot;name&quot;:&quot;Head office directory&quot;,&quot;url&quot;:&quot;ldaps://ldap.example.invalid&quot;,&quot;bindTemplate&quot;:&quot;uid={username},ou=people,dc=acme,dc=example&quot;,&quot;baseDn&quot;:&quot;dc=acme,dc=example&quot;,&quot;groupBaseDn&quot;:&quot;ou=groups,dc=acme,dc=example&quot;,&quot;enabled&quot;:false,&quot;startTls&quot;:false,&quot;emailAttribute&quot;:&quot;mail&quot;}'</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;update_directory&quot;, { params: { id: &quot;a969ba32-027a-4ba5-810f-df73bbeb3366&quot; }, body /* the request body above */ });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;update_directory&quot;, { params: { id: &quot;c5922738-ce68-4d09-8cc2-3a6c50f7f2ed&quot; }, body /* the request body above */ });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;a969ba32-027a-4ba5-810f-df73bbeb3366&quot;,
+  &quot;id&quot;: &quot;c5922738-ce68-4d09-8cc2-3a6c50f7f2ed&quot;,
   &quot;name&quot;: &quot;Head office directory&quot;,
   &quot;url&quot;: &quot;ldaps://ldap.example.invalid&quot;,
   &quot;startTls&quot;: false,
@@ -1865,20 +1866,13 @@
 <p>Removes a directory: its people can no longer sign in with it; their accounts and roles in Apelora stay. Its name must be typed again. Needs <code>platform.security.manage</code>; audited.</p>
 <p><strong>Operation ID:</strong> <code>delete_directory</code></p>
 <p><strong>Needs:</strong> <code>platform.security.manage</code>; audited.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Directory id</td></tr></tbody></table></div>
-<p><strong>Request body</strong> (JSON):</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The directory's name again.</td></tr></tbody></table></div>
-<pre data-lang="json" tabindex="0"><code>{
-  &quot;confirm&quot;: &quot;Head office directory&quot;
-}</code></pre>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Directory id</td></tr><tr><td><code>confirm</code></td><td>query</td><td>string</td><td>yes</td><td>—</td><td>The directory's name again.</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/sign-in/directories/a969ba32-027a-4ba5-810f-df73bbeb3366&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;confirm&quot;:&quot;Head office directory&quot;}'</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/sign-in/directories/c5922738-ce68-4d09-8cc2-3a6c50f7f2ed?confirm=Head+office+directory&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;delete_directory&quot;, { params: { id: &quot;a969ba32-027a-4ba5-810f-df73bbeb3366&quot; }, body: { confirm: &quot;Head office directory&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;delete_directory&quot;, { params: { id: &quot;c5922738-ce68-4d09-8cc2-3a6c50f7f2ed&quot; }, query: { confirm: &quot;Head office directory&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -1979,7 +1973,7 @@
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;5b32ced3-8f19-4428-b2b6-ba812a1226b9&quot;,
+  &quot;id&quot;: &quot;a27637b0-226c-4291-8843-c0910819fbfb&quot;,
   &quot;source&quot;: &quot;console&quot;,
   &quot;name&quot;: &quot;Company sign-in&quot;,
   &quot;issuer&quot;: &quot;https://login.example.invalid/realms/acme&quot;,
@@ -2033,18 +2027,18 @@
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/identity/sign-in/providers/5b32ced3-8f19-4428-b2b6-ba812a1226b9&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/identity/sign-in/providers/a27637b0-226c-4291-8843-c0910819fbfb&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
   --data-raw '{&quot;name&quot;:&quot;Company sign-in&quot;,&quot;issuer&quot;:&quot;https://login.example.invalid/realms/acme&quot;,&quot;audiences&quot;:[&quot;apelora&quot;],&quot;clientId&quot;:&quot;apelora-console&quot;,&quot;scopes&quot;:[&quot;openid&quot;,&quot;profile&quot;,&quot;email&quot;,&quot;groups&quot;],&quot;groupsClaim&quot;:&quot;groups&quot;,&quot;enabled&quot;:false}'</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;update_identity_provider&quot;, { params: { id: &quot;5b32ced3-8f19-4428-b2b6-ba812a1226b9&quot; }, body /* the request body above */ });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;update_identity_provider&quot;, { params: { id: &quot;a27637b0-226c-4291-8843-c0910819fbfb&quot; }, body /* the request body above */ });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
-  &quot;id&quot;: &quot;5b32ced3-8f19-4428-b2b6-ba812a1226b9&quot;,
+  &quot;id&quot;: &quot;a27637b0-226c-4291-8843-c0910819fbfb&quot;,
   &quot;source&quot;: &quot;console&quot;,
   &quot;name&quot;: &quot;Company sign-in&quot;,
   &quot;issuer&quot;: &quot;https://login.example.invalid/realms/acme&quot;,
@@ -2078,20 +2072,13 @@
 <p>Removes a provider saved in the Console: people stop being able to sign in with it. Its name must be typed again. Needs <code>platform.security.manage</code>; audited.</p>
 <p><strong>Operation ID:</strong> <code>delete_identity_provider</code></p>
 <p><strong>Needs:</strong> <code>platform.security.manage</code>; audited.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Provider id</td></tr></tbody></table></div>
-<p><strong>Request body</strong> (JSON):</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>confirm</code></td><td>string</td><td>yes</td><td>The provider's name again.</td></tr></tbody></table></div>
-<pre data-lang="json" tabindex="0"><code>{
-  &quot;confirm&quot;: &quot;Company sign-in&quot;
-}</code></pre>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Provider id</td></tr><tr><td><code>confirm</code></td><td>query</td><td>string</td><td>yes</td><td>—</td><td>The provider's name again.</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/sign-in/providers/5b32ced3-8f19-4428-b2b6-ba812a1226b9&quot; \
-  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  --data-raw '{&quot;confirm&quot;:&quot;Company sign-in&quot;}'</code></pre>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/sign-in/providers/a27637b0-226c-4291-8843-c0910819fbfb?confirm=Company+sign-in&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;delete_identity_provider&quot;, { params: { id: &quot;5b32ced3-8f19-4428-b2b6-ba812a1226b9&quot; }, body: { confirm: &quot;Company sign-in&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;delete_identity_provider&quot;, { params: { id: &quot;a27637b0-226c-4291-8843-c0910819fbfb&quot; }, query: { confirm: &quot;Company sign-in&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>confirmation_mismatch</code>, <code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>409</code></td><td><code>approval_invalid</code>, <code>approval_required</code>, <code>would_lock_out</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -2105,36 +2092,36 @@
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>With options</strong> (<code>user</code>):</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/sign-ins?user=6c57707e-01af-4d92-842e-6712151e369a&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X GET &quot;$APELORA_URL/api/v1/identity/sign-ins?user=d3dea878-2d2a-4710-af99-6bf13728a161&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;sign_ins&quot;, { query: { user: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;sign_ins&quot;, { query: { user: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot; } });</code></pre>
 <p><strong>Response <code>200</code></strong> — Done; the response holds the result..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ. Long lists are cut to their first items.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;effe4d81-6022-4dae-8d75-4e95ddcae456&quot;,
-      &quot;userId&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+      &quot;id&quot;: &quot;7a91cfc2-2345-4091-ac50-ebeca36fdccf&quot;,
+      &quot;userId&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
       &quot;person&quot;: &quot;ada&quot;,
       &quot;method&quot;: &quot;password&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:00.736531Z&quot;,
-      &quot;lastUsedAt&quot;: &quot;2026-10-28T21:24:02.173488Z&quot;,
-      &quot;expiresAt&quot;: &quot;2026-10-29T05:24:00.736531Z&quot;,
-      &quot;endsAt&quot;: &quot;2026-10-28T22:24:02.173488Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:08.08853Z&quot;,
+      &quot;lastUsedAt&quot;: &quot;2026-10-28T22:51:09.943411Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-10-29T06:51:08.08853Z&quot;,
+      &quot;endsAt&quot;: &quot;2026-10-28T23:51:09.943411Z&quot;,
       &quot;current&quot;: false
     },
     {
-      &quot;id&quot;: &quot;de9c9212-82b7-4c6b-9e1f-9844fde0b4b9&quot;,
-      &quot;userId&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+      &quot;id&quot;: &quot;68fbd2f7-62e6-4e6c-a67e-d0dfbcfa61b3&quot;,
+      &quot;userId&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
       &quot;person&quot;: &quot;ada&quot;,
       &quot;method&quot;: &quot;password&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.168348Z&quot;,
-      &quot;lastUsedAt&quot;: &quot;2026-10-28T21:24:02.168348Z&quot;,
-      &quot;expiresAt&quot;: &quot;2026-10-29T05:24:02.168348Z&quot;,
-      &quot;endsAt&quot;: &quot;2026-10-28T22:24:02.168348Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:09.930074Z&quot;,
+      &quot;lastUsedAt&quot;: &quot;2026-10-28T22:51:09.930074Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-10-29T06:51:09.930074Z&quot;,
+      &quot;endsAt&quot;: &quot;2026-10-28T23:51:09.930074Z&quot;,
       &quot;current&quot;: false
     }
   ],
@@ -2151,10 +2138,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Session id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/sign-ins/9b418b47-f160-41df-904e-1908017995a7&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/identity/sign-ins/511b733a-d61d-4556-a5c1-3fcae6973a2f&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;end_sign_in&quot;, { params: { id: &quot;9b418b47-f160-41df-904e-1908017995a7&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;end_sign_in&quot;, { params: { id: &quot;511b733a-d61d-4556-a5c1-3fcae6973a2f&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -2174,7 +2161,7 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;source&quot;: {
     &quot;provider&quot;: &quot;mock&quot;,
-    &quot;observedAt&quot;: &quot;2026-10-28T21:24:00.30883Z&quot;
+    &quot;observedAt&quot;: &quot;2026-10-28T22:51:07.511771Z&quot;
   },
   &quot;adminConfigured&quot;: true,
   &quot;baseline&quot;: {
@@ -2206,7 +2193,7 @@
   },
   &quot;organizations&quot;: [
     {
-      &quot;id&quot;: &quot;d57c15f8-d7d9-4ecd-b436-5b4ebad12de5&quot;,
+      &quot;id&quot;: &quot;8a36e3d8-344d-4c6d-85c8-2d0a5e13bff6&quot;,
       &quot;slug&quot;: &quot;acme&quot;,
       &quot;name&quot;: &quot;Acme Corporation&quot;,
       &quot;quota&quot;: null,
@@ -2219,7 +2206,7 @@
       &quot;canSetQuota&quot;: true,
       &quot;projects&quot;: [
         {
-          &quot;id&quot;: &quot;4c7dfe7c-30df-4b68-a7cc-bd8aa3f2331a&quot;,
+          &quot;id&quot;: &quot;0e64d3ef-1020-41d9-a96e-821b3b45cf04&quot;,
           &quot;slug&quot;: &quot;shop&quot;,
           &quot;name&quot;: &quot;Online shop&quot;,
           &quot;quota&quot;: {
@@ -2237,14 +2224,14 @@
           &quot;canSetQuota&quot;: true,
           &quot;environments&quot;: [
             {
-              &quot;id&quot;: &quot;276b703c-f198-472d-ae04-59bf969979dd&quot;,
+              &quot;id&quot;: &quot;de3e069e-2e1c-419a-996a-63bd3a4c13f2&quot;,
               &quot;slug&quot;: &quot;production&quot;,
               &quot;name&quot;: &quot;Production&quot;,
               &quot;kind&quot;: &quot;production&quot;,
               &quot;incusProject&quot;: &quot;shop-prod&quot;,
               &quot;incusState&quot;: &quot;created&quot;,
               &quot;incusDetail&quot;: &quot;Incus project shop-prod created by Apelora with the baseline restrictions&quot;,
-              &quot;checkedAt&quot;: &quot;2026-10-28T21:24:00.289944Z&quot;,
+              &quot;checkedAt&quot;: &quot;2026-10-28T22:51:07.46645Z&quot;,
               &quot;quota&quot;: null,
               &quot;effective&quot;: {
                 &quot;instances&quot;: 20,
@@ -2317,14 +2304,14 @@
               &quot;canPrepare&quot;: true
             },
             {
-              &quot;id&quot;: &quot;a1a9633b-c3fb-4339-aa65-ce10c30dd297&quot;,
+              &quot;id&quot;: &quot;b882f5f5-ed9e-40cf-8a05-aaf83ddef3f3&quot;,
               &quot;slug&quot;: &quot;staging&quot;,
               &quot;name&quot;: &quot;Staging&quot;,
               &quot;kind&quot;: &quot;staging&quot;,
               &quot;incusProject&quot;: &quot;acme-shop-staging&quot;,
               &quot;incusState&quot;: &quot;created&quot;,
               &quot;incusDetail&quot;: &quot;Incus project acme-shop-staging created by Apelora with the baseline restrictions&quot;,
-              &quot;checkedAt&quot;: &quot;2026-10-28T21:24:00.293726Z&quot;,
+              &quot;checkedAt&quot;: &quot;2026-10-28T22:51:07.479507Z&quot;,
               &quot;quota&quot;: null,
               &quot;effective&quot;: {
                 &quot;instances&quot;: 20,
@@ -2498,23 +2485,23 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+      &quot;id&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
       &quot;username&quot;: &quot;ada&quot;,
       &quot;email&quot;: &quot;ada@example.org&quot;,
       &quot;displayName&quot;: &quot;Ada Lovelace&quot;,
       &quot;issuer&quot;: &quot;apelora:local&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:00.325977Z&quot;,
-      &quot;lastSeenAt&quot;: &quot;2026-10-28T21:24:00.736531Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:07.549787Z&quot;,
+      &quot;lastSeenAt&quot;: &quot;2026-10-28T22:51:08.08853Z&quot;,
       &quot;disabled&quot;: false
     },
     {
-      &quot;id&quot;: &quot;c3f5597b-dd8e-401b-9ca9-4e1dc6b730cd&quot;,
+      &quot;id&quot;: &quot;0b9f0e2b-cc6b-4ea3-9540-0d2e5e75d368&quot;,
       &quot;username&quot;: &quot;grace&quot;,
       &quot;email&quot;: &quot;grace@example.org&quot;,
       &quot;displayName&quot;: &quot;Grace Hopper&quot;,
       &quot;issuer&quot;: &quot;apelora:local&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:00.74589Z&quot;,
-      &quot;lastSeenAt&quot;: &quot;2026-10-28T21:24:01.182477Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:08.102241Z&quot;,
+      &quot;lastSeenAt&quot;: &quot;2026-10-28T22:51:08.664587Z&quot;,
       &quot;disabled&quot;: false
     }
   ]
@@ -2528,10 +2515,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>user</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>User id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/users/289e97a9-0518-4909-8934-41d745a956e0/disable&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/users/e887c0b4-a67e-421d-840e-fac41b20a2c3/disable&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;disable_user&quot;, { params: { user: &quot;289e97a9-0518-4909-8934-41d745a956e0&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;disable_user&quot;, { params: { user: &quot;e887c0b4-a67e-421d-840e-fac41b20a2c3&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>last_super_admin</code>, <code>self_lockout</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -2542,10 +2529,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>user</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>User id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/users/289e97a9-0518-4909-8934-41d745a956e0/enable&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/identity/users/e887c0b4-a67e-421d-840e-fac41b20a2c3/enable&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;enable_user&quot;, { params: { user: &quot;289e97a9-0518-4909-8934-41d745a956e0&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;enable_user&quot;, { params: { user: &quot;e887c0b4-a67e-421d-840e-fac41b20a2c3&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>409</code></td><td><code>last_super_admin</code>, <code>self_lockout</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -2566,19 +2553,40 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+      &quot;id&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
       &quot;username&quot;: &quot;ada&quot;,
       &quot;email&quot;: &quot;ada@example.org&quot;,
       &quot;displayName&quot;: &quot;Ada Lovelace&quot;,
       &quot;issuer&quot;: &quot;apelora:local&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:00.325977Z&quot;,
-      &quot;lastSeenAt&quot;: &quot;2026-10-28T21:24:00.736531Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:07.549787Z&quot;,
+      &quot;lastSeenAt&quot;: &quot;2026-10-28T22:51:08.08853Z&quot;,
       &quot;disabled&quot;: false
     }
   ]
 }</code></pre>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
+<h3 id="put-apiv1mepassword"><code>PUT /api/v1/me/password</code></h3>
+<p>Changes the caller's own password (local accounts only). Every other session of theirs is revoked; the one making the request stays. Counts towards the account's lock like a sign-in.</p>
+<p><strong>Operation ID:</strong> <code>change_password</code></p>
+<p><strong>Needs:</strong> a signed-in caller; the server decides what that caller may see.</p>
+<p><strong>Request body</strong> (JSON):</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>current</code></td><td>string</td><td>yes</td><td>—</td></tr><tr><td><code>new</code></td><td>string</td><td>yes</td><td>—</td></tr></tbody></table></div>
+<pre data-lang="json" tabindex="0"><code>{
+  &quot;current&quot;: &quot;&lt;current password&gt;&quot;,
+  &quot;new&quot;: &quot;&lt;new password&gt;&quot;
+}</code></pre>
+<p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
+<p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X PUT &quot;$APELORA_URL/api/v1/me/password&quot; \
+  -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  --data-raw '{&quot;current&quot;:&quot;&lt;current password&gt;&quot;,&quot;new&quot;:&quot;&lt;new password&gt;&quot;}'</code></pre>
+<p><strong>TypeScript:</strong></p>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;change_password&quot;, { body: { current: &quot;&lt;current password&gt;&quot;, new: &quot;&lt;new password&gt;&quot; } });</code></pre>
+<p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
+<p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>400</code></td><td><code>invalid_request</code>, <code>weak_password</code>, <code>wrong_password</code></td></tr><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>409</code></td><td><code>account_locked</code>, <code>not_a_local_account</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>500</code></td><td><code>internal</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
 <h3 id="get-apiv1mesign-ins"><code>GET /api/v1/me/sign-ins</code></h3>
 <p>Your Apelora sessions open now (password and directory sign-ins), most recently used first. Sign-ins with an identity provider's token are not sessions and are not listed.</p>
 <p><strong>Operation ID:</strong> <code>my_sign_ins</code></p>
@@ -2595,25 +2603,25 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;effe4d81-6022-4dae-8d75-4e95ddcae456&quot;,
-      &quot;userId&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+      &quot;id&quot;: &quot;7a91cfc2-2345-4091-ac50-ebeca36fdccf&quot;,
+      &quot;userId&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
       &quot;person&quot;: &quot;ada&quot;,
       &quot;method&quot;: &quot;password&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:00.736531Z&quot;,
-      &quot;lastUsedAt&quot;: &quot;2026-10-28T21:24:02.173488Z&quot;,
-      &quot;expiresAt&quot;: &quot;2026-10-29T05:24:00.736531Z&quot;,
-      &quot;endsAt&quot;: &quot;2026-10-28T22:24:02.173488Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:08.08853Z&quot;,
+      &quot;lastUsedAt&quot;: &quot;2026-10-28T22:51:09.943411Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-10-29T06:51:08.08853Z&quot;,
+      &quot;endsAt&quot;: &quot;2026-10-28T23:51:09.943411Z&quot;,
       &quot;current&quot;: true
     },
     {
-      &quot;id&quot;: &quot;de9c9212-82b7-4c6b-9e1f-9844fde0b4b9&quot;,
-      &quot;userId&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+      &quot;id&quot;: &quot;68fbd2f7-62e6-4e6c-a67e-d0dfbcfa61b3&quot;,
+      &quot;userId&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
       &quot;person&quot;: &quot;ada&quot;,
       &quot;method&quot;: &quot;password&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.168348Z&quot;,
-      &quot;lastUsedAt&quot;: &quot;2026-10-28T21:24:02.168348Z&quot;,
-      &quot;expiresAt&quot;: &quot;2026-10-29T05:24:02.168348Z&quot;,
-      &quot;endsAt&quot;: &quot;2026-10-28T22:24:02.168348Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:09.930074Z&quot;,
+      &quot;lastUsedAt&quot;: &quot;2026-10-28T22:51:09.930074Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-10-29T06:51:09.930074Z&quot;,
+      &quot;endsAt&quot;: &quot;2026-10-28T23:51:09.930074Z&quot;,
       &quot;current&quot;: false
     }
   ],
@@ -2630,10 +2638,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Session id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/me/sign-ins/de9c9212-82b7-4c6b-9e1f-9844fde0b4b9&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/me/sign-ins/68fbd2f7-62e6-4e6c-a67e-d0dfbcfa61b3&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;end_my_sign_in&quot;, { params: { id: &quot;de9c9212-82b7-4c6b-9e1f-9844fde0b4b9&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;end_my_sign_in&quot;, { params: { id: &quot;68fbd2f7-62e6-4e6c-a67e-d0dfbcfa61b3&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>people_only</code>, <code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td><code>not_found</code></td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -2653,13 +2661,13 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;items&quot;: [
     {
-      &quot;id&quot;: &quot;b8fd01af-5c2b-4bb4-9321-8805e4d3e74b&quot;,
+      &quot;id&quot;: &quot;2c903790-e932-4823-9eaa-a0a0f25bd3f2&quot;,
       &quot;name&quot;: &quot;laptop-cli&quot;,
-      &quot;userId&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+      &quot;userId&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
       &quot;owner&quot;: &quot;ada&quot;,
       &quot;state&quot;: &quot;active&quot;,
-      &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.213138Z&quot;,
-      &quot;expiresAt&quot;: &quot;2026-11-27T21:24:02.213138Z&quot;,
+      &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.014267Z&quot;,
+      &quot;expiresAt&quot;: &quot;2026-11-27T22:51:10.014267Z&quot;,
       &quot;lastUsedAt&quot;: null,
       &quot;revokedAt&quot;: null,
       &quot;revokedBy&quot;: null,
@@ -2697,13 +2705,13 @@
 <pre data-lang="json" tabindex="0"><code>{
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
   &quot;info&quot;: {
-    &quot;id&quot;: &quot;b8fd01af-5c2b-4bb4-9321-8805e4d3e74b&quot;,
+    &quot;id&quot;: &quot;2c903790-e932-4823-9eaa-a0a0f25bd3f2&quot;,
     &quot;name&quot;: &quot;laptop-cli&quot;,
-    &quot;userId&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+    &quot;userId&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
     &quot;owner&quot;: &quot;ada&quot;,
     &quot;state&quot;: &quot;active&quot;,
-    &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.213138Z&quot;,
-    &quot;expiresAt&quot;: &quot;2026-11-27T21:24:02.213138Z&quot;,
+    &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.014267Z&quot;,
+    &quot;expiresAt&quot;: &quot;2026-11-27T22:51:10.014267Z&quot;,
     &quot;lastUsedAt&quot;: null,
     &quot;revokedAt&quot;: null,
     &quot;revokedBy&quot;: null,
@@ -2721,10 +2729,10 @@
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Parameter</th><th scope="col">In</th><th scope="col">Type</th><th scope="col">Required</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>id</code></td><td>path</td><td>string (uuid)</td><td>yes</td><td>—</td><td>Token id</td></tr></tbody></table></div>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/me/tokens/9478257a-5e5c-4bb6-ac2b-846824ebdd6a&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X DELETE &quot;$APELORA_URL/api/v1/me/tokens/d9e95662-a865-4644-9e94-6dba8e7643f3&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot;</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;revoke_my_token&quot;, { params: { id: &quot;9478257a-5e5c-4bb6-ac2b-846824ebdd6a&quot; } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>await client.request(&quot;revoke_my_token&quot;, { params: { id: &quot;d9e95662-a865-4644-9e94-6dba8e7643f3&quot; } });</code></pre>
 <p><strong>Response <code>204</code></strong> — Done; nothing is returned., with no body.</p>
 <p><strong>Errors.</strong> The body is <code>{&quot;error&quot;: {&quot;code&quot;: …, &quot;message&quot;: …}}</code>; see <a href="/docs/api/overview/#error-codes">error codes</a> for the codes every operation shares.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Status</th><th scope="col">Codes</th></tr></thead><tbody><tr><td><code>401</code></td><td><code>unauthenticated</code>, <code>invalid_token</code></td></tr><tr><td><code>403</code></td><td><code>people_only</code>, <code>forbidden</code>, <code>mfa_required</code></td></tr><tr><td><code>404</code></td><td>—</td></tr><tr><td><code>429</code></td><td><code>rate_limited</code></td></tr><tr><td><code>503</code></td><td><code>database_not_configured</code></td></tr></tbody></table></div>
@@ -2741,46 +2749,46 @@
 }</code></pre>
 <p><strong>Example request.</strong> Replace sample names, IDs and body values with resources and settings from your installation.</p>
 <p>This request can change state. Check permissions, prerequisites and any required approval before running it.</p>
-<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/me/tokens/b8fd01af-5c2b-4bb4-9321-8805e4d3e74b/rotate&quot; \
+<pre data-lang="sh" tabindex="0"><code>curl --fail-with-body -sS -X POST &quot;$APELORA_URL/api/v1/me/tokens/2c903790-e932-4823-9eaa-a0a0f25bd3f2/rotate&quot; \
   -H &quot;Authorization: Bearer $APELORA_TOKEN&quot; \
   -H &quot;Accept: application/json&quot; \
   -H &quot;Content-Type: application/json&quot; \
   --data-raw '{&quot;expiresInDays&quot;:30,&quot;overlapMinutes&quot;:60}'</code></pre>
 <p><strong>TypeScript:</strong></p>
-<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;rotate_my_token&quot;, { params: { id: &quot;b8fd01af-5c2b-4bb4-9321-8805e4d3e74b&quot; }, body: { expiresInDays: 30, overlapMinutes: 60 } });</code></pre>
+<pre data-lang="ts" tabindex="0"><code>const result = await client.request(&quot;rotate_my_token&quot;, { params: { id: &quot;2c903790-e932-4823-9eaa-a0a0f25bd3f2&quot; }, body: { expiresInDays: 30, overlapMinutes: 60 } });</code></pre>
 <p><strong>Response <code>201</code></strong> — Created; the response describes what was created..</p>
 <p>Content-Type: <code>application/json</code>.</p>
 <p><strong>Example response</strong> from a test installation; your IDs, names and times differ.</p>
 <pre data-lang="json" tabindex="0"><code>{
   &quot;token&quot;: &quot;&lt;token, shown once&gt;&quot;,
   &quot;info&quot;: {
-    &quot;id&quot;: &quot;9478257a-5e5c-4bb6-ac2b-846824ebdd6a&quot;,
+    &quot;id&quot;: &quot;d9e95662-a865-4644-9e94-6dba8e7643f3&quot;,
     &quot;name&quot;: &quot;laptop-cli&quot;,
-    &quot;userId&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+    &quot;userId&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
     &quot;owner&quot;: &quot;ada&quot;,
     &quot;state&quot;: &quot;active&quot;,
-    &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.231391Z&quot;,
-    &quot;expiresAt&quot;: &quot;2026-11-27T21:24:02.231391Z&quot;,
+    &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.045863Z&quot;,
+    &quot;expiresAt&quot;: &quot;2026-11-27T22:51:10.045863Z&quot;,
     &quot;lastUsedAt&quot;: null,
     &quot;revokedAt&quot;: null,
     &quot;revokedBy&quot;: null,
-    &quot;rotatedFrom&quot;: &quot;b8fd01af-5c2b-4bb4-9321-8805e4d3e74b&quot;,
+    &quot;rotatedFrom&quot;: &quot;2c903790-e932-4823-9eaa-a0a0f25bd3f2&quot;,
     &quot;successor&quot;: null,
     &quot;current&quot;: false
   },
   &quot;previous&quot;: {
-    &quot;id&quot;: &quot;b8fd01af-5c2b-4bb4-9321-8805e4d3e74b&quot;,
+    &quot;id&quot;: &quot;2c903790-e932-4823-9eaa-a0a0f25bd3f2&quot;,
     &quot;name&quot;: &quot;laptop-cli&quot;,
-    &quot;userId&quot;: &quot;6c57707e-01af-4d92-842e-6712151e369a&quot;,
+    &quot;userId&quot;: &quot;d3dea878-2d2a-4710-af99-6bf13728a161&quot;,
     &quot;owner&quot;: &quot;ada&quot;,
     &quot;state&quot;: &quot;rotating&quot;,
-    &quot;createdAt&quot;: &quot;2026-10-28T21:24:02.213138Z&quot;,
-    &quot;expiresAt&quot;: &quot;2026-10-28T22:24:02.231391Z&quot;,
+    &quot;createdAt&quot;: &quot;2026-10-28T22:51:10.014267Z&quot;,
+    &quot;expiresAt&quot;: &quot;2026-10-28T23:51:10.045863Z&quot;,
     &quot;lastUsedAt&quot;: null,
     &quot;revokedAt&quot;: null,
     &quot;revokedBy&quot;: null,
     &quot;rotatedFrom&quot;: null,
-    &quot;successor&quot;: &quot;9478257a-5e5c-4bb6-ac2b-846824ebdd6a&quot;,
+    &quot;successor&quot;: &quot;d9e95662-a865-4644-9e94-6dba8e7643f3&quot;,
     &quot;current&quot;: false
   }
 }</code></pre>
@@ -2790,7 +2798,7 @@
         <p class="docs-source">This page is a copy of <a href="https://github.com/Apelora/apelora-fabric/blob/main/packages/api-client/openapi.json">packages/api-client/openapi.json</a> in the repository, which is the source of truth. <a href="https://github.com/Apelora/apelora-fabric/edit/main/packages/api-client/openapi.json">Suggest a change</a>.</p>
         <nav class="docs-pager" aria-label="Previous and next page"><a class="prev" href="/docs/api/audit/"><span>Previous</span>Audit</a><a class="next" href="/docs/api/sessions/"><span>Next</span>Sessions</a></nav>
       </article>
-      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#get-apiv1approvals">GET /api/v1/approvals</a></li><li class="l3"><a href="#post-apiv1approvals">POST /api/v1/approvals</a></li><li class="l3"><a href="#post-apiv1approvalsidapprove">POST /api/v1/approvals/{id}/approve</a></li><li class="l3"><a href="#post-apiv1approvalsidcancel">POST /api/v1/approvals/{id}/cancel</a></li><li class="l3"><a href="#post-apiv1approvalsidreject">POST /api/v1/approvals/{id}/reject</a></li><li class="l3"><a href="#get-apiv1identityassignments">GET /api/v1/identity/assignments</a></li><li class="l3"><a href="#post-apiv1identityassignments">POST /api/v1/identity/assignments</a></li><li class="l3"><a href="#delete-apiv1identityassignmentsassignment">DELETE /api/v1/identity/assignments/{assignment}</a></li><li class="l3"><a href="#post-apiv1identityassignmentspreview">POST /api/v1/identity/assignments/preview</a></li><li class="l3"><a href="#get-apiv1identityaudit">GET /api/v1/identity/audit</a></li><li class="l3"><a href="#post-apiv1identityemergency-access">POST /api/v1/identity/emergency-access</a></li><li class="l3"><a href="#post-apiv1identityenvironmentsidincus-project">POST /api/v1/identity/environments/{id}/incus-project</a></li><li class="l3"><a href="#get-apiv1identitygroups">GET /api/v1/identity/groups</a></li><li class="l3"><a href="#post-apiv1identitygroups">POST /api/v1/identity/groups</a></li><li class="l3"><a href="#put-apiv1identitygroupsgroupexternal">PUT /api/v1/identity/groups/{group}/external</a></li><li class="l3"><a href="#get-apiv1identitygroupsgroupmembers">GET /api/v1/identity/groups/{group}/members</a></li><li class="l3"><a href="#put-apiv1identitygroupsgroupmembersuser">PUT /api/v1/identity/groups/{group}/members/{user}</a></li><li class="l3"><a href="#delete-apiv1identitygroupsgroupmembersuser">DELETE /api/v1/identity/groups/{group}/members/{user}</a></li><li class="l3"><a href="#post-apiv1identitylocal-accounts">POST /api/v1/identity/local-accounts</a></li><li class="l3"><a href="#post-apiv1identitylocal-accountsidreset">POST /api/v1/identity/local-accounts/{id}/reset</a></li><li class="l3"><a href="#get-apiv1identityorganizations">GET /api/v1/identity/organizations</a></li><li class="l3"><a href="#post-apiv1identityorganizations">POST /api/v1/identity/organizations</a></li><li class="l3"><a href="#post-apiv1identityorganizationsorgprojects">POST /api/v1/identity/organizations/{org}/projects</a></li><li class="l3"><a href="#get-apiv1identitypermissions">GET /api/v1/identity/permissions</a></li><li class="l3"><a href="#get-apiv1identitypersonal-tokens">GET /api/v1/identity/personal-tokens</a></li><li class="l3"><a href="#delete-apiv1identitypersonal-tokensid">DELETE /api/v1/identity/personal-tokens/{id}</a></li><li class="l3"><a href="#get-apiv1identitypolicies">GET /api/v1/identity/policies</a></li><li class="l3"><a href="#put-apiv1identitypolicies">PUT /api/v1/identity/policies</a></li><li class="l3"><a href="#delete-apiv1identitypoliciesid">DELETE /api/v1/identity/policies/{id}</a></li><li class="l3"><a href="#get-apiv1identityprojects">GET /api/v1/identity/projects</a></li><li class="l3"><a href="#get-apiv1identityprojectsprojectenvironments">GET /api/v1/identity/projects/{project}/environments</a></li><li class="l3"><a href="#post-apiv1identityprojectsprojectenvironments">POST /api/v1/identity/projects/{project}/environments</a></li><li class="l3"><a href="#get-apiv1identityquotasscopeid">GET /api/v1/identity/quotas/{scope}/{id}</a></li><li class="l3"><a href="#put-apiv1identityquotasscopeid">PUT /api/v1/identity/quotas/{scope}/{id}</a></li><li class="l3"><a href="#get-apiv1identityroles">GET /api/v1/identity/roles</a></li><li class="l3"><a href="#post-apiv1identityroles">POST /api/v1/identity/roles</a></li><li class="l3"><a href="#delete-apiv1identityrolesrole">DELETE /api/v1/identity/roles/{role}</a></li><li class="l3"><a href="#get-apiv1identityservice-identities">GET /api/v1/identity/service-identities</a></li><li class="l3"><a href="#post-apiv1identityservice-identities">POST /api/v1/identity/service-identities</a></li><li class="l3"><a href="#post-apiv1identityservice-identitiesiddisable">POST /api/v1/identity/service-identities/{id}/disable</a></li><li class="l3"><a href="#post-apiv1identityservice-identitiesidenable">POST /api/v1/identity/service-identities/{id}/enable</a></li><li class="l3"><a href="#get-apiv1identitysign-in">GET /api/v1/identity/sign-in</a></li><li class="l3"><a href="#put-apiv1identitysign-inapi-tokens">PUT /api/v1/identity/sign-in/api-tokens</a></li><li class="l3"><a href="#post-apiv1identitysign-incheck">POST /api/v1/identity/sign-in/check</a></li><li class="l3"><a href="#get-apiv1identitysign-indirectories">GET /api/v1/identity/sign-in/directories</a></li><li class="l3"><a href="#post-apiv1identitysign-indirectories">POST /api/v1/identity/sign-in/directories</a></li><li class="l3"><a href="#put-apiv1identitysign-indirectoriesid">PUT /api/v1/identity/sign-in/directories/{id}</a></li><li class="l3"><a href="#delete-apiv1identitysign-indirectoriesid">DELETE /api/v1/identity/sign-in/directories/{id}</a></li><li class="l3"><a href="#post-apiv1identitysign-indirectoriescheck">POST /api/v1/identity/sign-in/directories/check</a></li><li class="l3"><a href="#put-apiv1identitysign-inlocal-accounts">PUT /api/v1/identity/sign-in/local-accounts</a></li><li class="l3"><a href="#post-apiv1identitysign-inproviders">POST /api/v1/identity/sign-in/providers</a></li><li class="l3"><a href="#put-apiv1identitysign-inprovidersid">PUT /api/v1/identity/sign-in/providers/{id}</a></li><li class="l3"><a href="#delete-apiv1identitysign-inprovidersid">DELETE /api/v1/identity/sign-in/providers/{id}</a></li><li class="l3"><a href="#get-apiv1identitysign-ins">GET /api/v1/identity/sign-ins</a></li><li class="l3"><a href="#delete-apiv1identitysign-insid">DELETE /api/v1/identity/sign-ins/{id}</a></li><li class="l3"><a href="#get-apiv1identitytenancy">GET /api/v1/identity/tenancy</a></li><li class="l3"><a href="#get-apiv1identityusers">GET /api/v1/identity/users</a></li><li class="l3"><a href="#post-apiv1identityusersuserdisable">POST /api/v1/identity/users/{user}/disable</a></li><li class="l3"><a href="#post-apiv1identityusersuserenable">POST /api/v1/identity/users/{user}/enable</a></li><li class="l3"><a href="#get-apiv1identityuserslookup">GET /api/v1/identity/users/lookup</a></li><li class="l3"><a href="#get-apiv1mesign-ins">GET /api/v1/me/sign-ins</a></li><li class="l3"><a href="#delete-apiv1mesign-insid">DELETE /api/v1/me/sign-ins/{id}</a></li><li class="l3"><a href="#get-apiv1metokens">GET /api/v1/me/tokens</a></li><li class="l3"><a href="#post-apiv1metokens">POST /api/v1/me/tokens</a></li><li class="l3"><a href="#delete-apiv1metokensid">DELETE /api/v1/me/tokens/{id}</a></li><li class="l3"><a href="#post-apiv1metokensidrotate">POST /api/v1/me/tokens/{id}/rotate</a></li></ul></nav>
+      <nav class="docs-toc" aria-labelledby="toc-t"><h2 id="toc-t">On this page</h2><ul><li class="l2"><a href="#operations">Operations</a></li><li class="l2"><a href="#details">Details</a></li><li class="l3"><a href="#get-apiv1approvals">GET /api/v1/approvals</a></li><li class="l3"><a href="#post-apiv1approvals">POST /api/v1/approvals</a></li><li class="l3"><a href="#post-apiv1approvalsidapprove">POST /api/v1/approvals/{id}/approve</a></li><li class="l3"><a href="#post-apiv1approvalsidcancel">POST /api/v1/approvals/{id}/cancel</a></li><li class="l3"><a href="#post-apiv1approvalsidreject">POST /api/v1/approvals/{id}/reject</a></li><li class="l3"><a href="#get-apiv1identityassignments">GET /api/v1/identity/assignments</a></li><li class="l3"><a href="#post-apiv1identityassignments">POST /api/v1/identity/assignments</a></li><li class="l3"><a href="#delete-apiv1identityassignmentsassignment">DELETE /api/v1/identity/assignments/{assignment}</a></li><li class="l3"><a href="#post-apiv1identityassignmentspreview">POST /api/v1/identity/assignments/preview</a></li><li class="l3"><a href="#get-apiv1identityaudit">GET /api/v1/identity/audit</a></li><li class="l3"><a href="#post-apiv1identityemergency-access">POST /api/v1/identity/emergency-access</a></li><li class="l3"><a href="#post-apiv1identityenvironmentsidincus-project">POST /api/v1/identity/environments/{id}/incus-project</a></li><li class="l3"><a href="#get-apiv1identitygroups">GET /api/v1/identity/groups</a></li><li class="l3"><a href="#post-apiv1identitygroups">POST /api/v1/identity/groups</a></li><li class="l3"><a href="#put-apiv1identitygroupsgroupexternal">PUT /api/v1/identity/groups/{group}/external</a></li><li class="l3"><a href="#get-apiv1identitygroupsgroupmembers">GET /api/v1/identity/groups/{group}/members</a></li><li class="l3"><a href="#put-apiv1identitygroupsgroupmembersuser">PUT /api/v1/identity/groups/{group}/members/{user}</a></li><li class="l3"><a href="#delete-apiv1identitygroupsgroupmembersuser">DELETE /api/v1/identity/groups/{group}/members/{user}</a></li><li class="l3"><a href="#post-apiv1identitylocal-accounts">POST /api/v1/identity/local-accounts</a></li><li class="l3"><a href="#post-apiv1identitylocal-accountsidreset">POST /api/v1/identity/local-accounts/{id}/reset</a></li><li class="l3"><a href="#get-apiv1identityorganizations">GET /api/v1/identity/organizations</a></li><li class="l3"><a href="#post-apiv1identityorganizations">POST /api/v1/identity/organizations</a></li><li class="l3"><a href="#post-apiv1identityorganizationsorgprojects">POST /api/v1/identity/organizations/{org}/projects</a></li><li class="l3"><a href="#get-apiv1identitypermissions">GET /api/v1/identity/permissions</a></li><li class="l3"><a href="#get-apiv1identitypersonal-tokens">GET /api/v1/identity/personal-tokens</a></li><li class="l3"><a href="#delete-apiv1identitypersonal-tokensid">DELETE /api/v1/identity/personal-tokens/{id}</a></li><li class="l3"><a href="#get-apiv1identitypolicies">GET /api/v1/identity/policies</a></li><li class="l3"><a href="#put-apiv1identitypolicies">PUT /api/v1/identity/policies</a></li><li class="l3"><a href="#delete-apiv1identitypoliciesid">DELETE /api/v1/identity/policies/{id}</a></li><li class="l3"><a href="#get-apiv1identityprojects">GET /api/v1/identity/projects</a></li><li class="l3"><a href="#get-apiv1identityprojectsprojectidenvironments">GET /api/v1/identity/projects/{projectId}/environments</a></li><li class="l3"><a href="#post-apiv1identityprojectsprojectidenvironments">POST /api/v1/identity/projects/{projectId}/environments</a></li><li class="l3"><a href="#get-apiv1identityquotasscopeid">GET /api/v1/identity/quotas/{scope}/{id}</a></li><li class="l3"><a href="#put-apiv1identityquotasscopeid">PUT /api/v1/identity/quotas/{scope}/{id}</a></li><li class="l3"><a href="#get-apiv1identityroles">GET /api/v1/identity/roles</a></li><li class="l3"><a href="#post-apiv1identityroles">POST /api/v1/identity/roles</a></li><li class="l3"><a href="#delete-apiv1identityrolesrole">DELETE /api/v1/identity/roles/{role}</a></li><li class="l3"><a href="#get-apiv1identityservice-identities">GET /api/v1/identity/service-identities</a></li><li class="l3"><a href="#post-apiv1identityservice-identities">POST /api/v1/identity/service-identities</a></li><li class="l3"><a href="#post-apiv1identityservice-identitiesiddisable">POST /api/v1/identity/service-identities/{id}/disable</a></li><li class="l3"><a href="#post-apiv1identityservice-identitiesidenable">POST /api/v1/identity/service-identities/{id}/enable</a></li><li class="l3"><a href="#get-apiv1identitysign-in">GET /api/v1/identity/sign-in</a></li><li class="l3"><a href="#put-apiv1identitysign-inapi-tokens">PUT /api/v1/identity/sign-in/api-tokens</a></li><li class="l3"><a href="#post-apiv1identitysign-incheck">POST /api/v1/identity/sign-in/check</a></li><li class="l3"><a href="#get-apiv1identitysign-indirectories">GET /api/v1/identity/sign-in/directories</a></li><li class="l3"><a href="#post-apiv1identitysign-indirectories">POST /api/v1/identity/sign-in/directories</a></li><li class="l3"><a href="#put-apiv1identitysign-indirectoriesid">PUT /api/v1/identity/sign-in/directories/{id}</a></li><li class="l3"><a href="#delete-apiv1identitysign-indirectoriesid">DELETE /api/v1/identity/sign-in/directories/{id}</a></li><li class="l3"><a href="#post-apiv1identitysign-indirectoriescheck">POST /api/v1/identity/sign-in/directories/check</a></li><li class="l3"><a href="#put-apiv1identitysign-inlocal-accounts">PUT /api/v1/identity/sign-in/local-accounts</a></li><li class="l3"><a href="#post-apiv1identitysign-inproviders">POST /api/v1/identity/sign-in/providers</a></li><li class="l3"><a href="#put-apiv1identitysign-inprovidersid">PUT /api/v1/identity/sign-in/providers/{id}</a></li><li class="l3"><a href="#delete-apiv1identitysign-inprovidersid">DELETE /api/v1/identity/sign-in/providers/{id}</a></li><li class="l3"><a href="#get-apiv1identitysign-ins">GET /api/v1/identity/sign-ins</a></li><li class="l3"><a href="#delete-apiv1identitysign-insid">DELETE /api/v1/identity/sign-ins/{id}</a></li><li class="l3"><a href="#get-apiv1identitytenancy">GET /api/v1/identity/tenancy</a></li><li class="l3"><a href="#get-apiv1identityusers">GET /api/v1/identity/users</a></li><li class="l3"><a href="#post-apiv1identityusersuserdisable">POST /api/v1/identity/users/{user}/disable</a></li><li class="l3"><a href="#post-apiv1identityusersuserenable">POST /api/v1/identity/users/{user}/enable</a></li><li class="l3"><a href="#get-apiv1identityuserslookup">GET /api/v1/identity/users/lookup</a></li><li class="l3"><a href="#put-apiv1mepassword">PUT /api/v1/me/password</a></li><li class="l3"><a href="#get-apiv1mesign-ins">GET /api/v1/me/sign-ins</a></li><li class="l3"><a href="#delete-apiv1mesign-insid">DELETE /api/v1/me/sign-ins/{id}</a></li><li class="l3"><a href="#get-apiv1metokens">GET /api/v1/me/tokens</a></li><li class="l3"><a href="#post-apiv1metokens">POST /api/v1/me/tokens</a></li><li class="l3"><a href="#delete-apiv1metokensid">DELETE /api/v1/me/tokens/{id}</a></li><li class="l3"><a href="#post-apiv1metokensidrotate">POST /api/v1/me/tokens/{id}/rotate</a></li></ul></nav>
     </div>
   </main>
   <footer class="site-footer">
